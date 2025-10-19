@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "features": {
+    "autoReply": {
+      "enabled": true,
+      "price": 9900,
+      "keywords": ["출하예정", "견적요청", "문의"],
+      "replyTemplate": "<p>안녕하세요.<br>메일 잘 받았습니다.<br>확인 후 회신드리겠습니다.</p>"
+    },
+    "attachmentSave": {
+      "enabled": false,
+      "price": 3000,
+      "savePath": "C:\\WorkFree\\Attachments",
+      "organizeByDate": true
+    },
+    "pdfConversion": {
+      "enabled": false,
+      "price": 3000,
+      "convertExcel": true,
+      "convertWord": true
+    },
+    "logging": {
+      "enabled": false,
+      "price": 2000,
+      "logPath": "C:\\WorkFree\\Logs\\log.txt",
+      "logLevel": "Info"
+    }
+  },
+  "filters": {
+    "subjectContains": ["출하예정"],
+    "senderDomains": [],
+    "excludeSenders": []
+  },
+  "settings": {
+    "autoStart": true,
+    "showNotifications": true,
+    "delaySeconds": 2
+  }
+}
+
+

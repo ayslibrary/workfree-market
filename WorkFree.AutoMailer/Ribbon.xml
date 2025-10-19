@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+    <tabs>
+      <tab id="tabWorkFree" label="WorkFree 자동화">
+        
+        <!-- 메일 자동화 그룹 -->
+        <group id="grpMailAuto" label="메일 자동화">
+          
+          <!-- 자동회신 실행 버튼 -->
+          <button id="btnAutoReply"
+                  label="자동회신 실행"
+                  imageMso="Reply"
+                  size="large"
+                  onAction="OnClick_AutoReply"
+                  screentip="선택한 메일에 자동회신"
+                  supertip="선택한 메일에 대해 설정된 템플릿으로 자동회신을 실행합니다."/>
+          
+          <!-- 첨부파일 저장 버튼 -->
+          <button id="btnSaveAttachment"
+                  label="첨부파일 저장"
+                  imageMso="FileSaveAs"
+                  size="large"
+                  onAction="OnClick_SaveAttachment"
+                  screentip="첨부파일 자동 저장"
+                  supertip="선택한 메일의 첨부파일을 설정된 폴더에 자동으로 저장합니다."/>
+          
+        </group>
+        
+        <!-- 설정 그룹 -->
+        <group id="grpSettings" label="설정">
+          
+          <!-- 설정 버튼 -->
+          <button id="btnSettings"
+                  label="설정"
+                  imageMso="Options"
+                  size="normal"
+                  onAction="OnClick_Settings"
+                  screentip="WorkFree 설정"
+                  supertip="자동회신 키워드, 저장 경로 등을 설정합니다."/>
+          
+        </group>
+        
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
+
+
