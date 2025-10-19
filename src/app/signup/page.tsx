@@ -95,7 +95,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // 필드 변경 시 해당 에러 제거
     if (fieldErrors[field]) {
