@@ -1,6 +1,6 @@
 // Firebase 설정 및 초기화
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { 
   getAuth, 
   GoogleAuthProvider,
@@ -31,13 +31,13 @@ const isConfigured = firebaseConfig.apiKey && firebaseConfig.projectId;
 const app = isConfigured && getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0] || null;
 
 // Auth 인스턴스
-export const auth = app ? getAuth(app) : null as any;
+export const auth = app ? getAuth(app) : (null as unknown as ReturnType<typeof getAuth>);
 
 // Firestore 인스턴스
-export const db = app ? getFirestore(app) : null as any;
+export const db = app ? getFirestore(app) : (null as unknown as ReturnType<typeof getFirestore>);
 
 // Google Provider
-export const googleProvider = auth ? new GoogleAuthProvider() : null as any;
+export const googleProvider = auth ? new GoogleAuthProvider() : (null as unknown as GoogleAuthProvider);
 if (googleProvider) {
   googleProvider.setCustomParameters({
     prompt: 'select_account'
@@ -52,8 +52,8 @@ export async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     return { user: result.user, error: null };
-  } catch (error: any) {
-    return { user: null, error: error.message };
+  } catch (error) {
+    return { user: null, error: error instanceof Error ? error.message : 'An error occurred' };
   }
 }
 
@@ -75,15 +75,18 @@ export async function registerWithEmail(
     });
     
     return { user: result.user, error: null };
-  } catch (error: any) {
+  } catch (error) {
     let errorMessage = '회원가입에 실패했습니다.';
     
-    if (error.code === 'auth/email-already-in-use') {
-      errorMessage = '이미 사용 중인 이메일입니다.';
-    } else if (error.code === 'auth/weak-password') {
-      errorMessage = '비밀번호는 최소 6자 이상이어야 합니다.';
-    } else if (error.code === 'auth/invalid-email') {
-      errorMessage = '유효하지 않은 이메일 형식입니다.';
+    if (error && typeof error === 'object' && 'code' in error) {
+      const firebaseError = error as { code: string };
+      if (firebaseError.code === 'auth/email-already-in-use') {
+        errorMessage = '이미 사용 중인 이메일입니다.';
+      } else if (firebaseError.code === 'auth/weak-password') {
+        errorMessage = '비밀번호는 최소 6자 이상이어야 합니다.';
+      } else if (firebaseError.code === 'auth/invalid-email') {
+        errorMessage = '유효하지 않은 이메일 형식입니다.';
+      }
     }
     
     return { user: null, error: errorMessage };
@@ -98,15 +101,18 @@ export async function loginWithEmail(email: string, password: string) {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     return { user: result.user, error: null };
-  } catch (error: any) {
+  } catch (error) {
     let errorMessage = '로그인에 실패했습니다.';
     
-    if (error.code === 'auth/user-not-found') {
-      errorMessage = '등록되지 않은 이메일입니다.';
-    } else if (error.code === 'auth/wrong-password') {
-      errorMessage = '잘못된 비밀번호입니다.';
-    } else if (error.code === 'auth/invalid-email') {
-      errorMessage = '유효하지 않은 이메일 형식입니다.';
+    if (error && typeof error === 'object' && 'code' in error) {
+      const firebaseError = error as { code: string };
+      if (firebaseError.code === 'auth/user-not-found') {
+        errorMessage = '등록되지 않은 이메일입니다.';
+      } else if (firebaseError.code === 'auth/wrong-password') {
+        errorMessage = '잘못된 비밀번호입니다.';
+      } else if (firebaseError.code === 'auth/invalid-email') {
+        errorMessage = '유효하지 않은 이메일 형식입니다.';
+      }
     }
     
     return { user: null, error: errorMessage };
@@ -121,8 +127,8 @@ export async function signOut() {
   try {
     await firebaseSignOut(auth);
     return { error: null };
-  } catch (error: any) {
-    return { error: error.message };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : 'An error occurred' };
   }
 }
 

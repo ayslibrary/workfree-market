@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import { FadeIn } from "@/components/animations";
 
 export default function AboutPage() {
 

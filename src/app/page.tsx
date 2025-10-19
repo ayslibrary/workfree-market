@@ -288,7 +288,7 @@ export default function Home() {
           <FadeIn delay={0.2} duration={0.8}>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                직장인 2,930만명이<br />'자동화 제작자'가 되는 시대
+                직장인 2,930만명이<br />&apos;자동화 제작자&apos;가 되는 시대
               </span>
             </h1>
           </FadeIn>
@@ -439,7 +439,7 @@ export default function Home() {
           <FadeIn delay={0.2}>
             <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-10 md:p-14 rounded-3xl text-center text-white shadow-2xl">
               <p className="text-3xl md:text-4xl font-bold mb-4">
-                "판매자는 대화하지 않는다. 결과물만 말한다."
+                &quot;판매자는 대화하지 않는다. 결과물만 말한다.&quot;
               </p>
               <p className="text-lg opacity-90">
                 커스터마이징 요청 없음 | 완성된 키트만 거래 | 다운로드 후 거래 종료
@@ -796,7 +796,7 @@ export default function Home() {
                 <span className="text-lg font-bold text-gray-900 dark:text-white">5.0</span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-[17px]">
-                "매일 2시간씩 하던 메일 발송을 5분으로 줄였어요. 진작 살 걸 후회됩니다."
+                &quot;매일 2시간씩 하던 메일 발송을 5분으로 줄였어요. 진작 살 걸 후회됩니다.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -817,7 +817,7 @@ export default function Home() {
                 <span className="text-lg font-bold text-gray-900 dark:text-white">5.0</span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-[17px]">
-                "설치 가이드가 너무 친절해서 비개발자인 제가 5분 만에 적용했습니다!"
+                &quot;설치 가이드가 너무 친절해서 비개발자인 제가 5분 만에 적용했습니다!&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
@@ -838,7 +838,7 @@ export default function Home() {
                 <span className="text-lg font-bold text-gray-900 dark:text-white">4.9</span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-[17px]">
-                "회사에서 저보고 어떻게 이렇게 빨리 처리하냐고 물어봤어요 ㅎㅎ"
+                &quot;회사에서 저보고 어떻게 이렇게 빨리 처리하냐고 물어봤어요 ㅎㅎ&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
