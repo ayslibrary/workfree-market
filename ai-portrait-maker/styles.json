@@ -1,0 +1,35 @@
+{
+  "styles": [
+    {
+      "name": "🌸 봄날의 감성",
+      "description": "벚꽃이 흩날리는 봄날, 따뜻하고 로맨틱한 분위기",
+      "prompt": "Transform this portrait into a dreamy spring scene with cherry blossoms. Soft pink and white tones, romantic atmosphere, gentle sunlight filtering through flowers, bokeh effect, film photography aesthetic, pastel colors, ethereal mood. Keep the subject's face and features recognizable while adding artistic spring elements around them."
+    },
+    {
+      "name": "🌆 도시의 밤",
+      "description": "네온 불빛이 빛나는 도시, 세련되고 현대적인 느낌",
+      "prompt": "Create an urban night portrait with neon lights and city vibes. Cinematic lighting, bokeh city lights in background, moody blue and purple tones, modern aesthetic, street photography style, dramatic shadows, high contrast. Maintain the subject's facial features while adding urban nightlife atmosphere."
+    },
+    {
+      "name": "🎨 빈티지 필름",
+      "description": "90년대 필름 카메라로 찍은 듯한 아날로그 감성",
+      "prompt": "Apply vintage film photography aesthetic to this portrait. 90s film grain, warm nostalgic tones, analog camera look, slightly faded colors, authentic film photography vibe, retro mood, natural lighting. Preserve the subject's identity while adding vintage film qualities."
+    },
+    {
+      "name": "✨ 페어리 판타지",
+      "description": "판타지 동화 속 요정 같은 신비로운 분위기",
+      "prompt": "Transform into a magical fairy tale portrait. Enchanted forest setting, soft glowing lights, magical particles in air, dreamy fantasy atmosphere, ethereal glow, pastel fantasy colors, whimsical elements, fairy tale aesthetic. Keep the subject recognizable with added fantasy elements."
+    },
+    {
+      "name": "🌊 청량한 여름",
+      "description": "시원한 바다와 햇살이 있는 상쾌한 여름 느낌",
+      "prompt": "Create a fresh summer beach portrait. Bright natural sunlight, ocean blue tones, refreshing atmosphere, summer vibes, clear sky, coastal aesthetic, vibrant colors, joyful mood, vacation feeling. Maintain facial features while adding summery beach elements."
+    },
+    {
+      "name": "🍂 가을 감성",
+      "description": "단풍 물든 가을, 따뜻하고 아늑한 분위기",
+      "prompt": "Create a warm autumn portrait with fall colors. Golden hour lighting, orange and brown autumn tones, cozy atmosphere, falling leaves, warm nostalgic mood, autumn aesthetic, soft natural light. Keep the subject's face clear while adding autumn ambiance around them."
+    }
+  ]
+}
+

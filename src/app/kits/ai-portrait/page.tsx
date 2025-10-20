@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 
 export default function AIPortraitKitPage() {
@@ -129,108 +130,173 @@ export default function AIPortraitKitPage() {
         <FadeIn delay={0.3}>
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">
-              ✨ 실제 결과물 미리보기
+              ✨ 한 장의 사진으로 만드는 6가지 스타일
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
-              같은 사진으로 만든 다양한 스타일
+              중앙의 원본 사진이 다양한 화보 스타일로 변신합니다
             </p>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {/* Vogue Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-black to-gray-700 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">👑</div>
-                      <h3 className="text-2xl font-bold mb-2">Vogue Korea</h3>
-                      <p className="text-sm opacity-80">파워풀한 매거진 스타일</p>
+            {/* 중앙 원본 + 주변 스타일 레이아웃 */}
+            <div className="max-w-6xl mx-auto relative">
+              {/* 중앙 원본 사진 */}
+              <div className="flex justify-center mb-8">
+                <div className="relative">
+                  <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-purple-500 p-4 relative z-10">
+                    <div className="aspect-[3/4] w-64 md:w-80 relative overflow-hidden rounded-2xl">
+                      <Image 
+                        src="/examples/ai-portrait/기본사진.jpg" 
+                        alt="원본 사진" 
+                        fill 
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="mt-4 text-center">
+                      <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-bold text-sm">
+                        📸 원본 사진
+                      </div>
                     </div>
                   </div>
-                  {/* 실제 이미지를 넣으려면 여기에 추가 */}
-                  {/* <Image src="/examples/vogue-style.jpg" alt="Vogue Style" fill className="object-cover" /> */}
-                </div>
-                <div className="p-4 bg-gradient-to-r from-gray-900 to-black text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                  
+                  {/* 중앙에서 퍼지는 점선 원 */}
+                  <div className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-full -z-0 animate-pulse"></div>
                 </div>
               </div>
 
-              {/* Chanel Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-black relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">🖤</div>
-                      <h3 className="text-2xl font-bold mb-2">Chanel</h3>
-                      <p className="text-sm opacity-80">타임리스 럭셔리</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4 bg-gray-900 text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+              {/* 변환 화살표 텍스트 */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 px-6 py-3 rounded-full">
+                  <span className="text-2xl">⬇️</span>
+                  <span className="font-bold text-gray-900 dark:text-white">AI로 변환</span>
+                  <span className="text-2xl">⬇️</span>
                 </div>
               </div>
 
-              {/* LinkedIn Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-blue-600 to-blue-800 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">💼</div>
-                      <h3 className="text-2xl font-bold mb-2">LinkedIn</h3>
-                      <p className="text-sm opacity-80">전문가 프로필</p>
+              {/* 주변 6개 스타일 */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                {/* Vogue Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-black relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/보그화보.jpg" 
+                      alt="Vogue Korea Style" 
+                      fill 
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">👑</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Vogue Korea</h3>
+                      <p className="text-xs text-white/80">파워풀 매거진</p>
                     </div>
                   </div>
+                  <div className="p-3 bg-gradient-to-r from-gray-900 to-black text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
                 </div>
-                <div className="p-4 bg-blue-700 text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
-                </div>
-              </div>
 
-              {/* 빈티지 Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-amber-600 to-yellow-700 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">📻</div>
-                      <h3 className="text-2xl font-bold mb-2">Vintage 70s</h3>
-                      <p className="text-sm opacity-80">레트로 감성</p>
+                {/* Chanel Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-gray-900 relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/기본사진.jpg" 
+                      alt="Chanel Style" 
+                      fill 
+                      className="object-cover opacity-80 grayscale group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">🖤</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Chanel</h3>
+                      <p className="text-xs text-white/80">타임리스 럭셔리</p>
                     </div>
                   </div>
+                  <div className="p-3 bg-gray-900 text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
                 </div>
-                <div className="p-4 bg-amber-700 text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
-                </div>
-              </div>
 
-              {/* 사이버펑크 Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-cyan-500 to-purple-600 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">🌃</div>
-                      <h3 className="text-2xl font-bold mb-2">Cyberpunk</h3>
-                      <p className="text-sm opacity-80">미래적 네온</p>
+                {/* LinkedIn Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-blue-900 relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/링크드인.jpg" 
+                      alt="LinkedIn Professional" 
+                      fill 
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">💼</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">LinkedIn</h3>
+                      <p className="text-xs text-white/80">전문가 프로필</p>
                     </div>
                   </div>
+                  <div className="p-3 bg-blue-700 text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
                 </div>
-                <div className="p-4 bg-purple-700 text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
-                </div>
-              </div>
 
-              {/* 영화 Style */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                <div className="aspect-[3/4] bg-gradient-to-br from-blue-700 to-indigo-900 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <div className="text-6xl mb-4">🎬</div>
-                      <h3 className="text-2xl font-bold mb-2">Movie Still</h3>
-                      <p className="text-sm opacity-80">영화 주인공</p>
+                {/* 빈티지 Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-amber-900 relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/기본사진.jpg" 
+                      alt="Vintage 70s Style" 
+                      fill 
+                      className="object-cover opacity-75 sepia group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-amber-900 via-transparent to-yellow-900/30"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">📻</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Vintage 70s</h3>
+                      <p className="text-xs text-white/80">레트로 감성</p>
                     </div>
                   </div>
+                  <div className="p-3 bg-amber-700 text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
                 </div>
-                <div className="p-4 bg-indigo-800 text-white">
-                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+
+                {/* 사이버펑크 Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-purple-900 relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/기본사진.jpg" 
+                      alt="Cyberpunk Style" 
+                      fill 
+                      className="object-cover opacity-80 contrast-125 saturate-150 group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900 via-cyan-900/30 to-purple-900/30"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">🌃</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Cyberpunk</h3>
+                      <p className="text-xs text-white/80">미래적 네온</p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-purple-700 text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
+                </div>
+
+                {/* 영화 Style */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
+                  <div className="aspect-[3/4] bg-indigo-900 relative overflow-hidden">
+                    <Image 
+                      src="/examples/ai-portrait/기본사진.jpg" 
+                      alt="Movie Still Style" 
+                      fill 
+                      className="object-cover opacity-85 group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-indigo-900 via-transparent to-blue-900/30"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="text-4xl mb-1">🎬</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Movie Still</h3>
+                      <p className="text-xs text-white/80">영화 주인공</p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-indigo-800 text-white text-center">
+                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
+                  </div>
                 </div>
               </div>
             </div>
