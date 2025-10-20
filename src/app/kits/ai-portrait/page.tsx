@@ -125,8 +125,120 @@ export default function AIPortraitKitPage() {
           </FadeIn>
         </div>
 
-        {/* 20개 스타일 목록 */}
+        {/* 실제 결과물 갤러리 */}
         <FadeIn delay={0.3}>
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+              ✨ 실제 결과물 미리보기
+            </h2>
+            <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
+              같은 사진으로 만든 다양한 스타일
+            </p>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+              {/* Vogue Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-black to-gray-700 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">👑</div>
+                      <h3 className="text-2xl font-bold mb-2">Vogue Korea</h3>
+                      <p className="text-sm opacity-80">파워풀한 매거진 스타일</p>
+                    </div>
+                  </div>
+                  {/* 실제 이미지를 넣으려면 여기에 추가 */}
+                  {/* <Image src="/examples/vogue-style.jpg" alt="Vogue Style" fill className="object-cover" /> */}
+                </div>
+                <div className="p-4 bg-gradient-to-r from-gray-900 to-black text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+
+              {/* Chanel Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-black relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">🖤</div>
+                      <h3 className="text-2xl font-bold mb-2">Chanel</h3>
+                      <p className="text-sm opacity-80">타임리스 럭셔리</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-gray-900 text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+
+              {/* LinkedIn Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-blue-600 to-blue-800 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">💼</div>
+                      <h3 className="text-2xl font-bold mb-2">LinkedIn</h3>
+                      <p className="text-sm opacity-80">전문가 프로필</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-blue-700 text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+
+              {/* 빈티지 Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-amber-600 to-yellow-700 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">📻</div>
+                      <h3 className="text-2xl font-bold mb-2">Vintage 70s</h3>
+                      <p className="text-sm opacity-80">레트로 감성</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-amber-700 text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+
+              {/* 사이버펑크 Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-cyan-500 to-purple-600 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">🌃</div>
+                      <h3 className="text-2xl font-bold mb-2">Cyberpunk</h3>
+                      <p className="text-sm opacity-80">미래적 네온</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-purple-700 text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+
+              {/* 영화 Style */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                <div className="aspect-[3/4] bg-gradient-to-br from-blue-700 to-indigo-900 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <div className="text-6xl mb-4">🎬</div>
+                      <h3 className="text-2xl font-bold mb-2">Movie Still</h3>
+                      <p className="text-sm opacity-80">영화 주인공</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-indigo-800 text-white">
+                  <p className="text-sm font-semibold">프롬프트 포함 ✓</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        {/* 20개 스타일 목록 */}
+        <FadeIn delay={0.4}>
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
               📸 포함된 20가지 스타일
