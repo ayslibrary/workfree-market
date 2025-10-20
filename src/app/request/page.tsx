@@ -77,6 +77,7 @@ export default function RequestPage() {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const uploadFiles = async (): Promise<string[]> => {
     if (!storage) {
       console.error('Storage가 초기화되지 않았습니다.');

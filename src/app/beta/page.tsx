@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import RoulettePopup from "@/components/RoulettePopup";
 
 export default function BetaPage() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export default function BetaPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showRoulette, setShowRoulette] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -46,6 +48,9 @@ export default function BetaPage() {
         environment: "",
         task: "",
       });
+
+      // 룰렛 팝업 표시
+      setTimeout(() => setShowRoulette(true), 500);
 
       // 3초 후 다시 폼 표시
       setTimeout(() => setSubmitted(false), 3000);
@@ -273,6 +278,14 @@ export default function BetaPage() {
         <p className="mb-2">© 2025 WorkFree — Work Less, Create More.</p>
         <p>문의: contact@workfree.ai</p>
       </footer>
+
+      {/* 룰렛 팝업 */}
+      {showRoulette && (
+        <RoulettePopup
+          onClose={() => setShowRoulette(false)}
+          autoShow={false}
+        />
+      )}
     </div>
   );
 }

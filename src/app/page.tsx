@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { signOut, db } from "@/lib/firebase";
 import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import KitOptionsModal from "@/components/KitOptionsModal";
+import RoulettePopup from "@/components/RoulettePopup";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 
 export default function Home() {
@@ -1165,6 +1166,9 @@ export default function Home() {
           },
         ]}
       />
+
+      {/* 룰렛 팝업 - 첫 방문자에게만 자동 표시 */}
+      <RoulettePopup />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
-import { collection, query, where, orderBy, onSnapshot, QueryDocumentSnapshot, DocumentData, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, QueryDocumentSnapshot, DocumentData, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import SimpleHeader from '@/components/SimpleHeader';
 
 interface Kit {
@@ -15,7 +15,7 @@ interface Kit {
   expectedFeature: string;
   maker: string;
   status: string;
-  createdAt: any;
+  createdAt: Timestamp | string;
   downloadUrl?: string;
   rating?: number;
   downloads?: number;

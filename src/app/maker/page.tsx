@@ -87,7 +87,7 @@ export default function MakerPage() {
         console.log('⚠️ Firebase 미설정 - 임시 모드');
         // localStorage 업데이트
         const requests = JSON.parse(localStorage.getItem('requests') || '[]');
-        const updated = requests.map((req: any) => 
+        const updated = requests.map((req: { id: string; status: string; downloadUrl?: string; submittedAt?: string }) => 
           req.id === selectedProject.requestId 
             ? { ...req, status: '검수중', downloadUrl, submittedAt: new Date().toISOString() }
             : req

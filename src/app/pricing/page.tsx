@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import SimpleHeader from '@/components/SimpleHeader';
 import { FadeIn } from '@/components/animations';
 
@@ -413,12 +414,12 @@ export default function PricingPage() {
             <p className="text-xl text-white/90 mb-8">
               &quot;당신의 시간을 되돌려드립니다.&quot;
             </p>
-            <a
+            <Link
               href="/"
               className="inline-block px-10 py-5 bg-white text-indigo-600 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
             >
               지금 바로 무료로 시작하기 →
-            </a>
+            </Link>
           </FadeIn>
         </div>
       </section>

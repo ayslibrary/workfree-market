@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
 import SimpleHeader from '@/components/SimpleHeader';
 
 interface Request {
@@ -16,9 +15,9 @@ interface Request {
   priority: string;
   fileUrls: string[];
   status: string;
-  createdAt: any;
+  createdAt: Timestamp | string;
   maker?: string;
-  makerStartDate?: any;
+  makerStartDate?: Timestamp | string;
 }
 
 export default function AdminPage() {

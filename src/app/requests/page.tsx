@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
-import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
 import SimpleHeader from '@/components/SimpleHeader';
 
 interface Request {
@@ -16,10 +16,10 @@ interface Request {
   priority: string;
   fileUrls: string[];
   status: string;
-  createdAt: any;
+  createdAt: Timestamp | string;
   maker?: string;
-  makerStartDate?: any;
-  dueDate?: any;
+  makerStartDate?: Timestamp | string;
+  dueDate?: Date;
 }
 
 export default function RequestsPage() {
@@ -118,7 +118,6 @@ export default function RequestsPage() {
 
     try {
       const requestRef = doc(db, 'requests', selectedRequestId);
-      const now = new Date();
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 10); // 10일 후
 
