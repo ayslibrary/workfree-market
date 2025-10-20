@@ -115,10 +115,10 @@ export default function MakerPage() {
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Title */}
         <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 px-4">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 px-4 break-keep">
             🧑‍💻 제작자 대시보드
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 break-keep">
             내가 제작 중인 자동화 키트를 관리하세요
           </p>
         </div>

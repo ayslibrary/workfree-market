@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   description: "다운로드 한 번으로 끝나는 실무 자동화 키트 거래소. 설치 5분, 인생 자동화 시작.",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -123,10 +123,10 @@ export default function PricingPage() {
             <div className="inline-block px-4 md:px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-xs md:text-sm font-semibold shadow-lg mb-6">
               🎉 현재 베타테스트 기간 — 모든 플랜 무료 오픈 중!
             </div>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white px-4">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white px-4 break-keep">
               💼 WorkFree Market 요금제
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4 break-keep">
               직장인의 자동화를 위한, 합리적이고 실속 있는 선택.
             </p>
           </FadeIn>

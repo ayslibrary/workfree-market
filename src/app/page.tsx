@@ -300,7 +300,7 @@ export default function Home() {
           </FadeIn>
           
           <FadeIn delay={0.2} duration={0.8}>
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4 break-keep">
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 직장인 2,930만명이<br />&apos;자동화 제작자&apos;가 되는 시대
               </span>
@@ -308,7 +308,7 @@ export default function Home() {
           </FadeIn>
           
           <FadeIn delay={0.4}>
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed italic px-4">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed italic px-4 break-keep">
               — WorkFree: Work Less, Create More.
             </p>
           </FadeIn>

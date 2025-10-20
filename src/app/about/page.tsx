@@ -29,12 +29,12 @@ export default function AboutPage() {
               WorkFree
             </span>
           </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
-            &quot;일 안 하고도 일하는 사람들의 비밀도구&quot;
+          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6 px-4 leading-relaxed break-keep">
+            &quot;일 안 하고도 일하는<br className="md:hidden" /> 사람들의 비밀도구&quot;
           </h2>
-          <div className="max-w-3xl mx-auto text-base md:text-lg text-gray-700 space-y-2">
-            <p className="font-semibold">직장인을 위한 AI 자동화 생태계</p>
-            <p>반복 업무를 자동화하고, 당신의 시간을 되돌려드립니다.</p>
+          <div className="max-w-3xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 space-y-2 px-4">
+            <p className="font-semibold break-keep">직장인을 위한 AI 자동화 생태계</p>
+            <p className="break-keep">반복 업무를 자동화하고, 당신의 시간을 되돌려드립니다.</p>
           </div>
         </FadeIn>
 

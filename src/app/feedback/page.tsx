@@ -172,13 +172,13 @@ export default function FeedbackPage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12">
         <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4 break-keep">
             🧠 WorkFree Beta 설문
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 break-keep">
             당신의 피드백이 더 나은 자동화를 만듭니다 💡
           </p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-gray-500 mt-2 break-keep">
             3분 정도만 시간을 내어 아래 항목을 작성해 주세요
           </p>
         </div>

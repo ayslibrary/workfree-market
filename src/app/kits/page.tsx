@@ -124,10 +124,10 @@ export default function KitsPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-keep">
             🎉 WorkFree 자동화 키트
           </h1>
-          <p className="text-xl opacity-90 mb-8">
+          <p className="text-xl opacity-90 mb-8 break-keep">
             직장인들이 만든 검증된 자동화 솔루션
           </p>
           <div className="flex justify-center gap-4 md:gap-8 text-center">

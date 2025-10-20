@@ -149,10 +149,10 @@ export default function RequestsPage() {
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Title */}
         <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4 break-keep">
             🧩 자동화 요청 리스트
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 break-keep">
             직장인들이 실제로 필요한 자동화를 함께 만듭니다
           </p>
         </div>
