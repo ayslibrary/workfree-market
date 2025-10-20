@@ -13,6 +13,7 @@ import {
   User as FirebaseUser
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 // Firebase 설정 (환경 변수에서 가져오기)
 const firebaseConfig = {
@@ -35,6 +36,9 @@ export const auth = app ? getAuth(app) : (null as unknown as ReturnType<typeof g
 
 // Firestore 인스턴스
 export const db = app ? getFirestore(app) : (null as unknown as ReturnType<typeof getFirestore>);
+
+// Storage 인스턴스
+export const storage = app ? getStorage(app) : (null as unknown as ReturnType<typeof getStorage>);
 
 // Google Provider
 export const googleProvider = auth ? new GoogleAuthProvider() : (null as unknown as GoogleAuthProvider);

@@ -146,6 +146,12 @@ export default function Home() {
               >
                 작동방식
               </button>
+              <Link
+                href="/pricing"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+              >
+                요금제
+              </Link>
               <button
                 onClick={() => scrollToSection("seller")}
                 className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
@@ -246,6 +252,13 @@ export default function Home() {
                 >
                   작동방식
                 </button>
+                <Link
+                  href="/pricing"
+                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  요금제
+                </Link>
                 <button
                   onClick={() => scrollToSection("seller")}
                   className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
@@ -360,6 +373,36 @@ export default function Home() {
               </div>
             </StaggerItem>
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* 홍보 영상 섹션 */}
+      <section className="py-20 px-6 bg-white dark:bg-gray-950">
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+              WorkFree를 영상으로 만나보세요
+            </h2>
+            <p className="text-center text-gray-600 dark:text-gray-300 mb-12 text-lg">
+              직장인의 반복 업무를 자동화하는 WorkFree의 모든 것
+            </p>
+          </FadeIn>
+          
+          <FadeIn delay={0.2}>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-indigo-100 dark:border-indigo-900 mx-auto max-w-5xl">
+              <video
+                className="w-full h-auto"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              >
+                <source src="/videos/watermarked-691240b2-610f-42b0-a476-0e148e0a813b.mp4" type="video/mp4" />
+                브라우저가 비디오 태그를 지원하지 않습니다.
+              </video>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -1018,6 +1061,11 @@ export default function Home() {
                   <a href="#how-it-works" className="hover:text-white transition-colors">
                     작동 방식
                   </a>
+                </li>
+                <li>
+                  <Link href="/pricing" className="hover:text-white transition-colors">
+                    요금제
+                  </Link>
                 </li>
                 <li>
                   <a href="#seller" className="hover:text-white transition-colors">
