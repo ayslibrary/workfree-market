@@ -165,17 +165,17 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       {activeTab === 'plans' && (
         <section className="py-20 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <FadeIn key={plan.name} delay={index * 0.1}>
-                <div
-                  className={`relative rounded-3xl p-8 border-2 transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-                    plan.color === 'indigo'
-                      ? 'border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 shadow-xl'
-                      : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700'
-                  }`}
-                >
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {plans.map((plan, index) => (
+                <FadeIn key={plan.name} delay={index * 0.1}>
+                  <div
+                    className={`relative rounded-3xl p-8 border-2 transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
+                      plan.color === 'indigo'
+                        ? 'border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 shadow-xl'
+                        : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700'
+                    }`}
+                  >
                   {/* Badge */}
                   {plan.badge && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
