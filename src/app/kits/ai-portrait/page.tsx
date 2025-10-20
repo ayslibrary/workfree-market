@@ -198,12 +198,12 @@ export default function AIPortraitKitPage() {
                 <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
                   <div className="aspect-[3/4] bg-amber-900 relative overflow-hidden">
                     <Image 
-                      src="/examples/ai-portrait/기본사진.jpg" 
+                      src="/examples/ai-portrait/레트로.png" 
                       alt="Vintage Retro Style" 
                       fill 
-                      className="object-cover opacity-80 sepia group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-amber-900 via-transparent to-yellow-900/30"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-amber-900/40 via-transparent to-transparent"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <div className="text-4xl mb-1">📻</div>
                       <h3 className="text-lg font-bold text-white mb-0.5">Vintage Retro</h3>
