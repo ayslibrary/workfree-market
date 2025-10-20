@@ -128,37 +128,49 @@ export default function Home() {
             </Link>
 
             {/* 데스크톱 메뉴 */}
-            <div className="hidden md:flex gap-8 items-center">
+            <div className="hidden md:flex gap-6 items-center">
               <Link
                 href="/about"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
                 소개
               </Link>
-              <button
-                onClick={() => scrollToSection("kits")}
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+              <Link
+                href="/request"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
-                자동화 키트
-              </button>
-              <button
-                onClick={() => scrollToSection("how-it-works")}
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+                요청하기
+              </Link>
+              <Link
+                href="/requests"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
-                작동방식
-              </button>
+                요청 리스트
+              </Link>
+              <Link
+                href="/maker"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
+              >
+                제작자
+              </Link>
+              <Link
+                href="/kits"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
+              >
+                키트
+              </Link>
               <Link
                 href="/pricing"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
                 요금제
               </Link>
-              <button
-                onClick={() => scrollToSection("seller")}
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[16px]"
+              <Link
+                href="/admin"
+                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
-                판매자 되기
-              </button>
+                Admin
+              </Link>
               
               {!isLoading && (
                 <>
@@ -234,42 +246,68 @@ export default function Home() {
           {/* 모바일 메뉴 드롭다운 */}
           {showMobileMenu && (
             <div className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4">
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <Link
                   href="/about"
-                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                >
-                  소개
-                </Link>
-                <button
-                  onClick={() => scrollToSection("kits")}
-                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                >
-                  자동화 키트
-                </button>
-                <button
-                  onClick={() => scrollToSection("how-it-works")}
-                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                >
-                  작동방식
-                </button>
-                <Link
-                  href="/pricing"
-                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
                   onClick={() => setShowMobileMenu(false)}
                 >
-                  요금제
+                  📖 소개
                 </Link>
-                <button
-                  onClick={() => scrollToSection("seller")}
-                  className="text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                <Link
+                  href="/request"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
                 >
-                  판매자 되기
-                </button>
+                  ✨ 자동화 요청하기
+                </Link>
+                <Link
+                  href="/requests"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  📋 요청 리스트
+                </Link>
+                <Link
+                  href="/maker"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  🔧 제작자 대시보드
+                </Link>
+                <Link
+                  href="/kits"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  🧩 자동화 키트
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  💼 요금제
+                </Link>
+                <Link
+                  href="/feedback"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  💬 피드백
+                </Link>
+                <Link
+                  href="/admin"
+                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  ⚙️ Admin
+                </Link>
                 {!isLoading && !user && (
                   <Link
                     href="/login"
                     className="mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-6 py-3 rounded-full font-semibold text-center"
+                    onClick={() => setShowMobileMenu(false)}
                   >
                     로그인
                   </Link>
