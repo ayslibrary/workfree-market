@@ -442,6 +442,33 @@ export default function Home() {
               </video>
             </div>
           </FadeIn>
+
+          {/* 프롬프트 키트 안내 */}
+          <FadeIn delay={0.4}>
+            <div className="mt-12 max-w-4xl mx-auto">
+              <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/50 dark:via-purple-950/50 dark:to-pink-950/50 rounded-2xl p-8 border-2 border-indigo-200 dark:border-indigo-800">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <span className="text-3xl">🎬</span>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white break-keep">
+                    이 영상은 프롬프트 키트로 만들었습니다
+                  </h3>
+                </div>
+                <p className="text-center text-gray-700 dark:text-gray-300 mb-6 break-keep">
+                  베타테스트 무료 버전으로 나만의 홍보 영상을 만들어보세요
+                </p>
+                <div className="flex justify-center">
+                  <Link
+                    href="/kits"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <span>🎥</span>
+                    <span>프롬프트 키트 보러가기</span>
+                    <span>→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
