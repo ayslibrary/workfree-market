@@ -19,6 +19,15 @@ interface Kit {
   downloadUrl?: string;
   rating?: number;
   downloads?: number;
+  category?: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+  color: string;
 }
 
 export default function KitsPage() {
@@ -29,6 +38,58 @@ export default function KitsPage() {
   const [testerEmail, setTesterEmail] = useState('');
   const [testerName, setTesterName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  // 카테고리 정의
+  const categories: Category[] = [
+    {
+      id: 'all',
+      name: '전체',
+      icon: '📦',
+      description: '모든 자동화 키트',
+      color: 'gray'
+    },
+    {
+      id: 'microsoft',
+      name: 'Microsoft Office',
+      icon: '🏢',
+      description: 'Excel, Outlook, Word, PPT',
+      color: 'blue'
+    },
+    {
+      id: 'ai-prompts',
+      name: 'AI 프롬프트',
+      icon: '🤖',
+      description: 'ChatGPT, Gemini, Sora2',
+      color: 'purple'
+    },
+    {
+      id: 'automation-tools',
+      name: '업무 자동화',
+      icon: '⚙️',
+      description: 'Python, 파일관리, 스케줄링',
+      color: 'green'
+    },
+    {
+      id: 'cloud-collab',
+      name: '클라우드 & 협업',
+      icon: '☁️',
+      description: 'Google, Slack, Notion',
+      color: 'cyan'
+    },
+    {
+      id: 'marketing-design',
+      name: '마케팅 & 디자인',
+      icon: '🎨',
+      description: 'SNS, Canva, 이미지',
+      color: 'pink'
+    }
+  ];
+
+  // 필터링된 키트
+  const filteredKits = selectedCategory === 'all' 
+    ? kits 
+    : kits.filter(kit => kit.category === selectedCategory);
 
   useEffect(() => {
     if (!db) {
@@ -157,7 +218,7 @@ export default function KitsPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Beta Notice */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-12">
+        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-8">
           <div className="flex items-start gap-4">
             <span className="text-3xl">🎁</span>
             <div>
@@ -175,6 +236,44 @@ export default function KitsPage() {
                 📝 피드백 남기기
               </Link>
             </div>
+          </div>
+        </div>
+
+        {/* 카테고리 필터 */}
+        <div className="mb-12">
+          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span>🗂️</span>
+            <span>카테고리별 찾기</span>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
+                  selectedCategory === category.id
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-transparent shadow-lg'
+                    : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'
+                }`}
+              >
+                <div className="text-3xl mb-2">{category.icon}</div>
+                <div className={`font-semibold text-sm mb-1 ${
+                  selectedCategory === category.id ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {category.name}
+                </div>
+                <div className={`text-xs ${
+                  selectedCategory === category.id ? 'text-white/90' : 'text-gray-500'
+                }`}>
+                  {category.description}
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className="mt-4 text-center text-sm text-gray-600">
+            {selectedCategory === 'all' 
+              ? `전체 ${kits.length}개의 키트` 
+              : `${filteredKits.length}개의 키트`}
           </div>
         </div>
 
@@ -208,17 +307,35 @@ export default function KitsPage() {
         {/* Kits Grid */}
         {!loading && kits.length > 0 && (
           <>
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                🚀 출시된 자동화 키트
-              </h2>
-              <p className="text-gray-600">
-                실제 직장인들이 만들고 검증한 자동화 솔루션입니다
-              </p>
-            </div>
+            {filteredKits.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  해당 카테고리에 키트가 없습니다
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  다른 카테고리를 선택해보세요
+                </p>
+                <button
+                  onClick={() => setSelectedCategory('all')}
+                  className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all"
+                >
+                  전체 보기
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                    🚀 출시된 자동화 키트
+                  </h2>
+                  <p className="text-gray-600">
+                    실제 직장인들이 만들고 검증한 자동화 솔루션입니다
+                  </p>
+                </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {kits.map((kit) => (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredKits.map((kit) => (
                 <div
                   key={kit.id}
                   className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 border border-gray-100"
@@ -298,7 +415,9 @@ export default function KitsPage() {
                   </div>
                 </div>
               ))}
-            </div>
+                </div>
+              </>
+            )}
           </>
         )}
 
