@@ -129,36 +129,42 @@ export default function Home() {
 
             {/* 데스크톱 메뉴 */}
             <div className="hidden md:flex gap-6 items-center">
-              <Link
-                href="/about"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
-              >
-                소개
-              </Link>
-              <Link
-                href="/request"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
-              >
-                요청하기
-              </Link>
-              <Link
-                href="/requests"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
-              >
-                요청 리스트
-              </Link>
-              <Link
-                href="/maker"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
-              >
-                제작자
-              </Link>
-              <Link
-                href="/kits"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
-              >
-                키트
-              </Link>
+              {/* 카테고리 드롭다운 */}
+              <div className="relative group">
+                <button className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px] flex items-center gap-1">
+                  카테고리
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div className="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <Link
+                    href="/automation/microsoft"
+                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-[14px]"
+                  >
+                    📊 Microsoft 사무자동화
+                  </Link>
+                  <Link
+                    href="/automation/crawling"
+                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-colors text-[14px]"
+                  >
+                    🕷️ 웹 크롤링
+                  </Link>
+                  <Link
+                    href="/automation/visualization"
+                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors text-[14px]"
+                  >
+                    📈 데이터 시각화
+                  </Link>
+                  <Link
+                    href="/automation/prompts"
+                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors text-[14px]"
+                  >
+                    🤖 AI 프롬프트
+                  </Link>
+                </div>
+              </div>
+              
               <Link
                 href="/pricing"
                 className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
@@ -166,10 +172,10 @@ export default function Home() {
                 요금제
               </Link>
               <Link
-                href="/admin"
+                href="/about"
                 className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
-                Admin
+                소개
               </Link>
               
               {!isLoading && (
@@ -415,8 +421,140 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4개 카테고리 섹션 */}
+      <section className="py-24 px-6 bg-white dark:bg-gray-950">
+        <div className="container mx-auto max-w-7xl">
+          <FadeIn>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+              원하는 자동화를 찾아보세요
+            </h2>
+            <p className="text-center text-gray-600 dark:text-gray-300 mb-16 text-lg">
+              업무 분야별로 엄선된 자동화 키트
+            </p>
+          </FadeIn>
+
+          <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Microsoft 사무자동화 */}
+            <StaggerItem>
+              <Link href="/automation/microsoft" className="block group">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-10 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:scale-105 hover:shadow-2xl">
+                  <div className="text-6xl mb-6">📊</div>
+                  <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Microsoft 사무자동화
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-lg">
+                    Excel, Outlook, PPT 등 오피스 업무를 완전 자동화
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full">
+                      Outlook 자동회신
+                    </span>
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full">
+                      Excel 보고서
+                    </span>
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full">
+                      PPT 자동화
+                    </span>
+                  </div>
+                  <div className="text-blue-600 dark:text-blue-400 font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    6개 키트 보기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+
+            {/* 웹 크롤링 */}
+            <StaggerItem>
+              <Link href="/automation/crawling" className="block group">
+                <div className="bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 rounded-3xl p-10 border-2 border-cyan-200 dark:border-cyan-800 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all hover:scale-105 hover:shadow-2xl">
+                  <div className="text-6xl mb-6">🕷️</div>
+                  <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                    웹 크롤링
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-lg">
+                    검색부터 수집, 알림까지 웹 데이터 완전 자동화
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full">
+                      검색 자동화
+                    </span>
+                    <span className="text-xs bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full">
+                      뉴스 수집
+                    </span>
+                    <span className="text-xs bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full">
+                      가격 모니터링
+                    </span>
+                  </div>
+                  <div className="text-cyan-600 dark:text-cyan-400 font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    6개 키트 보기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+
+            {/* 데이터 시각화 */}
+            <StaggerItem>
+              <Link href="/automation/visualization" className="block group">
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-10 border-2 border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-600 transition-all hover:scale-105 hover:shadow-2xl">
+                  <div className="text-6xl mb-6">📈</div>
+                  <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                    데이터 시각화
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-lg">
+                    엑셀 데이터를 멋진 대시보드로 자동 변환
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full">
+                      대시보드
+                    </span>
+                    <span className="text-xs bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full">
+                      차트 생성
+                    </span>
+                    <span className="text-xs bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full">
+                      KPI 모니터링
+                    </span>
+                  </div>
+                  <div className="text-purple-600 dark:text-purple-400 font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    5개 키트 보기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+
+            {/* AI 프롬프트 */}
+            <StaggerItem>
+              <Link href="/automation/prompts" className="block group">
+                <div className="bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-900/20 dark:to-rose-900/20 rounded-3xl p-10 border-2 border-orange-200 dark:border-orange-800 hover:border-orange-400 dark:hover:border-orange-600 transition-all hover:scale-105 hover:shadow-2xl">
+                  <div className="text-6xl mb-6">🤖</div>
+                  <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                    AI 프롬프트
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-lg">
+                    영상, 이미지, 카피까지 AI로 콘텐츠 제작 자동화
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full">
+                      영상 기획
+                    </span>
+                    <span className="text-xs bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full">
+                      이미지 생성
+                    </span>
+                    <span className="text-xs bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full">
+                      마케팅 카피
+                    </span>
+                  </div>
+                  <div className="text-orange-600 dark:text-orange-400 font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    6개 키트 보기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </section>
+
       {/* 홍보 영상 섹션 */}
-      <section className="py-20 px-6 bg-white dark:bg-gray-950">
+      <section className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white px-4">
