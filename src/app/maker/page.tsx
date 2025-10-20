@@ -112,10 +112,10 @@ export default function MakerPage() {
       <SimpleHeader />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Title */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 px-4">
             🧑‍💻 제작자 대시보드
           </h1>
           <p className="text-lg text-gray-600">
@@ -124,37 +124,37 @@ export default function MakerPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-blue-100">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
+          <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 border border-blue-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-600 text-sm font-medium">진행중</span>
-              <span className="text-3xl">🔨</span>
+              <span className="text-gray-600 text-xs md:text-sm font-medium">진행중</span>
+              <span className="text-xl md:text-3xl">🔨</span>
             </div>
-            <p className="text-3xl font-bold text-blue-600">2</p>
+            <p className="text-2xl md:text-3xl font-bold text-blue-600">2</p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-yellow-100">
+          <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 border border-yellow-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-600 text-sm font-medium">검수중</span>
-              <span className="text-3xl">🔍</span>
+              <span className="text-gray-600 text-xs md:text-sm font-medium">검수중</span>
+              <span className="text-xl md:text-3xl">🔍</span>
             </div>
-            <p className="text-3xl font-bold text-yellow-600">1</p>
+            <p className="text-2xl md:text-3xl font-bold text-yellow-600">1</p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+          <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 border border-green-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-600 text-sm font-medium">출시완료</span>
-              <span className="text-3xl">🎉</span>
+              <span className="text-gray-600 text-xs md:text-sm font-medium">출시완료</span>
+              <span className="text-xl md:text-3xl">🎉</span>
             </div>
-            <p className="text-3xl font-bold text-green-600">5</p>
+            <p className="text-2xl md:text-3xl font-bold text-green-600">5</p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-purple-100">
+          <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 border border-purple-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-600 text-sm font-medium">누적 수익</span>
-              <span className="text-3xl">💰</span>
+              <span className="text-gray-600 text-xs md:text-sm font-medium">누적 수익</span>
+              <span className="text-xl md:text-3xl">💰</span>
             </div>
-            <p className="text-3xl font-bold text-purple-600">₩450K</p>
+            <p className="text-2xl md:text-3xl font-bold text-purple-600">₩450K</p>
           </div>
         </div>
 

@@ -123,39 +123,39 @@ export default function KitsPage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             🎉 WorkFree 자동화 키트
           </h1>
           <p className="text-xl opacity-90 mb-8">
             직장인들이 만든 검증된 자동화 솔루션
           </p>
-          <div className="flex justify-center gap-8 text-center">
+          <div className="flex justify-center gap-4 md:gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold">{kits.length}</div>
-              <div className="text-sm opacity-80">출시된 키트</div>
+              <div className="text-2xl md:text-4xl font-bold">{kits.length}</div>
+              <div className="text-xs md:text-sm opacity-80">출시된 키트</div>
             </div>
             <div>
-              <div className="text-4xl font-bold">
+              <div className="text-2xl md:text-4xl font-bold">
                 {kits.reduce((sum, kit) => sum + (kit.downloads || 0), 0)}
               </div>
-              <div className="text-sm opacity-80">총 다운로드</div>
+              <div className="text-xs md:text-sm opacity-80">총 다운로드</div>
             </div>
             <div>
-              <div className="text-4xl font-bold">
+              <div className="text-2xl md:text-4xl font-bold">
                 {kits.length > 0 
                   ? (kits.reduce((sum, kit) => sum + (kit.rating || 4.5), 0) / kits.length).toFixed(1)
                   : '0.0'
                 }
               </div>
-              <div className="text-sm opacity-80">평균 평점</div>
+              <div className="text-xs md:text-sm opacity-80">평균 평점</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Beta Notice */}
         <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-12">
           <div className="flex items-start gap-4">

@@ -21,18 +21,18 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 max-w-5xl">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-5xl">
         {/* Hero */}
         <FadeIn>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
               WorkFree
             </span>
           </h1>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
             &quot;일 안 하고도 일하는 사람들의 비밀도구&quot;
           </h2>
-          <div className="max-w-3xl mx-auto text-lg text-gray-700 space-y-2">
+          <div className="max-w-3xl mx-auto text-base md:text-lg text-gray-700 space-y-2">
             <p className="font-semibold">직장인을 위한 AI 자동화 생태계</p>
             <p>반복 업무를 자동화하고, 당신의 시간을 되돌려드립니다.</p>
           </div>
@@ -41,7 +41,7 @@ export default function AboutPage() {
         {/* 1. Pain Point */}
         <FadeIn delay={0.2}>
           <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
             🚨 Pain Point — 우리가 해결하려는 문제
           </h2>
           <p className="text-lg text-gray-700 mb-6">

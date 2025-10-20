@@ -300,7 +300,7 @@ export default function Home() {
           </FadeIn>
           
           <FadeIn delay={0.2} duration={0.8}>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4">
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 직장인 2,930만명이<br />&apos;자동화 제작자&apos;가 되는 시대
               </span>
@@ -308,7 +308,7 @@ export default function Home() {
           </FadeIn>
           
           <FadeIn delay={0.4}>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed italic">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed italic px-4">
               — WorkFree: Work Less, Create More.
             </p>
           </FadeIn>
@@ -381,7 +381,7 @@ export default function Home() {
       <section className="py-20 px-6 bg-white dark:bg-gray-950">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white px-4">
               WorkFree를 영상으로 만나보세요
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-12 text-lg">
@@ -411,7 +411,7 @@ export default function Home() {
       <section id="how-it-works" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
               간단한 3단계
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
@@ -502,7 +502,7 @@ export default function Home() {
                 🎁 무료 제공
               </span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
               무료 자동화 키트
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">

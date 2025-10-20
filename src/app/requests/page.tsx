@@ -146,10 +146,10 @@ export default function RequestsPage() {
       <SimpleHeader />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Title */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4">
             🧩 자동화 요청 리스트
           </h1>
           <p className="text-lg text-gray-600">
@@ -211,9 +211,9 @@ export default function RequestsPage() {
 
         {/* Empty State */}
         {!loading && requests.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
-            <div className="text-6xl mb-4">📭</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="text-center py-12 md:py-20 bg-white rounded-2xl shadow-sm">
+            <div className="text-4xl md:text-6xl mb-4">📭</div>
+            <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
               아직 요청이 없습니다
             </h3>
             <p className="text-gray-600 mb-6">

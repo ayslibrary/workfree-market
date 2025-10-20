@@ -101,9 +101,9 @@ export default function AdminPage() {
       <SimpleHeader />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
         {/* Stats Grid */}
-        <div className="grid md:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-6 md:mb-8">
           <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-400">
             <div className="text-2xl font-bold text-gray-700">{getStatusCount('대기')}</div>
             <div className="text-sm text-gray-600">⏳ 검수 대기</div>
@@ -203,9 +203,9 @@ export default function AdminPage() {
         )}
 
         {!loading && filteredRequests.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
-            <div className="text-6xl mb-4">📭</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="text-center py-12 md:py-20 bg-white rounded-2xl shadow-sm">
+            <div className="text-4xl md:text-6xl mb-4">📭</div>
+            <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
               요청이 없습니다
             </h3>
           </div>

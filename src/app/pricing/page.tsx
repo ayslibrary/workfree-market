@@ -117,16 +117,16 @@ export default function PricingPage() {
       <SimpleHeader />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/30 dark:to-purple-950/30">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 md:px-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/30 dark:to-purple-950/30">
         <div className="container mx-auto max-w-6xl text-center">
           <FadeIn>
-            <div className="inline-block px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-sm font-semibold shadow-lg mb-6">
+            <div className="inline-block px-4 md:px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-xs md:text-sm font-semibold shadow-lg mb-6">
               🎉 현재 베타테스트 기간 — 모든 플랜 무료 오픈 중!
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white px-4">
               💼 WorkFree Market 요금제
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
               직장인의 자동화를 위한, 합리적이고 실속 있는 선택.
             </p>
           </FadeIn>
@@ -134,13 +134,13 @@ export default function PricingPage() {
       </section>
 
       {/* Tab Navigation */}
-      <section className="py-8 px-6 bg-white dark:bg-gray-950">
+      <section className="py-6 md:py-8 px-4 md:px-6 bg-white dark:bg-gray-950">
         <div className="container mx-auto max-w-4xl">
           <FadeIn>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-2 md:gap-4">
               <button
                 onClick={() => setActiveTab('plans')}
-                className={`px-8 py-4 rounded-xl font-semibold text-lg transition-all ${
+                className={`px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all ${
                   activeTab === 'plans'
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl scale-105'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -150,7 +150,7 @@ export default function PricingPage() {
               </button>
               <button
                 onClick={() => setActiveTab('credits')}
-                className={`px-8 py-4 rounded-xl font-semibold text-lg transition-all ${
+                className={`px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all ${
                   activeTab === 'credits'
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl scale-105'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -165,7 +165,7 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       {activeTab === 'plans' && (
-        <section className="py-20 px-6">
+        <section className="py-12 md:py-20 px-4 md:px-6">
           <div className="container mx-auto max-w-7xl">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {plans.map((plan, index) => (
@@ -262,10 +262,10 @@ export default function PricingPage() {
 
       {/* Credits Section */}
       {activeTab === 'credits' && (
-        <section className="py-20 px-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black">
+        <section className="py-12 md:py-20 px-4 md:px-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black">
           <div className="container mx-auto max-w-7xl">
             <FadeIn>
-              <h2 className="text-4xl font-bold text-center mb-4 text-white">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-4 text-white">
                 💎 크레딧 구매
               </h2>
               <p className="text-center text-gray-400 mb-16 text-lg">
