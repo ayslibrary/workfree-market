@@ -239,6 +239,51 @@ export default function KitsPage() {
           </div>
         </div>
 
+        {/* Featured Kit - AI Portrait */}
+        <div className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 rounded-2xl shadow-xl p-8 mb-12 border-2 border-purple-200">
+          <div className="flex items-start gap-3 mb-4">
+            <span className="text-4xl">✨</span>
+            <div>
+              <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-1 rounded-full text-xs font-bold mb-2">
+                🆕 NEW RELEASE
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                🎨 AI 화보 메이커 프롬프트 키트
+              </h3>
+              <p className="text-gray-700 mb-4 leading-relaxed">
+                Gemini로 5분 만에 보그 커버 모델 되기! 20가지 컨셉 프롬프트 + 실제 결과물 60장 포함
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  🤖 AI 프롬프트
+                </span>
+                <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  📸 20개 컨셉
+                </span>
+                <span className="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  ⭐ 초급~고급
+                </span>
+                <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  💾 즉시 다운로드
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/kits/ai-portrait"
+                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-bold"
+                >
+                  🎨 자세히 보기 →
+                </Link>
+                <span className="text-sm text-gray-600 flex items-center">
+                  <span className="line-through mr-2">₩29,900</span>
+                  <span className="text-2xl font-bold text-purple-600">무료</span>
+                  <span className="ml-2">(베타 기간)</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* 카테고리 필터 */}
         <div className="mb-12">
           <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">

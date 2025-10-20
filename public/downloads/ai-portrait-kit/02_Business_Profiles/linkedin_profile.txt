@@ -1,0 +1,47 @@
+💼 LINKEDIN PROFESSIONAL PROFILE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A professional corporate headshot for LinkedIn profile, Korean business professional with approachable and confident smile, three-quarter angle pose looking directly at camera with friendly eye contact, clean office background with soft blur for professional context, wearing professional business attire in neutral colors, even studio lighting for clarity and professionalism, professional corporate photography with natural look, sharp focus on face with clear features, high-resolution corporate portrait, trustworthy and competent presence, approachable yet professional demeanor, modern business aesthetic
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- approachable smile → confident serious
+- friendly eye contact → authoritative gaze
+- warm → professional neutral
+
+[의상 변경]
+- professional business attire → smart casual
+- neutral colors → navy suit
+- formal → business casual
+
+[배경 변경]
+- clean office background → white backdrop
+- soft blur → modern workspace
+- office → library or bookshelf
+
+[분위기 조절]
+- even studio lighting → natural window light
+- clarity → warmth
+- modern business → classic corporate
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 이직/구직자
+- 프리랜서/컨설턴트
+- 모든 직장인 필수
+
+⭐ 난이도: 초급 (가장 실용적)
+📸 권장 사진: 정면 미소, 정장 또는 단정한 의상
+🎯 핵심 포인트: 신뢰감 + 전문성 + 접근성
+

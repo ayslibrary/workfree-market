@@ -1,0 +1,46 @@
+🎬 VOGUE KOREA STYLE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A high-fashion editorial portrait for Vogue Korea magazine, Korean model with confident and powerful expression, striking a bold pose with strong presence, shot in a minimalist white studio with dramatic lighting, wearing a sophisticated black turtleneck and tailored blazer, dramatic side lighting creating strong shadows and depth, professional high-fashion photography, Hasselblad H6D camera style, sharp focus on eyes with intense gaze, editorial quality with cinematic mood, 8K resolution, sophisticated and bold aesthetic, fashion-forward styling, modern and elegant composition
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- confident and powerful → gentle and sophisticated
+- intense gaze → soft gaze
+- bold → elegant
+
+[의상 변경]
+- black turtleneck → elegant dress
+- tailored blazer → leather jacket
+- sophisticated → casual chic
+
+[배경 변경]
+- minimalist white studio → urban rooftop at sunset
+- white studio → industrial warehouse
+- studio → luxury penthouse
+
+[분위기 조절]
+- dramatic lighting → soft natural light
+- strong shadows → ethereal glow
+- bold aesthetic → dreamy aesthetic
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 파워풀한 이미지를 원하는 분
+- 전문가/CEO 프로필
+- 포트폴리오용 화보
+
+⭐ 난이도: 중급 (명확한 조명 필요)
+📸 권장 사진: 정면 또는 살짝 사선 각도
+

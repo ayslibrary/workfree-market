@@ -1,0 +1,46 @@
+🎩 GQ MEN'S STYLE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A sophisticated men's editorial portrait for GQ Magazine style, Korean male model with strong masculine presence and confident demeanor, classic powerful pose with arms crossed or hands in pockets, shot in an upscale urban environment or luxury interior, wearing impeccably tailored suit with crisp white shirt and leather accessories, dramatic directional lighting emphasizing facial features and creating depth, professional men's fashion photography with cinematic quality, sharp focus with shallow depth of field, editorial sophistication with masculine elegance, high-resolution quality, refined gentleman aesthetic with modern edge
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- strong masculine presence → approachable gentleman
+- confident demeanor → relaxed sophistication
+- powerful → casual confidence
+
+[의상 변경]
+- impeccably tailored suit → casual blazer
+- crisp white shirt → black turtleneck
+- luxury leather → minimalist accessories
+
+[배경 변경]
+- upscale urban → luxury car interior
+- luxury interior → industrial loft
+- urban environment → modern office
+
+[분위기 조절]
+- dramatic lighting → natural soft light
+- cinematic quality → editorial clean
+- masculine elegance → contemporary casual
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 남성 전문가 프로필
+- CEO/임원 이미지
+- 비즈니스 포트폴리오
+
+⭐ 난이도: 중급 (포즈와 조명 중요)
+📸 권장 사진: 정장 또는 스마트 캐주얼
+

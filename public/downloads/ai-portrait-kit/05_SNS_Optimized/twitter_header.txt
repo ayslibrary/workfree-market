@@ -1,0 +1,50 @@
+🐦 TWITTER HEADER IMAGE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A striking Twitter header portrait optimized for wide banner format, Korean professional with confident and impactful presence, dynamic pose positioned for 3:1 wide crop with profile circle consideration, shot with wide cinematic composition, dramatic lighting creating strong visual impact, high-resolution photography perfect for banner display, bold statement aesthetic that commands attention, professional yet personable vibe, memorable visual identity, optimized for desktop and mobile viewing, clear focus on subject with room for text overlay, strong personal brand expression, stands out in timeline
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[레이아웃]
+- wide crop → left-weighted composition
+- profile circle consideration → centered heroic
+- dynamic pose → static professional
+
+[스타일 변경]
+- dramatic lighting → bright clean
+- strong visual impact → subtle elegant
+- bold statement → minimalist refined
+
+[업종별]
+- confident impactful → creative artistic
+- professional → tech entrepreneur
+- personable → thought leader
+
+[배경 처리]
+- room for text → graphic elements
+- clear focus → gradient background
+- banner display → branded background
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 트위터 활발히 사용하는 분
+- 개인 브랜드 중시하는 전문가
+- 소셜미디어 마케터
+
+⭐ 난이도: 초급 (구도만 이해하면 됨)
+📸 권장 사진: 여유있는 구도, 측면 배치 고려
+🎯 핵심 포인트: 임팩트 + 전문성 + 기억성
+📐 비율: 3:1 (1500x500px)
+⭕ 중요: 프로필 원형 위치 피하기
+💡 팁: 텍스트 오버레이 공간 확보
+

@@ -1,0 +1,47 @@
+🚀 STARTUP FOUNDER PROFILE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A dynamic and innovative startup founder portrait, Korean entrepreneur with confident and visionary expression, casual yet professional pose showing personality and energy, shot in a modern tech office or creative workspace, wearing smart casual attire like hoodie or blazer without tie, natural lighting with bright and energetic feel, contemporary business photography with startup culture vibe, sharp and clean aesthetic with vibrant energy, high-resolution quality showing innovation and approachability, modern tech industry professional image, youthful entrepreneurial spirit with competence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- confident and visionary → passionate and driven
+- personality and energy → calm determination
+- innovative → thoughtful
+
+[의상 변경]
+- smart casual → tech casual (jeans + tshirt)
+- hoodie or blazer → black turtleneck (Jobs style)
+- casual → business casual
+
+[배경 변경]
+- modern tech office → startup co-working space
+- creative workspace → innovation lab
+- office → industrial loft
+
+[분위기 조절]
+- natural lighting → dramatic moody
+- bright and energetic → focused intensity
+- startup culture → professional corporate
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 스타트업 대표/창업자
+- 테크 업계 종사자
+- 혁신적 이미지 필요한 분
+
+⭐ 난이도: 초급 (자연스러운 컨셉)
+📸 권장 사진: 편안한 표정, 캐주얼 의상
+🎯 핵심 포인트: 혁신성 + 에너지 + 진정성
+

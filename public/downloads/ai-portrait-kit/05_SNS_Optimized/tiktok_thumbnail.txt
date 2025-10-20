@@ -1,0 +1,50 @@
+🎵 TIKTOK THUMBNAIL STYLE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+An eye-catching TikTok style portrait optimized for video thumbnail, Korean creator with energetic and engaging expression, dynamic pose with personality and movement energy, shot with mobile-friendly vertical composition, bright vibrant lighting with punchy colors, contemporary digital photography with sharp clarity, bold colorful aesthetic that stands out in feed, high-contrast vivid saturation for scroll-stopping appeal, Gen Z aesthetic with trending style, engaging and approachable vibe, optimized for small screen viewing, attention-grabbing visual impact, youthful and trendy energy
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- energetic engaging → surprised reaction
+- personality → dramatic emotion
+- dynamic → playful fun
+
+[색상 변경]
+- bright vibrant → neon electric
+- punchy colors → pastel soft
+- high-contrast → balanced natural
+
+[스타일 변경]
+- bold colorful → clean minimalist
+- Gen Z aesthetic → sophisticated trendy
+- youthful → mature creator
+
+[분위기 조절]
+- scroll-stopping → elegant understated
+- attention-grabbing → subtle artistic
+- trendy energy → timeless quality
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 틱톡 크리에이터
+- 숏폼 콘텐츠 제작자
+- 젊은 타겟 대상 활동
+
+⭐ 난이도: 초급 (에너지가 중요)
+📸 권장 사진: 생동감 있는 표정, 활기찬 포즈
+🎯 핵심 포인트: 임팩트 + 에너지 + 트렌디
+💡 색감: 밝고 선명한 컬러
+📱 최적 비율: 세로형 9:16
+⚡ 핵심: 3초 안에 눈길을 끌어야 함
+

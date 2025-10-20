@@ -1,0 +1,48 @@
+📇 CORPORATE BUSINESS CARD PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A formal corporate portrait for business card and company materials, Korean business professional with composed and trustworthy expression, straight-on pose with professional posture and neutral expression, clean neutral background in solid color or subtle gradient, wearing formal business attire in conservative colors, even professional lighting with no harsh shadows, classic corporate photography with traditional aesthetic, perfectly sharp focus with centered composition, high-resolution quality for print materials, professional and authoritative presence, timeless corporate image, suitable for official company use
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- composed and trustworthy → slight professional smile
+- neutral expression → warm but formal
+- serious → approachable formal
+
+[의상 변경]
+- formal business attire → dark suit white shirt
+- conservative colors → navy or charcoal
+- traditional → modern business formal
+
+[배경 변경]
+- clean neutral → corporate gray
+- solid color → soft white backdrop
+- subtle gradient → professional blue
+
+[분위기 조절]
+- even lighting → slight rim lighting
+- traditional aesthetic → modern corporate
+- timeless → contemporary professional
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 임원/경영진
+- 금융/법률 업계
+- 공식 명함/회사 소개서
+
+⭐ 난이도: 초급 (명확한 가이드라인)
+📸 권장 사진: 정면, 정장, 무표정 또는 약간 미소
+🎯 핵심 포인트: 격식 + 신뢰 + 권위
+⚠️ 주의: 가장 보수적인 스타일
+

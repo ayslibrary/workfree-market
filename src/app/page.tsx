@@ -584,25 +584,43 @@ export default function Home() {
           {/* 프롬프트 키트 안내 */}
           <FadeIn delay={0.4}>
             <div className="mt-12 max-w-4xl mx-auto">
-              <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/50 dark:via-purple-950/50 dark:to-pink-950/50 rounded-2xl p-8 border-2 border-indigo-200 dark:border-indigo-800">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="text-3xl">🎬</span>
+              <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-rose-50 dark:from-purple-950/50 dark:via-pink-950/50 dark:to-rose-950/50 rounded-2xl p-8 border-2 border-purple-200 dark:border-purple-800">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-3xl">✨</span>
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white break-keep">
-                    이 영상은 프롬프트 키트로 만들었습니다
+                    🆕 NEW! AI 화보 메이커 프롬프트 키트
                   </h3>
                 </div>
                 <p className="text-center text-gray-700 dark:text-gray-300 mb-6 break-keep">
-                  베타테스트 무료 버전으로 나만의 홍보 영상을 만들어보세요
+                  이 영상도 Gemini 프롬프트로 만들었어요! 🎬<br />
+                  <span className="font-semibold text-purple-700 dark:text-purple-400">5분 만에 보그 커버 모델</span>이 되어보세요
                 </p>
-                <div className="flex justify-center">
-                  <Link
-                    href="/kits"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all"
-                  >
-                    <span>🎥</span>
-                    <span>프롬프트 키트 보러가기</span>
-                    <span>→</span>
-                  </Link>
+                <div className="flex flex-wrap justify-center gap-3 mb-4">
+                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-purple-700 dark:text-purple-400">
+                    📸 20개 컨셉
+                  </span>
+                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-pink-700 dark:text-pink-400">
+                    💎 Vogue·Chanel 스타일
+                  </span>
+                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-rose-700 dark:text-rose-400">
+                    💼 LinkedIn 프로필
+                  </span>
+                </div>
+                <div className="flex justify-center gap-3">
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all"
+                >
+                  <span>🎨</span>
+                  <span>AI 화보 갤러리 보기</span>
+                  <span>→</span>
+                </Link>
+                <Link
+                  href="/kits/ai-portrait"
+                  className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 text-purple-700 dark:text-purple-400 px-6 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all border-2 border-purple-200 dark:border-purple-800"
+                >
+                  <span>프롬프트 키트 다운로드</span>
+                </Link>
                 </div>
               </div>
             </div>

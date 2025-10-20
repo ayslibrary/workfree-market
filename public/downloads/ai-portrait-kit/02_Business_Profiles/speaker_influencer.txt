@@ -1,0 +1,47 @@
+🎤 SPEAKER / INFLUENCER PROFILE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A charismatic speaker and influencer portrait, Korean professional with warm and engaging expression radiating authority and approachability, confident pose with open body language and welcoming gesture, shot in a professional setting with soft dramatic lighting, wearing polished professional attire that commands respect, balanced lighting highlighting facial features and creating presence, professional speaker photography with authentic connection, sharp focus capturing genuine warmth and expertise, high-resolution quality showcasing personality and credibility, thought leader aesthetic with accessible charm, inspiring confidence and trust
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- warm and engaging → powerful and inspiring
+- authority and approachability → friendly expert
+- confident → passionate
+
+[포즈 변경]
+- open body language → arms crossed confidence
+- welcoming gesture → pointing forward
+- confident pose → relaxed casual
+
+[배경 변경]
+- professional setting → stage with audience blur
+- soft dramatic → conference room
+- studio → outdoor natural environment
+
+[분위기 조절]
+- balanced lighting → spotlight effect
+- authentic connection → editorial polish
+- thought leader → motivational speaker
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 강사/강연자
+- 인플루언서/크리에이터
+- 컨설턴트/코치
+
+⭐ 난이도: 중급 (표정과 포즈 중요)
+📸 권장 사진: 자연스러운 미소, 오픈된 포즈
+🎯 핵심 포인트: 신뢰감 + 친근함 + 권위
+

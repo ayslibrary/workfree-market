@@ -1,0 +1,46 @@
+💫 HARPER'S BAZAAR STYLE PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[사용법]
+1. 이 텍스트 전체를 복사 (Ctrl+A → Ctrl+C)
+2. Gemini에 본인 사진 업로드
+3. 프롬프트 붙여넣기 → Enter
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A sophisticated editorial portrait in Harper's Bazaar magazine style, Korean model with graceful and elegant demeanor, classic three-quarter angle pose with refined posture, shot in a luxurious setting with soft bokeh background, wearing timeless haute couture ensemble with pearls and elegant accessories, soft golden hour lighting creating a warm and sophisticated atmosphere, professional fashion photography with film camera aesthetic, medium format camera style, shallow depth of field highlighting the subject, editorial elegance with classic Hollywood glamour, high-resolution quality, refined and sophisticated mood, timeless beauty aesthetic
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 커스터마이징 옵션:
+
+[표정 변경]
+- graceful and elegant → mysterious and alluring
+- refined posture → relaxed elegance
+- classic → contemporary
+
+[의상 변경]
+- haute couture ensemble → silk evening dress
+- pearls → diamond jewelry
+- elegant accessories → minimal accessories
+
+[배경 변경]
+- luxurious setting → Parisian balcony
+- soft bokeh → grand staircase
+- golden hour → chandelier lighting
+
+[분위기 조절]
+- warm atmosphere → cool sophisticated
+- classic Hollywood → modern editorial
+- timeless beauty → avant-garde elegance
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 추천 대상:
+- 우아한 이미지를 원하는 분
+- 결혼식/이벤트 프로필
+- 클래식한 스타일 선호
+
+⭐ 난이도: 중급 (포즈와 조명 중요)
+📸 권장 사진: 우아한 포즈, 단정한 의상
+

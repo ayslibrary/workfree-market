@@ -295,19 +295,19 @@ export default function PromptsPage() {
                 <div className="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl">
                   <div className="font-semibold text-orange-700 dark:text-orange-300 mb-2">📥 입력 예시</div>
                   <p className="text-gray-700 dark:text-gray-300">
-                    "30대 직장인을 위한 운동 유튜브 영상을 만들고 싶어요"
+                    &ldquo;30대 직장인을 위한 운동 유튜브 영상을 만들고 싶어요&rdquo;
                   </p>
                 </div>
                 <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
                   <div className="font-semibold text-green-700 dark:text-green-300 mb-2">📤 AI 생성 결과</div>
                   <p className="text-gray-700 dark:text-gray-300 mb-2">
-                    <strong>제목:</strong> "하루 10분으로 끝! 직장인 맞춤 홈트레이닝"
+                    <strong>제목:</strong> &ldquo;하루 10분으로 끝! 직장인 맞춤 홈트레이닝&rdquo;
                   </p>
                   <p className="text-gray-700 dark:text-gray-300 mb-2">
-                    <strong>스크립트:</strong> "안녕하세요! 오늘은 바쁜 직장인 여러분을 위한..."
+                    <strong>스크립트:</strong> &ldquo;안녕하세요! 오늘은 바쁜 직장인 여러분을 위한...&rdquo;
                   </p>
                   <p className="text-gray-700 dark:text-gray-300">
-                    <strong>썸네일 문구:</strong> "10분 투자로 건강 UP"
+                    <strong>썸네일 문구:</strong> &ldquo;10분 투자로 건강 UP&rdquo;
                   </p>
                 </div>
               </div>
