@@ -130,7 +130,7 @@ export default function AIPortraitKitPage() {
         <FadeIn delay={0.3}>
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">
-              ✨ 한 장의 사진으로 만드는 6가지 스타일
+              ✨ 한 장의 사진으로 만드는 3가지 스타일
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
               중앙의 원본 사진이 다양한 화보 스타일로 변신합니다
@@ -171,8 +171,8 @@ export default function AIPortraitKitPage() {
                 </div>
               </div>
 
-              {/* 주변 6개 스타일 */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {/* 주변 3개 스타일 */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
                 {/* Vogue Style */}
                 <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
                   <div className="aspect-[3/4] bg-black relative overflow-hidden">
@@ -194,23 +194,23 @@ export default function AIPortraitKitPage() {
                   </div>
                 </div>
 
-                {/* Chanel Style */}
+                {/* Vintage Retro Style */}
                 <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
-                  <div className="aspect-[3/4] bg-gray-900 relative overflow-hidden">
+                  <div className="aspect-[3/4] bg-amber-900 relative overflow-hidden">
                     <Image 
                       src="/examples/ai-portrait/기본사진.jpg" 
-                      alt="Chanel Style" 
+                      alt="Vintage Retro Style" 
                       fill 
-                      className="object-cover opacity-80 grayscale group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover opacity-80 sepia group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-amber-900 via-transparent to-yellow-900/30"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-4xl mb-1">🖤</div>
-                      <h3 className="text-lg font-bold text-white mb-0.5">Chanel</h3>
-                      <p className="text-xs text-white/80">타임리스 럭셔리</p>
+                      <div className="text-4xl mb-1">📻</div>
+                      <h3 className="text-lg font-bold text-white mb-0.5">Vintage Retro</h3>
+                      <p className="text-xs text-white/80">레트로 감성</p>
                     </div>
                   </div>
-                  <div className="p-3 bg-gray-900 text-white text-center">
+                  <div className="p-3 bg-amber-700 text-white text-center">
                     <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
                   </div>
                 </div>
@@ -232,69 +232,6 @@ export default function AIPortraitKitPage() {
                     </div>
                   </div>
                   <div className="p-3 bg-blue-700 text-white text-center">
-                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
-                  </div>
-                </div>
-
-                {/* 빈티지 Style */}
-                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
-                  <div className="aspect-[3/4] bg-amber-900 relative overflow-hidden">
-                    <Image 
-                      src="/examples/ai-portrait/기본사진.jpg" 
-                      alt="Vintage 70s Style" 
-                      fill 
-                      className="object-cover opacity-75 sepia group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-amber-900 via-transparent to-yellow-900/30"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-4xl mb-1">📻</div>
-                      <h3 className="text-lg font-bold text-white mb-0.5">Vintage 70s</h3>
-                      <p className="text-xs text-white/80">레트로 감성</p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-amber-700 text-white text-center">
-                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
-                  </div>
-                </div>
-
-                {/* 사이버펑크 Style */}
-                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
-                  <div className="aspect-[3/4] bg-purple-900 relative overflow-hidden">
-                    <Image 
-                      src="/examples/ai-portrait/기본사진.jpg" 
-                      alt="Cyberpunk Style" 
-                      fill 
-                      className="object-cover opacity-80 contrast-125 saturate-150 group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900 via-cyan-900/30 to-purple-900/30"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-4xl mb-1">🌃</div>
-                      <h3 className="text-lg font-bold text-white mb-0.5">Cyberpunk</h3>
-                      <p className="text-xs text-white/80">미래적 네온</p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-purple-700 text-white text-center">
-                    <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
-                  </div>
-                </div>
-
-                {/* 영화 Style */}
-                <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:scale-105 group">
-                  <div className="aspect-[3/4] bg-indigo-900 relative overflow-hidden">
-                    <Image 
-                      src="/examples/ai-portrait/기본사진.jpg" 
-                      alt="Movie Still Style" 
-                      fill 
-                      className="object-cover opacity-85 group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-indigo-900 via-transparent to-blue-900/30"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-4xl mb-1">🎬</div>
-                      <h3 className="text-lg font-bold text-white mb-0.5">Movie Still</h3>
-                      <p className="text-xs text-white/80">영화 주인공</p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-indigo-800 text-white text-center">
                     <p className="text-xs font-semibold">✓ 프롬프트 포함</p>
                   </div>
                 </div>
