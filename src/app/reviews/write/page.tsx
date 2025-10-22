@@ -15,6 +15,7 @@ export default function WriteReviewPage() {
     content: '',
     pros: '',
     cons: '',
+    suggestedPrice: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -202,6 +203,39 @@ export default function WriteReviewPage() {
                 rows={3}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none resize-none text-gray-900"
               />
+            </div>
+
+            {/* 적정 가격 설문 */}
+            <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200">
+              <label className="block text-lg font-bold text-gray-900 mb-2">
+                📊 크레딧 1개에 적정한 가격은? <span className="text-blue-600">(선택)</span>
+              </label>
+              <p className="text-sm text-gray-600 mb-4">
+                정식 출시 시 참고할 예정입니다. 여러분의 의견이 큰 도움이 됩니다!
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {['₩10', '₩30', '₩50', '₩100', '₩200', '₩300', '₩500', '기타'].map((price) => (
+                  <button
+                    key={price}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, suggestedPrice: price })}
+                    className={`
+                      px-4 py-3 rounded-xl font-semibold transition-all
+                      ${formData.suggestedPrice === price
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white scale-105'
+                        : 'bg-white text-gray-700 hover:bg-blue-100'
+                      }
+                    `}
+                  >
+                    {price}
+                  </button>
+                ))}
+              </div>
+              {formData.suggestedPrice && (
+                <p className="mt-3 text-sm text-blue-600 font-semibold">
+                  선택하신 가격: {formData.suggestedPrice}
+                </p>
+              )}
             </div>
 
             {/* 제출 버튼 */}

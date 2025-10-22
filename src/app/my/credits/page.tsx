@@ -15,49 +15,49 @@ const DEMO_CREDITS = {
 const SUBSCRIPTION_PLANS = [
   {
     id: 'free',
-    nameKo: '무료 베타',
+    nameKo: '베타 테스터',
     badge: '🎁',
     price: 0,
     credits: 10,
     features: [
-      '회원가입 시 10 크레딧',
-      '1개월 유효기간',
-      '모든 기능 이용 가능',
-      '후기 작성 시 추가 크레딧',
-      'SNS 공유 시 보너스',
-    ],
-    recommended: false,
-    comingSoon: false,
-  },
-  {
-    id: 'starter',
-    nameKo: 'Starter',
-    badge: '💎',
-    price: 5900,
-    credits: 200,
-    features: [
-      '월 200 크레딧',
-      '크레딧 이월 가능',
-      '우선 지원',
-      '신규 기능 우선 체험',
-      '무제한 유효기간',
+      '🎉 베타 기간 완전 무료!',
+      '회원가입 시 10 크레딧 지급',
+      '모든 기능 무제한 이용',
+      '후기 작성 +5 크레딧',
+      'SNS 공유 +10 크레딧',
+      '피드백 제출 +15 크레딧',
     ],
     recommended: true,
     comingSoon: false,
   },
   {
+    id: 'starter',
+    nameKo: 'Starter (준비중)',
+    badge: '💎',
+    price: 0,
+    credits: 200,
+    features: [
+      '정식 출시 후 이용 가능',
+      '월 200 크레딧 제공 예정',
+      '크레딧 이월 가능',
+      '우선 지원',
+      '신규 기능 우선 체험',
+    ],
+    recommended: false,
+    comingSoon: true,
+  },
+  {
     id: 'pro',
-    nameKo: 'Pro',
+    nameKo: 'Pro (준비중)',
     badge: '🚀',
-    price: 19900,
+    price: 0,
     credits: 1000,
     features: [
-      '월 1000 크레딧 (40% 할인)',
-      '크레딧 이월 가능',
+      '정식 출시 후 이용 가능',
+      '월 1000 크레딧 제공 예정',
       '전담 고객 지원',
       'API 접근 권한',
       '커스텀 자동화 요청',
-      '무제한 유효기간',
     ],
     recommended: false,
     comingSoon: true,
@@ -92,11 +92,14 @@ export default function CreditsPage() {
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">
+            <div className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">
+              🎉 베타 기간 완전 무료!
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              💎 크레딧 & 구독
+              💎 크레딧 시스템
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400">
-              필요한 만큼만 사용하고, 시간은 절약하세요
+              베타 기간 동안 모든 기능을 무료로 체험하세요
             </p>
           </div>
         </FadeIn>
@@ -171,15 +174,18 @@ export default function CreditsPage() {
                         {plan.nameKo}
                       </h3>
                       <div className="flex items-baseline justify-center gap-1 mb-4">
-                        <span className="text-4xl font-bold text-purple-600 dark:text-purple-400">
-                          ₩{plan.price.toLocaleString()}
-                        </span>
-                        {plan.price > 0 && (
-                          <span className="text-gray-500 dark:text-gray-400">/월</span>
+                        {plan.id === 'free' ? (
+                          <span className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                            완전 무료
+                          </span>
+                        ) : (
+                          <span className="text-2xl font-bold text-gray-400 dark:text-gray-500">
+                            정식 출시 후 공개
+                          </span>
                         )}
                       </div>
                       <div className="text-xl font-semibold text-gray-700 dark:text-gray-300">
-                        {plan.credits} 크레딧
+                        {plan.credits} 크레딧 {plan.id !== 'free' && '(예정)'}
                       </div>
                     </div>
 
@@ -306,6 +312,24 @@ export default function CreditsPage() {
                   </div>
                 </div>
               </div>
+            </div>
+            
+            {/* 적정 가격 설문 안내 */}
+            <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border-2 border-blue-200 dark:border-blue-800">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl">📊</span>
+                도와주세요! 적정 가격 의견을 구합니다
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                정식 출시 시 크레딧 가격을 정하려고 합니다.<br />
+                <strong>후기 작성</strong> 시 "크레딧 1개에 적정한 가격"을 알려주시면 큰 도움이 됩니다!
+              </p>
+              <Link
+                href="/reviews/write"
+                className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all"
+              >
+                후기 작성하고 의견 남기기 →
+              </Link>
             </div>
           </div>
         </FadeIn>
