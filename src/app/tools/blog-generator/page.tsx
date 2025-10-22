@@ -57,7 +57,7 @@ export default function BlogGeneratorPage() {
           targetAudience,
           length,
           blogStyle,
-          userId: user?.uid || 'demo-user', // 사용자 ID 전송
+          userId: user?.id || 'demo-user', // 사용자 ID 전송
         }),
       });
 

@@ -16,8 +16,8 @@ export default function BlogHistoryPage() {
 
   useEffect(() => {
     async function loadHistory() {
-      if (user?.uid) {
-        const data = await getUserBlogHistory(user.uid);
+      if (user?.id) {
+        const data = await getUserBlogHistory(user.id);
         setHistories(data);
       } else {
         // 데모 데이터
