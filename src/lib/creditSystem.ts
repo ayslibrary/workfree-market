@@ -18,8 +18,7 @@ import {
   UserCredits, 
   CreditTransaction, 
   TimeSavings,
-  CREDIT_REWARDS,
-  HOURLY_RATE 
+  CREDIT_REWARDS
 } from '@/types/credit';
 
 // 크레딧 잔액 조회

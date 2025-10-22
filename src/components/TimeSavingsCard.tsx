@@ -13,15 +13,15 @@ export default function TimeSavingsCard({ userId }: TimeSavingsCardProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadSavings = async () => {
+      setLoading(true);
+      const data = await getTimeSavings(userId);
+      setSavings(data);
+      setLoading(false);
+    };
+    
     loadSavings();
   }, [userId]);
-
-  const loadSavings = async () => {
-    setLoading(true);
-    const data = await getTimeSavings(userId);
-    setSavings(data);
-    setLoading(false);
-  };
 
   const formatTime = (minutes: number) => {
     if (minutes < 60) return `${minutes}분`;

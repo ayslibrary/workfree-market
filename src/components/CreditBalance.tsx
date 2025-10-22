@@ -12,19 +12,19 @@ export default function CreditBalance() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadCredits = async () => {
+      if (!user?.uid) return;
+      
+      setLoading(true);
+      const userCredits = await getUserCredits(user.uid);
+      setCredits(userCredits);
+      setLoading(false);
+    };
+
     if (user?.uid) {
       loadCredits();
     }
   }, [user]);
-
-  const loadCredits = async () => {
-    if (!user?.uid) return;
-    
-    setLoading(true);
-    const userCredits = await getUserCredits(user.uid);
-    setCredits(userCredits);
-    setLoading(false);
-  };
 
   if (!user) return null;
   if (loading) {
