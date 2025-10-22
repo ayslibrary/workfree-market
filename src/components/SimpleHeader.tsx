@@ -17,7 +17,7 @@ export default function SimpleHeader() {
                 WorkFree
               </span>
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-0.5 rounded-full">
-                BETA
+                Beta
               </span>
             </div>
           </Link>

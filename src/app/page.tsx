@@ -123,7 +123,7 @@ export default function Home() {
                     WorkFree Market
                   </div>
                   <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                    BETA
+                    Beta
                   </span>
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
