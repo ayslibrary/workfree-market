@@ -1,38 +1,79 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
-import { getUserCredits } from '@/lib/creditSystem';
-import { UserCredits, SUBSCRIPTION_PLANS } from '@/types/credit';
 import SimpleHeader from '@/components/SimpleHeader';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 
+// 데모 데이터
+const DEMO_CREDITS = {
+  balance: 10,
+  isBetaTester: true,
+  subscriptionTier: 'free' as const,
+};
+
+const SUBSCRIPTION_PLANS = [
+  {
+    id: 'free',
+    nameKo: '무료 베타',
+    badge: '🎁',
+    price: 0,
+    credits: 10,
+    features: [
+      '회원가입 시 10 크레딧',
+      '1개월 유효기간',
+      '모든 기능 이용 가능',
+      '후기 작성 시 추가 크레딧',
+      'SNS 공유 시 보너스',
+    ],
+    recommended: false,
+    comingSoon: false,
+  },
+  {
+    id: 'starter',
+    nameKo: 'Starter',
+    badge: '💎',
+    price: 5900,
+    credits: 200,
+    features: [
+      '월 200 크레딧',
+      '크레딧 이월 가능',
+      '우선 지원',
+      '신규 기능 우선 체험',
+      '무제한 유효기간',
+    ],
+    recommended: true,
+    comingSoon: false,
+  },
+  {
+    id: 'pro',
+    nameKo: 'Pro',
+    badge: '🚀',
+    price: 19900,
+    credits: 1000,
+    features: [
+      '월 1000 크레딧 (40% 할인)',
+      '크레딧 이월 가능',
+      '전담 고객 지원',
+      'API 접근 권한',
+      '커스텀 자동화 요청',
+      '무제한 유효기간',
+    ],
+    recommended: false,
+    comingSoon: true,
+  },
+];
+
 export default function CreditsPage() {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
-  const [credits, setCredits] = useState<UserCredits | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/login');
-    } else if (user) {
-      loadCredits();
-    }
-  }, [user, isLoading, router]);
+    // 로딩 시뮬레이션
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const loadCredits = async () => {
-    if (!user?.uid) return;
-    
-    setLoading(true);
-    const userCredits = await getUserCredits(user.uid);
-    setCredits(userCredits);
-    setLoading(false);
-  };
-
-  if (isLoading || loading || !user) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white flex items-center justify-center">
         <div className="text-center">
@@ -61,34 +102,32 @@ export default function CreditsPage() {
         </FadeIn>
 
         {/* 현재 크레딧 */}
-        {credits && (
-          <FadeIn delay={0.1}>
-            <div className="max-w-2xl mx-auto mb-16">
-              <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 rounded-3xl p-8 text-white shadow-2xl">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm opacity-90 mb-2">보유 크레딧</div>
-                    <div className="text-5xl font-bold">{credits.balance}</div>
-                    {credits.isBetaTester && (
-                      <div className="mt-3 inline-block bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                        🎁 베타 테스터
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-8xl opacity-20">💎</div>
+        <FadeIn delay={0.1}>
+          <div className="max-w-2xl mx-auto mb-16">
+            <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 rounded-3xl p-8 text-white shadow-2xl">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm opacity-90 mb-2">보유 크레딧</div>
+                  <div className="text-5xl font-bold">{DEMO_CREDITS.balance}</div>
+                  {DEMO_CREDITS.isBetaTester && (
+                    <div className="mt-3 inline-block bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
+                      🎁 베타 테스터
+                    </div>
+                  )}
                 </div>
-                
-                {credits.balance < 5 && (
-                  <div className="mt-6 bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-sm">
-                      ⚠️ 크레딧이 부족합니다. 아래에서 충전하세요!
-                    </p>
-                  </div>
-                )}
+                <div className="text-8xl opacity-20">💎</div>
               </div>
+              
+              {DEMO_CREDITS.balance < 5 && (
+                <div className="mt-6 bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                  <p className="text-sm">
+                    ⚠️ 크레딧이 부족합니다. 아래에서 충전하세요!
+                  </p>
+                </div>
+              )}
             </div>
-          </FadeIn>
-        )}
+          </div>
+        </FadeIn>
 
         {/* 구독 플랜 */}
         <FadeIn delay={0.2}>
@@ -158,10 +197,10 @@ export default function CreditsPage() {
 
                     {/* CTA 버튼 */}
                     <button
-                      disabled={plan.comingSoon || (plan.id === 'free' && credits?.isBetaTester)}
+                      disabled={plan.comingSoon || (plan.id === 'free' && DEMO_CREDITS.isBetaTester)}
                       className={`
                         w-full py-4 rounded-xl font-bold transition-all
-                        ${plan.comingSoon || (plan.id === 'free' && credits?.isBetaTester)
+                        ${plan.comingSoon || (plan.id === 'free' && DEMO_CREDITS.isBetaTester)
                           ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
                           : plan.recommended
                           ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-105'
@@ -170,9 +209,9 @@ export default function CreditsPage() {
                       `}
                     >
                       {plan.comingSoon ? '출시 예정' : 
-                       plan.id === 'free' && credits?.isBetaTester ? '이미 가입됨' :
+                       plan.id === 'free' && DEMO_CREDITS.isBetaTester ? '이미 가입됨' :
                        plan.id === 'free' ? '무료로 시작하기' :
-                       plan.id === credits?.subscriptionTier ? '현재 플랜' :
+                       plan.id === DEMO_CREDITS.subscriptionTier ? '현재 플랜' :
                        '플랜 선택하기'}
                     </button>
                   </div>
@@ -284,4 +323,3 @@ export default function CreditsPage() {
     </div>
   );
 }
-
