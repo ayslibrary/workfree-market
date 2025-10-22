@@ -731,207 +731,168 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 무료 자동화 키트 섹션 */}
+      {/* 인기 서비스 섹션 */}
       <section id="kits" className="py-24 px-6 bg-white dark:bg-gray-950">
         <div className="container mx-auto max-w-7xl">
           <FadeIn>
             <div className="text-center mb-6">
-              <span className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
-                🎁 무료 제공
+              <span className="inline-block bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
+                🔥 인기 서비스
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
-              무료 자동화 키트
+              가장 많이 사용하는 서비스
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
-              지금 바로 다운로드해서 사용해보세요. 완전 무료입니다!
+              크레딧으로 바로 실행 • 설치 불필요 • 웹에서 즉시 사용
             </p>
           </FadeIn>
 
-          <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* 키트 1 - Outlook AutoResponder */}
+          <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {/* 서비스 1 - PDF 변환 */}
             <StaggerItem>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-green-200 dark:border-green-900 group">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 h-56 flex items-center justify-center relative">
-                <svg className="w-24 h-24 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  🎁 무료
+                <div className="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                  💎 1 크레딧
                 </div>
               </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-3 py-1 rounded-full text-xs font-semibold">
+                    문서변환
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 15분 절약</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  PDF → Word 변환
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  PDF 파일을 편집 가능한 Word 문서로 즉시 변환
+                </p>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>📄 원본 레이아웃 유지</div>
+                  <div>✍️ 바로 편집 가능</div>
+                </div>
+                <button 
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm"
+                >
+                  사용하기
+                </button>
+              </div>
+              </div>
+            </StaggerItem>
+
+            {/* 서비스 2 - Outlook 자동 회신 */}
+            <StaggerItem>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <div className="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                  💎 1 크레딧
+                </div>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
                   <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-semibold">
                     메일자동화
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">.bas 파일</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 30분 절약</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
-                  Outlook AutoResponder Kit
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  Outlook 자동 회신
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-[16px]">
-                  특정 메일 조건 시 자동회신 + PDF첨부. HTML 메일 템플릿 포함
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  조건에 맞는 메일 자동 회신 및 첨부파일 자동 발송
                 </p>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                    <div>📦 .bas 파일 + HTML 템플릿</div>
-                    <div>🎥 5분 설치 영상 가이드</div>
-                  </div>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>📧 조건별 자동 분류</div>
+                  <div>📎 첨부파일 자동 첨부</div>
                 </div>
                 <button 
-                  onClick={() => setShowOptionsModal(true)}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] text-[17px]"
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm"
                 >
-                  무료 다운로드
+                  사용하기
                 </button>
               </div>
               </div>
             </StaggerItem>
 
-            {/* 키트 2 - Invoice AutoSorter */}
+            {/* 서비스 3 - AI 화보 생성 */}
             <StaggerItem>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-green-200 dark:border-green-900 group">
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 h-56 flex items-center justify-center relative">
-                <svg className="w-24 h-24 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
+              <div className="bg-gradient-to-br from-pink-500 to-rose-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  🎁 무료
+                <div className="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                  💎 3 크레딧
                 </div>
               </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">
-                    엑셀자동화
-                  </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">.xlam 파일</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
-                  Invoice AutoSorter Kit
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-[16px]">
-                  엑셀에서 세율별 자동 분류 + 시트 생성. VBA 매크로 기반
-                </p>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                    <div>📦 .xlam 파일 + 설정 가이드</div>
-                    <div>🎥 시연 영상</div>
-                  </div>
-                </div>
-                <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] text-[17px]">
-                  무료 다운로드
-                </button>
-              </div>
-              </div>
-            </StaggerItem>
-
-            {/* 키트 3 - Python File Organizer */}
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-green-200 dark:border-green-900 group">
-              <div className="bg-gradient-to-br from-yellow-500 to-orange-600 h-56 flex items-center justify-center relative">
-                <svg className="w-24 h-24 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                </svg>
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  🎁 무료
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  <span className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 px-3 py-1 rounded-full text-xs font-semibold">
-                    Python
-                  </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">.zip 파일</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
-                  Python File Organizer
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-[16px]">
-                  특정 폴더의 파일을 날짜별로 자동정리. Python + .bat 실행 파일
-                </p>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                    <div>📦 .zip (스크립트 + bat 파일)</div>
-                    <div>🎥 Python 설치 5분 가이드</div>
-                  </div>
-                </div>
-                <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] text-[17px]">
-                  무료 다운로드
-                </button>
-              </div>
-              </div>
-            </StaggerItem>
-
-            {/* 키트 4 - GAS AutoMailer */}
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-green-200 dark:border-green-900 group">
-              <div className="bg-gradient-to-br from-green-500 to-green-600 h-56 flex items-center justify-center relative">
-                <svg className="w-24 h-24 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  🎁 무료
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full text-xs font-semibold">
-                    Apps Script
-                  </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">.gs 파일</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
-                  GAS AutoMailer for Sheets
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-[16px]">
-                  구글 시트 변경 시 자동 메일 발송. 트리거 자동 설정
-                </p>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                    <div>📦 .gs 코드</div>
-                    <div>🎥 스크립트 등록 영상</div>
-                  </div>
-                </div>
-                <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] text-[17px]">
-                  무료 다운로드
-                </button>
-              </div>
-              </div>
-            </StaggerItem>
-
-            {/* 키트 5 - Streamlit Report Viewer */}
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-green-200 dark:border-green-900 group">
-              <div className="bg-gradient-to-br from-pink-500 to-rose-600 h-56 flex items-center justify-center relative">
-                <svg className="w-24 h-24 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  🎁 무료
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
                   <span className="bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 px-3 py-1 rounded-full text-xs font-semibold">
-                    데이터시각화
+                    AI 생성
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">.py 파일</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 60분 절약</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
-                  Streamlit Report Viewer
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  AI 화보 생성
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-[16px]">
-                  CSV 업로드 → 자동 그래프 시각화. Streamlit 기반 대시보드
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  프로필 사진을 보그 커버 스타일 화보로 변환
                 </p>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                    <div>📦 .py + requirements.txt</div>
-                    <div>🎥 영상 가이드</div>
-                  </div>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>🎨 20가지 스타일</div>
+                  <div>💼 LinkedIn 최적화</div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] text-[17px]">
-                  무료 다운로드
+                <Link
+                  href="/gallery"
+                  className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm text-center"
+                >
+                  갤러리 보기
+                </Link>
+              </div>
+              </div>
+            </StaggerItem>
+
+            {/* 서비스 4 - 텍스트 일괄 변환 */}
+            <StaggerItem>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
+              <div className="bg-gradient-to-br from-green-500 to-emerald-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                <div className="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                  💎 1 크레딧
+                </div>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full text-xs font-semibold">
+                    텍스트처리
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 20분 절약</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  텍스트 일괄 변환
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  대량 텍스트 포맷 변환 및 정리를 한 번에 처리
+                </p>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>📝 대소문자 변환</div>
+                  <div>🔄 특수문자 제거</div>
+                </div>
+                <button 
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm"
+                >
+                  사용하기
                 </button>
               </div>
               </div>
@@ -940,8 +901,8 @@ export default function Home() {
 
           <FadeIn delay={0.5}>
             <div className="text-center mt-16">
-            <button className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-12 py-5 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all">
-              모든 자동화 키트 둘러보기 →
+            <button className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all">
+              모든 서비스 둘러보기 →
             </button>
             </div>
           </FadeIn>
