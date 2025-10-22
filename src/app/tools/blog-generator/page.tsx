@@ -1,20 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import SimpleHeader from '@/components/SimpleHeader';
 import { FadeIn } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 
 export default function BlogGeneratorPage() {
-  const router = useRouter();
   const { user } = useAuthStore();
   const [keyword, setKeyword] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');
   const [content3, setContent3] = useState('');
-  const [additionalContent, setAdditionalContent] = useState('');
   const [generatedBlog, setGeneratedBlog] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState('');
@@ -79,8 +76,9 @@ export default function BlogGeneratorPage() {
           alert('💡 데모 모드로 생성되었습니다.\n\n실제 GPT-4o-mini를 사용하려면:\n1. OpenAI API 키 발급 (https://platform.openai.com/api-keys)\n2. .env.local 파일에 OPENAI_API_KEY 추가\n3. 개발 서버 재시작');
         }, 500);
       }
-    } catch (err: any) {
-      setError(err.message || '오류가 발생했습니다.');
+    } catch (err: unknown) {
+      const error = err as { message?: string };
+      setError(error.message || '오류가 발생했습니다.');
     } finally {
       setIsGenerating(false);
     }

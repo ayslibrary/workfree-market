@@ -322,7 +322,7 @@ export default function CreditsPage() {
               </h3>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
                 정식 출시 시 크레딧 가격을 정하려고 합니다.<br />
-                <strong>후기 작성</strong> 시 "크레딧 1개에 적정한 가격"을 알려주시면 큰 도움이 됩니다!
+                <strong>후기 작성</strong> 시 &quot;크레딧 1개에 적정한 가격&quot;을 알려주시면 큰 도움이 됩니다!
               </p>
               <Link
                 href="/reviews/write"

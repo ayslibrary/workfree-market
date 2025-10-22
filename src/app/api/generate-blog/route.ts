@@ -26,14 +26,6 @@ export async function POST(request: NextRequest) {
                         tone === 'casual' ? '헤이! 👋' :
                         '본 글에서는';
       
-      // 종결어미 함수
-      const getEnding = (base: string) => {
-        if (tone === 'friendly') return base + '해요';
-        if (tone === 'professional') return base + '합니다';
-        if (tone === 'casual') return base + '다';
-        return base + '합니다';
-      };
-      
       const demoBlog = `# ${keyword} - 완벽 가이드
 
 ${tonePrefix}
@@ -399,11 +391,12 @@ ${length === 'long' ? `\n## FAQ\n\n**Q: ${keyword}는 어려운가요?**\nA: 처
       tokensUsed: completion.usage?.total_tokens || 0,
       historyId,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Blog generation error:', error);
     
     // OpenAI API 에러 처리
-    if (error.code === 'insufficient_quota') {
+    const err = error as { code?: string; message?: string };
+    if (err.code === 'insufficient_quota') {
       return NextResponse.json(
         { error: 'OpenAI API 사용량이 초과되었습니다. 관리자에게 문의하세요.' },
         { status: 500 }
@@ -411,7 +404,7 @@ ${length === 'long' ? `\n## FAQ\n\n**Q: ${keyword}는 어려운가요?**\nA: 처
     }
 
     return NextResponse.json(
-      { error: error.message || '블로그 글 생성 중 오류가 발생했습니다.' },
+      { error: err.message || '블로그 글 생성 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   }

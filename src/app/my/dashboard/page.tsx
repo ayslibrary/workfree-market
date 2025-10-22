@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SimpleHeader from '@/components/SimpleHeader';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
+import { FadeIn } from '@/components/animations';
 
 // 데모 데이터
 const DEMO_USER = {
