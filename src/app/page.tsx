@@ -122,7 +122,7 @@ export default function Home() {
                   WorkFree Market
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
-                  실무 자동화 키트 거래소
+                  AI 실무 자동화 스튜디오
                 </div>
               </div>
             </Link>

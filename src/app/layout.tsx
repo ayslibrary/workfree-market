@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WorkFree Market - 일 안 하고도 일하는 사람들의 비밀도구",
-  description: "다운로드 한 번으로 끝나는 실무 자동화 키트 거래소. 설치 5분, 인생 자동화 시작.",
+  title: "WorkFree Market - 당신의 시간을 되찾는 AI 자동화 스튜디오",
+  description: "퇴근을 앞당기는 가장 확실한 방법. 설치 없이 웹에서 바로 실행하는 AI 자동화. 베타 가입 시 무료 크레딧 10개 지급.",
 };
 
 export const viewport = {
