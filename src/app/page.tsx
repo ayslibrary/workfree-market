@@ -1253,24 +1253,39 @@ export default function Home() {
         <div className="container mx-auto max-w-4xl text-center text-white">
           <FadeIn delay={0.1}>
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              보고서 쓰는 시간에
+              30분짜리 업무를
               <br />
-              커피 한 잔 더.
+              30초로 단축.
             </h2>
           </FadeIn>
           <FadeIn delay={0.3}>
             <p className="text-2xl md:text-3xl mb-14 opacity-95">
-              직장인들의 비밀 무기, WorkFree Market에서 시작하세요
+              클릭 한 번으로 끝나는 실무 자동화
             </p>
           </FadeIn>
           <FadeIn delay={0.5}>
             <div className="flex gap-5 justify-center flex-wrap">
-            <button className="bg-white text-indigo-600 px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all">
-              무료로 둘러보기
-            </button>
-            <button className="bg-transparent border-3 border-white text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-indigo-600 transition-all">
-              판매자 시작하기
-            </button>
+            <Link
+              href="#kits"
+              className="bg-white text-indigo-600 px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              서비스 둘러보기
+            </Link>
+            {user ? (
+              <Link
+                href="/my/dashboard"
+                className="bg-transparent border-3 border-white text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-indigo-600 transition-all"
+              >
+                마이페이지 가기
+              </Link>
+            ) : (
+              <Link
+                href="/signup"
+                className="bg-transparent border-3 border-white text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-indigo-600 transition-all"
+              >
+                무료 시작하기
+              </Link>
+            )}
             </div>
           </FadeIn>
         </div>
