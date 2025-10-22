@@ -14,8 +14,13 @@ export default function AboutPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
               <span className="text-white text-xl font-bold">W</span>
             </div>
-            <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              WorkFree Market
+            <div>
+              <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                WorkFree Market
+              </div>
+              <div className="text-xs text-gray-500 hidden sm:block">
+                AI 실무 자동화 스튜디오
+              </div>
             </div>
           </Link>
         </div>
@@ -30,23 +35,23 @@ export default function AboutPage() {
             </span>
           </h1>
           <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6 px-4 leading-relaxed break-keep">
-            &quot;일 안 하고도 일하는<br className="md:hidden" /> 사람들의 비밀도구&quot;
+            &quot;퇴근을 앞당기는<br className="md:hidden" /> 가장 확실한 방법&quot;
           </h2>
           <div className="max-w-3xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 space-y-2 px-4">
-            <p className="font-semibold break-keep">직장인을 위한 AI 자동화 생태계</p>
-            <p className="break-keep">반복 업무를 자동화하고, 당신의 시간을 되돌려드립니다.</p>
+            <p className="font-semibold break-keep">당신의 시간을 되찾는 AI 자동화 스튜디오</p>
+            <p className="break-keep">설치 없이 웹에서 바로 실행하는 실무 자동화 서비스</p>
           </div>
         </FadeIn>
 
         {/* 1. Pain Point */}
         <FadeIn delay={0.2}>
-          <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
+          <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12 mt-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
             🚨 Pain Point — 우리가 해결하려는 문제
           </h2>
           <p className="text-lg text-gray-700 mb-6">
             하루에도 수십 번 반복하는 루틴 업무들.<br />
-            메일 확인, 엑셀 정리, 보고서 수정…
+            메일 확인, 엑셀 정리, 보고서 수정, PDF 변환…
           </p>
           <p className="text-lg text-gray-700 mb-6 font-semibold">
             이런 상황, 익숙하지 않나요?
@@ -54,11 +59,11 @@ export default function AboutPage() {
           <ul className="space-y-3 mb-8">
             <li className="flex items-start gap-3 text-gray-700">
               <span className="text-red-500 text-xl">•</span>
-              <span>자동화 툴은 많지만 <strong>우리 회사 환경에는 안 맞는다.</strong></span>
+              <span>자동화 툴은 많지만 <strong>설치가 복잡하고 배우기 어렵다.</strong></span>
             </li>
             <li className="flex items-start gap-3 text-gray-700">
               <span className="text-red-500 text-xl">•</span>
-              <span>IT 지식이 없어도 <strong>손쉽게 쓸 수 있는 도구가 없다.</strong></span>
+              <span>유료 구독은 부담스럽고 <strong>사용 빈도가 낮아 아깝다.</strong></span>
             </li>
             <li className="flex items-start gap-3 text-gray-700">
               <span className="text-red-500 text-xl">•</span>
@@ -70,7 +75,7 @@ export default function AboutPage() {
               WorkFree는 이 문제를 해결합니다.
             </p>
             <p className="text-lg text-gray-700">
-              누구나 직접 &apos;일을 자동화&apos;할 수 있는 시대.
+              클릭 한 번으로 끝나는 실무 자동화.
             </p>
           </div>
           </section>
@@ -83,60 +88,62 @@ export default function AboutPage() {
             💡 Solution — WorkFree는 이렇게 바꿉니다
           </h2>
           <p className="text-2xl font-bold text-purple-600 mb-6">
-            &quot;직장인이 만든 자동화 키트를 사고팔고, AI가 커스터마이징을 돕는다.&quot;
+            &quot;설치 없이 웹에서 바로 실행. 크레딧으로 필요한 만큼만 사용.&quot;
           </p>
           <p className="text-lg text-gray-700 mb-6">
-            WorkFree는 <strong>직장인 실무자 중심의 자동화 생태계</strong>입니다.
+            WorkFree는 <strong>직장인을 위한 AI 실무 자동화 스튜디오</strong>입니다.
           </p>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-xl p-6 border-2 border-purple-200">
-              <div className="text-4xl mb-3">🧩</div>
-              <p className="text-gray-700">직장인들이 직접 만든<br />자동화 키트 마켓</p>
+              <div className="text-4xl mb-3">⚡</div>
+              <p className="text-gray-700 font-bold mb-2">웹에서 즉시 실행</p>
+              <p className="text-sm text-gray-600">설치·다운로드 불필요<br />브라우저에서 바로 사용</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 border-2 border-purple-200">
+              <div className="text-4xl mb-3">💎</div>
+              <p className="text-gray-700 font-bold mb-2">크레딧 시스템</p>
+              <p className="text-sm text-gray-600">사용한 만큼만 차감<br />구독 부담 제로</p>
             </div>
             <div className="bg-white rounded-xl p-6 border-2 border-purple-200">
               <div className="text-4xl mb-3">🤖</div>
-              <p className="text-gray-700">AI가 환경에 맞게<br />자동 커스터마이징</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border-2 border-purple-200">
-              <div className="text-4xl mb-3">🧠</div>
-              <p className="text-gray-700">복잡한 업무는<br />판매자에게 직접 의뢰</p>
+              <p className="text-gray-700 font-bold mb-2">AI 기반 자동화</p>
+              <p className="text-sm text-gray-600">복잡한 작업도<br />클릭 한 번으로 처리</p>
             </div>
           </div>
           <div className="bg-green-100 rounded-xl p-6 border-2 border-green-300">
             <p className="text-xl font-bold text-gray-900">
-              📈 결과: 반복 업무는 사라지고, 생산성은 3배 이상 향상됩니다.
+              📈 결과: 매일 137분 절약, 생산성 3배 향상
             </p>
           </div>
           </section>
         </FadeIn>
 
-        {/* 3. Market Impact */}
+        {/* 3. Beta Benefits */}
         <FadeIn delay={0.2}>
           <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-indigo-200">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            📊 Market Impact — 경제적 효과
+            🎁 베타 프로그램 — 지금 시작하면
           </h2>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 border-2 border-blue-200 hover:scale-105 transition-transform">
-              <p className="font-bold text-gray-900 mb-2">창작자 월평균 수익</p>
-              <p className="text-sm text-gray-600 mb-3">30개 키트 기준</p>
-              <p className="text-3xl font-bold text-blue-600">₩500,000~₩1,500,000</p>
-            </div>
             <div className="bg-white rounded-xl p-6 border-2 border-purple-200 hover:scale-105 transition-transform">
-              <p className="font-bold text-gray-900 mb-2">구매자 효율 효과</p>
-              <p className="text-sm text-gray-600 mb-3">1인당 월 8시간 절감</p>
-              <p className="text-3xl font-bold text-purple-600">약 ₩200,000 절감</p>
+              <p className="font-bold text-gray-900 mb-2 text-xl">무료 크레딧 10개</p>
+              <p className="text-sm text-gray-600 mb-3">회원가입 즉시 지급</p>
+              <p className="text-3xl font-bold text-purple-600">즉시 지급</p>
             </div>
             <div className="bg-white rounded-xl p-6 border-2 border-green-200 hover:scale-105 transition-transform">
-              <p className="font-bold text-gray-900 mb-2">자동화 의뢰 시장</p>
-              <p className="text-sm text-gray-600 mb-3">2025년 한국 기준</p>
-              <p className="text-3xl font-bold text-green-600">₩5조+</p>
+              <p className="font-bold text-gray-900 mb-2 text-xl">후기 작성 보상</p>
+              <p className="text-sm text-gray-600 mb-3">서비스 사용 후 리뷰</p>
+              <p className="text-3xl font-bold text-green-600">+5 크레딧</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 border-2 border-pink-200 hover:scale-105 transition-transform">
+              <p className="font-bold text-gray-900 mb-2 text-xl">SNS 공유 보상</p>
+              <p className="text-sm text-gray-600 mb-3">친구에게 알리기</p>
+              <p className="text-3xl font-bold text-pink-600">+10 크레딧</p>
             </div>
           </div>
           <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8 border-2 border-indigo-300">
             <p className="text-2xl font-bold text-gray-900 text-center">
-              WorkFree는 &apos;전문가의 자동화&apos;를<br />
-              &apos;직장인의 자동화&apos;로 재정의합니다.
+              최대 25 크레딧으로<br />모든 서비스를 무료로 체험하세요
             </p>
           </div>
           </section>
@@ -146,28 +153,41 @@ export default function AboutPage() {
         <FadeIn delay={0.2}>
           <section className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-blue-200">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-            ⚙️ How It Works — 거래 흐름
+            ⚙️ How It Works — 사용 방법
           </h2>
           <div className="space-y-4">
-            {[
-              { step: "1️⃣", text: "구매자" },
-              { step: "↓", text: "무료/유료 키트 선택 (₩0~₩19,000)" },
-              { step: "↓", text: "AI 커스터마이징 (+₩3,000)" },
-              { step: "↓", text: "더 복잡한 요구 → \"커스터마이즈 의뢰\" 클릭" },
-              { step: "↓", text: "판매자 제안서 + 단가 수령 (₩50,000~₩300,000)" },
-              { step: "↓", text: "1:1 거래 성사 (WorkFree 수수료 15~20%)" },
-            ].map((item, index) => (
-              <div key={index} className="bg-white rounded-xl p-4 border-2 border-blue-200 text-center">
-                <p className="text-xl font-bold text-gray-900">
-                  {item.step} {item.text}
-                </p>
-              </div>
-            ))}
+            <div className="bg-white rounded-xl p-6 border-2 border-blue-200">
+              <p className="text-xl font-bold text-gray-900 mb-2">
+                1️⃣ 회원가입 (무료 크레딧 10개 지급)
+              </p>
+              <p className="text-gray-600">이메일 또는 소셜 로그인으로 30초 완료</p>
+            </div>
+            <div className="text-center text-2xl text-gray-400">↓</div>
+            <div className="bg-white rounded-xl p-6 border-2 border-blue-200">
+              <p className="text-xl font-bold text-gray-900 mb-2">
+                2️⃣ 원하는 서비스 선택
+              </p>
+              <p className="text-gray-600">PDF 변환, 메일 자동화, AI 화보 생성 등</p>
+            </div>
+            <div className="text-center text-2xl text-gray-400">↓</div>
+            <div className="bg-white rounded-xl p-6 border-2 border-blue-200">
+              <p className="text-xl font-bold text-gray-900 mb-2">
+                3️⃣ 클릭 한 번으로 실행
+              </p>
+              <p className="text-gray-600">크레딧 자동 차감, 웹에서 즉시 결과 확인</p>
+            </div>
+            <div className="text-center text-2xl text-gray-400">↓</div>
+            <div className="bg-white rounded-xl p-6 border-2 border-green-200">
+              <p className="text-xl font-bold text-green-600 mb-2">
+                ✅ 완료! 평균 30분 절약
+              </p>
+              <p className="text-gray-600">대시보드에서 절약한 시간/비용 확인</p>
+            </div>
           </div>
           <div className="mt-8 bg-blue-100 rounded-xl p-6 border-2 border-blue-300">
-            <p className="text-lg text-gray-700">
-              AI가 당신의 &apos;사무보조&apos;가 되어,<br />
-              누구나 쉽고 빠르게 자동화를 시작할 수 있도록 돕습니다.
+            <p className="text-lg text-gray-700 text-center">
+              <strong>설치, 설정, 학습 시간 제로.</strong><br />
+              누구나 쉽고 빠르게 시작할 수 있습니다.
             </p>
           </div>
           </section>
@@ -177,63 +197,122 @@ export default function AboutPage() {
         <FadeIn delay={0.2}>
           <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            💰 Pricing — 서비스 가격
+            💰 Pricing — 크레딧 시스템
           </h2>
           <p className="text-lg text-gray-700 mb-8">
-            필요한 만큼만, 합리적인 가격으로 시작하세요.
+            필요한 만큼만 사용하는 합리적인 가격
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-200 hover:scale-105 transition-transform">
-              <div className="text-4xl mb-3">🧩</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">자동화 키트</h3>
-              <p className="text-gray-700 mb-4">즉시 다운로드 가능한<br />완성형 자동화 파일</p>
-              <p className="text-3xl font-bold text-blue-600 mb-2">₩3,000~</p>
-              <p className="text-sm text-gray-600">무료 키트도 많아요!</p>
+              <div className="text-4xl mb-3">🎁</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">베타 무료</h3>
+              <p className="text-gray-700 mb-4">회원가입만 하면<br />즉시 사용 가능</p>
+              <p className="text-3xl font-bold text-blue-600 mb-2">10 크레딧</p>
+              <p className="text-sm text-gray-600">1개월 유효</p>
             </div>
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200 hover:scale-105 transition-transform">
-              <div className="text-4xl mb-3">🤖</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">AI 커스터마이징</h3>
-              <p className="text-gray-700 mb-4">내 환경에 맞게<br />AI가 자동 수정</p>
-              <p className="text-3xl font-bold text-purple-600 mb-2">+₩3,000</p>
-              <p className="text-sm text-gray-600">키트당 추가 옵션</p>
+              <div className="text-4xl mb-3">💎</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">단건 충전</h3>
+              <p className="text-gray-700 mb-4">필요할 때만<br />크레딧 구매</p>
+              <p className="text-3xl font-bold text-purple-600 mb-2">₩30/개</p>
+              <p className="text-sm text-gray-600">10개 단위 구매</p>
             </div>
             <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-6 border-2 border-orange-200 hover:scale-105 transition-transform">
-              <div className="text-4xl mb-3">🧠</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">맞춤 제작 의뢰</h3>
-              <p className="text-gray-700 mb-4">복잡한 업무는<br />전문가에게 직접 의뢰</p>
-              <p className="text-3xl font-bold text-orange-600 mb-2">협의</p>
-              <p className="text-sm text-gray-600">프로젝트 규모에 따라</p>
+              <div className="text-4xl mb-3">🚀</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">월간 구독</h3>
+              <p className="text-gray-700 mb-4">매월 자동 충전<br />최대 40% 할인</p>
+              <p className="text-3xl font-bold text-orange-600 mb-2">₩5,900~</p>
+              <p className="text-sm text-gray-600">200~1000 크레딧</p>
             </div>
           </div>
           <div className="mt-8 bg-green-100 rounded-xl p-6 border-2 border-green-300 text-center">
             <p className="text-lg font-bold text-gray-900">
-              💡 지금은 베타테스트 기간으로 대부분의 키트를 <span className="text-green-600">무료</span>로 제공합니다!
+              💡 크레딧 1개 = 평균 30분 절약 = 약 ₩10,000 절감 효과
             </p>
           </div>
           </section>
         </FadeIn>
 
-        {/* 6. Vision */}
+        {/* 6. Time Savings */}
+        <FadeIn delay={0.2}>
+          <section className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-green-200">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            ⏰ Time Savings — 시간과 비용 절약
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-xl p-8 border-2 border-green-200">
+              <p className="text-xl font-bold text-gray-900 mb-4">📊 절약 계산기</p>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                  <span className="text-gray-700">크레딧 1개 비용</span>
+                  <span className="font-bold text-purple-600">₩30</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                  <span className="text-gray-700">평균 절약 시간</span>
+                  <span className="font-bold text-pink-600">30분</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                  <span className="text-gray-700">시간당 환산 금액</span>
+                  <span className="font-bold text-green-600">₩20,000</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-xl p-8 border-2 border-blue-200">
+              <p className="text-xl font-bold text-gray-900 mb-4">✅ 사용자 혜택</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">실시간 웹 실행</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">자동 시간 절약 통계</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">크레딧 이월 가능</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">무료 크레딧 보상</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl p-8 border-2 border-green-300">
+            <p className="text-2xl font-bold text-gray-900 text-center">
+              월 10회 사용 시 ₩100,000+ 절약 효과<br />
+              <span className="text-lg text-gray-700">(평균 5시간 절약)</span>
+            </p>
+          </div>
+          </section>
+        </FadeIn>
+
+        {/* 7. Vision */}
         <FadeIn delay={0.2}>
           <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             🔭 Vision — 우리의 목표
           </h2>
           <p className="text-2xl font-bold text-indigo-600 mb-6">
-            &quot;직장인 모두가 &apos;자동화 제작자&apos;가 되는 세상.&quot;
+            &quot;직장인 모두가 시간을 되찾는 세상&quot;
           </p>
           <p className="text-lg text-gray-700 mb-6">
-            WorkFree는 단순히 도구를 파는 곳이 아닙니다.<br />
+            WorkFree는 단순히 도구를 제공하는 곳이 아닙니다.<br />
             <strong>&apos;일의 창의성&apos;을 되돌리는 혁신 문화</strong>를 만듭니다.
           </p>
           <ul className="space-y-3 mb-8">
             <li className="flex items-start gap-3 text-gray-700 text-lg">
               <span className="text-indigo-500 text-xl">•</span>
-              <span>더 적게 일하고, 더 똑똑하게 성장하기.</span>
+              <span>반복 업무는 자동화하고, 의미 있는 일에 집중하기</span>
             </li>
             <li className="flex items-start gap-3 text-gray-700 text-lg">
               <span className="text-indigo-500 text-xl">•</span>
-              <span>효율을 넘어, 의미 있는 일에 집중하기.</span>
+              <span>하루 2시간 빠른 퇴근으로 삶의 질 향상하기</span>
+            </li>
+            <li className="flex items-start gap-3 text-gray-700 text-lg">
+              <span className="text-indigo-500 text-xl">•</span>
+              <span>누구나 쉽게 AI 자동화를 사용하는 시대 만들기</span>
             </li>
           </ul>
           <div className="text-center bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-xl p-8 text-white">
@@ -242,75 +321,28 @@ export default function AboutPage() {
           </section>
         </FadeIn>
 
-        {/* 7. Creator Economy */}
-        <FadeIn delay={0.2}>
-          <section className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-yellow-200">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            🧑‍💻 Creator Economy — WorkFree 크리에이터
-          </h2>
-          <p className="text-2xl font-bold text-orange-600 mb-8">
-            &quot;자동화를 이해하는 직장인이 곧 창작자.&quot;
-          </p>
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 border-2 border-yellow-200">
-              <p className="font-bold text-gray-900 mb-2">🧩 키트 크리에이터</p>
-              <p className="text-gray-700">자동화 코드·템플릿 제작 및 판매</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border-2 border-yellow-200">
-              <p className="font-bold text-gray-900 mb-2">👩‍🏫 교육형 크리에이터</p>
-              <p className="text-gray-700">코드 공개 + 실무 강의 제작</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border-2 border-yellow-200">
-              <p className="font-bold text-gray-900 mb-2">🧠 커스터마이즈 전문가</p>
-              <p className="text-gray-700">AI가 처리 못하는 고급 로직 대응</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border-2 border-yellow-200">
-              <p className="font-bold text-gray-900 mb-2">🧾 기업형 개발자</p>
-              <p className="text-gray-700">B2B 자동화 프로젝트 수주</p>
-            </div>
-          </div>
-          <div className="bg-orange-100 rounded-xl p-6 border-2 border-orange-300">
-            <p className="text-xl font-bold text-gray-900 mb-4">💬 인센티브 정책</p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-3 text-gray-700">
-                <span className="text-orange-500">•</span>
-                <span>첫 3개월 수수료 0%</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-700">
-                <span className="text-orange-500">•</span>
-                <span>리뷰·다운로드 수에 따라 상위 노출</span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-700">
-                <span className="text-orange-500">•</span>
-                <span>&quot;Featured Creator&quot; 뱃지 부여</span>
-              </li>
-            </ul>
-          </div>
-          </section>
-        </FadeIn>
-
         {/* 8. Technology */}
         <FadeIn delay={0.2}>
           <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-indigo-200">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            🔐 Technology & Differentiation — 기술적 차별점
+            🔐 Technology — 기술적 차별점
           </h2>
           <div className="space-y-4">
             <div className="bg-white rounded-xl p-6 border-2 border-indigo-200">
-              <p className="font-bold text-gray-900 mb-2">🤖 AI 커스터마이징 엔진</p>
-              <p className="text-gray-700">자연어 → 코드 수정 파이프라인</p>
+              <p className="font-bold text-gray-900 mb-2">⚡ 웹 기반 실시간 실행</p>
+              <p className="text-gray-700">설치 없이 브라우저에서 즉시 실행 → 크로스 플랫폼 지원</p>
             </div>
             <div className="bg-white rounded-xl p-6 border-2 border-indigo-200">
-              <p className="font-bold text-gray-900 mb-2">🧠 사용자 맞춤 추천</p>
-              <p className="text-gray-700">수정 패턴 기반 자동화 제안</p>
+              <p className="font-bold text-gray-900 mb-2">💎 유연한 크레딧 시스템</p>
+              <p className="text-gray-700">사용한 만큼만 차감 → 구독 부담 없이 경제적</p>
             </div>
             <div className="bg-white rounded-xl p-6 border-2 border-indigo-200">
-              <p className="font-bold text-gray-900 mb-2">🪄 지식거래 생태계</p>
-              <p className="text-gray-700">판매자·구매자·AI의 삼각 연결</p>
+              <p className="font-bold text-gray-900 mb-2">🤖 AI 기반 자동화 엔진</p>
+              <p className="text-gray-700">복잡한 작업도 클릭 한 번 → 학습 시간 제로</p>
             </div>
             <div className="bg-white rounded-xl p-6 border-2 border-indigo-200">
-              <p className="font-bold text-gray-900 mb-2">🔒 코드 보호기술</p>
-              <p className="text-gray-700">락버전 / 암호화 파일 배포</p>
+              <p className="font-bold text-gray-900 mb-2">📊 자동 효율 추적</p>
+              <p className="text-gray-700">시간/비용 절약 통계 자동 수집 → 대시보드에서 확인</p>
             </div>
           </div>
           </section>
@@ -329,11 +361,11 @@ export default function AboutPage() {
             </li>
             <li className="flex items-start gap-3 text-lg text-gray-700">
               <span className="text-green-500 text-xl">✓</span>
-              <span>지식 창작자 수익화 → 창조경제 활성화</span>
+              <span>비개발자 접근성 향상 → 기술 민주화 실현</span>
             </li>
             <li className="flex items-start gap-3 text-lg text-gray-700">
               <span className="text-green-500 text-xl">✓</span>
-              <span>비개발자 접근성 향상 → 기술 민주화 실현</span>
+              <span>워라밸 개선 → 삶의 질 향상 및 행복 추구</span>
             </li>
             <li className="flex items-start gap-3 text-lg text-gray-700">
               <span className="text-green-500 text-xl">✓</span>
@@ -342,48 +374,8 @@ export default function AboutPage() {
           </ul>
           <div className="mt-8 bg-green-100 rounded-xl p-6 border-2 border-green-300">
             <p className="text-xl font-bold text-gray-900 text-center">
-              📈 WorkFree는 생산성과 창의성을 동시에 확장시키는 사회형 플랫폼입니다.
+              📈 WorkFree는 생산성과 창의성을 동시에 확장시키는 AI 자동화 플랫폼입니다.
             </p>
-          </div>
-          </section>
-        </FadeIn>
-
-        {/* 10. Service Architecture */}
-        <FadeIn delay={0.2}>
-          <section className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-gray-200">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            🧱 Service Architecture — 서비스 구조
-          </h2>
-          <p className="text-gray-600 mb-6 text-sm">
-            * 자세한 기술 구조가 궁금하신 분들을 위한 섹션
-          </p>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gradient-to-r from-indigo-100 to-purple-100">
-                  <th className="border-2 border-indigo-200 px-6 py-4 text-left font-bold">구분</th>
-                  <th className="border-2 border-indigo-200 px-6 py-4 text-left font-bold">설명</th>
-                  <th className="border-2 border-indigo-200 px-6 py-4 text-left font-bold">포지션</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border-2 border-gray-200 px-6 py-4 font-semibold">① 키트 마켓 (상품형)</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">직장인들이 만든 자동화 키트 판매</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">Gumroad형 / 저가 반복 매출</td>
-                </tr>
-                <tr>
-                  <td className="border-2 border-gray-200 px-6 py-4 font-semibold">② AI 커스터마이징 (옵션형)</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">AI가 사용자 환경에 맞게 코드 수정</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">Zapier + ChatGPT형</td>
-                </tr>
-                <tr>
-                  <td className="border-2 border-gray-200 px-6 py-4 font-semibold">③ 커스터마이즈 의뢰 (프로젝트형)</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">판매자에게 직접 의뢰, 단가 협의</td>
-                  <td className="border-2 border-gray-200 px-6 py-4">크몽형 / 고가 수주 매출</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
           </section>
         </FadeIn>
@@ -392,25 +384,25 @@ export default function AboutPage() {
         <FadeIn delay={0.2}>
           <section className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-12 text-center text-white mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            🚀 베타테스트 무료 참여하기 →
+            🎁 베타 무료 참여하기
           </h2>
           <p className="text-xl mb-8">
-            지금은 베타테스트 기간으로 무료로 참여하실 수 있습니다.<br />
-            실제 키트를 체험하고 효율화 데이터를 함께 남겨주세요.
+            지금 회원가입하면 <strong>무료 크레딧 10개</strong>를 즉시 지급합니다.<br />
+            모든 서비스를 무료로 체험하고 절약 효과를 직접 확인하세요.
           </p>
           <Link
-            href="/beta"
+            href="/#beta"
             className="inline-block bg-white text-purple-600 px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
           >
-            지금 바로 참여하기
+            무료로 시작하기 →
           </Link>
           </section>
         </FadeIn>
 
         {/* Footer */}
         <footer className="text-center text-gray-600 py-8 border-t border-gray-200">
-          <p className="mb-2">© 2025 WorkFree — Work Less, Create More.</p>
-          <p>문의: contact@workfree.ai</p>
+          <p className="mb-2">© 2025 WorkFree — 당신의 시간을 되찾는 AI 자동화 스튜디오</p>
+          <p className="text-sm">설치 없이, 클릭 한 번으로 끝. 자동화의 모든 것, 한 곳에.</p>
         </footer>
       </div>
     </div>
