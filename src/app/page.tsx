@@ -442,8 +442,13 @@ export default function Home() {
       <section className="py-24 px-6 bg-white dark:bg-gray-950">
         <div className="container mx-auto max-w-7xl">
           <FadeIn>
+            <div className="text-center mb-6">
+              <span className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
+                💼 스마트워크
+              </span>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
-              원하는 자동화를 찾아보세요
+              일은 자동으로,<br />성과는 그대로.
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-16 text-lg">
               업무 분야별로 엄선된 자동화 키트
@@ -741,7 +746,7 @@ export default function Home() {
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
-              가장 많이 사용하는 서비스
+              보고서·메일·정리…<br />클릭 한 번이면 끝.
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
               크레딧으로 바로 실행 • 설치 불필요 • 웹에서 즉시 사용
@@ -913,8 +918,13 @@ export default function Home() {
       <section id="savings" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
+            <div className="text-center mb-4">
+              <span className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
+                ⏰ 시간 단축 효과
+              </span>
+            </div>
             <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
-              크레딧으로 절약하는 시간과 비용
+              매일 137분,<br />자동화로 돌려드립니다
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
               크레딧 1개로 평균 30분, 약 10,000원 절약 효과
@@ -1253,14 +1263,14 @@ export default function Home() {
         <div className="container mx-auto max-w-4xl text-center text-white">
           <FadeIn delay={0.1}>
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              30분짜리 업무를
+              퇴근을 앞당기는
               <br />
-              30초로 단축.
+              가장 확실한 방법.
             </h2>
           </FadeIn>
           <FadeIn delay={0.3}>
             <p className="text-2xl md:text-3xl mb-14 opacity-95">
-              클릭 한 번으로 끝나는 실무 자동화
+              WorkFree — 당신의 시간을 되찾는 AI 자동화 스튜디오
             </p>
           </FadeIn>
           <FadeIn delay={0.5}>
@@ -1302,8 +1312,11 @@ export default function Home() {
                 </div>
                 <div className="text-2xl font-bold">WorkFree Market</div>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                일 안 하고도 일하는 사람들의 비밀도구
+              <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                당신의 시간을 되찾는 AI 자동화 스튜디오
+              </p>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                설치 없이, 클릭 한 번으로 끝. 자동화의 모든 것, 한 곳에.
               </p>
             </div>
             <div>
