@@ -721,10 +721,10 @@ export default function Home() {
           <FadeIn delay={0.2}>
             <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-10 md:p-14 rounded-3xl text-center text-white shadow-2xl">
               <p className="text-3xl md:text-4xl font-bold mb-4">
-                &quot;판매자는 대화하지 않는다. 결과물만 말한다.&quot;
+                &quot;클릭 한 번으로 완성. 대기 시간 제로.&quot;
               </p>
               <p className="text-lg opacity-90">
-                커스터마이징 요청 없음 | 완성된 키트만 거래 | 다운로드 후 거래 종료
+                설치 불필요 | 웹에서 즉시 실행 | 크레딧으로 필요한 만큼만 사용
               </p>
             </div>
           </FadeIn>
