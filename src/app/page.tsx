@@ -118,8 +118,13 @@ export default function Home() {
                 <span className="text-white text-xl font-bold">W</span>
               </div>
               <div>
-                <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  WorkFree Market
+                <div className="flex items-center gap-2">
+                  <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    WorkFree Market
+                  </div>
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    BETA
+                  </span>
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
                   AI 실무 자동화 스튜디오

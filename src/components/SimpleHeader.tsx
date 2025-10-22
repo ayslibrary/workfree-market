@@ -12,9 +12,14 @@ export default function SimpleHeader() {
             <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white text-base md:text-lg font-bold">W</span>
             </div>
-            <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              WorkFree
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                WorkFree
+              </span>
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-0.5 rounded-full">
+                BETA
+              </span>
+            </div>
           </Link>
 
           {/* Navigation Links */}
