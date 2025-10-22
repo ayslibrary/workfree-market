@@ -51,7 +51,6 @@ export default function BlogGeneratorPage() {
           content1: content1.trim() || undefined,
           content2: content2.trim() || undefined,
           content3: content3.trim() || undefined,
-          additionalContent: additionalContent.trim() || undefined,
           blogCategory,
           tone,
           targetAudience,
