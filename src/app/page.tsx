@@ -337,8 +337,8 @@ export default function Home() {
         <div className="container mx-auto text-center max-w-6xl relative z-10">
           <FadeIn delay={0.1}>
             <div className="inline-block mb-6 animate-bounce">
-              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-lg">
-                💾 즉시다운로드 마켓플레이스
+              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-xl">
+                🎁 Beta 무료 크레딧 10개 지급!
               </span>
             </div>
           </FadeIn>
@@ -346,31 +346,48 @@ export default function Home() {
           <FadeIn delay={0.2} duration={0.8}>
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4 break-keep">
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                직장인 2,930만명이<br />&apos;자동화 제작자&apos;가 되는 시대
+                세상의 모든 실무를<br />클릭 한 번으로
               </span>
             </h1>
           </FadeIn>
           
           <FadeIn delay={0.4}>
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed italic px-4 break-keep">
-              — WorkFree: Work Less, Create More.
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed px-4 break-keep">
+              <span className="font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                퇴근에 날개를 달다. WorkFree Market
+              </span>
+            </p>
+            <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4 break-keep">
+              설치 없이 웹에서 바로 실행 • 크레딧으로 필요한 만큼만 사용
             </p>
           </FadeIn>
           
-          {/* CTA 버튼 2개 */}
+          {/* CTA 버튼 */}
           <FadeIn delay={0.6}>
             <div className="flex gap-4 justify-center flex-wrap mb-16">
+              {!isLoading && !user ? (
+                <Link
+                  href="/signup"
+                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
+                >
+                  <span>🎁</span>
+                  <span>무료로 시작하기</span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">10 크레딧</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/my/dashboard"
+                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
+                >
+                  <span>마이페이지 가기</span>
+                  <span>→</span>
+                </Link>
+              )}
               <button
-                onClick={() => scrollToSection("kits")}
-                className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
+                onClick={() => scrollToSection("beta")}
+                className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-purple-200 dark:border-purple-800"
               >
-                내 업무 자동화 시작 →
-              </button>
-              <button
-                onClick={() => scrollToSection("seller")}
-                className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-indigo-200 dark:border-indigo-800"
-              >
-                판매자 시작하기
+                베타 자세히 보기
               </button>
             </div>
           </FadeIn>
@@ -380,40 +397,40 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900 hover:scale-105 transition-transform">
                 <div className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                  1,200+
+                  100명
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                  자동화 키트
+                  베타 테스터 모집
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-purple-100 dark:border-purple-900 hover:scale-105 transition-transform">
                 <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                  8,500+
+                  10개
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                  다운로드
+                  무료 크레딧
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-pink-100 dark:border-pink-900 hover:scale-105 transition-transform">
                 <div className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-2">
-                  4.8★
+                  웹실행
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                  평균 평점
+                  설치 불필요
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-green-100 dark:border-green-900 hover:scale-105 transition-transform">
                 <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
-                  5분
+                  1개월
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                  평균 설치시간
+                  무료 체험 기간
                 </div>
               </div>
             </StaggerItem>
@@ -1129,19 +1146,57 @@ export default function Home() {
                 <div className={`inline-block ${isBetaFull ? 'bg-gradient-to-r from-gray-500 to-gray-600' : 'bg-gradient-to-r from-green-500 to-emerald-500'} text-white px-6 py-2 rounded-full text-sm font-bold mb-6`}>
                   {isBetaFull ? '🔒 베타테스트 마감' : '🎉 베타테스터 모집 중'}
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                  {isBetaFull ? '베타테스트가 마감되었습니다' : '지금 무료로 시작하세요'}
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4" id="beta">
+                  {isBetaFull ? '베타테스트가 마감되었습니다' : '베타 테스터 모집'}
                 </h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                   {isBetaFull ? (
                     <>정식 버전 런칭 시 이메일로 안내드릴게요!</>
                   ) : (
                     <>
-                      베타테스트 기간 동안 모든 키트를 무료로 체험하고,<br />
-                      피드백 제출 시 정식 출시 후 <span className="font-bold text-purple-600">50% 할인 쿠폰</span>을 드립니다.
+                      회원가입만 하면 <span className="font-bold text-purple-600">무료 크레딧 10개</span>를 즉시 지급합니다<br />
+                      (1개월 유효 • 후기 작성 시 추가 크레딧 보상)
                     </>
                   )}
                 </p>
+                
+                {!isBetaFull && (
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 mb-6">
+                    <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-xl">
+                      🎁 베타 테스터 혜택
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-4 text-left">
+                      <div className="flex items-start gap-2">
+                        <span className="text-xl">💎</span>
+                        <div className="text-sm">
+                          <div className="font-semibold text-gray-900 dark:text-white">무료 크레딧 10개</div>
+                          <div className="text-gray-600 dark:text-gray-400">웹에서 바로 실행</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-xl">✍️</span>
+                        <div className="text-sm">
+                          <div className="font-semibold text-gray-900 dark:text-white">후기 작성 +5 크레딧</div>
+                          <div className="text-gray-600 dark:text-gray-400">사용 후 리뷰 남기기</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-xl">📱</span>
+                        <div className="text-sm">
+                          <div className="font-semibold text-gray-900 dark:text-white">SNS 공유 +10 크레딧</div>
+                          <div className="text-gray-600 dark:text-gray-400">친구에게 알리기</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-xl">🏅</span>
+                        <div className="text-sm">
+                          <div className="font-semibold text-gray-900 dark:text-white">베타 테스터 뱃지</div>
+                          <div className="text-gray-600 dark:text-gray-400">전용 배지 제공</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {/* 실시간 카운터 */}
                 {!isCountLoading && (
@@ -1185,14 +1240,14 @@ export default function Home() {
                       className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
                         isBetaFull
                           ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white hover:shadow-2xl hover:scale-[1.02]'
+                          : 'bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white hover:shadow-2xl hover:scale-[1.02]'
                       }`}
                     >
-                      {isBetaFull ? '🔒 마감됨' : '🚀 무료로 시작하기'}
+                      {isBetaFull ? '🔒 마감됨' : '🎁 무료로 시작하기 (10 크레딧)'}
                     </button>
 
                     <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                      {isBetaFull ? '정식 출시 시 알려드리겠습니다' : '회원가입 후 바로 다운로드하실 수 있습니다'}
+                      {isBetaFull ? '정식 출시 시 알려드리겠습니다' : '회원가입 후 크레딧이 자동 지급됩니다'}
                     </p>
                   </form>
                 </div>
@@ -1204,20 +1259,20 @@ export default function Home() {
                       환영합니다, {user.displayName}님!
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      이제 모든 자동화 키트를 무료로 다운로드하실 수 있습니다.
+                      무료 크레딧 10개가 지급되었습니다! 마이페이지에서 확인하세요.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Link
-                        href="/beta"
-                        className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
+                        href="/my/dashboard"
+                        className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
                       >
-                        💾 키트 다운로드
+                        💎 마이페이지 가기
                       </Link>
                       <Link
-                        href="/feedback"
+                        href="/tools"
                         className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-3 rounded-xl font-bold border-2 border-gray-300 dark:border-gray-700 hover:shadow-xl hover:scale-105 transition-all text-center"
                       >
-                        📝 피드백 남기기
+                        🛠️ 도구 사용하기
                       </Link>
                     </div>
                   </div>
