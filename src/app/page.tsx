@@ -948,15 +948,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 판매자 되기 섹션 */}
-      <section id="seller" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
+      {/* 크레딧으로 절약하는 시간과 비용 */}
+      <section id="savings" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
             <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
-              판매자로 수익 창출하기
+              크레딧으로 절약하는 시간과 비용
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
-              한 번 만들어 놓으면 계속 팔리는 패시브 인컴 시스템
+              크레딧 1개로 평균 30분, 약 10,000원 절약 효과
             </p>
           </FadeIn>
 
@@ -964,24 +964,25 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-10 rounded-3xl border-2 border-purple-100 dark:border-purple-900">
               <h3 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
-                💰 수익 구조
+                💰 절약 계산기
               </h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-5 bg-white/80 dark:bg-gray-800/80 rounded-xl">
-                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">판매 수수료</span>
-                  <span className="font-bold text-purple-600 dark:text-purple-400 text-xl">25~30%</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">크레딧 1개 비용</span>
+                  <span className="font-bold text-purple-600 dark:text-purple-400 text-xl">₩30</span>
                 </div>
                 <div className="flex items-center justify-between p-5 bg-white/80 dark:bg-gray-800/80 rounded-xl">
-                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">프리미엄 노출</span>
-                  <span className="font-bold text-pink-600 dark:text-pink-400 text-xl">₩30,000/월</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">평균 절약 시간</span>
+                  <span className="font-bold text-pink-600 dark:text-pink-400 text-xl">30분/사용</span>
                 </div>
                 <div className="flex items-center justify-between p-5 bg-white/80 dark:bg-gray-800/80 rounded-xl">
-                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">평균 키트 가격</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-xl">₩19,900</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300 text-[17px]">시간당 환산 금액</span>
+                  <span className="font-bold text-blue-600 dark:text-blue-400 text-xl">₩20,000</span>
                 </div>
-                <div className="p-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-xl text-white">
-                  <div className="text-sm mb-2 opacity-90">월 30개 판매 시 예상 수익</div>
-                  <div className="text-4xl font-bold">₩418,000+</div>
+                <div className="p-6 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 rounded-xl text-white">
+                  <div className="text-sm mb-2 opacity-90">월 10회 사용 시 절약 효과</div>
+                  <div className="text-4xl font-bold">₩100,000+</div>
+                  <div className="text-sm mt-2 opacity-90">5시간 절약</div>
                 </div>
               </div>
               </div>
@@ -990,7 +991,7 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-gradient-to-br from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 p-10 rounded-3xl border-2 border-blue-100 dark:border-blue-900">
               <h3 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
-                ✅ 판매자 혜택
+                ✅ 사용자 혜택
               </h3>
               <ul className="space-y-5">
                 <li className="flex items-start gap-4">
@@ -1000,8 +1001,8 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">자동 정산 시스템</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">매월 1일 자동 입금</div>
+                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">실시간 웹 실행</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">설치 없이 바로 사용</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
@@ -1011,30 +1012,30 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">악성코드 자동검사</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">플랫폼이 보안 책임</div>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">CS 부담 제로</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">커스터마이징 요청 없음</div>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">실시간 판매 통계</div>
+                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">자동 시간 절약 통계</div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">대시보드에서 한눈에 확인</div>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">크레딧 이월 가능</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">남은 크레딧 다음달 사용</div>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">무료 크레딧 보상</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">후기/공유 시 추가 지급</div>
                   </div>
                 </li>
               </ul>
@@ -1043,15 +1044,18 @@ export default function Home() {
           </StaggerContainer>
 
           <FadeIn delay={0.2}>
-            <div className="bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-700 p-12 md:p-16 rounded-3xl text-white shadow-2xl">
+            <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 p-12 md:p-16 rounded-3xl text-white shadow-2xl">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-4xl font-bold mb-6">판매자 등록은 무료입니다</h3>
+              <h3 className="text-4xl font-bold mb-6">지금 무료로 시작하세요</h3>
               <p className="text-xl mb-10 opacity-90">
-                키트 업로드 → 자동 검수 → 승인 후 즉시 판매 시작
+                베타 테스터 가입 시 무료 크레딧 10개 즉시 지급
               </p>
-              <button className="bg-white text-gray-900 px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all">
-                지금 판매자 신청하기 →
-              </button>
+              <Link
+                href="/signup"
+                className="inline-block bg-white text-purple-600 px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
+              >
+                🎁 무료로 시작하기 →
+              </Link>
             </div>
             </div>
           </FadeIn>
