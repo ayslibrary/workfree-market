@@ -171,10 +171,10 @@ export default function Home() {
               </div>
               
               <Link
-                href="/pricing"
+                href="/my/credits"
                 className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
               >
-                요금제
+                크레딧
               </Link>
               <Link
                 href="/about"
@@ -294,11 +294,11 @@ export default function Home() {
                   🧩 자동화 키트
                 </Link>
                 <Link
-                  href="/pricing"
+                  href="/my/credits"
                   className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
                   onClick={() => setShowMobileMenu(false)}
                 >
-                  💼 요금제
+                  💎 크레딧
                 </Link>
                 <Link
                   href="/feedback"
@@ -607,51 +607,199 @@ export default function Home() {
               </video>
             </div>
           </FadeIn>
+        </div>
+      </section>
 
-          {/* 프롬프트 키트 안내 */}
-          <FadeIn delay={0.4}>
-            <div className="mt-12 max-w-4xl mx-auto">
-              <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-rose-50 dark:from-purple-950/50 dark:via-pink-950/50 dark:to-rose-950/50 rounded-2xl p-8 border-2 border-purple-200 dark:border-purple-800">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <span className="text-3xl">✨</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white break-keep">
-                    🆕 NEW! AI 화보 메이커 프롬프트 키트
-                  </h3>
+      {/* 🎯 베타 서비스 체험 섹션 */}
+      <section className="py-16 px-6 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-pink-900/20">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* AI 블로그 생성기 */}
+            <FadeIn>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-purple-200 dark:border-purple-800 relative overflow-hidden h-full">
+              {/* 배경 장식 */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl -z-0"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl -z-0"></div>
+
+              <div className="relative z-10">
+                {/* 뱃지 */}
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <span className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                    ✨ NEW!
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                    🎁 Beta 무료
+                  </span>
                 </div>
-                <p className="text-center text-gray-700 dark:text-gray-300 mb-6 break-keep">
-                  이 영상도 Gemini 프롬프트로 만들었어요! 🎬<br />
-                  <span className="font-semibold text-purple-700 dark:text-purple-400">5분 만에 보그 커버 모델</span>이 되어보세요
+
+                {/* 메인 제목 */}
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+                  AI 블로그 자동 생성기
+                </h2>
+                <p className="text-center text-gray-600 dark:text-gray-300 mb-2">
+                  키워드 + 주요 내용 3개만 입력하면 <strong className="text-purple-600 dark:text-purple-400">완성도 높은 블로그 글</strong>이 즉시!
                 </p>
-                <div className="flex flex-wrap justify-center gap-3 mb-4">
-                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-purple-700 dark:text-purple-400">
-                    📸 20개 컨셉
-                  </span>
-                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-pink-700 dark:text-pink-400">
-                    💎 Vogue·Chanel 스타일
-                  </span>
-                  <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm font-semibold text-rose-700 dark:text-rose-400">
-                    💼 LinkedIn 프로필
-                  </span>
+                <p className="text-center text-sm text-purple-600 dark:text-purple-400 font-semibold mb-6">
+                  💡 베타 기간 동안 <span className="underline decoration-wavy">완전 무료</span>로 사용하세요
+                </p>
+
+                {/* 주요 기능 */}
+                <div className="space-y-3 mb-6">
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 rounded-xl p-3 border border-purple-200 dark:border-purple-700">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">⚡</div>
+                      <div>
+                        <div className="font-bold text-gray-900 dark:text-white text-sm">3가지 블로그 스타일</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">기본/SEO/마케팅</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🌐</div>
+                      <div>
+                        <div className="font-bold text-gray-900 dark:text-white text-sm">HTML 미리보기</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">바로 복붙 가능</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl p-3 border border-green-200 dark:border-green-700">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">💾</div>
+                      <div>
+                        <div className="font-bold text-gray-900 dark:text-white text-sm">파일 다운로드</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">TXT/HTML/PDF</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-center gap-3">
+
+                {/* CTA 버튼 */}
                 <Link
-                  href="/gallery"
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all"
+                  href="/tools/blog-generator"
+                  className="group block w-full bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
                 >
-                  <span>🎨</span>
-                  <span>AI 화보 갤러리 보기</span>
-                  <span>→</span>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-xl">✍️</span>
+                    <span>AI 블로그 생성 체험하기</span>
+                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
                 </Link>
-                <Link
-                  href="/kits/ai-portrait"
-                  className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 text-purple-700 dark:text-purple-400 px-6 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all border-2 border-purple-200 dark:border-purple-800"
-                >
-                  <span>프롬프트 키트 다운로드</span>
-                </Link>
+
+                {/* 하단 설명 */}
+                <div className="mt-6 text-center">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    ⏱️ 평균 10초 | 💎 3 크레딧 | 🎉 베타 가입 시 무료 10 크레딧
+                  </p>
                 </div>
               </div>
-            </div>
-          </FadeIn>
+              </div>
+            </FadeIn>
+
+            {/* AI 화보 메이커 미리보기 */}
+            <FadeIn delay={0.2}>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-pink-200 dark:border-pink-800 relative overflow-hidden h-full">
+                {/* 배경 장식 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-400/20 to-rose-400/20 rounded-full blur-3xl -z-0"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-orange-400/20 to-red-400/20 rounded-full blur-3xl -z-0"></div>
+
+                <div className="relative z-10">
+                  {/* 뱃지 */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-rose-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      ✨ 20개 컨셉
+                    </span>
+                    <span className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      📸 AI 화보
+                    </span>
+                  </div>
+
+                  {/* 메인 제목 */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
+                    AI 화보 메이커
+                  </h2>
+                  <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
+                    한 장의 사진으로 만드는 <strong className="text-pink-600 dark:text-pink-400">3가지 스타일</strong>
+                  </p>
+
+                  {/* 이미지 미리보기 (3개 스타일) */}
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-pink-200 dark:border-pink-700 hover:border-pink-400 dark:hover:border-pink-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">👔</div>
+                          <div className="text-white text-xs font-bold">Vogue Korea</div>
+                          <div className="text-gray-400 text-[10px]">모던 복고</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-orange-900 to-orange-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">🎨</div>
+                          <div className="text-white text-xs font-bold">Vintage Retro</div>
+                          <div className="text-gray-300 text-[10px]">레트로 감성</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">💼</div>
+                          <div className="text-white text-xs font-bold">Linkedin</div>
+                          <div className="text-gray-300 text-[10px]">인플루언서</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                  </div>
+
+                  {/* 주요 기능 */}
+                  <div className="space-y-3 mb-6">
+                    <div className="bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/30 dark:to-rose-900/30 rounded-xl p-3 border border-pink-200 dark:border-pink-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">📷</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">20가지 컨셉</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Vogue/Retro/Linkedin 등</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⚡</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">즉시 생성</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Gemini AI 프롬프트</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA 버튼 */}
+                  <Link
+                    href="/gallery"
+                    className="group block w-full bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">🎨</span>
+                      <span>AI 화보 갤러리 보기</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </Link>
+
+                  {/* 하단 설명 */}
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      📸 20개 스타일 | 🎁 프롬프트 키트 제공 | ✨ 5분 만에 보고 커버 모델
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
@@ -663,7 +811,7 @@ export default function Home() {
               간단한 3단계
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
-              복잡한 커스터마이징 없이, 바로 쓸 수 있는 완성품만 거래합니다
+              설치 불필요, 웹에서 클릭 한 번으로 바로 시작
             </p>
           </FadeIn>
           
@@ -672,13 +820,13 @@ export default function Home() {
               <div className="relative group">
                 <div className="bg-white dark:bg-gray-800 p-10 rounded-3xl text-center border-2 border-indigo-100 dark:border-indigo-900 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all hover:-translate-y-2 hover:shadow-2xl">
                   <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                    <span className="text-white text-4xl font-bold">1</span>
+                    <span className="text-white text-4xl font-bold">🎁</span>
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                    키트 선택
+                    무료 가입
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[17px]">
-                    필요한 자동화 키트를 검색하고 미리보기로 기능을 확인하세요
+                    10 크레딧 즉시 지급<br />설치 · 다운로드 불필요
                   </p>
                 </div>
                 <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-8 z-10">
@@ -693,13 +841,13 @@ export default function Home() {
               <div className="relative group">
                 <div className="bg-white dark:bg-gray-800 p-10 rounded-3xl text-center border-2 border-purple-100 dark:border-purple-900 hover:border-purple-300 dark:hover:border-purple-700 transition-all hover:-translate-y-2 hover:shadow-2xl">
                   <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                    <span className="text-white text-4xl font-bold">2</span>
+                    <span className="text-white text-4xl font-bold">⚡</span>
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                    즉시 결제
+                    웹에서 즉시 실행
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[17px]">
-                    간편 결제로 5초 안에 구매 완료. 복잡한 견적 요청 불필요
+                    클릭 한 번으로 자동화 시작<br />평균 10초 만에 완료
                   </p>
                 </div>
                 <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-8 z-10">
@@ -714,13 +862,13 @@ export default function Home() {
               <div className="group">
                 <div className="bg-white dark:bg-gray-800 p-10 rounded-3xl text-center border-2 border-pink-100 dark:border-pink-900 hover:border-pink-300 dark:hover:border-pink-700 transition-all hover:-translate-y-2 hover:shadow-2xl">
                   <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                    <span className="text-white text-4xl font-bold">3</span>
+                    <span className="text-white text-4xl font-bold">💾</span>
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                    즉시 다운로드
+                    결과 다운로드
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[17px]">
-                    바로 사용 가능한 파일과 설치 가이드를 받고 자동화를 시작하세요
+                    TXT/PDF/HTML 저장<br />시간 절약 통계 자동 기록
                   </p>
                 </div>
               </div>
@@ -871,39 +1019,40 @@ export default function Home() {
               </div>
             </StaggerItem>
 
-            {/* 서비스 4 - 텍스트 일괄 변환 */}
+            {/* 서비스 4 - AI 블로그 자동 생성 */}
             <StaggerItem>
               <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
-              <div className="bg-gradient-to-br from-green-500 to-emerald-600 h-48 flex items-center justify-center relative">
+              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 h-48 flex items-center justify-center relative">
                 <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
                 <div className="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
-                  💎 1 크레딧
+                  💎 3 크레딧
                 </div>
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full text-xs font-semibold">
-                    텍스트처리
+                  <span className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold">
+                    AI 생성
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 20분 절약</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 30분 절약</span>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                  텍스트 일괄 변환
+                  AI 블로그 자동 생성
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
-                  대량 텍스트 포맷 변환 및 정리를 한 번에 처리
+                  키워드만 입력하면 GPT가 자동으로 블로그 글 작성
                 </p>
                 <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
-                  <div>📝 대소문자 변환</div>
-                  <div>🔄 특수문자 제거</div>
+                  <div>✍️ GPT-4o-mini 사용</div>
+                  <div>📄 TXT/PDF 다운로드</div>
                 </div>
-                <button 
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm"
+                <Link
+                  href="/tools/blog-generator"
+                  className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm text-center"
                 >
                   사용하기
-                </button>
+                </Link>
               </div>
               </div>
             </StaggerItem>
@@ -1338,8 +1487,8 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <Link href="/pricing" className="hover:text-white transition-colors">
-                    요금제
+                  <Link href="/my/credits" className="hover:text-white transition-colors">
+                    크레딧
                   </Link>
                 </li>
                 <li>

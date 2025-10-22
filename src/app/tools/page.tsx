@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import SimpleHeader from '@/components/SimpleHeader';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 
@@ -66,17 +67,35 @@ const TOOLS = [
     color: 'from-yellow-500 to-orange-600',
     bgColor: 'from-yellow-50 to-orange-100',
   },
+  {
+    id: 'blog-generator',
+    name: 'AI 블로그 자동 생성',
+    icon: '✍️',
+    description: '키워드만 입력하면 GPT가 자동으로 블로그 글 작성',
+    credits: 3,
+    timeSaved: 30,
+    color: 'from-indigo-500 to-purple-600',
+    bgColor: 'from-indigo-50 to-purple-100',
+    link: '/tools/blog-generator',
+  },
 ];
 
 export default function ToolsPage() {
+  const router = useRouter();
   const [selectedTool, setSelectedTool] = useState<typeof TOOLS[0] | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentCredits] = useState(10); // 데모: 현재 크레딧
 
-  const handleUse Tool = async (tool: typeof TOOLS[0]) => {
+  const handleUseTool = async (tool: typeof TOOLS[0]) => {
     if (currentCredits < tool.credits) {
       alert('크레딧이 부족합니다! 충전 페이지로 이동하시겠습니까?');
+      return;
+    }
+
+    // link가 있으면 해당 페이지로 이동
+    if ('link' in tool && tool.link) {
+      router.push(tool.link);
       return;
     }
 

@@ -55,10 +55,10 @@ export default function SimpleHeader() {
               🧩 <span className="hidden sm:inline">키트</span>
             </Link>
             <Link
-              href="/pricing"
+              href="/my/credits"
               className="px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium text-gray-700 hover:bg-gray-100 transition-all"
             >
-              💼 <span className="hidden sm:inline">요금제</span>
+              💎 <span className="hidden sm:inline">크레딧</span>
             </Link>
             <Link
               href="/admin"

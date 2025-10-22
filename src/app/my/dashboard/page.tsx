@@ -293,7 +293,7 @@ export default function MyDashboardPage() {
 
         {/* 빠른 액션 */}
         <FadeIn delay={0.4}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link
               href="/#kits"
               className="bg-white dark:bg-gray-900 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-800 hover:border-purple-300 dark:hover:border-purple-700 hover:scale-105 transition-all text-center"
@@ -304,6 +304,19 @@ export default function MyDashboardPage() {
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 도구 사용하기
+              </p>
+            </Link>
+
+            <Link
+              href="/my/blog-history"
+              className="bg-white dark:bg-gray-900 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-700 hover:scale-105 transition-all text-center"
+            >
+              <div className="text-4xl mb-3">📚</div>
+              <h3 className="font-bold text-gray-900 dark:text-white mb-2">
+                블로그 히스토리
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                생성 기록 보기
               </p>
             </Link>
 
