@@ -9,6 +9,9 @@ import { useAuthStore } from '@/store/authStore';
 import { createReview, getTotalReviewCount } from '@/lib/beta/reviews';
 import { completeMissionByAction } from '@/lib/beta/missions';
 
+// 동적 렌더링 강제 (useSearchParams 사용)
+export const dynamic = 'force-dynamic';
+
 const SERVICE_OPTIONS = [
   { value: 'blog', label: '✍️ AI 블로그 생성기' },
   { value: 'portrait', label: '🎨 AI 초상화 메이커' },
