@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkFree Loading - SUIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* SUIT - 스타트업 감성의 한글 폰트 */
+    @import url('https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css');
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f9f6ff, #ece8ff);
+      font-family: 'SUIT', sans-serif;
+      overflow: hidden;
+    }
+
+    .loading-container {
+      text-align: center;
+      color: #4b3eff;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .loading-icon {
+      font-size: 4rem;
+      opacity: 0;
+      animation: fadeInOut 1.2s ease-in-out infinite, rotate 2s linear infinite;
+    }
+
+    .loading-text {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      opacity: 0;
+      animation: fadeInOut 1.2s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(15px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-15px); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .logo {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #2d2b57;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInLogo 1.5s ease 5s forwards;
+    }
+
+    @keyframes fadeInLogo {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #main {
+      display: none;
+      text-align: center;
+      font-size: 1.8rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .font-label {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #4b3eff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* 아이콘별 색상 */
+    .icon-excel { color: #1D6F42; }
+    .icon-ppt { color: #D24625; }
+    .icon-outlook { color: #0078D4; }
+    .icon-document { color: #5B5B5B; }
+    .icon-file { color: #7F7F7F; }
+    .icon-coffee { color: #8B4513; }
+    .icon-success { color: #4b3eff; }
+  </style>
+</head>
+<body>
+  <div class="font-label">SUIT (스타트업 감성)</div>
+  
+  <!-- 로딩화면 -->
+  <div class="loading-container" id="loadingScreen">
+    <div class="loading-content">
+      <i id="loadingIcon" class="loading-icon"></i>
+      <div id="loadingText" class="loading-text">Loading...</div>
+    </div>
+    <div class="logo">WorkFree</div>
+  </div>
+
+  <!-- 메인화면 (로딩 이후 표시됨) -->
+  <div id="main">
+    페이지 로딩 완료! 🎉
+  </div>
+
+  <script>
+    const loadingSteps = [
+      { text: "Excel 정리 중...", icon: "fa-solid fa-file-excel", class: "icon-excel" },
+      { text: "PPT 수정 중...", icon: "fa-solid fa-file-powerpoint", class: "icon-ppt" },
+      { text: "Outlook 메일 확인 중...", icon: "fa-solid fa-envelope", class: "icon-outlook" },
+      { text: "보고서 복붙 중...", icon: "fa-solid fa-file-lines", class: "icon-document" },
+      { text: "첨부파일 찾는 중...", icon: "fa-solid fa-paperclip", class: "icon-file" },
+      { text: "퇴근 준비 중...", icon: "fa-solid fa-mug-hot", class: "icon-coffee" },
+      { text: "이제 WorkFree가 대신합니다.", icon: "fa-solid fa-rocket", class: "icon-success" }
+    ];
+
+    let i = 0;
+    const loadingText = document.getElementById("loadingText");
+    const loadingIcon = document.getElementById("loadingIcon");
+
+    function changeText() {
+      const step = loadingSteps[i];
+      loadingText.textContent = step.text;
+      loadingIcon.className = `loading-icon ${step.icon} ${step.class}`;
+      i = (i + 1) % loadingSteps.length;
+    }
+
+    changeText();
+    const textInterval = setInterval(changeText, 1200);
+
+    async function simulateDataLoading() {
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      clearInterval(textInterval);
+      document.getElementById("loadingScreen").style.display = "none";
+      document.getElementById("main").style.display = "block";
+      setTimeout(() => { window.location.href = "/home"; }, 1500);
+    }
+
+    simulateDataLoading();
+  </script>
+</body>
+</html>
+

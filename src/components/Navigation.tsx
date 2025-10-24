@@ -9,6 +9,7 @@ export default function Navigation() {
   const navItems = [
     { href: '/', label: '🏠 홈' },
     { href: '/about', label: '💡 소개' },
+    { href: '/community', label: '💬 커뮤니티' },
     { href: '/request', label: '✨ 요청하기' },
     { href: '/requests', label: '📋 요청 리스트' },
     { href: '/maker', label: '🔧 제작자' },
