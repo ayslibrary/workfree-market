@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -10,12 +10,21 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setError, clearError } = useAuthStore();
+  const searchParams = useSearchParams();
+  const { user, setError, clearError } = useAuthStore();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState('');
+
+  // 이미 로그인한 경우 대시보드로 리다이렉트
+  useEffect(() => {
+    if (user) {
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
+    }
+  }, [user, router, searchParams]);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +39,8 @@ export default function LoginPage() {
       setError(error);
       setIsLoading(false);
     } else if (user) {
-      router.push('/');
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
     }
   };
 
@@ -46,7 +56,8 @@ export default function LoginPage() {
       setError(error);
       setIsLoading(false);
     } else if (user) {
-      router.push('/');
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
     }
   };
 

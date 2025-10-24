@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
+import { useAuth } from '@/hooks/useAuth';
 
 // 데모 데이터
 const DEMO_CREDITS = {
@@ -65,7 +68,16 @@ const SUBSCRIPTION_PLANS = [
 ];
 
 export default function CreditsPage() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [loading, setLoading] = useState(true);
+
+  // 로그인 체크
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login?redirect=/my/credits');
+    }
+  }, [user, isLoading, router]);
 
   useEffect(() => {
     // 로딩 시뮬레이션
@@ -73,15 +85,8 @@ export default function CreditsPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent mb-4"></div>
-          <p className="text-gray-600">로딩 중...</p>
-        </div>
-      </div>
-    );
+  if (isLoading || loading || !user) {
+    return <LoadingSpinner message="로딩 중..." variant="purple" />;
   }
 
   return (

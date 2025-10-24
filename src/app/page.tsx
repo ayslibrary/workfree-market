@@ -52,6 +52,7 @@ export default function Home() {
   const handleSignOut = async () => {
     await signOut();
     setShowUserMenu(false);
+    window.location.href = '/';
   };
 
   // 베타 신청 핸들러

@@ -4,10 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function BlogGeneratorPage() {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const [keyword, setKeyword] = useState('');
   const [content1, setContent1] = useState('');
   const [content2, setContent2] = useState('');

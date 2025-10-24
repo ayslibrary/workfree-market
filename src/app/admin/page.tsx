@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
 import MainNavigation from '@/components/MainNavigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Request {
   id: string;
@@ -21,12 +24,27 @@ interface Request {
 }
 
 export default function AdminPage() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
 
+  // 관리자 권한 체크
   useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'admin')) {
+      alert('관리자만 접근할 수 있습니다.');
+      router.push('/');
+    }
+  }, [user, isLoading, router]);
+
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'admin')) {
+      // 관리자가 아니면 데이터 로드하지 않음
+      return;
+    }
+
     if (!db) {
       console.error('Firebase가 초기화되지 않았습니다.');
       setLoading(false);
@@ -52,7 +70,7 @@ export default function AdminPage() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isLoading, user]);
 
   const handleStatusChange = async (requestId: string, newStatus: string) => {
     if (!db) return;
@@ -96,12 +114,22 @@ export default function AdminPage() {
     return requests.filter(req => req.status === status).length;
   };
 
+  // 로딩 중이거나 권한 없음
+  if (isLoading || loading) {
+    return <LoadingSpinner message="로딩 중..." variant="purple" />;
+  }
+
+  // 관리자 권한 없음
+  if (!user || user.role !== 'admin') {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 pt-28">
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-6 md:mb-8">
           <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-400">

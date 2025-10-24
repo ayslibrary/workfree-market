@@ -1,15 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
+import { signOut } from '@/lib/firebase';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, isLoading } = useAuth();
   const [activeTab, setActiveTab] = useState('home');
+
+  // 로그인 체크
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login?redirect=/my/dashboard');
+    }
+  }, [user, isLoading, router]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/');
+  };
+
+  if (isLoading || !user) {
+    return <LoadingSpinner message="로딩 중..." variant="purple" />;
+  }
 
   // 나만의 루틴 자동화 목록
   const myRoutines = [
@@ -185,35 +203,75 @@ export default function DashboardPage() {
         }}
       >
         <div className="flex items-center justify-around max-w-md mx-auto">
-          {[
-            { id: 'home', icon: '🏠', label: '홈' },
-            { id: 'tools', icon: '🔧', label: '툴' },
-            { id: 'community', icon: '💬', label: '톡' },
-            { id: 'settings', icon: '⚙️', label: '설정' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className="flex flex-col items-center gap-1 min-w-[60px] transition-all"
+          <Link
+            href="/my/dashboard"
+            className="flex flex-col items-center gap-1 min-w-[60px] transition-all"
+          >
+            <span className="text-2xl">🏠</span>
+            <span 
+              className="text-xs font-medium"
+              style={{ 
+                color: activeTab === 'home' ? 'var(--main-violet)' : 'var(--warm-white)',
+                opacity: activeTab === 'home' ? 1 : 0.7
+              }}
             >
-              <span className="text-2xl">{tab.icon}</span>
-              <span 
-                className="text-xs font-medium"
-                style={{ 
-                  color: activeTab === tab.id ? 'var(--main-violet)' : 'var(--warm-white)',
-                  opacity: activeTab === tab.id ? 1 : 0.7
-                }}
-              >
-                {tab.label}
-              </span>
-              {activeTab === tab.id && (
-                <div 
-                  className="w-1 h-1 rounded-full"
-                  style={{ backgroundColor: 'var(--main-violet)' }}
-                />
-              )}
-            </button>
-          ))}
+              홈
+            </span>
+            {activeTab === 'home' && (
+              <div 
+                className="w-1 h-1 rounded-full"
+                style={{ backgroundColor: 'var(--main-violet)' }}
+              />
+            )}
+          </Link>
+
+          <Link
+            href="/tools"
+            className="flex flex-col items-center gap-1 min-w-[60px] transition-all"
+          >
+            <span className="text-2xl">🔧</span>
+            <span 
+              className="text-xs font-medium"
+              style={{ 
+                color: 'var(--warm-white)',
+                opacity: 0.7
+              }}
+            >
+              툴
+            </span>
+          </Link>
+
+          <Link
+            href="/community"
+            className="flex flex-col items-center gap-1 min-w-[60px] transition-all"
+          >
+            <span className="text-2xl">💬</span>
+            <span 
+              className="text-xs font-medium"
+              style={{ 
+                color: 'var(--warm-white)',
+                opacity: 0.7
+              }}
+            >
+              톡
+            </span>
+          </Link>
+
+          <button
+            onClick={handleSignOut}
+            className="flex flex-col items-center gap-1 min-w-[60px] transition-all"
+          >
+            <span className="text-2xl">🚪</span>
+            <span 
+              className="text-xs font-medium"
+              style={{ 
+                color: 'var(--warm-white)',
+                opacity: 0.7
+              }}
+            >
+              로그아웃
+            </span>
+          </button>
         </div>
       </nav>
     </div>

@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { FadeIn } from '@/components/animations';
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 import { createPost } from '@/lib/community/posts';
 import type { PostCategory } from '@/types/community';
 import { CATEGORY_LABELS } from '@/types/community';
@@ -12,7 +13,7 @@ import { CATEGORY_LABELS } from '@/types/community';
 export default function WritePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user } = useAuthStore();
+  const { user, isLoading } = useAuth();
 
   const [category, setCategory] = useState<PostCategory>('lounge');
   const [title, setTitle] = useState('');
@@ -21,9 +22,9 @@ export default function WritePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       alert('로그인이 필요합니다.');
-      router.push('/login');
+      router.push('/login?redirect=/community/write');
       return;
     }
 
@@ -31,7 +32,11 @@ export default function WritePage() {
     if (categoryParam && (categoryParam === 'lounge' || categoryParam === 'career')) {
       setCategory(categoryParam);
     }
-  }, [user, router, searchParams]);
+  }, [user, isLoading, router, searchParams]);
+
+  if (isLoading || !user) {
+    return <LoadingSpinner message="로딩 중..." variant="purple" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,9 +88,9 @@ export default function WritePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-12 pt-28">
         <FadeIn>
           <div className="mb-8">
             <button

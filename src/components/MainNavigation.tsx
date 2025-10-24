@@ -13,6 +13,7 @@ export default function MainNavigation() {
   const handleSignOut = async () => {
     await signOut();
     setShowUserMenu(false);
+    window.location.href = '/';
   };
 
   return (

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -10,7 +10,8 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function SignupPage() {
   const router = useRouter();
-  const { setError, clearError } = useAuthStore();
+  const searchParams = useSearchParams();
+  const { user, setError, clearError } = useAuthStore();
   
   const [formData, setFormData] = useState({
     displayName: '',
@@ -24,6 +25,14 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // 이미 로그인한 경우 대시보드로 리다이렉트
+  useEffect(() => {
+    if (user) {
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
+    }
+  }, [user, router, searchParams]);
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -75,7 +84,8 @@ export default function SignupPage() {
       setIsLoading(false);
     } else if (user) {
       // TODO: Firestore에 추가 사용자 정보 저장 (role 등)
-      router.push('/');
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
     }
   };
 
@@ -91,7 +101,8 @@ export default function SignupPage() {
       setError(error);
       setIsLoading(false);
     } else if (user) {
-      router.push('/');
+      const redirect = searchParams.get('redirect') || '/my/dashboard';
+      router.push(redirect);
     }
   };
 

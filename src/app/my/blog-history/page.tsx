@@ -2,17 +2,27 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 import { getUserBlogHistory } from '@/lib/blogHistory';
 import { BlogHistory } from '@/types/blog';
 
 export default function BlogHistoryPage() {
-  const { user } = useAuthStore();
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [histories, setHistories] = useState<BlogHistory[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedHistory, setSelectedHistory] = useState<BlogHistory | null>(null);
+
+  // 로그인 체크
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login?redirect=/my/blog-history');
+    }
+  }, [user, isLoading, router]);
 
   useEffect(() => {
     async function loadHistory() {
@@ -210,22 +220,15 @@ ${history.content}
     URL.revokeObjectURL(url);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent mb-4"></div>
-          <p className="text-gray-600">로딩 중...</p>
-        </div>
-      </div>
-    );
+  if (isLoading || loading || !user) {
+    return <LoadingSpinner message="로딩 중..." variant="purple" />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">
