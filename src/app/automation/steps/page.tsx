@@ -69,7 +69,7 @@ export default function AutomationStepsPage() {
       {/* 스텝 목록 */}
       <div className="px-6 py-8">
         <StaggerContainer className="space-y-4 mb-8">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <StaggerItem key={step.id}>
               <div
                 className="p-6 rounded-2xl border-2 transition-all"
@@ -187,7 +187,7 @@ export default function AutomationStepsPage() {
             className="text-sm text-center"
             style={{ color: 'var(--midnight-navy)', opacity: 0.7 }}
           >
-            💡 각 스텝을 설정하고 "사용화 토팅"을 눌러주세요
+            💡 각 스텝을 설정하고 &quot;자동화 시작&quot;을 눌러주세요
           </p>
         </div>
       </div>

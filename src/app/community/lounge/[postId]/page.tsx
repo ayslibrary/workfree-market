@@ -114,7 +114,7 @@ export default function PostDetailPage() {
     }
   };
 
-  const handleDeleteComment = async (commentId: string) => {
+    const handleDeleteComment = async (commentId: string): Promise<void> => {
     if (!user) return;
 
     if (!confirm('댓글을 삭제하시겠습니까?')) return;

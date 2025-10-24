@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import MainNavigation from "@/components/MainNavigation";
 
 export default function GalleryPage() {
   const examples = [
@@ -57,22 +58,11 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-gray-950 dark:via-purple-950/30 dark:to-pink-950/30">
-      {/* 헤더 */}
-      <div className="bg-white/80 dark:bg-gray-950/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white text-xl font-bold">W</span>
-            </div>
-            <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              WorkFree Market
-            </div>
-          </Link>
-        </div>
-      </div>
+      {/* 네비게이션 */}
+      <MainNavigation />
 
       {/* Hero */}
-      <section className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white py-24 px-6 text-center">
+      <section className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white py-24 px-6 text-center mt-20">
           <FadeIn>
           <div className="inline-block mb-6">
             <span className="bg-white/20 backdrop-blur-sm text-white px-5 py-2 rounded-full text-sm font-semibold">
