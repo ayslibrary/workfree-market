@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 
 interface Request {
   id: string;

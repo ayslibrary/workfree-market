@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { storage, db } from '@/lib/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 
 export default function RequestPage() {
   const router = useRouter();
@@ -170,10 +170,10 @@ export default function RequestPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12">
+      <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-28">
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4 break-keep">
             💡 자동화 요청하기

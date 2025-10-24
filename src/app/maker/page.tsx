@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 
 interface MakerProject {
   id: string;

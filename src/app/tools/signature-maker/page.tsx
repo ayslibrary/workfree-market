@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 
 export default function SignatureMakerPage() {
@@ -115,9 +115,9 @@ export default function SignatureMakerPage() {
         background: `linear-gradient(180deg, var(--soft-lilac) 0%, var(--warm-white) 30%)` 
       }}
     >
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">

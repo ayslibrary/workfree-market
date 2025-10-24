@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 
 // 데모 데이터
@@ -86,9 +86,9 @@ export default function CreditsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, serverTimestamp, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 
 interface Request {
   id: string;
@@ -143,10 +143,10 @@ export default function RequestsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-28">
         {/* Page Title */}
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4 break-keep">

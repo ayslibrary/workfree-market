@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 import { createReview, getTotalReviewCount } from '@/lib/beta/reviews';
@@ -100,9 +100,9 @@ export default function ReviewPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="mb-8">

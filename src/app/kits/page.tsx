@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, query, where, orderBy, onSnapshot, QueryDocumentSnapshot, DocumentData, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 
 interface Kit {
   id: string;
@@ -180,10 +180,10 @@ export default function KitsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-20">
+      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-20 mt-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-keep">
             🎉 WorkFree 자동화 키트

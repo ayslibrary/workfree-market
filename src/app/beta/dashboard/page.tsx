@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 import {
@@ -62,8 +62,8 @@ export default function BetaDashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
-        <SimpleHeader />
-        <div className="flex justify-center items-center py-20">
+        <MainNavigation />
+        <div className="flex justify-center items-center py-20 pt-28">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
         </div>
       </div>
@@ -80,9 +80,9 @@ export default function BetaDashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-8">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 import { getPost, incrementViews, togglePostLike } from '@/lib/community/posts';
@@ -175,8 +175,8 @@ export default function CareerPostDetailPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white">
-        <SimpleHeader />
-        <div className="flex justify-center items-center py-20">
+        <MainNavigation />
+        <div className="flex justify-center items-center py-20 pt-28">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       </div>
@@ -191,9 +191,9 @@ export default function CareerPostDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white">
-      <SimpleHeader />
+      <MainNavigation />
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-12 pt-28">
         {/* 네비게이션 */}
         <FadeIn>
           <Link

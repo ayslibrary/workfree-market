@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 import { getPosts } from '@/lib/community/posts';

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
+import MainNavigation from '@/components/MainNavigation';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 import { useAuthStore } from '@/store/authStore';
 import { getUserBlogHistory } from '@/lib/blogHistory';
