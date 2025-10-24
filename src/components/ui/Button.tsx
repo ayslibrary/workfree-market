@@ -1,4 +1,4 @@
-// 기본 Button 컴포넌트
+// WorkFree Brand Button 컴포넌트
 
 import React from 'react';
 
@@ -16,13 +16,20 @@ export function Button({
   disabled,
   ...props 
 }: ButtonProps) {
-  const baseStyles = 'w-full px-6 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2';
+  const baseStyles = 'w-full px-6 py-3 font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-[1.02]',
-    secondary: 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:shadow-lg hover:scale-[1.02]',
-    outline: 'border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800',
-    google: 'bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700',
+    // Main CTA - Main Violet background
+    primary: 'bg-[var(--main-violet)] text-[var(--warm-white)] rounded-[var(--radius-button)] hover:bg-[var(--soft-lilac)] hover:shadow-[0_4px_12px_rgba(106,92,255,0.3)] hover:scale-[1.02]',
+    
+    // Secondary - Outline with Soft Lilac
+    secondary: 'bg-transparent text-[var(--main-violet)] border-2 border-[var(--soft-lilac)] rounded-[var(--radius-button)] hover:bg-[var(--soft-lilac)] hover:text-[var(--warm-white)]',
+    
+    // Outline - Minimal style
+    outline: 'border-2 border-[var(--soft-lilac)] text-[var(--midnight-navy)] rounded-[var(--radius-button)] hover:bg-[var(--soft-lilac)] hover:bg-opacity-20',
+    
+    // Google - Special case
+    google: 'bg-[var(--warm-white)] border-2 border-[var(--soft-lilac)] text-[var(--midnight-navy)] rounded-[var(--radius-button)] hover:bg-[var(--soft-lilac)] hover:bg-opacity-10',
   };
   
   return (

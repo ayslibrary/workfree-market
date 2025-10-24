@@ -1,32 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* WorkFree Brand Colors */
+  --main-violet: #6A5CFF;
+  --soft-lilac: #AFA6FF;
+  --midnight-navy: #1E1B33;
+  --warm-white: #FAFAFF;
+  --peach-accent: #FFBCA7;
+  
+  /* Legacy colors */
+  --background: var(--warm-white);
+  --foreground: var(--midnight-navy);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Brand Colors */
+  --color-brand-violet: var(--main-violet);
+  --color-brand-lilac: var(--soft-lilac);
+  --color-brand-navy: var(--midnight-navy);
+  --color-brand-white: var(--warm-white);
+  --color-brand-peach: var(--peach-accent);
+  
+  /* Primary/Secondary mappings */
+  --color-primary: var(--main-violet);
+  --color-secondary: var(--soft-lilac);
+  --color-accent: var(--peach-accent);
+  
+  /* Background & Text */
+  --color-background: var(--warm-white);
+  --color-foreground: var(--midnight-navy);
+  
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Border Radius */
+  --radius-card: 12px;
+  --radius-button: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--midnight-navy);
+    --foreground: var(--warm-white);
   }
 }
 
-html {
-  scroll-behavior: smooth;
+/* Next.js 라우트 전환 시 부드러운 스크롤 비활성화 */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-scroll-disabled]) {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f0ff; /* Soft Lilac Background */
+  color: #1E1B33; /* Midnight Navy */
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', system-ui, sans-serif;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,4 +74,20 @@ body {
 .break-keep {
   word-break: keep-all;
   overflow-wrap: break-word;
+}
+
+/* 떠다니는 아이콘 애니메이션 - 심플하고 전문적 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
 }

@@ -34,54 +34,75 @@ export default function AboutPage() {
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-5xl">
         {/* Hero */}
         <FadeIn>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              WorkFree
-            </span>
-          </h1>
-          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6 px-4 leading-relaxed break-keep">
-            &quot;퇴근을 앞당기는<br className="md:hidden" /> 가장 확실한 방법&quot;
-          </h2>
-          <div className="max-w-3xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 space-y-2 px-4">
-            <p className="font-semibold break-keep">당신의 시간을 되찾는 AI 자동화 스튜디오</p>
-            <p className="break-keep">설치 없이 웹에서 바로 실행하는 실무 자동화 서비스</p>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  WorkFree
+                </span>
+              </h1>
+              <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-900 mb-6 px-4 leading-relaxed break-keep">
+                &quot;퇴근을 앞당기는<br className="md:hidden" /> 가장 확실한 방법&quot;
+              </h2>
+              <div className="max-w-3xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 space-y-2 px-4">
+                <p className="font-semibold break-keep">당신의 시간을 되찾는 AI 자동화 스튜디오</p>
+                <p className="break-keep">설치 없이 웹에서 바로 실행하는 실무 자동화 서비스</p>
+              </div>
+            </div>
+            <div className="flex-shrink-0">
+              <div className="relative w-48 h-48 bg-gradient-to-br from-purple-200 via-pink-200 to-rose-200 rounded-full flex items-center justify-center shadow-2xl">
+                <div className="text-7xl">🚀</div>
+              </div>
+            </div>
           </div>
         </FadeIn>
 
         {/* 1. Pain Point */}
         <FadeIn delay={0.2}>
-          <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12 mt-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            🚨 Pain Point — 우리가 해결하려는 문제
-          </h2>
-          <p className="text-lg text-gray-700 mb-6">
-            하루에도 수십 번 반복하는 루틴 업무들.<br />
-            메일 확인, 엑셀 정리, 보고서 수정, PDF 변환…
-          </p>
-          <p className="text-lg text-gray-700 mb-6 font-semibold">
-            이런 상황, 익숙하지 않나요?
-          </p>
-          <ul className="space-y-3 mb-8">
-            <li className="flex items-start gap-3 text-gray-700">
-              <span className="text-red-500 text-xl">•</span>
-              <span>자동화 툴은 많지만 <strong>설치가 복잡하고 배우기 어렵다.</strong></span>
-            </li>
-            <li className="flex items-start gap-3 text-gray-700">
-              <span className="text-red-500 text-xl">•</span>
-              <span>유료 구독은 부담스럽고 <strong>사용 빈도가 낮아 아깝다.</strong></span>
-            </li>
-            <li className="flex items-start gap-3 text-gray-700">
-              <span className="text-red-500 text-xl">•</span>
-              <span>그래서 결국, <strong>사람이 다시 손으로 한다.</strong></span>
-            </li>
-          </ul>
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border-2 border-indigo-200">
-            <p className="text-xl font-bold text-gray-900 mb-2">
-              WorkFree는 이 문제를 해결합니다.
+          <section className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 mt-12">
+          <div className="flex flex-col md:flex-row items-start gap-8 mb-8">
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                🐰 Pain Point — 우리가 해결하려는 문제
+              </h2>
+              <p className="text-lg text-gray-700 mb-6">
+                하루에도 수십 번 반복하는 루틴 업무들.<br />
+                메일 확인, 엑셀 정리, 보고서 수정, PDF 변환…
+              </p>
+              <p className="text-lg text-gray-700 mb-6 font-semibold">
+                이런 상황, 익숙하지 않나요?
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-3 text-gray-700">
+                  <span className="text-orange-500 text-xl">●</span>
+                  <span>자동화 툴은 많지만 <strong>설치가 복잡하고 배우기 어렵다.</strong></span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <span className="text-orange-500 text-xl">●</span>
+                  <span>유료 구독은 부담스럽고 <strong>사용 빈도가 낮아 아깝다.</strong></span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <span className="text-orange-500 text-xl">●</span>
+                  <span>그래서 결국, <strong>사람이 다시 손으로 한다.</strong></span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex-shrink-0">
+              <div className="relative w-40 h-40 bg-gradient-to-br from-orange-200 via-amber-200 to-yellow-200 rounded-full flex items-center justify-center shadow-xl">
+                <div className="text-6xl">⚡</div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-500 rounded-2xl p-6 text-white">
+            <p className="text-xl font-bold mb-3">
+              WorkFree는 이 문제를 해결합니다. 클릭 한 번으로 실무 다기능.
             </p>
-            <p className="text-lg text-gray-700">
-              클릭 한 번으로 끝나는 실무 자동화.
-            </p>
+            <Link
+              href="/#beta"
+              className="inline-block bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-800 hover:to-indigo-800 text-white px-8 py-3 rounded-full font-semibold transition-all hover:scale-105"
+            >
+              WorkFree 본 이 문몬을 헬현하는 →
+            </Link>
           </div>
           </section>
         </FadeIn>
@@ -388,6 +409,11 @@ export default function AboutPage() {
         {/* CTA */}
         <FadeIn delay={0.2}>
           <section className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-12 text-center text-white mb-12">
+          <div className="flex justify-center mb-6">
+            <div className="w-32 h-32 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+              <div className="text-7xl">🎁</div>
+            </div>
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             🎁 베타 무료 참여하기
           </h2>

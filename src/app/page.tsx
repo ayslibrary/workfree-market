@@ -108,25 +108,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-[#f5f0ff]">
       {/* 네비게이션 */}
-      <nav className="fixed top-0 w-full bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg z-50 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      <nav className="fixed top-0 w-full bg-[#f5f0ff]/95 backdrop-blur-lg z-50 shadow-lg">
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white text-xl font-bold">W</span>
-              </div>
+            <Link href="/" className="flex items-center gap-3 group">
+              <img 
+                src="/workfree-logo.png?v=3" 
+                alt="WorkFree Logo" 
+                className="w-10 h-10 transition-transform group-hover:scale-110"
+              />
               <div>
                 <div className="flex items-center gap-2">
-                  <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  <div className="text-xl font-bold text-[#1E1B33]">
                     WorkFree Market
                   </div>
-                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-[#FF9A7A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                     Beta
                   </span>
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
+                <div className="text-xs text-[#1E1B33]/70 font-bold">
                   AI 실무 자동화 스튜디오
                 </div>
               </div>
@@ -135,35 +137,35 @@ export default function Home() {
             {/* 데스크톱 메뉴 */}
             <div className="hidden md:flex gap-6 items-center">
               {/* 카테고리 드롭다운 */}
-              <div className="relative group">
-                <button className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px] flex items-center gap-1">
-                  카테고리
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                      <div className="relative group">
+                        <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
+                          카테고리
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <Link
                     href="/automation/microsoft"
-                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-[14px]"
+                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                   >
                     📊 Microsoft 사무자동화
                   </Link>
                   <Link
                     href="/automation/crawling"
-                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-colors text-[14px]"
+                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                   >
                     🕷️ 웹 크롤링
                   </Link>
                   <Link
                     href="/automation/visualization"
-                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors text-[14px]"
+                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                   >
                     📈 데이터 시각화
                   </Link>
                   <Link
                     href="/automation/prompts"
-                    className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors text-[14px]"
+                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                   >
                     🤖 AI 프롬프트
                   </Link>
@@ -172,13 +174,13 @@ export default function Home() {
               
               <Link
                 href="/my/credits"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
+                className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
               >
                 크레딧
               </Link>
               <Link
                 href="/about"
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-[14px]"
+                className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
               >
                 소개
               </Link>
@@ -187,254 +189,264 @@ export default function Home() {
                 <>
                   {user ? (
                     <div className="relative">
-                      <button
-                        onClick={() => setShowUserMenu(!showUserMenu)}
-                        className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all text-[16px]"
-                      >
-                        <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                          <span className="text-sm">{user.displayName[0]}</span>
-                        </div>
-                        <span>{user.displayName}</span>
-                      </button>
+                              <button
+                                onClick={() => setShowUserMenu(!showUserMenu)}
+                                className="flex items-center gap-2 bg-[#6A5CFF] text-white px-5 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all text-[16px]"
+                              >
+                                <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                                  <span className="text-sm font-bold">{user.displayName[0]}</span>
+                                </div>
+                                <span>{user.displayName}</span>
+                              </button>
                       
                       {showUserMenu && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 py-2 z-50">
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 z-50">
                           <Link
                             href="/my/purchases"
-                            className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-[16px]"
+                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                           >
                             구매 내역
                           </Link>
                           <Link
                             href="/seller/dashboard"
-                            className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-[16px]"
+                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                           >
                             판매자 대시보드
                           </Link>
                           <Link
                             href="/my/settings"
-                            className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-[16px]"
+                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                           >
                             설정
                           </Link>
-                          <hr className="my-2 border-gray-200 dark:border-gray-700" />
+                          <hr className="my-2 border-[#AFA6FF]/30" />
                           <button
                             onClick={handleSignOut}
-                            className="w-full text-left px-4 py-2.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-[16px]"
+                            className="w-full text-left px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors text-[14px] font-medium"
                           >
                             로그아웃
                           </button>
                         </div>
                       )}
                     </div>
-                  ) : (
-                    <Link
-                      href="/login"
-                      className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all inline-block text-[16px]"
-                    >
-                      로그인
-                    </Link>
-                  )}
+                          ) : (
+                            <Link
+                              href="/login"
+                              className="bg-[#6A5CFF] text-white px-6 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all inline-block text-[16px]"
+                            >
+                              로그인
+                            </Link>
+                          )}
                 </>
               )}
             </div>
 
-            {/* 모바일 햄버거 메뉴 */}
-            <button
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="md:hidden p-2 text-gray-700 dark:text-gray-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {showMobileMenu ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+                    {/* 모바일 햄버거 메뉴 */}
+                    <button
+                      onClick={() => setShowMobileMenu(!showMobileMenu)}
+                      className="md:hidden p-2 text-[#1E1B33]"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        {showMobileMenu ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        ) : (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                        )}
+                      </svg>
+                    </button>
           </div>
 
-          {/* 모바일 메뉴 드롭다운 */}
-          {showMobileMenu && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4">
-              <div className="flex flex-col gap-2">
-                <Link
-                  href="/about"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  📖 소개
-                </Link>
-                <Link
-                  href="/request"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  ✨ 자동화 요청하기
-                </Link>
-                <Link
-                  href="/requests"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  📋 요청 리스트
-                </Link>
-                <Link
-                  href="/maker"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  🔧 제작자 대시보드
-                </Link>
-                <Link
-                  href="/kits"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  🧩 자동화 키트
-                </Link>
-                <Link
-                  href="/my/credits"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  💎 크레딧
-                </Link>
-                <Link
-                  href="/feedback"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  💬 피드백
-                </Link>
-                <Link
-                  href="/admin"
-                  className="text-left px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  ⚙️ Admin
-                </Link>
-                {!isLoading && !user && (
-                  <Link
-                    href="/login"
-                    className="mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-6 py-3 rounded-full font-semibold text-center"
-                    onClick={() => setShowMobileMenu(false)}
-                  >
-                    로그인
-                  </Link>
-                )}
+                  {/* 모바일 메뉴 드롭다운 */}
+                  {showMobileMenu && (
+                    <div className="md:hidden mt-4 pb-4 border-t border-[#AFA6FF]/30 pt-4">
+                      <div className="flex flex-col gap-2">
+                        <Link
+                          href="/about"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          📖 소개
+                        </Link>
+                        <Link
+                          href="/request"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          ✨ 자동화 요청하기
+                        </Link>
+                        <Link
+                          href="/requests"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          📋 요청 리스트
+                        </Link>
+                        <Link
+                          href="/maker"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          🔧 제작자 대시보드
+                        </Link>
+                        <Link
+                          href="/kits"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          🧩 자동화 키트
+                        </Link>
+                        <Link
+                          href="/my/credits"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          💎 크레딧
+                        </Link>
+                        <Link
+                          href="/feedback"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          💬 피드백
+                        </Link>
+                        <Link
+                          href="/admin"
+                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
+                          onClick={() => setShowMobileMenu(false)}
+                        >
+                          ⚙️ Admin
+                        </Link>
+                        {!isLoading && !user && (
+                          <Link
+                            href="/login"
+                            className="mt-2 bg-[#6A5CFF] text-white px-6 py-3 rounded-full font-bold text-center hover:shadow-lg hover:scale-105 transition-all"
+                            onClick={() => setShowMobileMenu(false)}
+                          >
+                            로그인
+                          </Link>
+                        )}
               </div>
             </div>
           )}
         </div>
       </nav>
 
-      {/* Hero 섹션 - 개선 */}
-      <section className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950/30 dark:to-purple-950/30 relative overflow-hidden">
-        {/* 배경 패턴 */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(99 102 241) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}></div>
+      {/* Hero 섹션 */}
+      <section className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-[#f5f0ff] relative overflow-hidden">
+        {/* 떠다니는 Office 아이콘들 */}
+        <div className="absolute top-[20%] left-[8%] animate-float" style={{ animationDelay: '0s' }}>
+          <div className="text-[70px] opacity-50">📊</div>
+        </div>
+        <div className="absolute top-[30%] right-[12%] animate-float" style={{ animationDelay: '1s' }}>
+          <div className="text-[65px] opacity-50">📧</div>
+        </div>
+        <div className="absolute bottom-[25%] left-[15%] animate-float" style={{ animationDelay: '2s' }}>
+          <div className="text-[75px] opacity-50">📈</div>
+        </div>
+        <div className="absolute top-[60%] right-[20%] animate-float" style={{ animationDelay: '0.5s' }}>
+          <div className="text-[60px] opacity-50">💼</div>
+        </div>
+        <div className="absolute top-[45%] left-[25%] animate-float" style={{ animationDelay: '1.5s' }}>
+          <div className="text-[68px] opacity-50">📝</div>
+        </div>
+        <div className="absolute bottom-[40%] right-[8%] animate-float" style={{ animationDelay: '2.5s' }}>
+          <div className="text-[72px] opacity-50">🔧</div>
         </div>
 
         <div className="container mx-auto text-center max-w-6xl relative z-10">
           <FadeIn delay={0.1}>
             <div className="inline-block mb-6 animate-bounce">
-              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-xl">
-                🎁 Beta 무료 크레딧 10개 지급!
+              <span className="bg-[#FF9A7A] text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-xl">
+                🎁 베타 테스터 한정 • 10 크레딧 무료 지급
               </span>
             </div>
           </FadeIn>
           
           <FadeIn delay={0.2} duration={0.8}>
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4 break-keep">
-              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                세상의 모든 실무를<br />클릭 한 번으로
-              </span>
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight px-4 break-keep text-[#1E1B33]">
+              세상의 모든 실무를<br />
+              <span className="text-[#6A5CFF]">클릭</span> 한 번으로
             </h1>
           </FadeIn>
           
           <FadeIn delay={0.4}>
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed px-4 break-keep">
-              <span className="font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <p className="text-lg md:text-xl lg:text-2xl text-[#1E1B33] mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4 break-keep">
+              <span className="font-bold">
                 퇴근에 날개를 달다. WorkFree Market
               </span>
-            </p>
-            <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4 break-keep">
-              설치 없이 웹에서 바로 실행 • 크레딧으로 필요한 만큼만 사용
             </p>
           </FadeIn>
           
           {/* CTA 버튼 */}
           <FadeIn delay={0.6}>
-            <div className="flex gap-4 justify-center flex-wrap mb-16">
+            <div className="flex gap-4 justify-center items-center flex-wrap mb-12 relative">
               {!isLoading && !user ? (
-                <Link
-                  href="/signup"
-                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
-                >
-                  <span>🎁</span>
-                  <span>무료로 시작하기</span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">10 크레딧</span>
-                </Link>
+                <>
+                  {/* 왼쪽 투명 공간 (균형용) */}
+                  <div className="w-12 h-12 opacity-0"></div>
+                  <Link
+                    href="/signup"
+                    className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    🚀 지금 칼퇴 클릭
+                  </Link>
+                  {/* 큰 커서 아이콘 */}
+                  <div className="animate-bounce">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#6A5CFF]">
+                      <path d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </>
               ) : (
                 <Link
                   href="/my/dashboard"
-                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
+                  className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
                 >
                   <span>마이페이지 가기</span>
                   <span>→</span>
                 </Link>
               )}
-              <button
-                onClick={() => scrollToSection("beta")}
-                className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-purple-200 dark:border-purple-800"
-              >
-                베타 자세히 보기
-              </button>
             </div>
           </FadeIn>
           
           {/* 통계 */}
-          <StaggerContainer staggerDelay={0.15} className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <StaggerContainer staggerDelay={0.15} className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <StaggerItem>
-              <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
                   100명
                 </div>
-                <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                <div className="text-[#1E1B33]/70 text-xs font-medium">
                   베타 테스터 모집
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-purple-100 dark:border-purple-900 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
                   10개
                 </div>
-                <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                <div className="text-[#1E1B33]/70 text-xs font-medium">
                   무료 크레딧
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-pink-100 dark:border-pink-900 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-2">
+              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
                   웹실행
                 </div>
-                <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                <div className="text-[#1E1B33]/70 text-xs font-medium">
                   설치 불필요
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border border-green-100 dark:border-green-900 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
                   1개월
                 </div>
-                <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                <div className="text-[#1E1B33]/70 text-xs font-medium">
                   무료 체험 기간
                 </div>
               </div>
@@ -444,18 +456,18 @@ export default function Home() {
       </section>
 
       {/* 4개 카테고리 섹션 */}
-      <section className="py-24 px-6 bg-white dark:bg-gray-950">
+      <section className="py-24 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <FadeIn>
             <div className="text-center mb-6">
-              <span className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
+              <span className="inline-block bg-[#6A5CFF] text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
                 💼 스마트워크
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-[#1E1B33]">
               일은 자동으로,<br />성과는 그대로.
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-16 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-16 text-lg">
               업무 분야별로 엄선된 자동화 키트
             </p>
           </FadeIn>
@@ -581,19 +593,19 @@ export default function Home() {
       </section>
 
       {/* 홍보 영상 섹션 */}
-      <section className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+      <section className="py-20 px-6 bg-[#ede7ff]">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white px-4">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-4 text-[#1E1B33] px-4">
               WorkFree를 영상으로 만나보세요
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-12 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-12 text-lg">
               직장인의 반복 업무를 자동화하는 WorkFree의 모든 것
             </p>
           </FadeIn>
           
           <FadeIn delay={0.2}>
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-indigo-100 dark:border-indigo-900 mx-auto max-w-5xl">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#AFA6FF] mx-auto max-w-5xl">
               <video
                 className="w-full h-auto"
                 autoPlay
@@ -611,7 +623,7 @@ export default function Home() {
       </section>
 
       {/* 🎯 베타 서비스 체험 섹션 */}
-      <section className="py-16 px-6 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-pink-900/20">
+      <section className="py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-8">
             {/* AI 블로그 생성기 */}
@@ -804,13 +816,13 @@ export default function Home() {
       </section>
 
       {/* 작동 방식 섹션 */}
-      <section id="how-it-works" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
+      <section id="how-it-works" className="py-24 px-6 bg-[#f5f0ff]">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-[#1E1B33] px-4">
               간단한 3단계
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
               설치 불필요, 웹에서 클릭 한 번으로 바로 시작
             </p>
           </FadeIn>
@@ -890,18 +902,18 @@ export default function Home() {
       </section>
 
       {/* 인기 서비스 섹션 */}
-      <section id="kits" className="py-24 px-6 bg-white dark:bg-gray-950">
+      <section id="kits" className="py-24 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <FadeIn>
             <div className="text-center mb-6">
-              <span className="inline-block bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
+              <span className="inline-block bg-[#6A5CFF] text-white px-6 py-2 rounded-full text-sm font-bold mb-6">
                 🔥 인기 서비스
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white px-4">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-6 text-[#1E1B33] px-4">
               보고서·메일·정리…<br />클릭 한 번이면 끝.
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
               크레딧으로 바로 실행 • 설치 불필요 • 웹에서 즉시 사용
             </p>
           </FadeIn>
@@ -1069,18 +1081,18 @@ export default function Home() {
       </section>
 
       {/* 크레딧으로 절약하는 시간과 비용 */}
-      <section id="savings" className="py-24 px-6 bg-gray-50 dark:bg-gray-900">
+      <section id="savings" className="py-24 px-6 bg-[#ede7ff]">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
             <div className="text-center mb-4">
-              <span className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
+              <span className="inline-block bg-[#6A5CFF] text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
                 ⏰ 시간 단축 효과
               </span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-[#1E1B33]">
               매일 137분,<br />자동화로 돌려드립니다
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
               크레딧 1개로 평균 30분, 약 10,000원 절약 효과
             </p>
           </FadeIn>
@@ -1188,13 +1200,13 @@ export default function Home() {
       </section>
 
       {/* 리뷰 섹션 */}
-      <section className="py-24 px-6 bg-white dark:bg-gray-950">
+      <section className="py-24 px-6 bg-[#f5f0ff]">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-5xl md:text-6xl font-bold text-center mb-6 text-[#1E1B33]">
               실제 사용자 리뷰
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-20 text-lg">
+            <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
               직장인들의 솔직한 후기
             </p>
           </FadeIn>
@@ -1267,7 +1279,7 @@ export default function Home() {
       </section>
 
       {/* 베타 신청 섹션 */}
-      <section className="py-24 px-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:bg-gradient-to-br dark:from-purple-900/20 dark:to-pink-900/20">
+      <section className="py-24 px-6 bg-white">
         <div className="container mx-auto max-w-3xl">
           <FadeIn>
             <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-12 border-2 border-purple-200 dark:border-purple-800">
@@ -1413,7 +1425,7 @@ export default function Home() {
       </section>
 
       {/* CTA 섹션 */}
-      <section className="py-24 px-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
+      <section className="py-24 px-6 bg-[#6A5CFF]">
         <div className="container mx-auto max-w-4xl text-center text-white">
           <FadeIn delay={0.1}>
             <h2 className="text-5xl md:text-6xl font-bold mb-8">

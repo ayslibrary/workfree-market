@@ -249,3 +249,4 @@ export const SOCIAL_SHARE_REWARDS: Record<SocialPlatform, number> = {
 // 베타 테스터 최대 인원
 export const MAX_BETA_TESTERS = 100;
 
+

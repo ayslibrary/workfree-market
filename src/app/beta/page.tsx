@@ -1,297 +1,291 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import SimpleHeader from '@/components/SimpleHeader';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
-import { useAuthStore } from '@/store/authStore';
-import { registerBetaTester, getBetaTesterCount } from '@/lib/beta/missions';
-import { MAX_BETA_TESTERS, COMPLETION_BONUS } from '@/types/beta';
+import { useState } from "react";
+import Link from "next/link";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import RoulettePopup from "@/components/RoulettePopup";
 
 export default function BetaPage() {
-  const router = useRouter();
-  const { user } = useAuthStore();
-  const [testerCount, setTesterCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isJoining, setIsJoining] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    job: "",
+    environment: "",
+    task: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showRoulette, setShowRoulette] = useState(false);
 
-  useEffect(() => {
-    loadTesterCount();
-  }, []);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const loadTesterCount = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
     try {
-      const count = await getBetaTesterCount();
-      setTesterCount(count);
+      // Firebase Firestore에 저장
+      await addDoc(collection(db, "beta_testers"), {
+        ...formData,
+        timestamp: new Date(),
+      });
+
+      console.log("Beta Tester Data:", formData);
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        job: "",
+        environment: "",
+        task: "",
+      });
+
+      // 룰렛 팝업 표시
+      setTimeout(() => setShowRoulette(true), 500);
+
+      // 3초 후 다시 폼 표시
+      setTimeout(() => setSubmitted(false), 3000);
     } catch (error) {
-      console.error('베타테스터 수 로딩 실패:', error);
+      console.error("Error submitting beta form:", error);
+      alert("신청 중 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
-
-  const handleJoinBeta = async () => {
-    if (!user) {
-      alert('로그인이 필요합니다.');
-      router.push('/login');
-      return;
-    }
-
-    try {
-      setIsJoining(true);
-      const betaNumber = await registerBetaTester(user.id);
-
-      if (betaNumber === null) {
-        alert('죄송합니다. 베타 테스터 모집이 마감되었습니다.');
-        return;
-      }
-
-      alert(`축하합니다! 베타테스터 #${betaNumber}로 등록되었습니다! 🎉`);
-      router.push('/beta/dashboard');
-    } catch (error: any) {
-      console.error('베타 등록 실패:', error);
-      alert(error.message || '베타 등록에 실패했습니다.');
-    } finally {
-      setIsJoining(false);
-    }
-  };
-
-  const remainingSlots = MAX_BETA_TESTERS - testerCount;
-  const isFull = testerCount >= MAX_BETA_TESTERS;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
-      <SimpleHeader />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      {/* 헤더 */}
+      <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-xl font-bold">W</span>
+            </div>
+            <div className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              WorkFree Market
+            </div>
+          </Link>
+        </div>
+      </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12">
-        {/* 메인 헤더 */}
+      {/* Hero */}
+      <section className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-24 px-6 text-center">
         <FadeIn>
-          <div className="text-center mb-12">
-            <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
-              🔥 LIMITED BETA
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              베타테스터 100인 한정 모집
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8">
-              WorkFree Beta Mission 100에 참여하고
-              <br />
-              <span className="font-bold text-purple-600">
-                10,000 크레딧 + VIP 등급
-              </span>
-              을 받아가세요!
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            🚀 WorkFree Beta Test
+          </h1>
+          <p className="text-xl md:text-2xl opacity-95">
+            AI 자동화로 당신의 루틴을 바꿀 시간입니다.
+          </p>
+        </FadeIn>
+      </section>
+
+      <div className="container mx-auto px-6 py-16 max-w-4xl">
+        {/* 신청 폼 섹션 */}
+        <FadeIn delay={0.2}>
+          <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-indigo-600 mb-6">
+              베타테스터 신청
+            </h2>
+            <p className="text-center text-gray-600 text-lg leading-relaxed mb-10">
+              WorkFree는 현재 베타테스터를 모집 중입니다.<br />
+              실제 키트를 무료로 체험하고, 당신의 효율화 경험을 들려주세요.
             </p>
 
-            {/* 카운터 */}
-            {isLoading ? (
-              <div className="inline-block bg-gray-100 rounded-2xl px-8 py-6">
-                <div className="animate-pulse">로딩 중...</div>
+            {submitted ? (
+              <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-8 text-center">
+                <div className="text-6xl mb-4">✅</div>
+                <h3 className="text-2xl font-bold text-green-700 mb-2">
+                  신청이 완료되었습니다!
+                </h3>
+                <p className="text-gray-600">
+                  WorkFree 베타테스터에 참여해주셔서 감사합니다.
+                </p>
               </div>
             ) : (
-              <div className="inline-block bg-white rounded-2xl shadow-xl px-8 py-6 border-4 border-purple-200">
-                <div className="text-sm text-gray-600 mb-2">현재 참여자</div>
-                <div className="text-5xl font-bold">
-                  <span className="text-purple-600">{testerCount}</span>
-                  <span className="text-gray-400"> / {MAX_BETA_TESTERS}</span>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    👤 이름
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="홍길동"
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                  />
                 </div>
-                {!isFull && (
-                  <div className="text-sm text-red-600 font-bold mt-2">
-                    ⏰ 남은 자리 {remainingSlots}개!
-                  </div>
-                )}
-              </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    📧 이메일
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="example@company.com"
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    🏢 직장/직무
+                  </label>
+                  <input
+                    type="text"
+                    name="job"
+                    value={formData.job}
+                    onChange={handleChange}
+                    placeholder="예: 영업관리 / 회계 / 마케팅"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    💻 주요 사용 환경
+                  </label>
+                  <select
+                    name="environment"
+                    value={formData.environment}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                  >
+                    <option value="">선택해주세요</option>
+                    <option value="windows">Windows</option>
+                    <option value="mac">macOS</option>
+                    <option value="google">Google Workspace</option>
+                    <option value="microsoft">Microsoft 365</option>
+                    <option value="other">기타</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    💬 WorkFree를 통해 자동화하고 싶은 업무
+                  </label>
+                  <textarea
+                    name="task"
+                    value={formData.task}
+                    onChange={handleChange}
+                    rows={4}
+                    placeholder="예: 엑셀 보고서 자동작성, 메일 회신 자동화 등"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "📨 신청 중..." : "📨 신청 완료하기"}
+                </button>
+              </form>
             )}
-          </div>
+          </section>
         </FadeIn>
 
-        {/* CTA 버튼 */}
-        <FadeIn delay={0.1}>
-          <div className="text-center mb-16">
-            {isFull ? (
-              <button
-                disabled
-                className="bg-gray-300 text-gray-500 px-12 py-4 rounded-xl font-bold text-xl cursor-not-allowed"
-              >
-                마감되었습니다
-              </button>
-            ) : (
-              <button
-                onClick={handleJoinBeta}
-                disabled={isJoining}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-xl font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50"
-              >
-                {isJoining ? '등록 중...' : '🚀 지금 바로 참여하기'}
-              </button>
-            )}
-            <p className="text-sm text-gray-500 mt-4">
-              * 로그인이 필요합니다
-            </p>
-          </div>
-        </FadeIn>
-
-        {/* 혜택 카드 */}
-        <StaggerContainer>
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-purple-200">
-                <div className="text-4xl mb-4">💰</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {COMPLETION_BONUS.credits.toLocaleString()} 크레딧
-                </h3>
-                <p className="text-gray-600">
-                  10개 미션 완주 시<br />대량 크레딧 무료 제공
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-200">
-                <div className="text-4xl mb-4">👑</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  VIP 등급
-                </h3>
-                <p className="text-gray-600">
-                  정식 런칭 시<br />평생 VIP 혜택 제공
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-green-200">
-                <div className="text-4xl mb-4">🎁</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  특별 할인
-                </h3>
-                <p className="text-gray-600">
-                  모든 서비스<br />평생 30% 할인
-                </p>
-              </div>
-            </StaggerItem>
-          </div>
-        </StaggerContainer>
-
-        {/* 미션 소개 */}
+        {/* 혜택 섹션 */}
         <FadeIn delay={0.3}>
-          <div className="bg-gradient-to-r from-purple-900 to-blue-900 rounded-3xl p-12 mb-16 text-white">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              🎮 10개 미션으로 완성하는 베타 여정
+          <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-2 border-indigo-200">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-indigo-600 mb-8">
+              📈 베타테스터 혜택
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">✅</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">1. 회원가입</h4>
-                  <p className="text-purple-200 text-sm">+100 크레딧</p>
+            <StaggerContainer staggerDelay={0.1} className="space-y-4">
+              <StaggerItem>
+                <div className="flex items-start gap-4 bg-white p-6 rounded-xl border-2 border-indigo-100 hover:scale-[1.02] transition-transform">
+                  <div className="text-3xl">✅</div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-900">
+                      WorkFree 자동화 키트 2종 무료 다운로드
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">🎨</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">2. AI 초상화 생성</h4>
-                  <p className="text-purple-200 text-sm">+200 크레딧 | 30분 절약</p>
+              </StaggerItem>
+              <StaggerItem>
+                <div className="flex items-start gap-4 bg-white p-6 rounded-xl border-2 border-indigo-100 hover:scale-[1.02] transition-transform">
+                  <div className="text-3xl">✅</div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-900">
+                      피드백 작성 시 정식 출시 후 50% 할인쿠폰 지급
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">✍️</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">3. AI 블로그 생성</h4>
-                  <p className="text-purple-200 text-sm">+200 크레딧 | 30분 절약</p>
+              </StaggerItem>
+              <StaggerItem>
+                <div className="flex items-start gap-4 bg-white p-6 rounded-xl border-2 border-indigo-100 hover:scale-[1.02] transition-transform">
+                  <div className="text-3xl">✅</div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-900">
+                      우수 후기자는 &quot;Featured User&quot; 섹션 노출
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📝</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">4. 첫 번째 후기</h4>
-                  <p className="text-purple-200 text-sm">+300 크레딧</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">💬</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">5. 커뮤니티 참여</h4>
-                  <p className="text-purple-200 text-sm">+200 크레딧</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">🔧</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">6. 자동화 도구</h4>
-                  <p className="text-purple-200 text-sm">+300 크레딧 | 60분 절약</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📝</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">7. 두 번째 후기</h4>
-                  <p className="text-purple-200 text-sm">+400 크레딧</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📢</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">8. SNS 공유</h4>
-                  <p className="text-purple-200 text-sm">+500 크레딧</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📝</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">9. 전체 후기</h4>
-                  <p className="text-purple-200 text-sm">+500 크레딧</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">🎉</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">10. 베타 설문</h4>
-                  <p className="text-purple-200 text-sm">+500 크레딧</p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 text-center">
-              <div className="inline-block bg-yellow-400 text-gray-900 px-6 py-3 rounded-xl font-bold">
-                🎁 완주 보너스: +10,000 크레딧 + VIP 등급
-              </div>
-            </div>
-          </div>
+              </StaggerItem>
+            </StaggerContainer>
+          </section>
         </FadeIn>
 
-        {/* FAQ */}
+        {/* 다운로드 섹션 */}
         <FadeIn delay={0.4}>
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              자주 묻는 질문
+          <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              💾 베타 키트 다운로드
             </h2>
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-bold text-gray-900 mb-2">
-                  Q. 베타 테스트는 언제까지인가요?
-                </h4>
-                <p className="text-gray-600">
-                  100명이 모두 모집되면 자동으로 마감됩니다. 서둘러 참여하세요!
-                </p>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-900 mb-2">
-                  Q. 미션을 완료하지 못하면 어떻게 되나요?
-                </h4>
-                <p className="text-gray-600">
-                  일부만 완료해도 해당 미션의 크레딧은 받을 수 있습니다. 하지만 완주 보너스는 10개 모두 완료 시에만 지급됩니다.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-900 mb-2">
-                  Q. VIP 등급의 혜택은 무엇인가요?
-                </h4>
-                <p className="text-gray-600">
-                  정식 런칭 후 모든 서비스 평생 30% 할인, 신기능 우선 체험, 전용 고객 지원 등의 혜택이 제공됩니다.
-                </p>
-              </div>
+            <p className="text-gray-600 text-lg mb-8">
+              신청 후 바로 다운로드하실 수 있습니다.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="/downloads/rpa-test.txt"
+                download
+                className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all inline-block"
+              >
+                💾 테스트 키트 다운로드
+              </a>
+              <Link
+                href="/feedback"
+                className="bg-gray-900 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all inline-block"
+              >
+                📝 피드백 남기기
+              </Link>
             </div>
-          </div>
+          </section>
         </FadeIn>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 py-12 text-center text-gray-600">
+        <p className="mb-2">© 2025 WorkFree — Work Less, Create More.</p>
+        <p>문의: contact@workfree.ai</p>
+      </footer>
+
+      {/* 룰렛 팝업 */}
+      {showRoulette && (
+        <RoulettePopup
+          onClose={() => setShowRoulette(false)}
+          autoShow={false}
+        />
+      )}
     </div>
   );
 }

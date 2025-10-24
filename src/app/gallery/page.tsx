@@ -73,15 +73,15 @@ export default function GalleryPage() {
 
       {/* Hero */}
       <section className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white py-24 px-6 text-center">
-        <FadeIn>
+          <FadeIn>
           <div className="inline-block mb-6">
             <span className="bg-white/20 backdrop-blur-sm text-white px-5 py-2 rounded-full text-sm font-semibold">
               🎨 AI 화보 갤러리
-            </span>
-          </div>
+                </span>
+              </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             5분 만에 Vogue 커버 모델
-          </h1>
+              </h1>
           <p className="text-xl md:text-2xl opacity-95 max-w-3xl mx-auto mb-8">
             AI가 만든 프로페셔널 화보 스타일 갤러리
           </p>
@@ -100,13 +100,13 @@ export default function GalleryPage() {
             >
               📦 프롬프트 키트 다운로드
             </Link>
-          </div>
-        </FadeIn>
+            </div>
+          </FadeIn>
       </section>
 
       <div className="container mx-auto px-6 py-16 max-w-7xl">
         {/* 갤러리 소개 */}
-        <FadeIn>
+          <FadeIn>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               다양한 스타일로 변신하세요
@@ -115,7 +115,7 @@ export default function GalleryPage() {
               Google Gemini AI가 당신의 사진을 프로페셔널 화보로 변환합니다
             </p>
           </div>
-        </FadeIn>
+          </FadeIn>
 
         {/* Before & After 갤러리 */}
         <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -131,8 +131,8 @@ export default function GalleryPage() {
                     <div className="text-3xl mb-4">→</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">After</div>
                     <div className="text-gray-800 dark:text-gray-200 font-semibold">{example.after}</div>
-                  </div>
-                </div>
+            </div>
+          </div>
 
                 {/* 정보 */}
                 <div className="p-6">
@@ -149,14 +149,14 @@ export default function GalleryPage() {
                         className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full text-xs font-semibold"
                       >
                         {tag}
-                      </span>
+                        </span>
                     ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
 
         {/* CTA 섹션 */}
         <FadeIn delay={0.4}>
@@ -176,12 +176,12 @@ export default function GalleryPage() {
               >
                 🚀 지금 무료로 시작하기
               </a>
-              <Link
-                href="/kits/ai-portrait"
+            <Link
+              href="/kits/ai-portrait"
                 className="bg-white/20 backdrop-blur-sm border-2 border-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-purple-600 transition-all"
-              >
+            >
                 📚 프롬프트 가이드 보기
-              </Link>
+            </Link>
             </div>
           </div>
         </FadeIn>
@@ -220,10 +220,10 @@ export default function GalleryPage() {
                   생성된 프롬프트를 이미지 AI에 적용해 완성!
                 </p>
               </div>
-            </div>
-          </section>
+        </div>
+      </section>
         </FadeIn>
-      </div>
+        </div>
 
       {/* Footer */}
       <footer className="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 py-12 text-center text-gray-600 dark:text-gray-400">
