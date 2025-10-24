@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { loginWithEmail, signInWithGoogle } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,15 +34,20 @@ export default function LoginPage() {
     setLocalError('');
     setIsLoading(true);
 
-    const { user, error } = await loginWithEmail(email, password);
-    
-    if (error) {
-      setLocalError(error);
-      setError(error);
+    try {
+      const { user, error } = await loginWithEmail(email, password);
+      
+      if (error) {
+        setLocalError(error);
+        setError(error);
+        setIsLoading(false);
+      } else if (user) {
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
+      }
+    } catch (err) {
+      setLocalError('로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
-    } else if (user) {
-      const redirect = searchParams.get('redirect') || '/my/dashboard';
-      router.push(redirect);
     }
   };
 
@@ -49,15 +56,20 @@ export default function LoginPage() {
     setLocalError('');
     setIsLoading(true);
 
-    const { user, error } = await signInWithGoogle();
-    
-    if (error) {
-      setLocalError(error);
-      setError(error);
+    try {
+      const { user, error } = await signInWithGoogle();
+      
+      if (error) {
+        setLocalError(error);
+        setError(error);
+        setIsLoading(false);
+      } else if (user) {
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
+      }
+    } catch (err) {
+      setLocalError('Google 로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
-    } else if (user) {
-      const redirect = searchParams.get('redirect') || '/my/dashboard';
-      router.push(redirect);
     }
   };
 

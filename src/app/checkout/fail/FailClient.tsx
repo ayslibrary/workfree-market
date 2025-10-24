@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default function FailClient() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");

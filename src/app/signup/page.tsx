@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { registerWithEmail, signInWithGoogle } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 
+export const dynamic = 'force-dynamic';
+
 export default function SignupPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -72,20 +74,25 @@ export default function SignupPage() {
     
     setIsLoading(true);
 
-    const { user, error } = await registerWithEmail(
-      formData.email,
-      formData.password,
-      formData.displayName
-    );
-    
-    if (error) {
-      setLocalError(error);
-      setError(error);
+    try {
+      const { user, error } = await registerWithEmail(
+        formData.email,
+        formData.password,
+        formData.displayName
+      );
+      
+      if (error) {
+        setLocalError(error);
+        setError(error);
+        setIsLoading(false);
+      } else if (user) {
+        // TODO: Firestore에 추가 사용자 정보 저장 (role 등)
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
+      }
+    } catch (err) {
+      setLocalError('회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
-    } else if (user) {
-      // TODO: Firestore에 추가 사용자 정보 저장 (role 등)
-      const redirect = searchParams.get('redirect') || '/my/dashboard';
-      router.push(redirect);
     }
   };
 
@@ -94,15 +101,20 @@ export default function SignupPage() {
     setLocalError('');
     setIsLoading(true);
 
-    const { user, error } = await signInWithGoogle();
-    
-    if (error) {
-      setLocalError(error);
-      setError(error);
+    try {
+      const { user, error } = await signInWithGoogle();
+      
+      if (error) {
+        setLocalError(error);
+        setError(error);
+        setIsLoading(false);
+      } else if (user) {
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
+      }
+    } catch (err) {
+      setLocalError('Google 회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
-    } else if (user) {
-      const redirect = searchParams.get('redirect') || '/my/dashboard';
-      router.push(redirect);
     }
   };
 

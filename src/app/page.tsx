@@ -7,6 +7,7 @@ import { signOut, db } from "@/lib/firebase";
 import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import KitOptionsModal from "@/components/KitOptionsModal";
 import RoulettePopup from "@/components/RoulettePopup";
+import PageLoadingScreen from "@/components/PageLoadingScreen";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
   const [betaCount, setBetaCount] = useState<number>(0);
   const [isBetaFull, setIsBetaFull] = useState<boolean>(false);
   const [isCountLoading, setIsCountLoading] = useState<boolean>(true);
+  const [initialLoadComplete, setInitialLoadComplete] = useState<boolean>(false);
 
   // 베타 참여 인원 수 가져오기
   const getBetaCount = async () => {
@@ -42,6 +44,13 @@ export default function Home() {
 
     fetchBetaCount();
   }, []);
+
+  // 모든 로딩이 완료되면 초기 로딩 완료로 표시
+  useEffect(() => {
+    if (!isLoading && !isCountLoading && !initialLoadComplete) {
+      setInitialLoadComplete(true);
+    }
+  }, [isLoading, isCountLoading, initialLoadComplete]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -108,10 +117,22 @@ export default function Home() {
     }
   };
 
+  // 초기 로딩 중일 때만 로딩 화면 표시
+  const showLoadingScreen = !initialLoadComplete && (isLoading || isCountLoading);
+
   return (
-    <div className="min-h-screen bg-[#f5f0ff]">
-      {/* 네비게이션 */}
-      <nav className="fixed top-0 w-full bg-[#f5f0ff]/95 backdrop-blur-lg z-50 shadow-lg">
+    <>
+      {/* 페이지 로딩 화면 - 초기 로딩 중일 때만 표시 */}
+      {showLoadingScreen && <PageLoadingScreen />}
+
+      {/* 메인 콘텐츠 */}
+      <div 
+        className={`min-h-screen bg-[#f5f0ff] transition-opacity duration-700 ${
+          initialLoadComplete ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        {/* 네비게이션 */}
+        <nav className="fixed top-0 w-full bg-[#f5f0ff]/95 backdrop-blur-lg z-50 shadow-lg">
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center gap-3 group">
@@ -1605,6 +1626,7 @@ export default function Home() {
 
       {/* 룰렛 팝업 - 첫 방문자에게만 자동 표시 */}
       <RoulettePopup />
-    </div>
+      </div>
+    </>
   );
 }

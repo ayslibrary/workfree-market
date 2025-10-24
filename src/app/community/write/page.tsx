@@ -10,6 +10,8 @@ import { createPost } from '@/lib/community/posts';
 import type { PostCategory } from '@/types/community';
 import { CATEGORY_LABELS } from '@/types/community';
 
+export const dynamic = 'force-dynamic';
+
 export default function WritePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
