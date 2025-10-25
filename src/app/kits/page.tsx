@@ -183,7 +183,7 @@ export default function KitsPage() {
       <MainNavigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-20 mt-20">
+      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white pt-24 md:pt-20 pb-16 md:pb-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-keep">
             🎉 WorkFree 자동화 키트

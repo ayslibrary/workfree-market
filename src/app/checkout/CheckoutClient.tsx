@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { loadPaymentWidget, PaymentWidgetInstance } from "@tosspayments/payment-widget-sdk";
+import MainNavigation from "@/components/MainNavigation";
 
 export const dynamic = 'force-dynamic';
 
@@ -72,8 +73,9 @@ export default function CheckoutClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <MainNavigation />
+      <div className="max-w-2xl mx-auto pt-24 md:pt-20 pb-12 px-4">
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="mb-8">
             <button
