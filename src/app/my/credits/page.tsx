@@ -90,7 +90,7 @@ export default function CreditsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
+    <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-28">
@@ -100,10 +100,10 @@ export default function CreditsPage() {
             <div className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">
               🎉 베타 기간 완전 무료!
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#1E1B33] mb-4">
               💎 크레딧 시스템
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-[#1E1B33]/70">
               베타 기간 동안 모든 기능을 무료로 체험하세요
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function CreditsPage() {
         {/* 구독 플랜 */}
         <FadeIn delay={0.2}>
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">
+            <h2 className="text-3xl font-bold text-center text-[#1E1B33] mb-8">
               구독 플랜
             </h2>
 
@@ -148,10 +148,10 @@ export default function CreditsPage() {
               {SUBSCRIPTION_PLANS.map((plan) => (
                 <StaggerItem key={plan.id}>
                   <div className={`
-                    relative bg-white dark:bg-gray-900 rounded-3xl p-8 border-2 
+                    relative bg-white rounded-3xl p-8 border-2 
                     ${plan.recommended 
-                      ? 'border-purple-500 shadow-2xl scale-105' 
-                      : 'border-gray-200 dark:border-gray-800'
+                      ? 'border-[#6A5CFF] shadow-2xl scale-105' 
+                      : 'border-[#AFA6FF]/50'
                     }
                     ${plan.comingSoon ? 'opacity-60' : 'hover:scale-105'}
                     transition-all
@@ -235,7 +235,7 @@ export default function CreditsPage() {
         {/* 크레딧 사용 가이드 */}
         <FadeIn delay={0.3}>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
+            <h2 className="text-2xl font-bold text-center text-[#1E1B33] mb-8">
               💡 크레딧 사용 가이드
             </h2>
 
@@ -343,7 +343,7 @@ export default function CreditsPage() {
         <div className="text-center mt-12">
           <Link
             href="/my/dashboard"
-            className="inline-block text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 font-semibold"
+            className="inline-block text-[#1E1B33]/70 hover:text-[#6A5CFF] font-semibold"
           >
             ← 마이페이지로 돌아가기
           </Link>

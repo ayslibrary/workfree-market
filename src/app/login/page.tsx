@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { loginWithEmail, signInWithGoogle } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
+import { FadeIn } from '@/components/animations';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,31 +75,46 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md">
         {/* 로고 */}
-        <Link href="/" className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">W</span>
-          </div>
-          <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            WorkFree Market
-          </div>
-        </Link>
+        <FadeIn delay={0.1}>
+          <Link href="/" className="flex items-center justify-center gap-3 mb-8 group">
+            <img 
+              src="/workfree-logo.png?v=3" 
+              alt="WorkFree Logo" 
+              className="w-12 h-12 transition-transform group-hover:scale-110"
+            />
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="text-2xl font-bold text-[#1E1B33]">
+                  WorkFree Market
+                </div>
+                <span className="bg-[#FF9A7A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                  Beta
+                </span>
+              </div>
+              <div className="text-xs text-[#1E1B33]/70 font-bold">
+                AI 실무 자동화 스튜디오
+              </div>
+            </div>
+          </Link>
+        </FadeIn>
 
         {/* 로그인 폼 */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+        <FadeIn delay={0.2}>
+          <div className="bg-white rounded-3xl p-8 shadow-2xl border-2 border-[#AFA6FF]">
+          <h1 className="text-3xl font-bold text-[#1E1B33] mb-2 text-center">
             로그인
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+          <p className="text-[#1E1B33]/70 mb-8 text-center">
             자동화 키트 거래소에 오신 것을 환영합니다
           </p>
 
           {/* 에러 메시지 */}
           {localError && (
-            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-              <p className="text-sm text-red-600 dark:text-red-400">{localError}</p>
+            <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+              <p className="text-sm text-red-600">{localError}</p>
             </div>
           )}
 
@@ -132,10 +148,10 @@ export default function LoginPage() {
 
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              <div className="w-full border-t border-[#AFA6FF]/30"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+              <span className="px-4 bg-white text-[#1E1B33]/70">
                 또는
               </span>
             </div>
@@ -167,13 +183,13 @@ export default function LoginPage() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  className="w-4 h-4 rounded border-gray-300 text-[#6A5CFF] focus:ring-[#6A5CFF]"
                 />
-                <span className="text-gray-600 dark:text-gray-400">로그인 유지</span>
+                <span className="text-[#1E1B33]/70">로그인 유지</span>
               </label>
               <Link
                 href="/reset-password"
-                className="text-purple-600 dark:text-purple-400 hover:underline"
+                className="text-[#6A5CFF] hover:underline"
               >
                 비밀번호 찾기
               </Link>
@@ -190,27 +206,30 @@ export default function LoginPage() {
 
           {/* 회원가입 링크 */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-[#1E1B33]/70">
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"
-                className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
+                className="text-[#6A5CFF] font-semibold hover:underline"
               >
                 회원가입
               </Link>
             </p>
           </div>
-        </div>
+          </div>
+        </FadeIn>
 
         {/* 하단 링크 */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-          >
-            ← 홈으로 돌아가기
-          </Link>
-        </div>
+        <FadeIn delay={0.3}>
+          <div className="mt-8 text-center">
+            <Link
+              href="/"
+              className="text-[#1E1B33]/70 hover:text-[#6A5CFF] transition-colors font-medium"
+            >
+              ← 홈으로 돌아가기
+            </Link>
+          </div>
+        </FadeIn>
       </div>
     </div>
   );

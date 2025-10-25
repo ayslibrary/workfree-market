@@ -225,7 +225,7 @@ ${history.content}
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
+    <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-28">
