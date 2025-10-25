@@ -8,11 +8,10 @@ import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore
 import KitOptionsModal from "@/components/KitOptionsModal";
 import RoulettePopup from "@/components/RoulettePopup";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import MainNavigation from "@/components/MainNavigation";
 
 export default function Home() {
   const { user, isLoading } = useAuth();
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [betaCount, setBetaCount] = useState<number>(0);
   const [isBetaFull, setIsBetaFull] = useState<boolean>(false);
@@ -46,13 +45,6 @@ export default function Home() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
-    setShowMobileMenu(false);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    setShowUserMenu(false);
-    window.location.href = '/';
   };
 
   // 베타 신청 핸들러
@@ -110,227 +102,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f5f0ff]">
-        {/* 네비게이션 */}
-        <nav className="fixed top-0 w-full bg-[#f5f0ff]/95 backdrop-blur-lg z-50 shadow-lg">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center gap-3 group">
-              <img 
-                src="/workfree-logo.png?v=3" 
-                alt="WorkFree Logo" 
-                className="w-10 h-10 transition-transform group-hover:scale-110"
-              />
-              <div>
-                <div className="flex items-center gap-2">
-                  <div className="text-xl font-bold text-[#1E1B33]">
-                    WorkFree Market
-                  </div>
-                  <span className="bg-[#FF9A7A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                    Beta
-                  </span>
-                </div>
-                <div className="text-xs text-[#1E1B33]/70 font-bold">
-                  AI 실무 자동화 스튜디오
-                </div>
-              </div>
-            </Link>
-
-            {/* 데스크톱 메뉴 */}
-            <div className="hidden md:flex gap-6 items-center">
-              {/* 카테고리 드롭다운 */}
-                      <div className="relative group">
-                        <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
-                          카테고리
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                        <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <Link
-                    href="/automation/microsoft"
-                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                  >
-                    📊 Microsoft 사무자동화
-                  </Link>
-                  <Link
-                    href="/automation/crawling"
-                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                  >
-                    🕷️ 웹 크롤링
-                  </Link>
-                  <Link
-                    href="/automation/visualization"
-                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                  >
-                    📈 데이터 시각화
-                  </Link>
-                  <Link
-                    href="/automation/prompts"
-                    className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                  >
-                    🤖 AI 프롬프트
-                  </Link>
-                </div>
-              </div>
-              
-              <Link
-                href="/my/credits"
-                className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
-              >
-                크레딧
-              </Link>
-              <Link
-                href="/about"
-                className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
-              >
-                소개
-              </Link>
-              
-              {!isLoading && (
-                <>
-                  {user ? (
-                    <div className="relative">
-                              <button
-                                onClick={() => setShowUserMenu(!showUserMenu)}
-                                className="flex items-center gap-2 bg-[#6A5CFF] text-white px-5 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all text-[16px]"
-                              >
-                                <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                                  <span className="text-sm font-bold">{user.displayName[0]}</span>
-                                </div>
-                                <span>{user.displayName}</span>
-                              </button>
-                      
-                      {showUserMenu && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 z-50">
-                          <Link
-                            href="/my/purchases"
-                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                          >
-                            구매 내역
-                          </Link>
-                          <Link
-                            href="/seller/dashboard"
-                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                          >
-                            판매자 대시보드
-                          </Link>
-                          <Link
-                            href="/my/settings"
-                            className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                          >
-                            설정
-                          </Link>
-                          <hr className="my-2 border-[#AFA6FF]/30" />
-                          <button
-                            onClick={handleSignOut}
-                            className="w-full text-left px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors text-[14px] font-medium"
-                          >
-                            로그아웃
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                          ) : (
-                            <Link
-                              href="/login"
-                              className="bg-[#6A5CFF] text-white px-6 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all inline-block text-[16px]"
-                            >
-                              로그인
-                            </Link>
-                          )}
-                </>
-              )}
-            </div>
-
-                    {/* 모바일 햄버거 메뉴 */}
-                    <button
-                      onClick={() => setShowMobileMenu(!showMobileMenu)}
-                      className="md:hidden p-2 text-[#1E1B33]"
-                    >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {showMobileMenu ? (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        ) : (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        )}
-                      </svg>
-                    </button>
-          </div>
-
-                  {/* 모바일 메뉴 드롭다운 */}
-                  {showMobileMenu && (
-                    <div className="md:hidden mt-4 pb-4 border-t border-[#AFA6FF]/30 pt-4">
-                      <div className="flex flex-col gap-2">
-                        <Link
-                          href="/about"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          📖 소개
-                        </Link>
-                        <Link
-                          href="/request"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          ✨ 자동화 요청하기
-                        </Link>
-                        <Link
-                          href="/requests"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          📋 요청 리스트
-                        </Link>
-                        <Link
-                          href="/maker"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          🔧 제작자 대시보드
-                        </Link>
-                        <Link
-                          href="/kits"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          🧩 자동화 키트
-                        </Link>
-                        <Link
-                          href="/my/credits"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          💎 크레딧
-                        </Link>
-                        <Link
-                          href="/feedback"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          💬 피드백
-                        </Link>
-                        <Link
-                          href="/admin"
-                          className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                          onClick={() => setShowMobileMenu(false)}
-                        >
-                          ⚙️ Admin
-                        </Link>
-                        {!isLoading && !user && (
-                          <Link
-                            href="/login"
-                            className="mt-2 bg-[#6A5CFF] text-white px-6 py-3 rounded-full font-bold text-center hover:shadow-lg hover:scale-105 transition-all"
-                            onClick={() => setShowMobileMenu(false)}
-                          >
-                            로그인
-                          </Link>
-                        )}
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+      <MainNavigation />
 
       {/* Hero 섹션 */}
       <section className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-[#f5f0ff] relative overflow-hidden">
@@ -386,7 +158,7 @@ export default function Home() {
                   {/* 왼쪽 투명 공간 (균형용) - 데스크톱만 */}
                   <div className="hidden md:block w-12 h-12 opacity-0"></div>
                   <Link
-                    href="/signup"
+                    href="/kits"
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
                   >
                     🚀 지금 칼퇴 클릭
@@ -400,11 +172,10 @@ export default function Home() {
                 </>
               ) : (
                 <Link
-                  href="/my/dashboard"
+                  href="/kits"
                   className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
                 >
-                  <span>마이페이지 가기</span>
-                  <span>→</span>
+                  🚀 지금 칼퇴 클릭
                 </Link>
               )}
             </div>
@@ -435,10 +206,10 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
                 <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
-                  웹실행
+                  AI 기반
                 </div>
                 <div className="text-[#1E1B33]/70 text-xs font-medium">
-                  설치 불필요
+                  스마트 자동화
                 </div>
               </div>
             </StaggerItem>
@@ -451,6 +222,78 @@ export default function Home() {
                   무료 체험 기간
                 </div>
               </div>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* 주요 기능 바로가기 섹션 */}
+      <section className="py-20 px-6 bg-gradient-to-br from-[#f5f0ff] to-white">
+        <div className="container mx-auto max-w-7xl">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1E1B33] mb-4">
+                🚀 빠른 시작하기
+              </h2>
+              <p className="text-[#1E1B33]/70 text-lg">
+                원하는 기능으로 바로 이동하세요
+              </p>
+            </div>
+          </FadeIn>
+
+          <StaggerContainer staggerDelay={0.1} className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {/* 도구 카드 */}
+            <StaggerItem>
+              <Link href="/tools/blog-generator" className="block group">
+                <div className="bg-white rounded-2xl p-8 border-2 border-[#AFA6FF] hover:border-[#6A5CFF] transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="text-5xl mb-4">🧰</div>
+                  <h3 className="text-2xl font-bold mb-3 text-[#1E1B33]">
+                    AI 도구
+                  </h3>
+                  <p className="text-[#1E1B33]/70 mb-4 leading-relaxed">
+                    블로그 생성, AI 갤러리, 자동화 스텝 관리
+                  </p>
+                  <div className="text-[#6A5CFF] font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    도구 보기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+
+            {/* 커뮤니티 카드 */}
+            <StaggerItem>
+              <Link href="/community" className="block group">
+                <div className="bg-white rounded-2xl p-8 border-2 border-[#AFA6FF] hover:border-[#6A5CFF] transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="text-5xl mb-4">💬</div>
+                  <h3 className="text-2xl font-bold mb-3 text-[#1E1B33]">
+                    커뮤니티
+                  </h3>
+                  <p className="text-[#1E1B33]/70 mb-4 leading-relaxed">
+                    직장인 라운지, 커리어 정보 공유
+                  </p>
+                  <div className="text-[#6A5CFF] font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    커뮤니티 가기 →
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+
+            {/* 마켓 카드 */}
+            <StaggerItem>
+              <Link href="/kits" className="block group">
+                <div className="bg-white rounded-2xl p-8 border-2 border-[#AFA6FF] hover:border-[#6A5CFF] transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="text-5xl mb-4">🎁</div>
+                  <h3 className="text-2xl font-bold mb-3 text-[#1E1B33]">
+                    키트 마켓
+                  </h3>
+                  <p className="text-[#1E1B33]/70 mb-4 leading-relaxed">
+                    즉시 사용 가능한 자동화 키트
+                  </p>
+                  <div className="text-[#6A5CFF] font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                    둘러보기 →
+                  </div>
+                </div>
+              </Link>
             </StaggerItem>
           </StaggerContainer>
         </div>
@@ -824,7 +667,7 @@ export default function Home() {
               간단한 3단계
             </h2>
             <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
-              설치 불필요, 웹에서 클릭 한 번으로 바로 시작
+              클릭 한 번으로 바로 시작
             </p>
           </FadeIn>
           
@@ -839,7 +682,7 @@ export default function Home() {
                     무료 가입
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[17px]">
-                    10 크레딧 즉시 지급<br />설치 · 다운로드 불필요
+                    10 크레딧 즉시 지급<br />빠르고 간편한 시작
                   </p>
                 </div>
                 <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-8 z-10">
@@ -895,7 +738,7 @@ export default function Home() {
                 &quot;클릭 한 번으로 완성. 대기 시간 제로.&quot;
               </p>
               <p className="text-lg opacity-90">
-                설치 불필요 | 웹에서 즉시 실행 | 크레딧으로 필요한 만큼만 사용
+                즉시 실행 | 크레딧으로 필요한 만큼만 사용
               </p>
             </div>
           </FadeIn>
@@ -915,7 +758,7 @@ export default function Home() {
               보고서·메일·정리…<br />클릭 한 번이면 끝.
             </h2>
             <p className="text-center text-[#1E1B33]/70 mb-20 text-lg">
-              크레딧으로 바로 실행 • 설치 불필요 • 웹에서 즉시 사용
+              크레딧으로 바로 실행 • 즉시 사용
             </p>
           </FadeIn>
 
@@ -1081,6 +924,235 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 나만의 대시보드 프리뷰 */}
+      <section className="py-24 px-6 bg-white dark:bg-gray-900">
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn>
+            <div className="text-center mb-16">
+              <span className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6">
+                📊 나만의 대시보드
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#1E1B33] dark:text-white">
+                내 모든 활동이 한눈에
+              </h2>
+              <p className="text-[#1E1B33]/70 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+                시간 절약 통계부터 최근 활동까지, 퍼스널라이징된 대시보드에서 관리하세요
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* 대시보드 미리보기 */}
+          <FadeIn delay={0.2}>
+            <div className="bg-gradient-to-br from-[#f5f0ff] to-white dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 md:p-12 border-2 border-[#AFA6FF] shadow-2xl">
+              
+              {/* 시간 절약 통계 */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-[#1E1B33] dark:text-white mb-4 flex items-center gap-2">
+                  <span>⏰</span>
+                  <span>내가 절약한 시간</span>
+                </h3>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  {/* 이번 달 절약 */}
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border-2 border-blue-200 dark:border-blue-800">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl">
+                        📅
+                      </div>
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white">
+                        이번 달 절약
+                      </h4>
+                    </div>
+                    <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+                      24시간 37분
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      약 ₩820,000 절약
+                    </div>
+                  </div>
+
+                  {/* 누적 절약 */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 border-2 border-purple-200 dark:border-purple-800">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-2xl">
+                        🏆
+                      </div>
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white">
+                        누적 절약
+                      </h4>
+                    </div>
+                    <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                      127시간 12분
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      약 ₩4,240,000 절약
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 활동 통계 */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-[#1E1B33] dark:text-white mb-4">
+                  📈 이번 주 활동
+                </h3>
+                
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border-2 border-[#AFA6FF]/50 text-center">
+                    <div className="text-3xl mb-2">📰</div>
+                    <div className="text-3xl font-bold text-[#6A5CFF] mb-1">
+                      12
+                    </div>
+                    <div className="text-xs text-[#1E1B33]/70 dark:text-gray-400">
+                      생성한 블로그
+                    </div>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border-2 border-[#AFA6FF]/50 text-center">
+                    <div className="text-3xl mb-2">⚡</div>
+                    <div className="text-3xl font-bold text-[#6A5CFF] mb-1">
+                      8
+                    </div>
+                    <div className="text-xs text-[#1E1B33]/70 dark:text-gray-400">
+                      이번 주 활동
+                    </div>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border-2 border-[#AFA6FF]/50 text-center">
+                    <div className="text-3xl mb-2">💎</div>
+                    <div className="text-3xl font-bold text-[#6A5CFF] mb-1">
+                      45
+                    </div>
+                    <div className="text-xs text-[#1E1B33]/70 dark:text-gray-400">
+                      사용한 크레딧
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 최근 활동 */}
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-[#1E1B33] dark:text-white">
+                    📝 최근 활동
+                  </h3>
+                  <span className="text-sm text-[#6A5CFF] hover:underline cursor-pointer">
+                    전체보기 →
+                  </span>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border-2 border-[#AFA6FF]/50">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl">📰</div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-sm text-[#1E1B33] dark:text-white mb-1">
+                          "AI 마케팅 트렌드 2025" 블로그 생성
+                        </h4>
+                        <p className="text-xs text-[#1E1B33]/70 dark:text-gray-400 mb-2">
+                          AI와 자동화를 활용한 최신 마케팅 전략...
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-[#1E1B33]/50 dark:text-gray-500">
+                          <span>🎨 전문가 스타일</span>
+                          <span>•</span>
+                          <span>2시간 전</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border-2 border-[#AFA6FF]/50">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl">🎨</div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-sm text-[#1E1B33] dark:text-white mb-1">
+                          AI 화보 생성 (LinkedIn 프로필)
+                        </h4>
+                        <p className="text-xs text-[#1E1B33]/70 dark:text-gray-400 mb-2">
+                          전문적인 비즈니스 프로필 이미지 생성 완료
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-[#1E1B33]/50 dark:text-gray-500">
+                          <span>💼 비즈니스</span>
+                          <span>•</span>
+                          <span>1일 전</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border-2 border-[#AFA6FF]/50">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl">📊</div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-sm text-[#1E1B33] dark:text-white mb-1">
+                          엑셀 자동화 스크립트 실행
+                        </h4>
+                        <p className="text-xs text-[#1E1B33]/70 dark:text-gray-400 mb-2">
+                          월간 보고서 데이터 정리 자동화 완료
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-[#1E1B33]/50 dark:text-gray-500">
+                          <span>⚙️ 자동화</span>
+                          <span>•</span>
+                          <span>2일 전</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="text-center pt-6 border-t-2 border-[#AFA6FF]/30">
+                <p className="text-sm text-[#1E1B33]/70 dark:text-gray-400 mb-4">
+                  지금 시작하면 <span className="font-bold text-[#6A5CFF]">10 크레딧</span>을 무료로 드려요!
+                </p>
+                <Link
+                  href="/kits"
+                  className="inline-block bg-gradient-to-r from-purple-600 via-[#6A5CFF] to-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
+                >
+                  🚀 지금 칼퇴 클릭
+                </Link>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* 추가 혜택 */}
+          <FadeIn delay={0.4}>
+            <div className="mt-12 grid md:grid-cols-3 gap-6">
+              <div className="text-center p-6">
+                <div className="text-4xl mb-3">🎯</div>
+                <h4 className="font-bold text-[#1E1B33] dark:text-white mb-2">
+                  맞춤형 추천
+                </h4>
+                <p className="text-sm text-[#1E1B33]/70 dark:text-gray-400">
+                  사용 패턴 분석으로 필요한 자동화를 추천
+                </p>
+              </div>
+
+              <div className="text-center p-6">
+                <div className="text-4xl mb-3">📱</div>
+                <h4 className="font-bold text-[#1E1B33] dark:text-white mb-2">
+                  모바일 최적화
+                </h4>
+                <p className="text-sm text-[#1E1B33]/70 dark:text-gray-400">
+                  언제 어디서나 내 대시보드 확인 가능
+                </p>
+              </div>
+
+              <div className="text-center p-6">
+                <div className="text-4xl mb-3">🔔</div>
+                <h4 className="font-bold text-[#1E1B33] dark:text-white mb-2">
+                  실시간 알림
+                </h4>
+                <p className="text-sm text-[#1E1B33]/70 dark:text-gray-400">
+                  작업 완료 시 즉시 알림으로 확인
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 크레딧으로 절약하는 시간과 비용 */}
       <section id="savings" className="py-24 px-6 bg-[#ede7ff]">
         <div className="container mx-auto max-w-6xl">
@@ -1139,8 +1211,8 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">실시간 웹 실행</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">설치 없이 바로 사용</div>
+                    <div className="font-bold text-gray-900 dark:text-white text-[18px]">즉시 실행</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">바로 사용 가능</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
@@ -1241,7 +1313,7 @@ export default function Home() {
                 <span className="text-lg font-bold text-gray-900 dark:text-white">5.0</span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-[17px]">
-                &quot;설치 가이드가 너무 친절해서 비개발자인 제가 5분 만에 적용했습니다!&quot;
+                &quot;사용법이 너무 간단해서 비개발자인 제가 5분 만에 적용했습니다!&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
@@ -1483,7 +1555,7 @@ export default function Home() {
                 당신의 시간을 되찾는 AI 자동화 스튜디오
               </p>
               <p className="text-gray-500 text-xs leading-relaxed">
-                설치 없이, 클릭 한 번으로 끝. 자동화의 모든 것, 한 곳에.
+                클릭 한 번으로 끝. 자동화의 모든 것, 한 곳에.
               </p>
             </div>
             <div>
@@ -1521,7 +1593,7 @@ export default function Home() {
                 </li>
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
-                    설치 가이드
+                    사용 가이드
                   </a>
                 </li>
                 <li>

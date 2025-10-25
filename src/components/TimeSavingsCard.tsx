@@ -15,9 +15,15 @@ export default function TimeSavingsCard({ userId }: TimeSavingsCardProps) {
   useEffect(() => {
     const loadSavings = async () => {
       setLoading(true);
-      const data = await getTimeSavings(userId);
-      setSavings(data);
-      setLoading(false);
+      try {
+        const data = await getTimeSavings(userId);
+        setSavings(data);
+      } catch (error) {
+        console.error('시간 절약 데이터 로딩 실패:', error);
+        setSavings(null);
+      } finally {
+        setLoading(false);
+      }
     };
     
     loadSavings();

@@ -268,7 +268,7 @@ export default function AboutPage() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 text-xl">✓</span>
-                  <span className="text-gray-700">실시간 웹 실행</span>
+                  <span className="text-gray-700">즉시 실행</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 text-xl">✓</span>

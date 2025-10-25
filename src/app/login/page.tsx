@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { loginWithEmail, signInWithGoogle } from '@/lib/firebase';
+import { loginWithEmail, signInWithGoogle, loginWithDemo } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 import { FadeIn } from '@/components/animations';
 
@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user, setError, clearError } = useAuthStore();
+  const { user, setUser, setError, clearError } = useAuthStore();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -74,6 +74,39 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    clearError();
+    setLocalError('');
+    setIsLoading(true);
+
+    try {
+      const { user, error } = await loginWithDemo('demo');
+      
+      if (error) {
+        setLocalError(error);
+        setIsLoading(false);
+      } else if (user) {
+        // authStore에 직접 설정
+        const demoUser = {
+          id: user.uid,
+          email: user.email!,
+          displayName: user.displayName || '데모 사용자',
+          photoURL: user.photoURL || undefined,
+          role: 'buyer' as const,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        setUser(demoUser);
+        
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
+      }
+    } catch (err) {
+      setLocalError('데모 로그인 중 오류가 발생했습니다.');
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 pt-16 md:pt-16 pb-12">
       <div className="w-full max-w-md">
@@ -117,6 +150,36 @@ export default function LoginPage() {
               <p className="text-sm text-red-600">{localError}</p>
             </div>
           )}
+
+          {/* 데모 로그인 (강조) */}
+          <div className="mb-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border-2 border-[#AFA6FF]">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">🎮</span>
+              <h3 className="font-bold text-[#1E1B33]">데모 체험하기</h3>
+              <span className="bg-[#6A5CFF] text-white text-xs px-2 py-0.5 rounded-full">추천</span>
+            </div>
+            <p className="text-xs text-[#1E1B33]/70 mb-3">
+              로그인 없이 바로 WorkFree를 체험해보세요!
+            </p>
+            <Button
+              onClick={handleDemoLogin}
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-purple-600 via-[#6A5CFF] to-indigo-600 hover:shadow-lg"
+            >
+              🚀 데모 계정으로 시작하기
+            </Button>
+          </div>
+
+          <div className="relative mb-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#AFA6FF]/30"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-[#1E1B33]/70">
+                또는
+              </span>
+            </div>
+          </div>
 
           {/* Google 로그인 */}
           <Button

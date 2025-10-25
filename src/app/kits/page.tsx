@@ -179,170 +179,200 @@ export default function KitsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white pt-24 md:pt-20 pb-16 md:pb-20">
+      <section className="bg-gradient-to-r from-purple-600 via-[#6A5CFF] to-indigo-600 text-white pt-24 md:pt-20 pb-12 md:pb-16">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-keep">
-            🎉 WorkFree 자동화 키트
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 break-keep">
+            ⚡ WorkFree 자동화 키트
           </h1>
-          <p className="text-xl opacity-90 mb-8 break-keep">
-            직장인들이 만든 검증된 자동화 솔루션
+          <p className="text-lg md:text-xl opacity-90 break-keep">
+            퇴근 시간을 앞당기는 업무 자동화 솔루션
           </p>
-          <div className="flex justify-center gap-4 md:gap-8 text-center">
-            <div>
-              <div className="text-2xl md:text-4xl font-bold">{kits.length}</div>
-              <div className="text-xs md:text-sm opacity-80">출시된 키트</div>
-            </div>
-            <div>
-              <div className="text-2xl md:text-4xl font-bold">
-                {kits.reduce((sum, kit) => sum + (kit.downloads || 0), 0)}
-              </div>
-              <div className="text-xs md:text-sm opacity-80">총 다운로드</div>
-            </div>
-            <div>
-              <div className="text-2xl md:text-4xl font-bold">
-                {kits.length > 0 
-                  ? (kits.reduce((sum, kit) => sum + (kit.rating || 4.5), 0) / kits.length).toFixed(1)
-                  : '0.0'
-                }
-              </div>
-              <div className="text-xs md:text-sm opacity-80">평균 평점</div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Beta Notice */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-8">
-          <div className="flex items-start gap-4">
-            <span className="text-3xl">🎁</span>
+        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-12">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🎁</span>
             <div>
-              <h3 className="text-lg font-bold text-blue-900 mb-2">
-                베타 테스트 기간 무료!
-              </h3>
-              <p className="text-blue-800 mb-3">
-                현재 모든 키트를 무료로 다운로드하실 수 있습니다. 
-                피드백을 남겨주시면 정식 출시 시 <span className="font-semibold">50% 할인 쿠폰</span>을 드립니다!
-              </p>
-              <Link
-                href="/feedback"
-                className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
-              >
-                📝 피드백 남기기
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Featured Kit - AI Portrait */}
-        <div className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 rounded-2xl shadow-xl p-8 mb-12 border-2 border-purple-200">
-          <div className="flex items-start gap-3 mb-4">
-            <span className="text-4xl">✨</span>
-            <div>
-              <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-1 rounded-full text-xs font-bold mb-2">
-                🆕 NEW RELEASE
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                🎨 AI 화보 메이커 프롬프트 키트
-              </h3>
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                Gemini로 5분 만에 보그 커버 모델 되기! 20가지 컨셉 프롬프트 + 실제 결과물 60장 포함
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
-                  🤖 AI 프롬프트
-                </span>
-                <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-semibold">
-                  📸 20개 컨셉
-                </span>
-                <span className="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-semibold">
-                  ⭐ 초급~고급
-                </span>
-                <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
-                  💾 즉시 다운로드
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/kits/ai-portrait"
-                  className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-bold"
-                >
-                  🎨 자세히 보기 →
+              <p className="text-sm text-blue-800">
+                <span className="font-bold">베타 기간 무료!</span> 피드백 남기면 정식 출시 시 <span className="font-semibold">50% 할인 쿠폰</span> 
+                <Link href="/feedback" className="ml-2 text-blue-600 hover:underline font-semibold">
+                  피드백 남기기 →
                 </Link>
-                <span className="text-sm text-gray-600 flex items-center">
-                  <span className="line-through mr-2">₩29,900</span>
-                  <span className="text-2xl font-bold text-purple-600">무료</span>
-                  <span className="ml-2">(베타 기간)</span>
-                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 카테고리 카드 그리드 */}
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          {/* Microsoft 사무자동화 */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border-2 border-blue-200 hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer group">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-6xl">📊</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-[#1E1B33] mb-2">
+                  Microsoft 사무자동화
+                </h3>
+                <p className="text-[#1E1B33]/70 mb-4">
+                  Excel, Outlook, PPT 등 오피스 업무를 완전 자동화
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    Outlook 자동회신
+                  </span>
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    Excel 보고서
+                  </span>
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    PPT 자동화
+                  </span>
+                </div>
+                <Link
+                  href="/automation/microsoft"
+                  className="text-blue-600 font-semibold hover:underline inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                >
+                  6개 키트 보기 →
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* 웹 크롤링 */}
+          <div className="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-3xl p-8 border-2 border-cyan-200 hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer group">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-6xl">🕷️</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-[#1E1B33] mb-2">
+                  웹 크롤링
+                </h3>
+                <p className="text-[#1E1B33]/70 mb-4">
+                  검색부터 수집, 알림까지 웹 데이터 완전 자동화
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    검색 자동화
+                  </span>
+                  <span className="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    뉴스 수집
+                  </span>
+                  <span className="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    가격 모니터링
+                  </span>
+                </div>
+                <Link
+                  href="/automation/crawling"
+                  className="text-cyan-600 font-semibold hover:underline inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                >
+                  6개 키트 보기 →
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* 데이터 시각화 */}
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 border-2 border-purple-200 hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer group">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-6xl">📈</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-[#1E1B33] mb-2">
+                  데이터 시각화
+                </h3>
+                <p className="text-[#1E1B33]/70 mb-4">
+                  엑셀 데이터를 맞진 대시보드로 자동 변환
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    차트 생성
+                  </span>
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    대시보드
+                  </span>
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    리포트 자동화
+                  </span>
+                </div>
+                <Link
+                  href="/automation/visualization"
+                  className="text-purple-600 font-semibold hover:underline inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                >
+                  6개 키트 보기 →
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* AI 프롬프트 */}
+          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-8 border-2 border-orange-200 hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer group">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="text-6xl">🤖</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-[#1E1B33] mb-2">
+                  AI 프롬프트
+                </h3>
+                <p className="text-[#1E1B33]/70 mb-4">
+                  영상, 이미지, 카피까지 AI로 콘텐츠 제작 자동화
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    블로그 생성
+                  </span>
+                  <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    이미지 생성
+                  </span>
+                  <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    영상 스크립트
+                  </span>
+                </div>
+                <Link
+                  href="/automation/prompts"
+                  className="text-orange-600 font-semibold hover:underline inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                >
+                  6개 키트 보기 →
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 카테고리 필터 */}
-        <div className="mb-12">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <span>🗂️</span>
-            <span>카테고리별 찾기</span>
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
-                  selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-transparent shadow-lg'
-                    : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'
-                }`}
-              >
-                <div className="text-3xl mb-2">{category.icon}</div>
-                <div className={`font-semibold text-sm mb-1 ${
-                  selectedCategory === category.id ? 'text-white' : 'text-gray-900'
-                }`}>
-                  {category.name}
-                </div>
-                <div className={`text-xs ${
-                  selectedCategory === category.id ? 'text-white/90' : 'text-gray-500'
-                }`}>
-                  {category.description}
-                </div>
-              </button>
-            ))}
-          </div>
-          <div className="mt-4 text-center text-sm text-gray-600">
-            {selectedCategory === 'all' 
-              ? `전체 ${kits.length}개의 키트` 
-              : `${filteredKits.length}개의 키트`}
-          </div>
+        {/* 전체 키트 섹션 (기존 코드) */}
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-[#1E1B33] mb-2">
+            🔥 인기 자동화 키트
+          </h2>
+          <p className="text-[#1E1B33]/70 mb-8">
+            실무에 바로 적용 가능한 검증된 자동화 솔루션
+          </p>
         </div>
 
         {/* Loading State */}
         {loading && (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent"></div>
-            <p className="mt-4 text-gray-600">키트를 불러오는 중...</p>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#6A5CFF] border-t-transparent"></div>
+            <p className="mt-4 text-[#1E1B33]/70">키트를 불러오는 중...</p>
           </div>
         )}
 
         {/* Empty State */}
         {!loading && kits.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
+          <div className="text-center py-20 bg-white rounded-2xl shadow-sm border-2 border-[#AFA6FF]/50">
             <div className="text-6xl mb-4">📦</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-xl font-semibold text-[#1E1B33] mb-2">
               아직 출시된 키트가 없습니다
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[#1E1B33]/70 mb-6">
               첫 번째 자동화 키트를 기다리고 있습니다!
             </p>
             <Link
               href="/requests"
-              className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all"
+              className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all"
             >
               요청 리스트 보기
             </Link>
@@ -353,17 +383,17 @@ export default function KitsPage() {
         {!loading && kits.length > 0 && (
           <>
             {filteredKits.length === 0 ? (
-              <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
+              <div className="text-center py-20 bg-white rounded-2xl shadow-sm border-2 border-[#AFA6FF]/50">
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-semibold text-[#1E1B33] mb-2">
                   해당 카테고리에 키트가 없습니다
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-[#1E1B33]/70 mb-6">
                   다른 카테고리를 선택해보세요
                 </p>
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all"
+                  className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all"
                 >
                   전체 보기
                 </button>
@@ -371,11 +401,11 @@ export default function KitsPage() {
             ) : (
               <>
                 <div className="mb-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                    🚀 출시된 자동화 키트
+                  <h2 className="text-3xl font-bold text-[#1E1B33] mb-2">
+                    🚀 자동화 키트
                   </h2>
-                  <p className="text-gray-600">
-                    실제 직장인들이 만들고 검증한 자동화 솔루션입니다
+                  <p className="text-[#1E1B33]/70">
+                    실무에 바로 적용 가능한 검증된 자동화 솔루션
                   </p>
                 </div>
 
@@ -383,16 +413,16 @@ export default function KitsPage() {
                   {filteredKits.map((kit) => (
                 <div
                   key={kit.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 border border-gray-100"
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 border-2 border-[#AFA6FF]/50 hover:border-[#6A5CFF]"
                 >
                   {/* Kit Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                      <h3 className="text-xl font-bold text-[#1E1B33] mb-2 line-clamp-2">
                         {kit.title}
                       </h3>
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
+                        <span className="text-sm bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">
                           ✅ 출시완료
                         </span>
                         {kit.rating && (
@@ -406,12 +436,12 @@ export default function KitsPage() {
 
                   {/* Maker & Job */}
                   <div className="mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center gap-2 text-sm text-[#1E1B33]/70 mb-2">
                       <span className="font-semibold">👤 제작자:</span>
                       <span>{kit.maker}</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                      <span className="text-xs bg-[#f5f0ff] text-[#6A5CFF] px-2 py-1 rounded font-semibold">
                         💼 {kit.job}
                       </span>
                       {kit.tools.slice(0, 3).map((tool, idx) => (
@@ -431,13 +461,13 @@ export default function KitsPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                  <p className="text-sm text-[#1E1B33]/70 mb-4 line-clamp-3">
                     {kit.problem}
                   </p>
 
                   {/* Stats */}
                   {kit.downloads && (
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-4 text-sm text-[#1E1B33]/50 mb-4">
                       <span>📥 {kit.downloads} 다운로드</span>
                     </div>
                   )}
@@ -447,7 +477,7 @@ export default function KitsPage() {
                     <a
                       href={kit.downloadUrl || '/downloads/rpa-test.txt'}
                       download
-                      className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg hover:shadow-lg transition-all font-semibold text-center"
+                      className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg hover:shadow-lg transition-all font-semibold text-center"
                     >
                       💾 다운로드
                     </a>
@@ -465,64 +495,6 @@ export default function KitsPage() {
             )}
           </>
         )}
-
-        {/* Tester Section */}
-        <section className="mt-16 bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-12">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              🧪 베타 테스터가 되어주세요!
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              자동화 키트를 먼저 사용해보고 피드백을 남겨주시면
-              <br />
-              <span className="font-semibold text-purple-600">정식 출시 시 특별 혜택</span>을 드립니다!
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="text-3xl mb-3">🎟️</div>
-                <h3 className="font-bold text-gray-800 mb-2">50% 할인 쿠폰</h3>
-                <p className="text-sm text-gray-600">
-                  정식 출시 시 모든 유료 키트에 사용 가능
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="text-3xl mb-3">🏆</div>
-                <h3 className="font-bold text-gray-800 mb-2">얼리 어답터 배지</h3>
-                <p className="text-sm text-gray-600">
-                  프로필에 특별 배지 부여
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm">
-                <div className="text-3xl mb-3">💡</div>
-                <h3 className="font-bold text-gray-800 mb-2">신규 키트 우선 접근</h3>
-                <p className="text-sm text-gray-600">
-                  새 키트 출시 시 가장 먼저 알림
-                </p>
-              </div>
-            </div>
-
-            <Link
-              href="/feedback"
-              className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-10 py-4 rounded-xl hover:shadow-lg transition-all font-bold text-lg"
-            >
-              📝 지금 바로 피드백 남기기
-            </Link>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">
-            원하는 자동화가 없으신가요?
-          </p>
-          <Link
-            href="/request"
-            className="inline-block bg-purple-600 text-white px-8 py-4 rounded-xl hover:bg-purple-700 transition-all font-semibold text-lg"
-          >
-            ✨ 새 자동화 요청하기
-          </Link>
-        </div>
       </main>
 
       {/* Tester Application Modal */}

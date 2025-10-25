@@ -4,7 +4,7 @@
 
 import { useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { onAuthStateChange } from '@/lib/firebase';
+import { onAuthStateChange, isDemoMode, getDemoUser } from '@/lib/firebase';
 import { User } from '@/types/user';
 
 export function useAuth() {
@@ -13,6 +13,25 @@ export function useAuth() {
   useEffect(() => {
     setLoading(true);
     
+    // 데모 모드 확인
+    if (isDemoMode()) {
+      const demoUser = getDemoUser();
+      if (demoUser) {
+        const user: User = {
+          id: demoUser.uid,
+          email: demoUser.email,
+          displayName: demoUser.displayName,
+          photoURL: demoUser.photoURL,
+          role: 'buyer',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        setUser(user);
+        return;
+      }
+    }
+    
+    // Firebase 인증 상태 확인
     const unsubscribe = onAuthStateChange((firebaseUser) => {
       if (firebaseUser) {
         // Firebase User를 우리의 User 타입으로 변환
