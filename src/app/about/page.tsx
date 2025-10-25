@@ -11,7 +11,7 @@ export default function AboutPage() {
       {/* 네비게이션 */}
       <MainNavigation />
 
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-5xl pt-40">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-5xl pt-40 md:pt-28">
         {/* Hero */}
         <FadeIn>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">

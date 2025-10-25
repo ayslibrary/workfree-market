@@ -105,7 +105,7 @@ export default function ReviewPage() {
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
       <MainNavigation />
 
-      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 pt-40">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 pt-40 md:pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="mb-8">

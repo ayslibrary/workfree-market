@@ -119,7 +119,7 @@ export default function ToolsPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
         <MainNavigation />
-        <div className="max-w-2xl mx-auto px-4 py-20 text-center pt-40">
+        <div className="max-w-2xl mx-auto px-4 py-20 text-center pt-40 md:pt-28">
           <div className="bg-white rounded-3xl shadow-2xl p-12 border-2 border-green-200">
             <div className="text-6xl mb-6">✅</div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -163,7 +163,7 @@ export default function ToolsPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
         <MainNavigation />
-        <div className="max-w-2xl mx-auto px-4 py-20 text-center pt-40">
+        <div className="max-w-2xl mx-auto px-4 py-20 text-center pt-40 md:pt-28">
           <div className="bg-white rounded-3xl shadow-2xl p-12 border-2 border-purple-200">
             <div className="text-6xl mb-6 animate-bounce">{selectedTool.icon}</div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -188,7 +188,7 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
       <MainNavigation />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-40">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 pt-40 md:pt-28">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">

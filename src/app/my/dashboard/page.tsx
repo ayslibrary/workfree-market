@@ -64,7 +64,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen pb-20 bg-[#f5f0ff]">
       {/* 헤더 */}
-      <div className="px-6 pt-12 pb-8">
+      <div className="px-6 pt-40 md:pt-12 pb-8">
         <div className="flex items-center justify-between mb-8">
           <Link href="/" className="flex items-center gap-3">
             <img 
