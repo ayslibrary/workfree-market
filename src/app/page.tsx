@@ -380,19 +380,19 @@ export default function Home() {
           
           {/* CTA 버튼 */}
           <FadeIn delay={0.6}>
-            <div className="flex gap-4 justify-center items-center flex-wrap mb-12 relative">
+            <div className="flex gap-4 justify-center items-center mb-12 relative">
               {!isLoading && !user ? (
                 <>
-                  {/* 왼쪽 투명 공간 (균형용) */}
-                  <div className="w-12 h-12 opacity-0"></div>
+                  {/* 왼쪽 투명 공간 (균형용) - 데스크톱만 */}
+                  <div className="hidden md:block w-12 h-12 opacity-0"></div>
                   <Link
                     href="/signup"
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
                   >
                     🚀 지금 칼퇴 클릭
                   </Link>
-                  {/* 큰 커서 아이콘 */}
-                  <div className="animate-bounce">
+                  {/* 큰 커서 아이콘 - 데스크톱만 */}
+                  <div className="hidden md:block animate-bounce">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#6A5CFF]">
                       <path d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
