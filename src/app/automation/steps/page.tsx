@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
+import MainNavigation from '@/components/MainNavigation';
 
 export default function AutomationStepsPage() {
   const router = useRouter();
@@ -46,9 +47,11 @@ export default function AutomationStepsPage() {
       className="min-h-screen"
       style={{ backgroundColor: 'var(--warm-white)' }}
     >
+      <MainNavigation />
+      
       {/* 헤더 */}
       <div 
-        className="px-6 py-4 flex items-center gap-4 border-b"
+        className="px-6 pt-24 md:pt-20 pb-4 flex items-center gap-4 border-b"
         style={{ borderColor: 'var(--soft-lilac)' }}
       >
         <button
@@ -62,7 +65,7 @@ export default function AutomationStepsPage() {
           className="text-xl font-bold"
           style={{ color: 'var(--midnight-navy)' }}
         >
-          사용화 스텝
+          자동화 스텝
         </h1>
       </div>
 
