@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function AboutPage() {
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-[#f5f0ff]">
       {/* 네비게이션 */}
       <MainNavigation />
 

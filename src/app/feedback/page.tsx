@@ -166,7 +166,7 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
+    <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
       {/* Main Content */}
