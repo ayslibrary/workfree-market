@@ -61,7 +61,7 @@ export default function CareerPage() {
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white">
       <MainNavigation />
 
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 pt-32">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 pt-40">
         {/* 헤더 */}
         <FadeIn>
           <div className="mb-8">

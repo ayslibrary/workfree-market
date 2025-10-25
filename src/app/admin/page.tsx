@@ -129,7 +129,7 @@ export default function AdminPage() {
       <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 pt-32">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 pt-40">
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-6 md:mb-8">
           <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-400">
