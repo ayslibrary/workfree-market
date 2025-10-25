@@ -75,7 +75,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 pt-40 md:pt-28 pb-12">
+    <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 pt-24 md:pt-20 pb-12">
       <div className="w-full max-w-md">
         {/* 로고 */}
         <FadeIn delay={0.1}>

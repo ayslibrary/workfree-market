@@ -112,7 +112,7 @@ export default function MakerPage() {
       <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-40 md:pt-28">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-24 md:pt-20">
         {/* Page Title */}
         <div className="mb-6 md:mb-8">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 px-4 break-keep">

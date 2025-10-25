@@ -47,7 +47,7 @@ export default function CommunityPage() {
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/30 to-white">
       <MainNavigation />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-40 md:pt-28">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-24 md:pt-20">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">
