@@ -75,26 +75,26 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 pt-24 md:pt-20 pb-12">
+    <div className="min-h-screen bg-[#f5f0ff] flex items-center justify-center px-6 pt-16 md:pt-16 pb-12">
       <div className="w-full max-w-md">
         {/* 로고 */}
         <FadeIn delay={0.1}>
-          <Link href="/" className="flex items-center justify-center gap-3 mb-8 group">
+          <Link href="/" className="flex items-center justify-center gap-4 mb-10 group">
             <img 
               src="/workfree-logo.png?v=3" 
               alt="WorkFree Logo" 
-              className="w-12 h-12 transition-transform group-hover:scale-110"
+              className="w-16 h-16 md:w-20 md:h-20 transition-transform group-hover:scale-110"
             />
             <div>
               <div className="flex items-center gap-2">
-                <div className="text-2xl font-bold text-[#1E1B33]">
+                <div className="text-3xl md:text-4xl font-bold text-[#1E1B33]">
                   WorkFree Market
                 </div>
-                <span className="bg-[#FF9A7A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                <span className="bg-[#FF9A7A] text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
                   Beta
                 </span>
               </div>
-              <div className="text-xs text-[#1E1B33]/70 font-bold">
+              <div className="text-sm md:text-base text-[#1E1B33]/70 font-bold">
                 AI 실무 자동화 스튜디오
               </div>
             </div>
@@ -103,11 +103,11 @@ export default function LoginPage() {
 
         {/* 로그인 폼 */}
         <FadeIn delay={0.2}>
-          <div className="bg-white rounded-3xl p-8 shadow-2xl border-2 border-[#AFA6FF]">
-          <h1 className="text-3xl font-bold text-[#1E1B33] mb-2 text-center">
+          <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-[#AFA6FF]">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1E1B33] mb-3 text-center">
             로그인
           </h1>
-          <p className="text-[#1E1B33]/70 mb-8 text-center">
+          <p className="text-base md:text-lg text-[#1E1B33]/70 mb-8 text-center">
             자동화 키트 거래소에 오신 것을 환영합니다
           </p>
 
