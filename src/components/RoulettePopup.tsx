@@ -15,12 +15,12 @@ export default function RoulettePopup({ onClose, autoShow = true }: RoulettePopu
   const [selectedReward, setSelectedReward] = useState("");
 
   const rewards = [
-    { text: "AI 커스터마이징", emoji: "🎁", color: "#f9a8d4" },
-    { text: "키트 50% 할인", emoji: "💡", color: "#c084fc" },
-    { text: "₩10,000 포인트", emoji: "💰", color: "#93c5fd" },
-    { text: "무료 설치지원", emoji: "🧩", color: "#a7f3d0" },
-    { text: "베타 뱃지", emoji: "🎖️", color: "#fcd34d" },
-    { text: "추첨권 2배", emoji: "🔁", color: "#fca5a5" }
+    { text: "30 크레딧", emoji: "💎", color: "#6A5CFF" },
+    { text: "키트 50% 할인", emoji: "🎟️", color: "#8B7AFF" },
+    { text: "20 크레딧", emoji: "💰", color: "#FF9A7A" },
+    { text: "베타 전용 뱃지", emoji: "🏆", color: "#AFA6FF" },
+    { text: "15 크레딧", emoji: "✨", color: "#FFB39A" },
+    { text: "VIP 얼리버드", emoji: "👑", color: "#9B8AFF" }
   ];
 
   useEffect(() => {
@@ -76,20 +76,20 @@ export default function RoulettePopup({ onClose, autoShow = true }: RoulettePopu
           animation: "fadeIn 0.3s ease"
         }}
       >
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-[20px] md:rounded-[30px] p-6 md:p-12 text-center max-w-[600px] w-full shadow-[0_8px_60px_rgba(0,0,0,0.3)] relative">
-          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
-            🎁 베타테스터<br className="md:hidden" /> 전원 선물 증정!
+        <div className="bg-gradient-to-br from-[#f5f0ff] via-white to-[#FFF5F0] rounded-[20px] md:rounded-[30px] p-6 md:p-12 text-center max-w-[600px] w-full shadow-[0_8px_60px_rgba(106,92,255,0.3)] relative border-2 border-[#AFA6FF]">
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r from-[#6A5CFF] via-[#8B7AFF] to-[#FF9A7A] bg-clip-text text-transparent leading-tight">
+            🎉 베타테스터<br className="md:hidden" /> 전용 혜택!
           </h2>
-          <p className="text-gray-600 text-sm md:text-base lg:text-lg mb-6 md:mb-8">
-            WorkFree Market 런칭 기념 룰렛 이벤트
+          <p className="text-[#1E1B33]/70 text-sm md:text-base lg:text-lg mb-6 md:mb-8 font-semibold">
+            WorkFree 런칭 기념 • 룰렛 한 번만!
           </p>
 
           {/* 룰렛 컨테이너 */}
           <div className="relative flex justify-center items-center mb-6 md:mb-10">
             {/* 상단 화살표 (침) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-30">
-              <div className="w-0 h-0 border-l-[15px] md:border-l-[20px] border-l-transparent border-r-[15px] md:border-r-[20px] border-r-transparent border-t-[25px] md:border-t-[35px] border-t-red-500 drop-shadow-lg"></div>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 md:w-3 h-2.5 md:h-3 bg-red-500 rounded-full -mt-1"></div>
+              <div className="w-0 h-0 border-l-[15px] md:border-l-[20px] border-l-transparent border-r-[15px] md:border-r-[20px] border-r-transparent border-t-[25px] md:border-t-[35px] border-t-[#FF9A7A] drop-shadow-lg"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 md:w-3 h-2.5 md:h-3 bg-[#FF9A7A] rounded-full -mt-1"></div>
             </div>
 
             {/* 룰렛 휠 */}
@@ -143,8 +143,8 @@ export default function RoulettePopup({ onClose, autoShow = true }: RoulettePopu
                   );
                 })}
                 {/* 중앙 원 */}
-                <circle cx="100" cy="100" r="20" fill="white" stroke="#8b5cf6" strokeWidth="4" />
-                <text x="100" y="100" textAnchor="middle" dominantBaseline="middle" fill="#8b5cf6" fontSize="12" fontWeight="bold">
+                <circle cx="100" cy="100" r="20" fill="white" stroke="#6A5CFF" strokeWidth="4" />
+                <text x="100" y="100" textAnchor="middle" dominantBaseline="middle" fill="#6A5CFF" fontSize="12" fontWeight="bold">
                   SPIN
                 </text>
               </svg>
@@ -155,7 +155,7 @@ export default function RoulettePopup({ onClose, autoShow = true }: RoulettePopu
           <button
             onClick={handleSpin}
             disabled={isSpinning}
-            className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white border-none px-8 md:px-12 py-3.5 md:py-5 text-base md:text-xl rounded-full cursor-pointer font-bold hover:scale-105 transition-all shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full md:w-auto"
+            className="bg-gradient-to-r from-[#6A5CFF] via-[#8B7AFF] to-[#FF9A7A] text-white border-none px-8 md:px-12 py-3.5 md:py-5 text-base md:text-xl rounded-full cursor-pointer font-bold hover:scale-105 transition-all shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full md:w-auto"
           >
             {isSpinning ? "🎡 돌리는 중..." : "🎡 룰렛 돌리기!"}
           </button>
@@ -173,25 +173,28 @@ export default function RoulettePopup({ onClose, autoShow = true }: RoulettePopu
       {/* 결과 팝업 */}
       {showResultPopup && (
         <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-[1100] animate-fadeIn p-4">
-          <div className="bg-white rounded-2xl md:rounded-3xl p-8 md:p-12 text-center max-w-[500px] w-full shadow-[0_10px_70px_rgba(0,0,0,0.4)] animate-scaleIn">
+          <div className="bg-gradient-to-br from-[#f5f0ff] to-white rounded-2xl md:rounded-3xl p-8 md:p-12 text-center max-w-[500px] w-full shadow-[0_10px_70px_rgba(106,92,255,0.4)] animate-scaleIn border-2 border-[#AFA6FF]">
             <div className="text-6xl md:text-8xl mb-4 md:mb-6 animate-bounce">🎉</div>
-            <h3 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">
+            <h3 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-[#6A5CFF] to-[#FF9A7A] bg-clip-text text-transparent">
               축하합니다!
             </h3>
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl md:rounded-2xl p-6 md:p-8 mb-6 md:mb-8">
-              <p className="text-xl md:text-3xl font-bold text-purple-700 break-keep">
+            <div className="bg-gradient-to-r from-[#AFA6FF]/20 to-[#FF9A7A]/20 rounded-xl md:rounded-2xl p-6 md:p-8 mb-6 md:mb-8 border-2 border-[#6A5CFF]/30">
+              <p className="text-xl md:text-3xl font-bold text-[#6A5CFF] break-keep">
                 {selectedReward}
               </p>
+              <p className="text-sm md:text-base text-[#1E1B33]/70 mt-3">
+                당첨되셨어요!
+              </p>
             </div>
-            <p className="text-gray-600 mb-6 md:mb-8 text-sm md:text-lg leading-relaxed">
-              베타 신청 완료 후<br />
-              마이페이지에서 확인하실 수 있습니다
+            <p className="text-[#1E1B33]/70 mb-6 md:mb-8 text-sm md:text-lg leading-relaxed">
+              회원가입 후<br />
+              <span className="font-bold text-[#6A5CFF]">마이페이지</span>에서 확인하실 수 있습니다
             </p>
             <button
               onClick={handleResultConfirm}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg hover:scale-105 transition-all shadow-xl w-full"
+              className="bg-gradient-to-r from-[#6A5CFF] via-[#8B7AFF] to-[#FF9A7A] text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg hover:scale-105 transition-all shadow-xl w-full"
             >
-              확인
+              확인하고 시작하기
             </button>
           </div>
         </div>
