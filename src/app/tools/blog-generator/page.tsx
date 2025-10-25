@@ -241,7 +241,7 @@ ${generatedBlog}
     <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 pt-28">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 pt-32">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-12">

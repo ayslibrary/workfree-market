@@ -63,7 +63,7 @@ export default function BetaDashboardPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
         <MainNavigation />
-        <div className="flex justify-center items-center py-20 pt-28">
+        <div className="flex justify-center items-center py-20 pt-32">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function BetaDashboardPage() {
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
       <MainNavigation />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-28">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 pt-32">
         {/* 헤더 */}
         <FadeIn>
           <div className="text-center mb-8">

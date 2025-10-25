@@ -170,7 +170,7 @@ export default function FeedbackPage() {
       <MainNavigation />
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-28">
+      <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 pt-32">
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 px-4 break-keep">
             🧠 WorkFree Beta 설문
