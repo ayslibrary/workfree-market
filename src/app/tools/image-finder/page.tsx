@@ -89,7 +89,7 @@ export default function ImageFinderPage() {
             <input
               type="range"
               min="5"
-              max="30"
+              max="50"
               step="5"
               value={count}
               onChange={(e) => setCount(Number(e.target.value))}
@@ -98,7 +98,7 @@ export default function ImageFinderPage() {
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1">
               <span>5장</span>
-              <span>30장</span>
+              <span>50장</span>
             </div>
           </div>
 
