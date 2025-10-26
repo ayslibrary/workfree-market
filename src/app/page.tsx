@@ -184,11 +184,11 @@ export default function Home() {
                       {/* 글로우 효과 배경 */}
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
                       {/* 프리 캐릭터 */}
-                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110">
+                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110 overflow-hidden">
                         <img 
                           src="/fri-free.png" 
                           alt="WorkFree 마스코트 프리(Fri)" 
-                          className={`w-24 h-24 object-contain ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
+                          className={`w-24 h-24 object-cover rounded-full ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
                         />
                       </div>
                     </div>
@@ -223,11 +223,11 @@ export default function Home() {
                       {/* 글로우 효과 배경 */}
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
                       {/* 프리 캐릭터 */}
-                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110">
+                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110 overflow-hidden">
                         <img 
                           src="/fri-free.png" 
                           alt="WorkFree 마스코트 프리(Fri)" 
-                          className={`w-24 h-24 object-contain ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
+                          className={`w-24 h-24 object-cover rounded-full ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
                         />
                       </div>
                     </div>
