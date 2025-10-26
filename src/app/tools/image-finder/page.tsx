@@ -200,6 +200,11 @@ export default function ImageFinderPage() {
               <p><span className="font-semibold">콘텐츠팀:</span> 블로그 / 뉴스레터 삽화 확보</p>
             </div>
           </div>
+
+          {/* API 출처 표시 */}
+          <div className="text-center text-xs text-gray-400 pt-4">
+            <p>Powered by <span className="font-medium">Unsplash</span>, <span className="font-medium">Pexels</span>, <span className="font-medium">Pixabay</span></p>
+          </div>
         </div>
       </div>
     </div>
