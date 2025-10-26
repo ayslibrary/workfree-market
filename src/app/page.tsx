@@ -782,10 +782,10 @@ export default function Home() {
                   <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 30분 절약</span>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                  WorkFree 이미지 어시스턴트
+                  WorkFree 이미지 파인더
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
-                  검색만 하면, 필요한 이미지가 정리됩니다
+                  합법적 고품질 이미지, 3개 API에서 한 번에
                 </p>
                 <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
                   <div>✅ 브랜드 / 제품 리서치</div>

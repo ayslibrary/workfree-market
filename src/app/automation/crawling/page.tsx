@@ -18,12 +18,12 @@ export default function CrawlingPage() {
     {
       id: 0,
       icon: "📸",
-      name: "WorkFree 이미지 어시스턴트",
+      name: "WorkFree 이미지 파인더",
       price: "무료",
       originalPrice: "",
       badge: "NEW ✨",
-      category: ["이미지수집", "AI", "Next.js"],
-      description: "검색만 하면, 필요한 이미지가 정리됩니다. AI가 자동으로 찾아주고 분류합니다",
+      category: ["이미지수집", "합법", "Next.js"],
+      description: "합법적 고품질 이미지, 3개 API에서 한 번에 검색 (Unsplash + Pexels + Pixabay)",
       features: [
         "브랜드 / 제품 / 트렌드 이미지 리서치",
         "중복 제거 및 자동 폴더 정리",
