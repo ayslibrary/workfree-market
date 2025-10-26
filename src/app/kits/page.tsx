@@ -211,6 +211,131 @@ export default function KitsPage() {
           </div>
         </div>
 
+        {/* 🎯 베타 서비스 - 지금 바로 사용 가능 */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-4 animate-pulse">
+              🎁 베타 기간 무료!
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E1B33] mb-3">
+              지금 바로 사용 가능
+            </h2>
+            <p className="text-[#1E1B33]/70 text-lg">
+              NEW 서비스 3개를 먼저 만나보세요
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* 1. AI 블로그 자동 생성기 */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-200 hover:shadow-xl transition-all hover:-translate-y-1">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
+                  ✨ NEW!
+                </span>
+                <span className="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold">
+                  🎁 Beta 무료
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                AI 블로그 자동 생성기
+              </h3>
+              
+              <p className="text-center text-sm text-gray-600 mb-4">
+                키워드만 입력하면 완성도 높은 블로그 글이 즉시!
+              </p>
+              
+              <div className="space-y-2 mb-4 text-xs">
+                <div className="bg-purple-50 rounded-lg p-2 border border-purple-200">
+                  ⚡ 3가지 블로그 스타일 (기본/SEO/마케팅)
+                </div>
+                <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
+                  🌐 HTML 미리보기 & 바로 복붙
+                </div>
+              </div>
+              
+              <Link
+                href="/tools/blog-generator"
+                className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
+              >
+                ✍️ 블로그 생성 시작 →
+              </Link>
+            </div>
+
+            {/* 2. WorkFree 이미지 파인더 */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200 hover:shadow-xl transition-all hover:-translate-y-1">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
+                  ✨ NEW!
+                </span>
+                <span className="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold">
+                  🎁 Beta 무료
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                WorkFree 이미지 파인더
+              </h3>
+              
+              <p className="text-center text-sm text-gray-600 mb-4">
+                합법적 고품질 이미지, 3개 API에서 한 번에 검색
+              </p>
+              
+              <div className="space-y-2 mb-4 text-xs">
+                <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
+                  🌍 3개 소스 통합 (Unsplash + Pexels + Pixabay)
+                </div>
+                <div className="bg-purple-50 rounded-lg p-2 border border-purple-200">
+                  ⚡ 최대 50장 검색 & 상업적 이용 가능
+                </div>
+              </div>
+              
+              <Link
+                href="/tools/image-finder"
+                className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
+              >
+                📸 이미지 검색 시작 →
+              </Link>
+            </div>
+
+            {/* 3. AI 화보 메이커 */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-pink-200 hover:shadow-xl transition-all hover:-translate-y-1">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <span className="bg-gradient-to-r from-pink-600 to-rose-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
+                  ✨ NEW!
+                </span>
+                <span className="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold">
+                  🎁 Beta 무료
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+                AI 화보 메이커
+              </h3>
+              
+              <p className="text-center text-sm text-gray-600 mb-4">
+                한 장의 사진으로 만드는 20가지 스타일 화보
+              </p>
+              
+              <div className="space-y-2 mb-4 text-xs">
+                <div className="bg-pink-50 rounded-lg p-2 border border-pink-200">
+                  📷 20개 컨셉 (Vogue/Retro/Linkedin 등)
+                </div>
+                <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
+                  ⚡ Gemini AI 프롬프트로 즉시 생성
+                </div>
+              </div>
+              
+              <Link
+                href="/gallery"
+                className="block w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
+              >
+                🎨 화보 갤러리 보기 →
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* 카테고리 카드 그리드 */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {/* Microsoft 사무자동화 */}

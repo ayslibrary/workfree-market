@@ -566,112 +566,8 @@ export default function Home() {
               </div>
             </FadeIn>
 
-            {/* AI 화보 메이커 미리보기 */}
-            <FadeIn delay={0.2}>
-              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-pink-200 dark:border-pink-800 relative overflow-hidden h-full">
-                {/* 배경 장식 */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-400/20 to-rose-400/20 rounded-full blur-3xl -z-0"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-orange-400/20 to-red-400/20 rounded-full blur-3xl -z-0"></div>
-
-                <div className="relative z-10">
-                  {/* 뱃지 */}
-                  <div className="flex items-center justify-center gap-2 mb-6">
-                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-rose-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                      ✨ 20개 컨셉
-                    </span>
-                    <span className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-                      📸 AI 화보
-                    </span>
-                  </div>
-
-                  {/* 메인 제목 */}
-                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
-                    AI 화보 메이커
-                  </h2>
-                  <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
-                    한 장의 사진으로 만드는 <strong className="text-pink-600 dark:text-pink-400">3가지 스타일</strong>
-                  </p>
-
-                  {/* 이미지 미리보기 (3개 스타일) */}
-                  <div className="grid grid-cols-3 gap-3 mb-6">
-                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-pink-200 dark:border-pink-700 hover:border-pink-400 dark:hover:border-pink-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">👔</div>
-                          <div className="text-white text-xs font-bold">Vogue Korea</div>
-                          <div className="text-gray-400 text-[10px]">모던 복고</div>
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </div>
-                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-orange-900 to-orange-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">🎨</div>
-                          <div className="text-white text-xs font-bold">Vintage Retro</div>
-                          <div className="text-gray-300 text-[10px]">레트로 감성</div>
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </div>
-                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">💼</div>
-                          <div className="text-white text-xs font-bold">Linkedin</div>
-                          <div className="text-gray-300 text-[10px]">인플루언서</div>
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </div>
-                  </div>
-
-                  {/* 주요 기능 */}
-                  <div className="space-y-3 mb-6">
-                    <div className="bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/30 dark:to-rose-900/30 rounded-xl p-3 border border-pink-200 dark:border-pink-700">
-                      <div className="flex items-center gap-3">
-                        <div className="text-2xl">📷</div>
-                        <div>
-                          <div className="font-bold text-gray-900 dark:text-white text-sm">20가지 컨셉</div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Vogue/Retro/Linkedin 등</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
-                      <div className="flex items-center gap-3">
-                        <div className="text-2xl">⚡</div>
-                        <div>
-                          <div className="font-bold text-gray-900 dark:text-white text-sm">즉시 생성</div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Gemini AI 프롬프트</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* CTA 버튼 */}
-                  <Link
-                    href="/gallery"
-                    className="group block w-full bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-xl">🎨</span>
-                      <span>AI 화보 갤러리 보기</span>
-                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                    </div>
-                  </Link>
-
-                  {/* 하단 설명 */}
-                  <div className="mt-6 text-center">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      📸 20개 스타일 | 🎁 프롬프트 키트 제공 | ✨ 5분 만에 보고 커버 모델
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-
             {/* 이미지 파인더 */}
-            <FadeIn delay={0.4}>
+            <FadeIn delay={0.2}>
               <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-blue-200 dark:border-blue-800 relative overflow-hidden h-full">
                 {/* 배경 장식 */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl -z-0"></div>
@@ -746,6 +642,110 @@ export default function Home() {
                   <div className="mt-6 text-center">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       ⚡ 즉시 검색 | 💰 완전 무료 | 📊 마케터/디자이너/블로거 필수
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* AI 화보 메이커 */}
+            <FadeIn delay={0.4}>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-pink-200 dark:border-pink-800 relative overflow-hidden h-full">
+                {/* 배경 장식 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-400/20 to-rose-400/20 rounded-full blur-3xl -z-0"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-orange-400/20 to-red-400/20 rounded-full blur-3xl -z-0"></div>
+
+                <div className="relative z-10">
+                  {/* 뱃지 */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-600 to-rose-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                      ✨ NEW!
+                    </span>
+                    <span className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      🎁 Beta 무료
+                    </span>
+                  </div>
+
+                  {/* 메인 제목 */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
+                    AI 화보 메이커
+                  </h2>
+                  <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
+                    한 장의 사진으로 만드는 <strong className="text-pink-600 dark:text-pink-400">20가지 스타일</strong>
+                  </p>
+
+                  {/* 이미지 미리보기 (3개 스타일) */}
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-pink-200 dark:border-pink-700 hover:border-pink-400 dark:hover:border-pink-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">👔</div>
+                          <div className="text-white text-xs font-bold">Vogue Korea</div>
+                          <div className="text-gray-400 text-[10px]">모던 복고</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-orange-900 to-orange-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">🎨</div>
+                          <div className="text-white text-xs font-bold">Vintage Retro</div>
+                          <div className="text-gray-300 text-[10px]">레트로 감성</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all hover:scale-105">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-3xl mb-2">💼</div>
+                          <div className="text-white text-xs font-bold">Linkedin</div>
+                          <div className="text-gray-300 text-[10px]">인플루언서</div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                  </div>
+
+                  {/* 주요 기능 */}
+                  <div className="space-y-3 mb-6">
+                    <div className="bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/30 dark:to-rose-900/30 rounded-xl p-3 border border-pink-200 dark:border-pink-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">📷</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">20가지 컨셉</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Vogue/Retro/Linkedin 등</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⚡</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">즉시 생성</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Gemini AI 프롬프트</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA 버튼 */}
+                  <Link
+                    href="/gallery"
+                    className="group block w-full bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">🎨</span>
+                      <span>AI 화보 갤러리 보기</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </Link>
+
+                  {/* 하단 설명 */}
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      📸 20개 스타일 | 🎁 프롬프트 키트 제공 | ✨ 5분 만에 보그 커버 모델
                     </p>
                   </div>
                 </div>
