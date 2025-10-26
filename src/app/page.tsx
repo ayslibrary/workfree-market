@@ -172,27 +172,39 @@ export default function Home() {
           
           {/* CTA 버튼 */}
           <FadeIn delay={0.6}>
-            <div className="flex gap-4 justify-center items-center mb-12 relative">
+            <div className="flex gap-6 justify-center items-center mb-12 relative">
               {!isLoading && !user ? (
                 <>
                   {/* 왼쪽에 프리(Fri) 캐릭터 - 데스크톱만 */}
                   <div 
-                    className="hidden md:block cursor-pointer hover:scale-110 transition-transform"
+                    className="hidden md:flex flex-col items-center cursor-pointer group"
                     onClick={handleFriClick}
-                    title="프리(Fri)를 클릭해보세요!"
                   >
-                    <img 
-                      src="/fri-free.png" 
-                      alt="WorkFree 마스코트 프리(Fri)" 
-                      className={`w-20 h-20 object-contain ${isFriWaggling ? 'animate-bounce' : ''}`}
-                    />
+                    <div className="relative">
+                      {/* 글로우 효과 배경 */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                      {/* 프리 캐릭터 */}
+                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110">
+                        <img 
+                          src="/fri-free.png" 
+                          alt="WorkFree 마스코트 프리(Fri)" 
+                          className={`w-24 h-24 object-contain ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
+                        />
+                      </div>
+                    </div>
+                    {/* 말풍선 */}
+                    <div className="mt-3 bg-white px-4 py-2 rounded-full shadow-lg border-2 border-purple-200 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-y-0 translate-y-2">
+                      <p className="text-xs font-bold text-purple-600 whitespace-nowrap">클릭해보세요! 🐰</p>
+                    </div>
                   </div>
+
                   <Link
                     href="/kits"
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
                   >
                     🚀 지금 칼퇴 클릭
                   </Link>
+
                   {/* 큰 커서 아이콘 - 데스크톱만 */}
                   <div className="hidden md:block animate-bounce">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#6A5CFF]">
@@ -204,16 +216,27 @@ export default function Home() {
                 <>
                   {/* 로그인 시에도 프리(Fri) 표시 */}
                   <div 
-                    className="hidden md:block cursor-pointer hover:scale-110 transition-transform"
+                    className="hidden md:flex flex-col items-center cursor-pointer group"
                     onClick={handleFriClick}
-                    title="프리(Fri)를 클릭해보세요!"
                   >
-                    <img 
-                      src="/fri-free.png" 
-                      alt="WorkFree 마스코트 프리(Fri)" 
-                      className={`w-20 h-20 object-contain ${isFriWaggling ? 'animate-bounce' : ''}`}
-                    />
+                    <div className="relative">
+                      {/* 글로우 효과 배경 */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                      {/* 프리 캐릭터 */}
+                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110">
+                        <img 
+                          src="/fri-free.png" 
+                          alt="WorkFree 마스코트 프리(Fri)" 
+                          className={`w-24 h-24 object-contain ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
+                        />
+                      </div>
+                    </div>
+                    {/* 말풍선 */}
+                    <div className="mt-3 bg-white px-4 py-2 rounded-full shadow-lg border-2 border-purple-200 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-y-0 translate-y-2">
+                      <p className="text-xs font-bold text-purple-600 whitespace-nowrap">반가워요! 🐰</p>
+                    </div>
                   </div>
+
                   <Link
                     href={user ? "/my/dashboard" : "/kits"}
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
