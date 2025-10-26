@@ -55,12 +55,15 @@ export default function ImageFinderPage() {
       <div className="max-w-3xl mx-auto">
         {/* 헤더 */}
         <div className="text-center mb-12">
-          <div className="text-6xl mb-4">🐰</div>
+          <div className="text-6xl mb-4">📸</div>
           <h1 className="text-5xl font-bold mb-3" style={{ color: "#3A36A2" }}>
-            합법 이미지 파인더
+            WorkFree 이미지 어시스턴트
           </h1>
-          <p className="text-xl text-gray-600">
-            저작권 걱정 없는 고품질 이미지 자동 검색
+          <p className="text-xl text-gray-600 mb-2">
+            검색만 하면, 필요한 이미지가 정리됩니다.
+          </p>
+          <p className="text-lg text-gray-500">
+            AI가 자동으로 찾아주고 분류합니다.
           </p>
         </div>
 
@@ -106,11 +109,11 @@ export default function ImageFinderPage() {
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">🐰</span>
-                이미지 검색 중...
+                <span className="animate-spin">📸</span>
+                이미지 수집 중...
               </span>
             ) : (
-              "🚀 이미지 검색 시작"
+              "🚀 이미지 자동 수집"
             )}
           </button>
 
@@ -167,8 +170,36 @@ export default function ImageFinderPage() {
         </div>
 
         {/* 하단 정보 */}
-        <div className="mt-8 text-center text-sm text-gray-600">
-          <p>✅ 상업적 이용 가능 | ✅ 고품질 이미지 | 🚀 ZIP 다운로드 (준비 중)</p>
+        <div className="mt-8 space-y-6">
+          {/* 주요 기능 */}
+          <div className="bg-white rounded-2xl p-6 shadow-lg">
+            <div className="space-y-3">
+              <p className="text-gray-700 flex items-start gap-2">
+                <span className="text-green-500 font-bold">✅</span>
+                <span>브랜드 / 제품 / 트렌드 이미지 리서치</span>
+              </p>
+              <p className="text-gray-700 flex items-start gap-2">
+                <span className="text-green-500 font-bold">✅</span>
+                <span>중복 제거 및 자동 폴더 정리</span>
+              </p>
+              <p className="text-gray-700 flex items-start gap-2">
+                <span className="text-green-500 font-bold">✅</span>
+                <span>ZIP으로 한번에 내보내기 (준비 중)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 실무 예시 */}
+          <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6">
+            <h3 className="text-lg font-bold mb-4" style={{ color: "#3A36A2" }}>
+              💬 실무 예시
+            </h3>
+            <div className="space-y-2 text-sm text-gray-700">
+              <p><span className="font-semibold">마케팅팀:</span> 광고용 시각자료 수집</p>
+              <p><span className="font-semibold">디자인팀:</span> 트렌드 이미지 리서치</p>
+              <p><span className="font-semibold">콘텐츠팀:</span> 블로그 / 뉴스레터 삽화 확보</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
