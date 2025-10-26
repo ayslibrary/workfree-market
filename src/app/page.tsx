@@ -61,6 +61,13 @@ export default function Home() {
     const email = formData.get('email') as string;
     const task = formData.get('task') as string;
 
+    // 클라이언트 측 이메일 유효성 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("⚠️ 유효하지 않은 이메일 주소 형식입니다.");
+      return;
+    }
+
     try {
       // 다시 한번 현재 인원 확인 (동시 접속 방지)
       const currentCount = await getBetaCount();
@@ -172,10 +179,20 @@ export default function Home() {
                 </>
               ) : (
                 <Link
-                  href="/kits"
+                  href={user ? "/my/dashboard" : "/kits"}
                   className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
                 >
-                  🚀 지금 칼퇴 클릭
+                  {user ? (
+                    <>
+                      <span className="text-2xl">⚡</span>
+                      <span>내 WorkFree 허브로 이동</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-xl">🚀</span>
+                      <span>지금 칼퇴 클릭</span>
+                    </>
+                  )}
                 </Link>
               )}
             </div>
@@ -186,10 +203,14 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
                 <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
-                  100명
+                  {isCountLoading ? (
+                    <div className="h-6 w-20 bg-gray-200 rounded-full animate-pulse mx-auto"></div>
+                  ) : (
+                    `🔥 ${betaCount}/100명`
+                  )}
                 </div>
                 <div className="text-[#1E1B33]/70 text-xs font-medium">
-                  베타 테스터 모집
+                  베타 테스터 참여 인원
                 </div>
               </div>
             </StaggerItem>
@@ -457,6 +478,7 @@ export default function Home() {
                 loop
                 playsInline
                 controls
+                aria-label="WorkFree 자동화 솔루션 데모 영상"
               >
                 <source src="/videos/watermarked-691240b2-610f-42b0-a476-0e148e0a813b.mp4" type="video/mp4" />
                 브라우저가 비디오 태그를 지원하지 않습니다.
@@ -1241,10 +1263,10 @@ export default function Home() {
                   지금 시작하면 <span className="font-bold text-[#6A5CFF]">10 크레딧</span>을 무료로 드려요!
                 </p>
                 <Link
-                  href="/kits"
+                  href={user ? "/my/dashboard" : "/kits"}
                   className="inline-block bg-gradient-to-r from-purple-600 via-[#6A5CFF] to-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
                 >
-                  🚀 지금 칼퇴 클릭
+                  {user ? "⚡ 내 WorkFree 허브로 이동" : "🚀 지금 칼퇴 클릭"}
                 </Link>
               </div>
             </div>
