@@ -193,7 +193,7 @@ export default function ImageFinderPage() {
                   <span>최대 50장</span>
                 </p>
                 <p className="text-sm text-gray-600 ml-7">
-                  30장 → 50장으로 10배 더 많은 선택지
+                  한 번에 최대 50장까지 검색 가능
                 </p>
               </div>
               
