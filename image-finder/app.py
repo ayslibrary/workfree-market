@@ -4,6 +4,7 @@ Unsplash API 연동 추가
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import requests
@@ -14,8 +15,8 @@ import zipfile
 from io import BytesIO
 from datetime import datetime
 
-# .env 파일 로드 (일단 주석 처리)
-# load_dotenv()
+# .env 파일 로드 (로컬 개발용)
+load_dotenv()
 
 app = FastAPI(
     title="WorkFree Image Finder API",
@@ -23,8 +24,22 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# 테스트용: API 키 직접 입력
-UNSPLASH_ACCESS_KEY = "tYJaN2hzn_j1UEZCH5vd2YfayTwShagHAnmfiyqtYb0"
+# CORS 설정 - Vercel 도메인 허용
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "https://workfreemarket.com",
+        "https://*.vercel.app",
+        "*"  # 개발 중에는 모든 origin 허용
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 환경 변수에서 API 키 로드
+UNSPLASH_ACCESS_KEY = os.getenv("UNSPLASH_ACCESS_KEY", "")
 
 # 디버그 출력
 print("=" * 60)
