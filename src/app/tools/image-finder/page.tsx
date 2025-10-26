@@ -57,13 +57,13 @@ export default function ImageFinderPage() {
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">📸</div>
           <h1 className="text-5xl font-bold mb-3" style={{ color: "#3A36A2" }}>
-            WorkFree 이미지 어시스턴트
+            WorkFree 이미지 파인더
           </h1>
-          <p className="text-xl text-gray-600 mb-2">
-            검색만 하면, 필요한 이미지가 정리됩니다.
+          <p className="text-xl text-gray-700 mb-2 font-semibold">
+            합법적 고품질 이미지, 3개 API에서 한 번에 검색
           </p>
-          <p className="text-lg text-gray-500">
-            AI가 자동으로 찾아주고 분류합니다.
+          <p className="text-base text-gray-500">
+            상업적 이용 가능 | 저작권 걱정 없음
           </p>
         </div>
 
@@ -173,31 +173,74 @@ export default function ImageFinderPage() {
         <div className="mt-8 space-y-6">
           {/* 주요 기능 */}
           <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <div className="space-y-3">
-              <p className="text-gray-700 flex items-start gap-2">
-                <span className="text-green-500 font-bold">✅</span>
-                <span>브랜드 / 제품 / 트렌드 이미지 리서치</span>
-              </p>
-              <p className="text-gray-700 flex items-start gap-2">
-                <span className="text-green-500 font-bold">✅</span>
-                <span>중복 제거 및 자동 폴더 정리</span>
-              </p>
-              <p className="text-gray-700 flex items-start gap-2">
-                <span className="text-green-500 font-bold">✅</span>
-                <span>ZIP으로 한번에 내보내기 (준비 중)</span>
-              </p>
+            <h3 className="text-lg font-bold mb-4" style={{ color: "#3A36A2" }}>
+              ✨ 이 서비스의 장점
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-gray-800 font-semibold mb-1 flex items-center gap-2">
+                  <span className="text-xl">🌍</span>
+                  <span>3개 소스 통합</span>
+                </p>
+                <p className="text-sm text-gray-600 ml-7">
+                  Unsplash + Pexels + Pixabay를 한 번에 검색
+                </p>
+              </div>
+              
+              <div>
+                <p className="text-gray-800 font-semibold mb-1 flex items-center gap-2">
+                  <span className="text-xl">⚡</span>
+                  <span>최대 50장</span>
+                </p>
+                <p className="text-sm text-gray-600 ml-7">
+                  30장 → 50장으로 10배 더 많은 선택지
+                </p>
+              </div>
+              
+              <div>
+                <p className="text-gray-800 font-semibold mb-1 flex items-center gap-2">
+                  <span className="text-xl">✅</span>
+                  <span>합법적 사용</span>
+                </p>
+                <p className="text-sm text-gray-600 ml-7">
+                  모든 이미지 상업적 이용 가능
+                </p>
+              </div>
+              
+              <div>
+                <p className="text-gray-800 font-semibold mb-1 flex items-center gap-2">
+                  <span className="text-xl">💰</span>
+                  <span>완전 무료</span>
+                </p>
+                <p className="text-sm text-gray-600 ml-7">
+                  API 제한 내 무제한 사용
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* 실무 예시 */}
+          {/* 실무 활용 */}
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6">
             <h3 className="text-lg font-bold mb-4" style={{ color: "#3A36A2" }}>
-              💬 실무 예시
+              💼 이런 분들이 사용해요
             </h3>
-            <div className="space-y-2 text-sm text-gray-700">
-              <p><span className="font-semibold">마케팅팀:</span> 광고용 시각자료 수집</p>
-              <p><span className="font-semibold">디자인팀:</span> 트렌드 이미지 리서치</p>
-              <p><span className="font-semibold">콘텐츠팀:</span> 블로그 / 뉴스레터 삽화 확보</p>
+            <div className="space-y-3 text-sm text-gray-700">
+              <p className="flex items-start gap-2">
+                <span className="text-lg">📊</span>
+                <span><span className="font-semibold">마케터:</span> 제안서 / 광고 소재용 이미지</span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="text-lg">🎨</span>
+                <span><span className="font-semibold">디자이너:</span> 트렌드 리서치 / 무드보드</span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="text-lg">✍️</span>
+                <span><span className="font-semibold">블로거:</span> 포스팅 썸네일 / 삽화</span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="text-lg">📱</span>
+                <span><span className="font-semibold">SNS 운영자:</span> 피드 / 스토리용 이미지</span>
+              </p>
             </div>
           </div>
 
