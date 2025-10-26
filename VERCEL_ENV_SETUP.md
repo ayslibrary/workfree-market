@@ -15,18 +15,29 @@ Python 백엔드 없이 Next.js API Route에서 직접 Unsplash API를 호출합
 
 ---
 
-### 2️⃣ 환경 변수 추가
+### 2️⃣ 환경 변수 추가 (3개)
 
 1. **Settings** 탭 클릭
 2. 왼쪽 메뉴에서 **Environment Variables** 클릭
-3. **새 환경 변수 추가**:
+3. **다음 3개 환경 변수를 추가**:
 
-#### 변수 정보
+#### 변수 1: Unsplash
 - **Key (Name)**: `UNSPLASH_ACCESS_KEY`
 - **Value**: `tYJaN2hzn_j1UEZCH5vd2YfayTwShagHAnmfiyqtYb0`
 - **Environments**: **Production**, **Preview**, **Development** 모두 체크 ✅
+- **Save** 버튼 클릭
 
-4. **Save** 버튼 클릭
+#### 변수 2: Pexels
+- **Key (Name)**: `PEXELS_API_KEY`
+- **Value**: `YmEljCccg5fdyHk0Vd6GQK5K6kPa6tRw5AKXfb7hTebjKSdPD520AzTb`
+- **Environments**: **Production**, **Preview**, **Development** 모두 체크 ✅
+- **Save** 버튼 클릭
+
+#### 변수 3: Pixabay
+- **Key (Name)**: `PIXABAY_API_KEY`
+- **Value**: `52944408-afd014b9efdddab303767de3d`
+- **Environments**: **Production**, **Preview**, **Development** 모두 체크 ✅
+- **Save** 버튼 클릭
 
 ---
 
@@ -52,7 +63,9 @@ Python 백엔드 없이 Next.js API Route에서 직접 Unsplash API를 호출합
 
 ✅ **Python 백엔드 불필요** - Vercel만 사용
 ✅ **완전 무료** - 추가 비용 없음
-✅ **더 빠름** - 직접 Unsplash API 호출
+✅ **3개 API 통합** - Unsplash + Pexels + Pixabay
+✅ **최대 300+ 이미지** - 훨씬 더 많은 결과
+✅ **최신 이미지 포함** - 최신순 정렬 지원
 ✅ **Sleep 모드 없음** - 항상 빠른 응답
 
 ---
