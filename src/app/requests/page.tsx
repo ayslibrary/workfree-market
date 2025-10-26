@@ -25,6 +25,7 @@ interface Request {
 export default function RequestsPage() {
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState<'all' | 'approved' | 'inProgress' | 'completed'>('approved');
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState<string>('');
@@ -35,6 +36,7 @@ export default function RequestsPage() {
     if (!db) {
       console.error('Firebase가 초기화되지 않았습니다.');
       setLoading(false);
+      setHasError(true);
       return;
     }
 
@@ -63,9 +65,11 @@ export default function RequestsPage() {
       });
       setRequests(requestsData);
       setLoading(false);
+      setHasError(false);
     }, (error) => {
       console.error('요청 조회 오류:', error);
       setLoading(false);
+      setHasError(true);
     });
 
     return () => unsubscribe();
@@ -201,23 +205,55 @@ export default function RequestsPage() {
           </button>
         </div>
 
+        {/* Error State */}
+        {hasError && (
+          <div className="text-center py-20 bg-red-50 rounded-lg border border-red-200 flex flex-col items-center">
+            <img 
+              src="/fri-work.png" 
+              alt="프리(Fri) - 에러 발생" 
+              className="h-24 w-auto mb-4 opacity-70"
+            />
+            <p className="text-red-700 font-semibold text-lg">
+              ⚠️ 프리(Fri)가 잠시 길을 잃었어요!
+            </p>
+            <p className="text-red-600 mt-2">
+              데이터 로드에 실패했습니다. 관리자에게 문의해주세요.
+            </p>
+          </div>
+        )}
+
         {/* Loading State */}
-        {loading && (
+        {loading && !hasError && (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
-            <p className="mt-4 text-gray-600">요청을 불러오는 중...</p>
+            <div className="mb-4 flex justify-center">
+              <img 
+                src="/fri-work.png" 
+                alt="프리(Fri) 로딩 중" 
+                className="h-20 w-auto animate-bounce"
+              />
+            </div>
+            <p className="mt-4 text-purple-600 font-semibold text-lg">
+              ✨ 프리(Fri)가 자동화 요청 리스트를 가져오는 중...
+            </p>
+            <p className="text-gray-500 mt-2">잠시만 기다려주세요!</p>
           </div>
         )}
 
         {/* Empty State */}
-        {!loading && requests.length === 0 && (
+        {!loading && !hasError && requests.length === 0 && (
           <div className="text-center py-12 md:py-20 bg-white rounded-2xl shadow-sm">
-            <div className="text-4xl md:text-6xl mb-4">📭</div>
+            <div className="mb-4 flex justify-center">
+              <img 
+                src="/fri-free.png" 
+                alt="프리(Fri) - 요청 없음" 
+                className="h-32 w-auto"
+              />
+            </div>
             <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
-              아직 요청이 없습니다
+              프리(Fri)가 쉴 수 있도록, 새로운 자동화 요청을 부탁해요!
             </h3>
             <p className="text-gray-600 mb-6">
-              첫 번째 자동화 요청을 등록해보세요!
+              함께 만들어갈 첫 번째 자동화를 제안해주세요.
             </p>
             <Link
               href="/request"

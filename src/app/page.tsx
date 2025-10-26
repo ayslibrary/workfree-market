@@ -16,6 +16,7 @@ export default function Home() {
   const [betaCount, setBetaCount] = useState<number>(0);
   const [isBetaFull, setIsBetaFull] = useState<boolean>(false);
   const [isCountLoading, setIsCountLoading] = useState<boolean>(true);
+  const [isFriWaggling, setIsFriWaggling] = useState<boolean>(false);
 
   // 베타 참여 인원 수 가져오기
   const getBetaCount = async () => {
@@ -45,6 +46,18 @@ export default function Home() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // 프리(Fri) 귀 움직임 애니메이션
+  const handleFriClick = () => {
+    if (isFriWaggling) return;
+
+    setIsFriWaggling(true);
+    setTimeout(() => {
+      setIsFriWaggling(false);
+    }, 600);
+    
+    console.log("🐰 칼퇴하고 프리(Fri) 귀가 쫑긋!");
   };
 
   // 베타 신청 핸들러
@@ -162,8 +175,18 @@ export default function Home() {
             <div className="flex gap-4 justify-center items-center mb-12 relative">
               {!isLoading && !user ? (
                 <>
-                  {/* 왼쪽 투명 공간 (균형용) - 데스크톱만 */}
-                  <div className="hidden md:block w-12 h-12 opacity-0"></div>
+                  {/* 왼쪽에 프리(Fri) 캐릭터 - 데스크톱만 */}
+                  <div 
+                    className="hidden md:block cursor-pointer hover:scale-110 transition-transform"
+                    onClick={handleFriClick}
+                    title="프리(Fri)를 클릭해보세요!"
+                  >
+                    <img 
+                      src="/fri-free.png" 
+                      alt="WorkFree 마스코트 프리(Fri)" 
+                      className={`w-20 h-20 object-contain ${isFriWaggling ? 'animate-bounce' : ''}`}
+                    />
+                  </div>
                   <Link
                     href="/kits"
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
@@ -178,22 +201,36 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                <Link
-                  href={user ? "/my/dashboard" : "/kits"}
-                  className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
-                >
-                  {user ? (
-                    <>
-                      <span className="text-2xl">⚡</span>
-                      <span>내 WorkFree 허브로 이동</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-xl">🚀</span>
-                      <span>지금 칼퇴 클릭</span>
-                    </>
-                  )}
-                </Link>
+                <>
+                  {/* 로그인 시에도 프리(Fri) 표시 */}
+                  <div 
+                    className="hidden md:block cursor-pointer hover:scale-110 transition-transform"
+                    onClick={handleFriClick}
+                    title="프리(Fri)를 클릭해보세요!"
+                  >
+                    <img 
+                      src="/fri-free.png" 
+                      alt="WorkFree 마스코트 프리(Fri)" 
+                      className={`w-20 h-20 object-contain ${isFriWaggling ? 'animate-bounce' : ''}`}
+                    />
+                  </div>
+                  <Link
+                    href={user ? "/my/dashboard" : "/kits"}
+                    className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
+                  >
+                    {user ? (
+                      <>
+                        <span className="text-2xl">⚡</span>
+                        <span>내 WorkFree 허브로 이동</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xl">🚀</span>
+                        <span>지금 칼퇴 클릭</span>
+                      </>
+                    )}
+                  </Link>
+                </>
               )}
             </div>
           </FadeIn>
