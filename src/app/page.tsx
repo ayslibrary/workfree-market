@@ -203,14 +203,10 @@ export default function Home() {
             <StaggerItem>
               <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
                 <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
-                  {isCountLoading ? (
-                    <div className="h-6 w-20 bg-gray-200 rounded-full animate-pulse mx-auto"></div>
-                  ) : (
-                    `🔥 ${betaCount}/100명`
-                  )}
+                  100명 한정
                 </div>
                 <div className="text-[#1E1B33]/70 text-xs font-medium">
-                  베타 테스터 참여 인원
+                  베타 테스터 모집
                 </div>
               </div>
             </StaggerItem>
@@ -1565,13 +1561,6 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                
-                {/* 실시간 카운터 */}
-                {!isCountLoading && (
-                  <div className={`mt-6 text-center font-bold text-xl ${isBetaFull ? 'text-red-600' : 'text-blue-600'}`}>
-                    📊 현재 {betaCount}/100명 참여 중
                   </div>
                 )}
               </div>
