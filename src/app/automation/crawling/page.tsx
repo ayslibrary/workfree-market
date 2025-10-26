@@ -16,6 +16,27 @@ export default function CrawlingPage() {
 
   const kits = [
     {
+      id: 0,
+      icon: "📸",
+      name: "WorkFree 이미지 어시스턴트",
+      price: "무료",
+      originalPrice: "",
+      badge: "NEW ✨",
+      category: ["이미지수집", "AI", "Next.js"],
+      description: "검색만 하면, 필요한 이미지가 정리됩니다. AI가 자동으로 찾아주고 분류합니다",
+      features: [
+        "브랜드 / 제품 / 트렌드 이미지 리서치",
+        "중복 제거 및 자동 폴더 정리",
+        "ZIP으로 한번에 내보내기 (준비 중)",
+        "Unsplash API 고품질 이미지",
+        "상업적 이용 가능한 이미지만 제공"
+      ],
+      included: ["웹 기반 서비스 (설치 불필요)", "실시간 검색", "고품질 이미지", "저작권 안전"],
+      difficulty: 1,
+      isWebService: true,
+      link: "/tools/image-finder"
+    },
+    {
       id: 1,
       icon: "🔍",
       name: "검색어 매일 자동검색 & 메일발송",
@@ -229,12 +250,21 @@ export default function CrawlingPage() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleDownload(kit.name)}
-                    className="w-full bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] shadow-lg"
-                  >
-                    구매하기
-                  </button>
+                  {kit.isWebService ? (
+                    <Link
+                      href={kit.link!}
+                      className="block w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] shadow-lg text-center"
+                    >
+                      🚀 바로 사용하기
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => handleDownload(kit.name)}
+                      className="w-full bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition-all hover:scale-[1.02] shadow-lg"
+                    >
+                      구매하기
+                    </button>
+                  )}
                 </div>
               </div>
             </StaggerItem>

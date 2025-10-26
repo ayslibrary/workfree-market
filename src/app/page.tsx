@@ -763,6 +763,44 @@ export default function Home() {
           </FadeIn>
 
           <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {/* 서비스 0 - 이미지 어시스턴트 (NEW) */}
+            <StaggerItem>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
+              <div className="bg-gradient-to-br from-purple-500 via-blue-500 to-purple-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-3 py-1.5 rounded-full text-sm font-bold animate-pulse">
+                  ✨ NEW
+                </div>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">
+                    이미지수집
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 30분 절약</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  WorkFree 이미지 어시스턴트
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  검색만 하면, 필요한 이미지가 정리됩니다
+                </p>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>✅ 브랜드 / 제품 리서치</div>
+                  <div>✅ 중복 제거 자동 정리</div>
+                </div>
+                <Link
+                  href="/tools/image-finder"
+                  className="block w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm text-center"
+                >
+                  🚀 바로 사용하기
+                </Link>
+              </div>
+              </div>
+            </StaggerItem>
+
             {/* 서비스 1 - PDF 변환 */}
             <StaggerItem>
               <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-purple-200 dark:border-purple-900 group">
