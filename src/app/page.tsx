@@ -469,7 +469,21 @@ export default function Home() {
       {/* 🎯 베타 서비스 체험 섹션 */}
       <section className="py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-8">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <span className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold mb-6 animate-pulse">
+                🎁 베타 기간 무료!
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1E1B33] mb-4">
+                지금 바로 사용 가능
+              </h2>
+              <p className="text-[#1E1B33]/70 text-lg">
+                NEW 서비스 3개를 먼저 만나보세요
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="grid lg:grid-cols-3 gap-8">
             {/* AI 블로그 생성기 */}
             <FadeIn>
               <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-purple-200 dark:border-purple-800 relative overflow-hidden h-full">
@@ -650,6 +664,88 @@ export default function Home() {
                   <div className="mt-6 text-center">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       📸 20개 스타일 | 🎁 프롬프트 키트 제공 | ✨ 5분 만에 보고 커버 모델
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 이미지 파인더 */}
+            <FadeIn delay={0.4}>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-blue-200 dark:border-blue-800 relative overflow-hidden h-full">
+                {/* 배경 장식 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl -z-0"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-cyan-400/20 to-indigo-400/20 rounded-full blur-3xl -z-0"></div>
+
+                <div className="relative z-10">
+                  {/* 뱃지 */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                      ✨ NEW!
+                    </span>
+                    <span className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      🎁 Beta 무료
+                    </span>
+                  </div>
+
+                  {/* 메인 제목 */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                    WorkFree 이미지 파인더
+                  </h2>
+                  <p className="text-center text-gray-600 dark:text-gray-300 mb-2">
+                    합법적 고품질 이미지, <strong className="text-blue-600 dark:text-blue-400">3개 API에서 한 번에 검색</strong>
+                  </p>
+                  <p className="text-center text-sm text-blue-600 dark:text-blue-400 font-semibold mb-6">
+                    💡 베타 기간 동안 <span className="underline decoration-wavy">완전 무료</span>로 사용하세요
+                  </p>
+
+                  {/* 주요 기능 */}
+                  <div className="space-y-3 mb-6">
+                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">🌍</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">3개 소스 통합</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Unsplash + Pexels + Pixabay</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-purple-200 dark:border-purple-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⚡</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">최대 50장 검색</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">한 번에 50장까지</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl p-3 border border-green-200 dark:border-green-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">✅</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">상업적 이용 가능</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">저작권 걱정 없음</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA 버튼 */}
+                  <Link
+                    href="/tools/image-finder"
+                    className="group block w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">📸</span>
+                      <span>이미지 검색 시작하기</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </Link>
+
+                  {/* 하단 설명 */}
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      ⚡ 즉시 검색 | 💰 완전 무료 | 📊 마케터/디자이너/블로거 필수
                     </p>
                   </div>
                 </div>
