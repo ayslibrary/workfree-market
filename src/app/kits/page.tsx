@@ -225,11 +225,11 @@ export default function KitsPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* 1. AI 블로그 자동 생성기 */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-200 hover:shadow-xl transition-all hover:-translate-y-1">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* 1. QR 코드 생성기 */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-cyan-200 hover:shadow-xl transition-all hover:-translate-y-1">
               <div className="flex items-center justify-center gap-2 mb-4">
-                <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
+                <span className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
                   ✨ NEW!
                 </span>
                 <span className="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold">
@@ -237,28 +237,28 @@ export default function KitsPage() {
                 </span>
               </div>
               
-              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                AI 블로그 자동 생성기
+              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                QR 코드 생성기
               </h3>
               
               <p className="text-center text-sm text-gray-600 mb-4">
-                키워드만 입력하면 완성도 높은 블로그 글이 즉시!
+                URL, 텍스트를 QR 코드로 변환하고 로고 삽입까지
               </p>
               
               <div className="space-y-2 mb-4 text-xs">
-                <div className="bg-purple-50 rounded-lg p-2 border border-purple-200">
-                  ⚡ 3가지 블로그 스타일 (기본/SEO/마케팅)
+                <div className="bg-cyan-50 rounded-lg p-2 border border-cyan-200">
+                  📱 PNG/SVG 다운로드
                 </div>
-                <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
-                  🌐 HTML 미리보기 & 바로 복붙
+                <div className="bg-purple-50 rounded-lg p-2 border border-purple-200">
+                  🎨 로고 중앙 삽입
                 </div>
               </div>
               
               <Link
-                href="/tools/blog-generator"
-                className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
+                href="/tools/qr-generator"
+                className="block w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
               >
-                ✍️ 블로그 생성 시작 →
+                📱 QR 코드 생성하기 →
               </Link>
             </div>
 
@@ -298,7 +298,43 @@ export default function KitsPage() {
               </Link>
             </div>
 
-            {/* 3. AI 화보 메이커 */}
+            {/* 3. AI 블로그 자동 생성기 */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-200 hover:shadow-xl transition-all hover:-translate-y-1">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
+                  ✨ NEW!
+                </span>
+                <span className="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold">
+                  🎁 Beta 무료
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-center mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                AI 블로그 자동 생성기
+              </h3>
+              
+              <p className="text-center text-sm text-gray-600 mb-4">
+                키워드만 입력하면 완성도 높은 블로그 글이 즉시!
+              </p>
+              
+              <div className="space-y-2 mb-4 text-xs">
+                <div className="bg-purple-50 rounded-lg p-2 border border-purple-200">
+                  ⚡ 3가지 블로그 스타일 (기본/SEO/마케팅)
+                </div>
+                <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
+                  🌐 HTML 미리보기 & 바로 복붙
+                </div>
+              </div>
+              
+              <Link
+                href="/tools/blog-generator"
+                className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold text-center transition-all hover:scale-105"
+              >
+                ✍️ 블로그 생성 시작 →
+              </Link>
+            </div>
+
+            {/* 4. AI 화보 메이커 */}
             <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-pink-200 hover:shadow-xl transition-all hover:-translate-y-1">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <span className="bg-gradient-to-r from-pink-600 to-rose-600 text-white px-3 py-1.5 rounded-full text-xs font-bold animate-pulse">
