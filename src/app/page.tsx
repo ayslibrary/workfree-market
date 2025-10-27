@@ -684,31 +684,46 @@ export default function Home() {
                   {/* 이미지 미리보기 (3개 스타일) */}
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-pink-200 dark:border-pink-700 hover:border-pink-400 dark:hover:border-pink-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">👔</div>
-                          <div className="text-white text-xs font-bold">Vogue Korea</div>
-                          <div className="text-gray-400 text-[10px]">모던 복고</div>
+                      <div className="aspect-[3/4] relative">
+                        <img 
+                          src="/examples/ai-portrait/보그화보.jpg" 
+                          alt="Vogue Korea 스타일 화보" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                          <div className="text-xs font-bold">Vogue Korea</div>
+                          <div className="text-[10px] text-gray-300">모던 복고</div>
                         </div>
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-orange-900 to-orange-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">🎨</div>
-                          <div className="text-white text-xs font-bold">Vintage Retro</div>
-                          <div className="text-gray-300 text-[10px]">레트로 감성</div>
+                      <div className="aspect-[3/4] relative">
+                        <img 
+                          src="/examples/ai-portrait/레트로.png" 
+                          alt="Vintage Retro 스타일 화보" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                          <div className="text-xs font-bold">Vintage Retro</div>
+                          <div className="text-[10px] text-gray-300">레트로 감성</div>
                         </div>
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div className="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all hover:scale-105">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-3xl mb-2">💼</div>
-                          <div className="text-white text-xs font-bold">Linkedin</div>
-                          <div className="text-gray-300 text-[10px]">인플루언서</div>
+                      <div className="aspect-[3/4] relative">
+                        <img 
+                          src="/examples/ai-portrait/링크드인.jpg" 
+                          alt="LinkedIn 스타일 화보" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                          <div className="text-xs font-bold">Linkedin</div>
+                          <div className="text-[10px] text-gray-300">인플루언서</div>
                         </div>
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
