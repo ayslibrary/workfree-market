@@ -15,27 +15,18 @@ import {
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Firebase 설정 (환경 변수에서 가져오기)
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
-// 환경 변수 확인
-const isConfigured = firebaseConfig.apiKey && firebaseConfig.projectId;
-
-// Firebase 앱 초기화 (중복 방지)
-const app = isConfigured && getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0] || null;
+// Firebase 설정 완전 비활성화 (데모 모드)
+const firebaseConfig = null;
+const isConfigured = false;
+const app = null;
 
 // Auth 인스턴스
 export const auth = app ? getAuth(app) : (null as unknown as ReturnType<typeof getAuth>);
 
 // Firestore 인스턴스
 export const db = app ? getFirestore(app) : (null as unknown as ReturnType<typeof getFirestore>);
+
+// 데모 사용자 생성 (아래에서 함수로 재정의됨)
 
 // Storage 인스턴스
 export const storage = app ? getStorage(app) : (null as unknown as ReturnType<typeof getStorage>);
@@ -208,17 +199,20 @@ export async function signOutDemo() {
   return { error: null };
 }
 
-// 데모 모드 확인
+// 데모 모드 확인 (개발용으로 항상 true)
 export function isDemoMode(): boolean {
-  if (typeof window === 'undefined') return false;
-  return localStorage.getItem('demo_mode') === 'true';
+  return true; // 개발용으로 항상 데모 모드 활성화
 }
 
 // 데모 사용자 가져오기
 export function getDemoUser(): DemoUser | null {
-  if (typeof window === 'undefined') return null;
-  const userStr = localStorage.getItem('demo_user');
-  return userStr ? JSON.parse(userStr) : null;
+  // 개발용으로 고정된 데모 사용자 반환
+  return {
+    uid: 'demo-user-123',
+    email: 'demo@workfree.com',
+    displayName: '데모 사용자',
+    photoURL: null,
+  };
 }
 
 export default app;
