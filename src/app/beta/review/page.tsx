@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import MainNavigation from '@/components/MainNavigation';
@@ -41,9 +41,9 @@ export default function ReviewPage() {
       return;
     }
     loadReviewCount();
-  }, [user, router]);
+  }, [user, router, loadReviewCount]);
 
-  const loadReviewCount = async () => {
+  const loadReviewCount = useCallback(async () => {
     if (!user) return;
     try {
       const count = await getTotalReviewCount(user.id);
@@ -51,7 +51,7 @@ export default function ReviewPage() {
     } catch (error) {
       console.error('후기 수 로딩 실패:', error);
     }
-  };
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,9 +87,9 @@ export default function ReviewPage() {
 
       alert('후기가 작성되었습니다! 크레딧이 지급되었습니다. 🎉');
       router.push('/beta/dashboard');
-    } catch (error: any) {
+    } catch (error) {
       console.error('후기 작성 실패:', error);
-      alert(error.message || '후기 작성에 실패했습니다.');
+      alert(error instanceof Error ? error.message : '후기 작성에 실패했습니다.');
     } finally {
       setIsSubmitting(false);
     }

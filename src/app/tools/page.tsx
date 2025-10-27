@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
+import { AUTOMATION_SERVICES, getServicesByCategory, getPopularServices } from '@/lib/services';
 
 const TOOLS = [
   {
@@ -97,6 +98,7 @@ export default function ToolsPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentCredits] = useState(10); // 데모: 현재 크레딧
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const handleUseTool = async (tool: typeof TOOLS[0]) => {
     if (currentCredits < tool.credits) {
@@ -217,9 +219,66 @@ export default function ToolsPage() {
           </div>
         </FadeIn>
 
+        {/* 카테고리 필터 */}
+        <FadeIn>
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                selectedCategory === 'all'
+                  ? 'bg-[#6A5CFF] text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#6A5CFF]'
+              }`}
+            >
+              전체
+            </button>
+            <button
+              onClick={() => setSelectedCategory('marketing')}
+              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                selectedCategory === 'marketing'
+                  ? 'bg-[#6A5CFF] text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#6A5CFF]'
+              }`}
+            >
+              📊 마케팅/영업
+            </button>
+            <button
+              onClick={() => setSelectedCategory('hr')}
+              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                selectedCategory === 'hr'
+                  ? 'bg-[#6A5CFF] text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#6A5CFF]'
+              }`}
+            >
+              📝 인사/총무
+            </button>
+            <button
+              onClick={() => setSelectedCategory('finance')}
+              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                selectedCategory === 'finance'
+                  ? 'bg-[#6A5CFF] text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#6A5CFF]'
+              }`}
+            >
+              💰 재무/회계
+            </button>
+            <button
+              onClick={() => setSelectedCategory('product')}
+              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                selectedCategory === 'product'
+                  ? 'bg-[#6A5CFF] text-white shadow-lg'
+                  : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#6A5CFF]'
+              }`}
+            >
+              💡 기획/제품
+            </button>
+          </div>
+        </FadeIn>
+
         {/* 도구 목록 */}
         <StaggerContainer staggerDelay={0.1} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {TOOLS.map((tool) => (
+          {/* 기존 도구들 (전체 카테고리일 때만 표시) */}
+          {selectedCategory === 'all' && TOOLS.map((tool) => (
             <StaggerItem key={tool.id}>
               <div className={`bg-gradient-to-br ${tool.bgColor} rounded-3xl p-8 border-2 border-gray-200 hover:border-purple-300 hover:scale-105 transition-all`}>
                 <div className="text-5xl mb-4">{tool.icon}</div>
@@ -268,6 +327,80 @@ export default function ToolsPage() {
                   `}
                 >
                   {currentCredits < tool.credits ? '크레딧 부족' : '사용하기'}
+                </button>
+              </div>
+            </StaggerItem>
+          ))}
+
+          {/* 새로운 자동화 서비스들 */}
+          {selectedCategory !== 'all' && getServicesByCategory(selectedCategory).map((service) => (
+            <StaggerItem key={service.id}>
+              <div className="bg-white rounded-3xl p-8 border-2 border-gray-200 hover:border-[#6A5CFF] hover:scale-105 transition-all shadow-lg">
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  {service.name}
+                </h3>
+                <p className="text-gray-700 mb-4 leading-relaxed text-sm">
+                  {service.description}
+                </p>
+
+                {/* 카테고리 태그 */}
+                <div className="mb-4">
+                  <span className="inline-block bg-[#6A5CFF]/10 text-[#6A5CFF] px-3 py-1 rounded-full text-sm font-medium">
+                    {service.categoryName}
+                  </span>
+                </div>
+
+                {/* 크레딧 및 시간 정보 */}
+                <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+                  <div>
+                    <span className="text-sm text-gray-600">사용 크레딧</span>
+                    <div className="text-2xl font-bold text-[#6A5CFF]">
+                      {service.cost}개
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-sm text-gray-600">절약 시간</span>
+                    <div className="text-2xl font-bold text-green-600">
+                      {service.timeSaved}분
+                    </div>
+                  </div>
+                </div>
+
+                {/* 기능 특징 */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-bold text-gray-700 mb-2">주요 기능</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {service.features.slice(0, 2).map((feature, index) => (
+                      <span key={index} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 사용하기 버튼 */}
+                <button
+                  onClick={() => handleUseTool({
+                    id: service.id,
+                    name: service.name,
+                    icon: service.icon,
+                    description: service.description,
+                    credits: service.cost,
+                    timeSaved: service.timeSaved,
+                    color: 'from-[#6A5CFF] to-[#5A4CE8]',
+                    bgColor: 'from-[#6A5CFF]/10 to-[#5A4CE8]/10'
+                  })}
+                  disabled={currentCredits < service.cost}
+                  className={`
+                    w-full py-3 rounded-xl font-bold transition-all
+                    ${currentCredits < service.cost
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-[#6A5CFF] to-[#5A4CE8] text-white hover:shadow-lg hover:scale-[1.02]'
+                    }
+                  `}
+                >
+                  {currentCredits < service.cost ? '크레딧 부족' : '사용하기'}
                 </button>
               </div>
             </StaggerItem>

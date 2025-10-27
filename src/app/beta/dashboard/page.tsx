@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import MainNavigation from '@/components/MainNavigation';
@@ -30,9 +30,9 @@ export default function BetaDashboardPage() {
       return;
     }
     loadDashboard();
-  }, [user, router]);
+  }, [user, router, loadDashboard]);
 
-  const loadDashboard = async () => {
+  const loadDashboard = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -57,7 +57,7 @@ export default function BetaDashboardPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, router]);
 
   if (isLoading) {
     return (
@@ -228,7 +228,7 @@ export default function BetaDashboardPage() {
               📝 미션 목록
             </h2>
             <div className="space-y-4">
-              {missions.map((progress, index) => {
+              {missions.map((progress) => {
                 const { mission, isCompleted, isLocked } = progress;
                 return (
                   <div

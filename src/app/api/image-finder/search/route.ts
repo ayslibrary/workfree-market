@@ -20,6 +20,38 @@ interface ImageResult {
   license: string;
 }
 
+interface UnsplashPhoto {
+  id: string;
+  urls: {
+    regular: string;
+    thumb: string;
+  };
+  user: {
+    name: string;
+    links: {
+      html: string;
+    };
+  };
+}
+
+interface PexelsPhoto {
+  id: number;
+  src: {
+    large: string;
+    medium: string;
+  };
+  photographer: string;
+  photographer_url: string;
+}
+
+interface PixabayPhoto {
+  id: number;
+  largeImageURL: string;
+  webformatURL: string;
+  user: string;
+  user_id: number;
+}
+
 // Unsplash API 호출
 async function searchUnsplash(keyword: string, count: number): Promise<ImageResult[]> {
   if (!UNSPLASH_ACCESS_KEY) return [];
@@ -37,7 +69,7 @@ async function searchUnsplash(keyword: string, count: number): Promise<ImageResu
     if (!response.ok) return [];
 
     const data = await response.json();
-    return (data.results || []).map((photo: any) => ({
+    return (data.results || []).map((photo: UnsplashPhoto) => ({
       id: `unsplash_${photo.id}`,
       url: photo.urls.regular,
       thumbnail_url: photo.urls.thumb,
@@ -69,7 +101,7 @@ async function searchPexels(keyword: string, count: number): Promise<ImageResult
     if (!response.ok) return [];
 
     const data = await response.json();
-    return (data.photos || []).map((photo: any) => ({
+    return (data.photos || []).map((photo: PexelsPhoto) => ({
       id: `pexels_${photo.id}`,
       url: photo.src.large,
       thumbnail_url: photo.src.medium,
@@ -96,7 +128,7 @@ async function searchPixabay(keyword: string, count: number): Promise<ImageResul
     if (!response.ok) return [];
 
     const data = await response.json();
-    return (data.hits || []).map((photo: any) => ({
+    return (data.hits || []).map((photo: PixabayPhoto) => ({
       id: `pixabay_${photo.id}`,
       url: photo.largeImageURL,
       thumbnail_url: photo.webformatURL,

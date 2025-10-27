@@ -1,19 +1,19 @@
 'use client';
 
 import React from 'react';
-import { AUTOMATION_TOOLS } from '@/types/credit';
+import { getPopularServices } from '@/lib/services';
 
 interface QuickLaunchProps {
   onToolRun: (toolId: string, toolName: string, cost: number, minutes: number) => void;
-  userCredits: number;
+  userCredits?: number;
 }
 
-export default function QuickLaunch({ onToolRun, userCredits }: QuickLaunchProps) {
-  const availableTools = AUTOMATION_TOOLS.filter(tool => tool.available).slice(0, 4);
+export default function QuickLaunch({ onToolRun, userCredits = 10 }: QuickLaunchProps) {
+  const popularServices = getPopularServices();
   
-  const handleToolClick = (tool: typeof AUTOMATION_TOOLS[0]) => {
-    if (userCredits >= tool.creditCost) {
-      onToolRun(tool.id, tool.nameKo, tool.creditCost, tool.timeSavedMinutes);
+  const handleToolClick = (service: typeof popularServices[0]) => {
+    if (userCredits >= service.cost) {
+      onToolRun(service.id, service.name, service.cost, service.timeSaved);
     }
   };
   
@@ -25,40 +25,40 @@ export default function QuickLaunch({ onToolRun, userCredits }: QuickLaunchProps
       </h2>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {availableTools.map((tool) => {
-          const canUse = userCredits >= tool.creditCost;
+        {popularServices.map((service) => {
+          const canUse = userCredits >= service.cost;
           
           return (
             <button
-              key={tool.id}
-              onClick={() => handleToolClick(tool)}
+              key={service.id}
+              onClick={() => handleToolClick(service)}
               disabled={!canUse}
               className={`
                 relative p-4 rounded-xl transition-all duration-200 transform hover:scale-105
                 ${canUse 
-                  ? 'bg-gradient-to-br from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 border-2 border-indigo-200 hover:border-indigo-300 shadow-md hover:shadow-lg' 
+                  ? 'bg-gradient-to-br from-[#6A5CFF]/10 to-[#5A4CE8]/10 hover:from-[#6A5CFF]/20 hover:to-[#5A4CE8]/20 border-2 border-[#6A5CFF]/30 hover:border-[#6A5CFF] shadow-md hover:shadow-lg' 
                   : 'bg-gray-100 border-2 border-gray-200 cursor-not-allowed opacity-60'
                 }
               `}
             >
               {/* 크레딧 배지 */}
-              <div className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
-                {tool.creditCost}C
+              <div className="absolute -top-2 -right-2 bg-[#6A5CFF] text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                {service.cost}C
               </div>
               
               {/* 아이콘 */}
               <div className="text-4xl mb-3">
-                {tool.icon}
+                {service.icon}
               </div>
               
-              {/* 도구명 */}
-              <div className="font-bold text-sm text-gray-800 mb-1 line-clamp-2">
-                {tool.nameKo}
+              {/* 서비스명 */}
+              <div className="font-bold text-sm text-[#1E1B33] mb-1 line-clamp-2">
+                {service.name}
               </div>
               
               {/* 절약 시간 */}
-              <div className="text-xs text-gray-600 mb-2">
-                {Math.floor(tool.timeSavedMinutes / 60)}h {tool.timeSavedMinutes % 60}m 절약
+              <div className="text-xs text-[#1E1B33]/70 mb-2">
+                {service.timeSaved}분 절약
               </div>
               
               {/* 상태 표시 */}

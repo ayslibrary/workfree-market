@@ -4,7 +4,7 @@ import QRCode from "qrcode";
 
 export async function POST(request: NextRequest) {
   try {
-    const { qrData, logoFile, options } = await request.json();
+    const { qrData, options } = await request.json();
 
     if (!qrData || !Array.isArray(qrData) || qrData.length === 0) {
       return NextResponse.json(
@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
         });
 
         // 클라이언트에서 전송한 로고가 포함된 이미지 사용
-        let finalBuffer = pngBuffer;
         
         if (qr.imageData) {
           try {

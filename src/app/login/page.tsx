@@ -46,7 +46,7 @@ export default function LoginPage() {
         const redirect = searchParams.get('redirect') || '/my/dashboard';
         router.push(redirect);
       }
-    } catch (err) {
+    } catch {
       setLocalError('로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
     }
@@ -68,7 +68,7 @@ export default function LoginPage() {
         const redirect = searchParams.get('redirect') || '/my/dashboard';
         router.push(redirect);
       }
-    } catch (err) {
+    } catch {
       setLocalError('Google 로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
     }
@@ -101,7 +101,7 @@ export default function LoginPage() {
         const redirect = searchParams.get('redirect') || '/my/dashboard';
         router.push(redirect);
       }
-    } catch (err) {
+    } catch {
       setLocalError('데모 로그인 중 오류가 발생했습니다.');
       setIsLoading(false);
     }

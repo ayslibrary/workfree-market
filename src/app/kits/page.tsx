@@ -40,51 +40,51 @@ export default function KitsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  // 카테고리 정의
-  const categories: Category[] = [
-    {
-      id: 'all',
-      name: '전체',
-      icon: '📦',
-      description: '모든 자동화 키트',
-      color: 'gray'
-    },
-    {
-      id: 'microsoft',
-      name: 'Microsoft Office',
-      icon: '🏢',
-      description: 'Excel, Outlook, Word, PPT',
-      color: 'blue'
-    },
-    {
-      id: 'ai-prompts',
-      name: 'AI 프롬프트',
-      icon: '🤖',
-      description: 'ChatGPT, Gemini, Sora2',
-      color: 'purple'
-    },
-    {
-      id: 'automation-tools',
-      name: '업무 자동화',
-      icon: '⚙️',
-      description: 'Python, 파일관리, 스케줄링',
-      color: 'green'
-    },
-    {
-      id: 'cloud-collab',
-      name: '클라우드 & 협업',
-      icon: '☁️',
-      description: 'Google, Slack, Notion',
-      color: 'cyan'
-    },
-    {
-      id: 'marketing-design',
-      name: '마케팅 & 디자인',
-      icon: '🎨',
-      description: 'SNS, Canva, 이미지',
-      color: 'pink'
-    }
-  ];
+  // 카테고리 정의 (사용하지 않음)
+  // const categories: Category[] = [
+  //   {
+  //     id: 'all',
+  //     name: '전체',
+  //     icon: '📦',
+  //     description: '모든 자동화 키트',
+  //     color: 'gray'
+  //   },
+  //   {
+  //     id: 'microsoft',
+  //     name: 'Microsoft Office',
+  //     icon: '🏢',
+  //     description: 'Excel, Outlook, Word, PPT',
+  //     color: 'blue'
+  //   },
+  //   {
+  //     id: 'ai-prompts',
+  //     name: 'AI 프롬프트',
+  //     icon: '🤖',
+  //     description: 'ChatGPT, Gemini, Sora2',
+  //     color: 'purple'
+  //   },
+  //   {
+  //     id: 'automation-tools',
+  //     name: '업무 자동화',
+  //     icon: '⚙️',
+  //     description: 'Python, 파일관리, 스케줄링',
+  //     color: 'green'
+  //   },
+  //   {
+  //     id: 'cloud-collab',
+  //     name: '클라우드 & 협업',
+  //     icon: '☁️',
+  //     description: 'Google, Slack, Notion',
+  //     color: 'cyan'
+  //   },
+  //   {
+  //     id: 'marketing-design',
+  //     name: '마케팅 & 디자인',
+  //     icon: '🎨',
+  //     description: 'SNS, Canva, 이미지',
+  //     color: 'pink'
+  //   }
+  // ];
 
   // 필터링된 키트
   const filteredKits = selectedCategory === 'all' 

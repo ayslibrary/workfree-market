@@ -258,7 +258,7 @@ export default function DashboardPage() {
         <StatsRow userProfile={userProfile} />
 
         {/* 퀵런치 */}
-        <QuickLaunch onToolRun={handleToolRun} />
+        <QuickLaunch onToolRun={handleToolRun} userCredits={userProfile.credits} />
 
         {/* 나만의 루틴 */}
         <MyRoutines routines={routines} />

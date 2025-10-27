@@ -161,7 +161,7 @@ export default function GamificationDemo() {
     };
 
     loadInitialData();
-  }, []); // 데모 모드에서는 의존성 없이 한 번만 실행
+  }, [demoUser.uid]); // demoUser.uid를 의존성에 추가
 
   // 로딩 상태
   if (isLoadingData) {
