@@ -90,6 +90,28 @@ const TOOLS = [
     bgColor: 'from-cyan-50 to-blue-100',
     link: '/tools/qr-generator',
   },
+  {
+    id: 'exchange-rate',
+    name: '환율 자동 공유',
+    icon: '💱',
+    description: '매일 아침 선택한 통화의 환율을 전사원에게 자동 발송',
+    credits: 2,
+    timeSaved: 30,
+    color: 'from-emerald-500 to-teal-600',
+    bgColor: 'from-emerald-50 to-teal-100',
+    link: '/tools/exchange-rate',
+  },
+  {
+    id: 'email-template',
+    name: '이메일 템플릿 생성기',
+    icon: '📧',
+    description: '상황에 맞는 완벽한 이메일을 빠르게 생성하고 변수 치환까지',
+    credits: 1,
+    timeSaved: 20,
+    color: 'from-emerald-500 to-teal-600',
+    bgColor: 'from-emerald-50 to-teal-100',
+    link: '/tools/email-template',
+  },
 ];
 
 export default function ToolsPage() {

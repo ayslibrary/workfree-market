@@ -1,4 +1,4 @@
-# 🐰 WorkFree Image Finder - 완전 설치 가이드
+ # 🐰 WorkFree Image Finder - 완전 설치 가이드
 
 ## 📦 프로젝트 구조
 
