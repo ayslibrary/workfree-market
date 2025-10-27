@@ -14,7 +14,7 @@ interface QRGeneratorProps {
     margin: number;
     enableShortUrl: boolean;
   };
-  onOptionsChange: (options: any) => void;
+  onOptionsChange: (options: Record<string, unknown>) => void;
   loading: boolean;
   error: string;
 }
@@ -42,7 +42,7 @@ export default function QRGenerator({
     onGenerate(texts);
   };
 
-  const handleOptionChange = (key: string, value: any) => {
+  const handleOptionChange = (key: string, value: unknown) => {
     onOptionsChange({
       ...options,
       [key]: value,

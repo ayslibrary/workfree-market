@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { UserProfile, formatMoney } from '@/types/gamification';
+import { UserProfile } from '@/types/gamification';
 
 interface CreditBoxProps {
   userProfile: UserProfile;
@@ -16,7 +16,7 @@ export default function CreditBox({
   onViewPlans, 
   onRecharge, 
   onToggleAutoRecharge,
-  onTimeToCreditConversion
+  onTimeToCreditConversion: _onTimeToCreditConversion
 }: CreditBoxProps) {
   const [autoRecharge, setAutoRecharge] = useState(false);
   

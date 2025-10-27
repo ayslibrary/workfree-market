@@ -333,7 +333,7 @@ export default function ToolsPage() {
           ))}
 
           {/* 새로운 자동화 서비스들 */}
-          {selectedCategory !== 'all' && getServicesByCategory(selectedCategory).map((service) => (
+          {selectedCategory !== 'all' && AUTOMATION_SERVICES.filter(service => service.category === selectedCategory).map((service) => (
             <StaggerItem key={service.id}>
               <div className="bg-white rounded-3xl p-8 border-2 border-gray-200 hover:border-[#6A5CFF] hover:scale-105 transition-all shadow-lg">
                 <div className="text-5xl mb-4">{service.icon}</div>

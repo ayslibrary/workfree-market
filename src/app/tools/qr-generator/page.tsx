@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import MainNavigation from "@/components/MainNavigation";
 import { FadeIn } from "@/components/animations";
@@ -19,7 +19,7 @@ interface QRData {
 export default function QRGeneratorPage() {
   const { user, isAuthenticated } = useAuth();
   const [qrData, setQrData] = useState<QRData[]>([]);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>("");
   const [options, setOptions] = useState({
     size: 256,
@@ -136,7 +136,7 @@ export default function QRGeneratorPage() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-    } catch (err) {
+    } catch {
       setError("다운로드 중 오류가 발생했습니다");
     }
   };

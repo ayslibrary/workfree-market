@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { getBetaTester } from '@/lib/beta/missions';
 import { formatTimeSaved } from '@/lib/beta/missions';
@@ -22,7 +22,7 @@ export default function TimeSavingsCounter({
     if (user) {
       loadTimeSavings();
     }
-  }, [user]);
+  }, [user, loadTimeSavings]);
 
   // 카운터 애니메이션
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function TimeSavingsCounter({
     return () => clearInterval(timer);
   }, [totalMinutes]);
 
-  const loadTimeSavings = async () => {
+  const loadTimeSavings = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -62,7 +62,7 @@ export default function TimeSavingsCounter({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
 
   if (!user || totalMinutes === 0) {
     return null;

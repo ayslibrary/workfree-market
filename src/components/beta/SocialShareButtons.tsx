@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { recordSocialShare, generateShareText, getShareUrl, hasSharedOnPlatform } from '@/lib/beta/social';
 import { completeMissionByAction } from '@/lib/beta/missions';
@@ -23,11 +23,11 @@ export default function SocialShareButtons({
   const [isChecking, setIsChecking] = useState(false);
 
   // 초기 공유 상태 확인
-  useState(() => {
+  useEffect(() => {
     if (user) {
       checkSharedPlatforms();
     }
-  });
+  }, [user]);
 
   const checkSharedPlatforms = async () => {
     if (!user) return;
@@ -89,7 +89,7 @@ export default function SocialShareButtons({
         } else {
           alert(result.message);
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error('공유 기록 실패:', error);
         alert('공유 기록에 실패했습니다.');
       }
@@ -135,7 +135,7 @@ export default function SocialShareButtons({
           } else {
             alert(result.message);
           }
-        } catch (error: any) {
+        } catch (error) {
           console.error('공유 기록 실패:', error);
           alert('공유 기록에 실패했습니다.');
         }

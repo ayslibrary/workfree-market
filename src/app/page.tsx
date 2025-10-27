@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
-import { signOut, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import KitOptionsModal from "@/components/KitOptionsModal";
 import RoulettePopup from "@/components/RoulettePopup";
@@ -13,34 +13,14 @@ import MainNavigation from "@/components/MainNavigation";
 export default function Home() {
   const { user, isLoading } = useAuth();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const [betaCount, setBetaCount] = useState<number>(0);
   const [isBetaFull, setIsBetaFull] = useState<boolean>(false);
-  const [isCountLoading, setIsCountLoading] = useState<boolean>(true);
   const [isFriWaggling, setIsFriWaggling] = useState<boolean>(false);
 
-  // 베타 참여 인원 수 가져오기
-  const getBetaCount = async () => {
-    if (!db) return 0;
-    try {
-      const snapshot = await getDocs(collection(db, "beta_testers"));
-      return snapshot.size;
-    } catch (error) {
-      console.error("베타 인원 조회 오류:", error);
-      return 0;
-    }
-  };
 
-  // 페이지 로드 시 베타 인원 수 조회 (백그라운드)
+  // 페이지 로드 시 베타 상태 확인
   useEffect(() => {
-    const fetchBetaCount = async () => {
-      setIsCountLoading(true);
-      const count = await getBetaCount();
-      setBetaCount(count);
-      setIsBetaFull(count >= 100);
-      setIsCountLoading(false);
-    };
-
-    fetchBetaCount();
+    // 베타가 가득 찬 상태로 설정 (임시)
+    setIsBetaFull(true);
   }, []);
 
   const scrollToSection = (id: string) => {

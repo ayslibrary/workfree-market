@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import QRCode from "qrcode";
-import html2canvas from "html2canvas";
 
 interface QRData {
   id: string;
@@ -27,7 +26,7 @@ export default function QRDisplay({ qrData, logoPreview, options }: QRDisplayPro
   const [downloading, setDownloading] = useState<string | null>(null);
 
   // QR 코드를 Canvas에 그리는 함수 (로고 포함)
-  const drawQRCode = async (canvas: HTMLCanvasElement, text: string, index: number) => {
+  const drawQRCode = useCallback(async (canvas: HTMLCanvasElement, text: string) => {
     try {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
@@ -81,17 +80,17 @@ export default function QRDisplay({ qrData, logoPreview, options }: QRDisplayPro
     } catch (error) {
       console.error(`QR 코드 그리기 실패 (${text}):`, error);
     }
-  };
+  }, [options, logoPreview]);
 
   // QR 데이터가 변경될 때마다 Canvas에 그리기
   useEffect(() => {
     qrData.forEach((qr, index) => {
       const canvas = document.getElementById(`qr-canvas-${index}`) as HTMLCanvasElement;
       if (canvas) {
-        drawQRCode(canvas, qr.text, index);
+        drawQRCode(canvas, qr.text);
       }
     });
-  }, [qrData, options]);
+  }, [qrData, options, drawQRCode]);
 
   const handleDownloadPNG = async (qrData: QRData, index: number) => {
     setDownloading(qrData.id);

@@ -4,7 +4,7 @@
 
 import { useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { onAuthStateChange, isDemoMode, getDemoUser } from '@/lib/firebase';
+import { getDemoUser } from '@/lib/firebase';
 import { User } from '@/types/user';
 
 export function useAuth() {
