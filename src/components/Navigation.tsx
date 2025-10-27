@@ -24,6 +24,7 @@ export default function Navigation() {
     { href: '/community', label: '💬 커뮤니티' },
     { href: '/kits', label: '🧩 키트' },
     { href: '/tools/blog-generator', label: '✍️ 블로그' },
+    { href: '/tools/qr-generator', label: '📱 QR코드' },
     { href: '/request', label: '✨ 요청하기' },
   ];
 

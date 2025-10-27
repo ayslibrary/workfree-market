@@ -241,6 +241,7 @@ export default function RequestPage() {
                 { value: 'Notion', label: '📓 Notion', icon: '📓' },
                 { value: 'Slack', label: '💬 Slack', icon: '💬' },
                 { value: 'Teams', label: '👥 Teams', icon: '👥' },
+                { value: 'QR Generator', label: '📱 QR Generator', icon: '📱' },
                 { value: 'SAP', label: '🏢 SAP', icon: '🏢' },
                 { value: 'ERP', label: '🔧 ERP', icon: '🔧' }
               ].map((tool) => (

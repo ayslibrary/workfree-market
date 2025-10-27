@@ -78,6 +78,17 @@ const TOOLS = [
     bgColor: 'from-indigo-50 to-purple-100',
     link: '/tools/blog-generator',
   },
+  {
+    id: 'qr-generator',
+    name: 'QR 코드 생성기',
+    icon: '📱',
+    description: 'URL, 텍스트를 QR 코드로 변환하고 로고 삽입까지',
+    credits: 1,
+    timeSaved: 15,
+    color: 'from-cyan-500 to-blue-600',
+    bgColor: 'from-cyan-50 to-blue-100',
+    link: '/tools/qr-generator',
+  },
 ];
 
 export default function ToolsPage() {

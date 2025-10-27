@@ -1124,6 +1124,44 @@ export default function Home() {
               </div>
               </div>
             </StaggerItem>
+
+            {/* 서비스 5 - QR 코드 생성기 */}
+            <StaggerItem>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border-2 border-cyan-200 dark:border-cyan-900 group">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 h-48 flex items-center justify-center relative">
+                <svg className="w-20 h-20 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+                <div className="absolute top-4 right-4 bg-cyan-500 text-white px-3 py-1.5 rounded-full text-sm font-bold">
+                  💎 1 크레딧
+                </div>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full text-xs font-semibold">
+                    이미지 생성
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">⏱️ 15분 절약</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  QR 코드 생성기
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm">
+                  URL, 텍스트를 QR 코드로 변환하고 로고 삽입까지
+                </p>
+                <div className="mb-4 text-xs text-gray-600 dark:text-gray-400">
+                  <div>📱 PNG/SVG 다운로드</div>
+                  <div>🎨 로고 중앙 삽입</div>
+                </div>
+                <Link
+                  href="/tools/qr-generator"
+                  className="block w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02] text-sm text-center"
+                >
+                  사용하기
+                </Link>
+              </div>
+              </div>
+            </StaggerItem>
           </StaggerContainer>
 
           <FadeIn delay={0.5}>

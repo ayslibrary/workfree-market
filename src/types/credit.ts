@@ -258,6 +258,18 @@ export const AUTOMATION_TOOLS: AutomationTool[] = [
     moneySavedAmount: 30000,
     icon: '🎨',
     available: true
+  },
+  {
+    id: 'qr-generator',
+    name: 'QR Code Generator',
+    nameKo: 'QR 코드 생성기',
+    category: '이미지 생성',
+    description: 'URL, 텍스트를 QR 코드로 변환하고 로고 삽입',
+    creditCost: 1,
+    timeSavedMinutes: 15,
+    moneySavedAmount: 5000,
+    icon: '📱',
+    available: true
   }
 ];
 
