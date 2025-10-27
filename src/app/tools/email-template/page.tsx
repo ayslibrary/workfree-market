@@ -250,6 +250,19 @@ export default function EmailTemplatePage() {
   const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate | null>(null);
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [previewMode, setPreviewMode] = useState<'edit' | 'preview'>('edit');
+  
+  // AI 생성 관련 상태
+  const [aiMode, setAiMode] = useState<boolean>(false);
+  const [aiContext, setAiContext] = useState<string>('');
+  const [aiRecipientInfo, setAiRecipientInfo] = useState({
+    name: '',
+    company: '',
+    relationship: ''
+  });
+  const [aiTone, setAiTone] = useState<'formal' | 'casual' | 'friendly'>('formal');
+  const [aiLanguage, setAiLanguage] = useState<'ko' | 'en' | 'ja'>('ko');
+  const [aiLoading, setAiLoading] = useState<boolean>(false);
+  const [aiError, setAiError] = useState<string>('');
 
   // 선택된 카테고리의 템플릿들 필터링
   const filteredTemplates = EMAIL_TEMPLATES.filter(template => template.category === selectedCategory);
@@ -259,6 +272,64 @@ export default function EmailTemplatePage() {
     return text.replace(/\{([^}]+)\}/g, (match, key) => {
       return vars[key] || `{${key}}`;
     });
+  };
+
+  // AI 이메일 생성 함수
+  const handleAiGenerate = async () => {
+    if (!aiContext.trim()) {
+      setAiError('상황 설명을 입력해주세요.');
+      return;
+    }
+
+    setAiLoading(true);
+    setAiError('');
+
+    try {
+      const response = await fetch('/api/email-template/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: selectedCategory,
+          context: aiContext,
+          recipientInfo: aiRecipientInfo,
+          tone: aiTone,
+          language: aiLanguage
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'AI 생성 실패');
+      }
+
+      const data = await response.json();
+      
+      // AI 생성 결과를 템플릿으로 변환
+      const aiTemplate: EmailTemplate = {
+        id: 'ai-generated',
+        name: 'AI 생성 이메일',
+        category: selectedCategory,
+        subject: data.email.subject,
+        content: data.email.content,
+        variables: data.email.variables,
+        description: 'AI가 생성한 맞춤형 이메일'
+      };
+
+      setSelectedTemplate(aiTemplate);
+      setPreviewMode('edit');
+      
+      // 변수 초기화
+      const initialVars: Record<string, string> = {};
+      data.email.variables.forEach((variable: string) => {
+        initialVars[variable] = '';
+      });
+      setVariables(initialVars);
+
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : 'AI 생성 중 오류가 발생했습니다');
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   // 템플릿 선택 핸들러
@@ -403,35 +474,181 @@ export default function EmailTemplatePage() {
               </div>
             </FadeIn>
 
-            {/* 템플릿 선택 */}
-            <FadeIn delay={0.2}>
+            {/* AI 생성 모드 토글 */}
+            <FadeIn delay={0.15}>
               <div className="max-w-6xl mx-auto mb-8">
                 <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 border-2 border-purple-200 dark:border-purple-800">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-                    📝 템플릿 선택
-                  </h2>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredTemplates.map((template) => (
-                      <button
-                        key={template.id}
-                        onClick={() => handleTemplateSelect(template)}
-                        className={`p-6 rounded-xl text-left transition-all ${
-                          selectedTemplate?.id === template.id
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                        }`}
-                      >
-                        <h3 className="font-bold text-lg mb-2">{template.name}</h3>
-                        <p className="text-sm opacity-80">{template.description}</p>
-                        <div className="mt-2 text-xs opacity-60">
-                          변수 {template.variables.length}개
-                        </div>
-                      </button>
-                    ))}
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      🤖 AI 이메일 생성
+                    </h2>
+                    <button
+                      onClick={() => setAiMode(!aiMode)}
+                      className={`px-6 py-3 rounded-xl font-bold transition-all ${
+                        aiMode
+                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      {aiMode ? 'AI 모드 ON' : 'AI 모드 OFF'}
+                    </button>
                   </div>
+                  
+                  {aiMode && (
+                    <div className="space-y-6">
+                      {/* 상황 설명 */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                          📝 상황 설명 <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          value={aiContext}
+                          onChange={(e) => setAiContext(e.target.value)}
+                          placeholder="예: 신규 고객에게 제품 소개 이메일을 보내고 싶습니다. 우리 회사의 AI 솔루션을 홍보하고 싶어요."
+                          className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none dark:bg-gray-800 dark:text-white h-24 resize-none"
+                        />
+                      </div>
+
+                      {/* 수신자 정보 */}
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            수신자 이름
+                          </label>
+                          <input
+                            type="text"
+                            value={aiRecipientInfo.name}
+                            onChange={(e) => setAiRecipientInfo(prev => ({ ...prev, name: e.target.value }))}
+                            placeholder="홍길동"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            회사명
+                          </label>
+                          <input
+                            type="text"
+                            value={aiRecipientInfo.company}
+                            onChange={(e) => setAiRecipientInfo(prev => ({ ...prev, company: e.target.value }))}
+                            placeholder="ABC 회사"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            관계
+                          </label>
+                          <input
+                            type="text"
+                            value={aiRecipientInfo.relationship}
+                            onChange={(e) => setAiRecipientInfo(prev => ({ ...prev, relationship: e.target.value }))}
+                            placeholder="고객, 동료, 상사"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                          />
+                        </div>
+                      </div>
+
+                      {/* 톤앤매너 및 언어 */}
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            톤앤매너
+                          </label>
+                          <select
+                            value={aiTone}
+                            onChange={(e) => setAiTone(e.target.value as 'formal' | 'casual' | 'friendly')}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                          >
+                            <option value="formal">공식적</option>
+                            <option value="casual">편안한</option>
+                            <option value="friendly">친근한</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            언어
+                          </label>
+                          <select
+                            value={aiLanguage}
+                            onChange={(e) => setAiLanguage(e.target.value as 'ko' | 'en' | 'ja')}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                          >
+                            <option value="ko">한국어</option>
+                            <option value="en">English</option>
+                            <option value="ja">日本語</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* AI 생성 버튼 */}
+                      <div className="text-center">
+                        <button
+                          onClick={handleAiGenerate}
+                          disabled={!aiContext.trim() || aiLoading}
+                          className={`px-8 py-4 rounded-xl font-bold text-lg transition-all ${
+                            !aiContext.trim() || aiLoading
+                              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-105'
+                          }`}
+                        >
+                          {aiLoading ? (
+                            <span className="flex items-center justify-center gap-2">
+                              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                              </svg>
+                              AI 생성 중...
+                            </span>
+                          ) : (
+                            '🤖 AI로 이메일 생성하기'
+                          )}
+                        </button>
+                      </div>
+
+                      {/* 에러 메시지 */}
+                      {aiError && (
+                        <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl">
+                          ⚠️ {aiError}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </FadeIn>
+
+            {/* 템플릿 선택 (AI 모드가 아닐 때만 표시) */}
+            {!aiMode && (
+              <FadeIn delay={0.2}>
+                <div className="max-w-6xl mx-auto mb-8">
+                  <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 border-2 border-purple-200 dark:border-purple-800">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                      📝 템플릿 선택
+                    </h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredTemplates.map((template) => (
+                        <button
+                          key={template.id}
+                          onClick={() => handleTemplateSelect(template)}
+                          className={`p-6 rounded-xl text-left transition-all ${
+                            selectedTemplate?.id === template.id
+                              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
+                              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                          }`}
+                        >
+                          <h3 className="font-bold text-lg mb-2">{template.name}</h3>
+                          <p className="text-sm opacity-80">{template.description}</p>
+                          <div className="mt-2 text-xs opacity-60">
+                            변수 {template.variables.length}개
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            )}
 
             {/* 템플릿 에디터 */}
             {selectedTemplate && (
