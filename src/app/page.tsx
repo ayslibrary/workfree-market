@@ -556,7 +556,7 @@ export default function Home() {
                 지금 바로 사용 가능
               </h2>
               <p className="text-[#1E1B33]/70 text-lg">
-                NEW 서비스 3개를 먼저 만나보세요
+                NEW 서비스 4개를 먼저 만나보세요
               </p>
             </div>
           </FadeIn>
