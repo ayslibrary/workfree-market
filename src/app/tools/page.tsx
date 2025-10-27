@@ -9,6 +9,17 @@ import { AUTOMATION_SERVICES, getServicesByCategory, getPopularServices } from '
 
 const TOOLS = [
   {
+    id: 'exchange-rate',
+    name: '환율 자동 공유',
+    icon: '💱',
+    description: '매일 아침 서울외환중개 매매기준율을 전사원에게 자동 발송',
+    credits: 2,
+    timeSaved: 30,
+    color: 'from-emerald-500 to-teal-600',
+    bgColor: 'from-emerald-50 to-teal-100',
+    link: '/tools/exchange-rate',
+  },
+  {
     id: 'pdf-convert',
     name: 'PDF → Word 변환',
     icon: '📄',
@@ -89,17 +100,6 @@ const TOOLS = [
     color: 'from-cyan-500 to-blue-600',
     bgColor: 'from-cyan-50 to-blue-100',
     link: '/tools/qr-generator',
-  },
-  {
-    id: 'exchange-rate',
-    name: '환율 자동 공유',
-    icon: '💱',
-    description: '매일 아침 선택한 통화의 환율을 전사원에게 자동 발송',
-    credits: 2,
-    timeSaved: 30,
-    color: 'from-emerald-500 to-teal-600',
-    bgColor: 'from-emerald-50 to-teal-100',
-    link: '/tools/exchange-rate',
   },
   {
     id: 'email-template',
