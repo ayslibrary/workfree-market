@@ -34,17 +34,12 @@ export default function GamificationDemo() {
     photoURL: undefined,
   };
 
-  // 로딩 상태
-  if (isLoadingData) {
-    return <LoadingSpinner message="게이미피케이션 대시보드 로딩 중..." variant="purple" />;
-  }
-
   // 초기 데이터 로드
   useEffect(() => {
     const loadInitialData = async () => {
       try {
         // Mock 사용자 프로필 생성 (데모 모드)
-        const mockProfile = createMockUserProfile(demoUser.uid);
+        const mockProfile = createMockUserProfile('demo-user-123');
         setUserProfile(mockProfile);
 
         // Mock 활동 데이터
@@ -167,6 +162,11 @@ export default function GamificationDemo() {
 
     loadInitialData();
   }, []); // 데모 모드에서는 의존성 없이 한 번만 실행
+
+  // 로딩 상태
+  if (isLoadingData) {
+    return <LoadingSpinner message="게이미피케이션 대시보드 로딩 중..." variant="purple" />;
+  }
 
   // 도구 실행 핸들러 (Mock)
   const handleToolRun = async (toolId: string, toolName: string, cost: number, minutes: number) => {
