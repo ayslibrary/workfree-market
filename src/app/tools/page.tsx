@@ -40,6 +40,18 @@ const TOOLS = [
     bgColor: 'from-blue-50 to-blue-100',
   },
   {
+    id: 'outlook-mail-builder',
+    name: 'Outlook 자동메일 빌더',
+    icon: '🚀',
+    description: 'IF-THEN 규칙으로 메일 자동화 설정 및 관리',
+    credits: 5,
+    timeSaved: 25,
+    color: 'from-orange-500 to-red-600',
+    bgColor: 'from-orange-50 to-red-100',
+    link: '/tools/outlook-mail-builder',
+    isNew: true,
+  },
+  {
     id: 'ai-portrait',
     name: 'AI 화보 생성',
     icon: '🎨',

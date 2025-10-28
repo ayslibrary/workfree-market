@@ -465,12 +465,12 @@ export default function Home() {
                 지금 바로 사용 가능
               </h2>
               <p className="text-[#1E1B33]/70 text-lg">
-                NEW 서비스 4개를 먼저 만나보세요
+                NEW 서비스 5개를 먼저 만나보세요
               </p>
             </div>
           </FadeIn>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {/* QR 코드 생성기 */}
             <FadeIn>
               <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-cyan-200 dark:border-cyan-800 relative overflow-hidden h-full">
@@ -830,6 +830,94 @@ export default function Home() {
                   <div className="mt-6 text-center">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       📸 20개 스타일 | 🎁 프롬프트 키트 제공 | ✨ 5분 만에 보그 커버 모델
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Outlook 자동메일 빌더 */}
+            <FadeIn delay={0.5}>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-orange-200 dark:border-orange-800 relative overflow-hidden h-full">
+                {/* 배경 장식 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-400/20 to-red-400/20 rounded-full blur-3xl -z-0"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-yellow-400/20 to-orange-400/20 rounded-full blur-3xl -z-0"></div>
+
+                <div className="relative z-10">
+                  {/* 뱃지 */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-600 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                      ✨ NEW!
+                    </span>
+                    <span className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      🎁 Beta 무료
+                    </span>
+                  </div>
+
+                  {/* 메인 제목 */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent">
+                    Outlook 자동메일 빌더
+                  </h2>
+                  <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
+                    <strong className="text-orange-600 dark:text-orange-400">IF-THEN 규칙</strong>으로 메일 자동화
+                  </p>
+
+                  {/* 기능 미리보기 */}
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⚙️</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">조건 설정</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">제목/본문 키워드</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl p-3 border border-green-200 dark:border-green-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">🎯</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">자동 회신</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">HTML 템플릿</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 rounded-xl p-3 border border-purple-200 dark:border-purple-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">📧</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">Outlook 연동</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">실시간 감지</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-xl p-3 border border-yellow-200 dark:border-yellow-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⚡</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">즉시 실행</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">5분 절약/규칙</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA 버튼 */}
+                  <Link
+                    href="/tools/outlook-mail-builder"
+                    className="group block w-full bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">📧</span>
+                      <span>자동메일 빌더 체험하기</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </Link>
+
+                  {/* 하단 설명 */}
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      📧 IF-THEN 규칙 | 💎 5 크레딧/월 | 🎉 베타 가입 시 무료 10 크레딧
                     </p>
                   </div>
                 </div>
