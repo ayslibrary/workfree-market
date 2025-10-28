@@ -391,7 +391,6 @@ export default function OutlookMailBuilderPage() {
                       </div>
                     </div>
                   </div>
-                </div>
 
                   {/* Action Section */}
                   <div className="bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-xl border-2 border-red-200">
