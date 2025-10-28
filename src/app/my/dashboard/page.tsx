@@ -183,6 +183,27 @@ export default function DashboardPage() {
     setShowConversionModal(false);
   };
 
+  // 루틴 토글 처리
+  const handleToggleRoutine = (routineId: string, isActive: boolean) => {
+    setRoutines(prevRoutines => 
+      prevRoutines.map(routine => 
+        routine.id === routineId 
+          ? { ...routine, isActive }
+          : routine
+      )
+    );
+    setToastMessage(isActive ? '루틴이 활성화되었습니다' : '루틴이 비활성화되었습니다');
+    setShowToast(true);
+  };
+
+  // 루틴 편집 처리
+  const handleEditRoutine = (routineId: string) => {
+    // TODO: 루틴 편집 모달 열기
+    console.log('Edit routine:', routineId);
+    setToastMessage('루틴 편집 기능은 준비 중입니다');
+    setShowToast(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f0ff] pb-20">
       {/* 토스트 메시지 */}
@@ -261,7 +282,11 @@ export default function DashboardPage() {
         <QuickLaunch onToolRun={handleToolRun} userCredits={userProfile.credits} />
 
         {/* 나만의 루틴 */}
-        <MyRoutines routines={routines} />
+        <MyRoutines 
+          routines={routines} 
+          onToggleRoutine={handleToggleRoutine}
+          onEditRoutine={handleEditRoutine}
+        />
 
         {/* 주간 미션 */}
         <WeeklyMissions missions={userProfile.weeklyMissions} />

@@ -218,7 +218,7 @@ export default function Home() {
                   </div>
 
                   <Link
-                    href={user ? "/my/dashboard" : "/kits"}
+                    href={user ? "/beta/dashboard" : "/beta/dashboard"}
                     className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
                   >
                     {user ? (
@@ -1363,7 +1363,7 @@ export default function Home() {
                   지금 시작하면 <span className="font-bold text-[#6A5CFF]">10 크레딧</span>을 무료로 드려요!
                 </p>
                 <Link
-                  href={user ? "/my/dashboard" : "/kits"}
+                  href={user ? "/beta/dashboard" : "/beta/dashboard"}
                   className="inline-block bg-gradient-to-r from-purple-600 via-[#6A5CFF] to-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   {user ? "⚡ 내 WorkFree 허브로 이동" : "🚀 지금 칼퇴 클릭"}
@@ -1630,6 +1630,19 @@ export default function Home() {
                   )}
                 </p>
                 
+                {/* 데모 체험 버튼 */}
+                <div className="mb-6">
+                  <Link
+                    href="/beta/dashboard"
+                    className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all"
+                  >
+                    🚶‍♀️ 퇴근 여정 데모 체험하기
+                  </Link>
+                  <p className="text-sm text-gray-500 mt-2">
+                    로그인 없이 바로 체험해보세요!
+                  </p>
+                </div>
+                
                 {!isBetaFull && (
                   <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 mb-6">
                     <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-xl">
@@ -1726,10 +1739,10 @@ export default function Home() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Link
-                        href="/my/dashboard"
+                        href="/beta/dashboard"
                         className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all text-center"
                       >
-                        💎 마이페이지 가기
+                        🚶‍♀️ 퇴근 여정 체험하기
                       </Link>
                       <Link
                         href="/tools"
@@ -1771,10 +1784,10 @@ export default function Home() {
             </Link>
             {user ? (
               <Link
-                href="/my/dashboard"
+                href="/beta/dashboard"
                 className="bg-transparent border-3 border-white text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-indigo-600 transition-all"
               >
-                마이페이지 가기
+                🚶‍♀️ 퇴근 여정 체험하기
               </Link>
             ) : (
               <Link

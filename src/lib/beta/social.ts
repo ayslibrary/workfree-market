@@ -19,6 +19,17 @@ export async function recordSocialShare(
   platform: SocialPlatform,
   url?: string
 ): Promise<{ success: boolean; credits: number; message: string }> {
+  if (!db) {
+    // 데모 모드: 성공 응답 반환
+    console.log(`데모 모드: SNS 공유 - ${platform} by ${userId}`);
+    const credits = SOCIAL_SHARE_REWARDS[platform];
+    return {
+      success: true,
+      credits,
+      message: `${credits} 크레딧이 지급되었습니다!`,
+    };
+  }
+
   // 이미 해당 플랫폼에 공유했는지 확인
   const existingShare = await hasSharedOnPlatform(userId, platform);
   
@@ -53,6 +64,11 @@ export async function hasSharedOnPlatform(
   userId: string,
   platform: SocialPlatform
 ): Promise<boolean> {
+  if (!db) {
+    // 데모 모드: false 반환 (공유하지 않음으로 처리)
+    return false;
+  }
+
   const q = query(
     collection(db, SOCIAL_SHARES_COLLECTION),
     where('userId', '==', userId),
@@ -65,6 +81,11 @@ export async function hasSharedOnPlatform(
 
 // 사용자의 모든 공유 기록
 export async function getUserShares(userId: string): Promise<SocialShare[]> {
+  if (!db) {
+    // 데모 모드: 빈 배열 반환
+    return [];
+  }
+
   const q = query(
     collection(db, SOCIAL_SHARES_COLLECTION),
     where('userId', '==', userId)

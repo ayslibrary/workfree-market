@@ -19,6 +19,12 @@ export async function createReview(
   content: string,
   screenshot?: string
 ): Promise<string> {
+  if (!db) {
+    // 데모 모드: 가짜 ID 반환
+    console.log(`데모 모드: 후기 작성 - ${serviceType} by ${userId}`);
+    return `demo-review-${Date.now()}`;
+  }
+
   const newReview = {
     userId,
     serviceType,
@@ -35,6 +41,11 @@ export async function createReview(
 
 // 사용자의 후기 가져오기
 export async function getUserReviews(userId: string): Promise<Review[]> {
+  if (!db) {
+    // 데모 모드: 빈 배열 반환
+    return [];
+  }
+
   const q = query(
     collection(db, REVIEWS_COLLECTION),
     where('userId', '==', userId)
@@ -52,6 +63,11 @@ export async function getReviewCount(
   userId: string,
   serviceType: string
 ): Promise<number> {
+  if (!db) {
+    // 데모 모드: 0 반환
+    return 0;
+  }
+
   const q = query(
     collection(db, REVIEWS_COLLECTION),
     where('userId', '==', userId),
@@ -64,6 +80,11 @@ export async function getReviewCount(
 
 // 사용자가 작성한 총 후기 수
 export async function getTotalReviewCount(userId: string): Promise<number> {
+  if (!db) {
+    // 데모 모드: 0 반환
+    return 0;
+  }
+
   const q = query(
     collection(db, REVIEWS_COLLECTION),
     where('userId', '==', userId)

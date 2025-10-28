@@ -255,6 +255,12 @@ export default function BetaPage() {
               신청 후 바로 다운로드하실 수 있습니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/beta/dashboard"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all inline-block"
+              >
+                🚶‍♀️ 퇴근 여정 체험하기
+              </Link>
               <a
                 href="/downloads/rpa-test.txt"
                 download

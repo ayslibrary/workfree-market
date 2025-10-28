@@ -29,6 +29,11 @@ const COMPLETIONS_COLLECTION = 'beta_mission_completions';
 
 // 미션 초기 데이터 설정 (한 번만 실행)
 export async function initializeMissions(): Promise<void> {
+  if (!db) {
+    console.log('Firebase가 설정되지 않았습니다. 데모 모드로 실행됩니다.');
+    return;
+  }
+  
   const missionsRef = collection(db, MISSIONS_COLLECTION);
   const snapshot = await getDocs(missionsRef);
 
@@ -44,6 +49,14 @@ export async function initializeMissions(): Promise<void> {
 
 // 전체 미션 목록 가져오기
 export async function getAllMissions(): Promise<Mission[]> {
+  if (!db) {
+    // 데모 모드: 기본 미션 데이터 반환
+    return DEFAULT_MISSIONS.map((mission, index) => ({
+      id: `demo-mission-${index + 1}`,
+      ...mission,
+    }));
+  }
+
   const q = query(
     collection(db, MISSIONS_COLLECTION),
     where('isActive', '==', true),
@@ -59,6 +72,12 @@ export async function getAllMissions(): Promise<Mission[]> {
 
 // 특정 미션 가져오기
 export async function getMission(missionId: string): Promise<Mission | null> {
+  if (!db) {
+    // 데모 모드: 기본 미션 데이터에서 찾기
+    const missions = await getAllMissions();
+    return missions.find(m => m.id === missionId) || null;
+  }
+
   const docRef = doc(db, MISSIONS_COLLECTION, missionId);
   const docSnap = await getDoc(docRef);
 
@@ -74,6 +93,11 @@ export async function getMission(missionId: string): Promise<Mission | null> {
 
 // 베타테스터 등록
 export async function registerBetaTester(userId: string): Promise<number | null> {
+  if (!db) {
+    // 데모 모드: 고정된 베타테스터 번호 반환
+    return 1;
+  }
+
   // 이미 등록되어 있는지 확인
   const existingTester = await getBetaTester(userId);
   if (existingTester) {
@@ -114,6 +138,21 @@ export async function registerBetaTester(userId: string): Promise<number | null>
 
 // 베타테스터 정보 가져오기
 export async function getBetaTester(userId: string): Promise<BetaTester | null> {
+  if (!db) {
+    // 데모 모드: 고정된 베타테스터 데이터 반환
+    return {
+      id: userId,
+      userId,
+      betaNumber: 1,
+      joinedAt: new Date() as any,
+      totalCreditsEarned: 100,
+      timeSaved: 0,
+      completedMissions: [],
+      isCompleted: false,
+      vipEligible: false,
+    };
+  }
+
   const docRef = doc(db, TESTERS_COLLECTION, userId);
   const docSnap = await getDoc(docRef);
 
@@ -129,6 +168,9 @@ export async function getBetaTester(userId: string): Promise<BetaTester | null> 
 
 // 현재 베타테스터 수 가져오기
 export async function getBetaTesterCount(): Promise<number> {
+  if (!db) {
+    return 1; // 데모 모드
+  }
   const snapshot = await getDocs(collection(db, TESTERS_COLLECTION));
   return snapshot.size;
 }
@@ -166,6 +208,12 @@ export async function completeMission(
   missionId: string,
   proof?: string
 ): Promise<void> {
+  if (!db) {
+    // 데모 모드: 콘솔에 로그만 출력
+    console.log(`데모 모드: 미션 완료 - ${missionId} by ${userId}`);
+    return;
+  }
+
   const [mission, tester] = await Promise.all([
     getMission(missionId),
     getBetaTester(userId),
@@ -230,6 +278,11 @@ export async function completeMissionByAction(
 export async function getUserCompletedMissions(
   userId: string
 ): Promise<MissionCompletion[]> {
+  if (!db) {
+    // 데모 모드: 빈 배열 반환
+    return [];
+  }
+
   const q = query(
     collection(db, COMPLETIONS_COLLECTION),
     where('userId', '==', userId),
