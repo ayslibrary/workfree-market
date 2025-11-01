@@ -205,7 +205,7 @@ export async function POST(request: NextRequest) {
 5. 실행 가능한 인사이트 제공
 6. **출처 명시 필수**: 뉴스/자료 인용 시 반드시 [번호] 형태로 출처 표기 (예: "AI 시장은 25% 성장할 것으로 전망된다 [1]")
 7. 구체적인 수치, 날짜, 출처를 최대한 활용하여 신뢰성 확보
-8. **⚠️ 매우 중요**: 참고 자료의 링크 URL은 제공된 실제 URL을 정확히 복사해서 사용하세요. 절대로 임의로 만들지 마세요!`;
+8. **참고 자료 섹션은 시스템이 자동 생성**하므로 보고서에 포함하지 마세요`;
 
     // 프롬프트 구성
     let prompt = `다음 주제로 전문 보고서를 작성하세요: "${topic}"
@@ -253,44 +253,19 @@ export async function POST(request: NextRequest) {
 
   <h2>6. 결론</h2>
   <p>{전체 요약 및 향후 전망}</p>
-
-  <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
-
-  <h2>참고 자료 (References)</h2>
-  <ol style="font-size: 14px; line-height: 1.8;">
-    <li>[1] "{인용한 자료 제목}" - {출처}, {날짜}
-        <br><a href="{링크}" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
-    </li>
-  </ol>
-  <p style="font-size: 12px; color: #6b7280; margin-top: 20px;">
-    * 본 보고서는 위 참고 자료를 기반으로 AI가 작성하였습니다.
-  </p>
 </article>
+
+**중요**: 참고 자료 섹션은 포함하지 마세요. 시스템이 자동으로 추가합니다.
 
 **작성 예시:**
 
 [본문 내 출처 표기 방법]
 "AI 시장은 2030년까지 연평균 25% 성장할 것으로 전망된다 [1]. 특히 국내 시장 규모는 2025년 15조원에서 2030년 45조원으로 3배 증가할 것으로 예상된다 [2]. 이러한 성장은 자동화 기술의 발전과 기업들의 디지털 전환 가속화에 기인한다 [3]."
 
-[참고 자료 섹션 형식]
-<h2>참고 자료 (References)</h2>
-<ol style="font-size: 14px; line-height: 1.8;">
-  <li>[1] "기사 제목" - 출처명, 날짜
-      <br><a href="실제_링크_URL" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
-  </li>
-</ol>
-
-**⚠️ 중요 - 링크 사용 규칙:**
-1. 참고 자료의 링크는 **반드시 검색 결과로 제공된 실제 URL만 사용**하세요
-2. 절대로 임의로 링크를 만들거나 수정하지 마세요
-3. 제공된 [최신 뉴스 및 자료]의 "출처:" 다음에 나오는 URL을 정확히 복사해서 사용하세요
-4. 링크가 없는 자료는 참고 자료에 포함하지 마세요
-
 **중요 규칙**: 
-- 본문에 [번호] 형태로 출처 표기
-- 참고 자료는 제목, 출처, 날짜, **실제 링크** 모두 포함
-- **링크는 검색 결과에서 제공된 실제 URL만 사용 (절대 임의 생성 금지)**
-- 구체적인 수치와 데이터 활용
+- 본문에 [번호] 형태로 출처 표기만 하세요
+- 참고 자료 섹션은 시스템이 자동으로 생성하므로 포함하지 마세요
+- 구체적인 수치와 데이터를 최대한 활용
 - 객관적이고 전문적인 문체 유지`;
 
     // 주요 분석 포인트 추가
@@ -310,12 +285,7 @@ export async function POST(request: NextRequest) {
     // 최신 검색 데이터 추가
     if (searchData.text) {
       prompt += searchData.text;
-      prompt += `\n\n**⚠️ 매우 중요 - 링크 사용 지침:**
-위 뉴스/자료를 참고 자료로 작성할 때:
-1. "링크 URL" 다음에 나오는 URL을 **정확히 그대로 복사**해서 <a href="여기에"> 넣으세요
-2. URL을 절대 수정하거나 임의로 만들지 마세요
-3. 제공된 실제 URL만 사용하세요 (예: ${searchData.references?.[0]?.link || 'https://n.news.naver.com/...'})
-4. 본문에는 [번호]로 표기하고, 참고 자료에는 위 정보를 정확히 사용하세요`;
+      prompt += `\n\n**중요**: 위 뉴스/자료를 인용할 때는 본문에 [번호] 형태로 출처를 표기하세요. 참고 자료 목록은 시스템이 자동으로 추가합니다.`;
     }
 
     // 추가 참고 자료
@@ -347,9 +317,40 @@ export async function POST(request: NextRequest) {
 
     console.log('[REPORT] 보고서 생성 완료');
 
+    // 실제 검색 결과로 참고 자료 섹션 생성
+    let finalContent = generatedContent;
+    if (searchData.references && searchData.references.length > 0) {
+      const referencesHtml = `
+  <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
+
+  <h2>참고 자료 (References)</h2>
+  <ol style="font-size: 14px; line-height: 1.8; color: #374151;">
+    ${searchData.references.map(ref => {
+      const pubDate = new Date(ref.pubDate);
+      const formattedDate = pubDate.toLocaleDateString('ko-KR', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      return `<li style="margin-bottom: 12px;">
+      [${ref.id}] "${ref.title}" - ${ref.link.includes('naver') ? '네이버 뉴스' : '뉴스'}, ${formattedDate}
+      <br><a href="${ref.link}" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: none; font-size: 13px;">🔗 기사 보기 →</a>
+    </li>`;
+    }).join('\n    ')}
+  </ol>
+  <p style="font-size: 12px; color: #6b7280; margin-top: 20px; font-style: italic;">
+    * 본 보고서는 위 참고 자료를 기반으로 AI가 작성하였습니다.
+  </p>
+</article>`;
+
+      // </article> 태그를 참고 자료로 교체
+      finalContent = generatedContent.replace('</article>', referencesHtml);
+    }
+
     return NextResponse.json({
       success: true,
-      content: generatedContent,
+      content: finalContent,
       topic: topic,
       tokensUsed: completion.usage?.total_tokens || 0,
       isDemo: false,
