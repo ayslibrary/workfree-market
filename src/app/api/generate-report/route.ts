@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 // 최신 데이터 검색 함수
-async function searchLatestData(topic: string): Promise<string> {
+async function searchLatestData(topic: string): Promise<{ text: string; references: any[] }> {
   try {
     // 네이버 뉴스 API 사용 (search-crawler에서 사용 중인 것과 동일)
     const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
@@ -10,7 +10,7 @@ async function searchLatestData(topic: string): Promise<string> {
     
     if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) {
       console.log('[SEARCH] Naver API 키 없음 - 검색 생략');
-      return '';
+      return { text: '', references: [] };
     }
 
     const url = "https://openapi.naver.com/v1/search/news.json";
@@ -28,31 +28,39 @@ async function searchLatestData(topic: string): Promise<string> {
     
     if (!response.ok) {
       console.log('[SEARCH] Naver API 응답 실패:', response.status);
-      return '';
+      return { text: '', references: [] };
     }
 
     const data = await response.json();
     
     if (!data.items || data.items.length === 0) {
       console.log('[SEARCH] 검색 결과 없음');
-      return '';
+      return { text: '', references: [] };
     }
 
-    // 검색 결과를 텍스트로 변환
-    let searchResults = '\n\n[최신 뉴스 및 자료]\n\n';
-    data.items.slice(0, 5).forEach((item: any, index: number) => {
-      const title = item.title.replace(/<\/?b>/g, '');
-      const description = item.description.replace(/<\/?b>/g, '');
-      searchResults += `${index + 1}. ${title}\n`;
-      searchResults += `   ${description}\n`;
-      searchResults += `   출처: ${item.link}\n\n`;
+    // 검색 결과를 구조화된 데이터로 변환
+    const references = data.items.slice(0, 8).map((item: any, index: number) => ({
+      id: index + 1,
+      title: item.title.replace(/<\/?b>/g, ''),
+      description: item.description.replace(/<\/?b>/g, ''),
+      link: item.link,
+      pubDate: item.pubDate
+    }));
+
+    // GPT에 전달할 텍스트 (출처 번호 포함)
+    let searchResults = '\n\n[최신 뉴스 및 자료 - 인용 시 반드시 [번호] 형태로 출처 표기]\n\n';
+    references.forEach((ref) => {
+      searchResults += `[${ref.id}] ${ref.title}\n`;
+      searchResults += `    ${ref.description}\n`;
+      searchResults += `    출처: ${ref.link}\n`;
+      searchResults += `    날짜: ${new Date(ref.pubDate).toLocaleDateString('ko-KR')}\n\n`;
     });
 
-    console.log('[SEARCH] 검색 결과 수집 완료:', data.items.length);
-    return searchResults;
+    console.log('[SEARCH] 검색 결과 수집 완료:', references.length);
+    return { text: searchResults, references };
   } catch (error) {
     console.error('[SEARCH] 검색 실패:', error);
-    return '';
+    return { text: '', references: [] };
   }
 }
 
@@ -83,7 +91,7 @@ export async function POST(request: NextRequest) {
     console.log('🔑 API Key exists:', !!apiKey);
     
     // 최신 데이터 검색 (옵션)
-    let searchData = '';
+    let searchData = { text: '', references: [] as any[] };
     if (useSearch) {
       console.log('[SEARCH] 최신 데이터 검색 시작...');
       searchData = await searchLatestData(topic);
@@ -192,7 +200,9 @@ export async function POST(request: NextRequest) {
 2. 객관적이고 전문적인 톤 유지
 3. 데이터와 통계를 활용한 근거 제시
 4. 체계적인 구조 (서론 → 본론 → 결론)
-5. 실행 가능한 인사이트 제공`;
+5. 실행 가능한 인사이트 제공
+6. **출처 명시 필수**: 뉴스/자료 인용 시 반드시 [번호] 형태로 출처 표기 (예: "AI 시장은 25% 성장할 것으로 전망된다 [1]")
+7. 구체적인 수치, 날짜, 출처를 최대한 활용하여 신뢰성 확보`;
 
     // 프롬프트 구성
     let prompt = `다음 주제로 전문 보고서를 작성하세요: "${topic}"
@@ -240,10 +250,23 @@ export async function POST(request: NextRequest) {
 
   <h2>6. 결론</h2>
   <p>{전체 요약 및 향후 전망}</p>
+
+  <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
+
+  <h2>참고 자료 (References)</h2>
+  <ol style="font-size: 14px; line-height: 1.8;">
+    <li>[1] "{인용한 자료 제목}" - {출처}, {날짜}
+        <br><a href="{링크}" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
+    </li>
+  </ol>
+  <p style="font-size: 12px; color: #6b7280; margin-top: 20px;">
+    * 본 보고서는 위 참고 자료를 기반으로 AI가 작성하였습니다.
+  </p>
 </article>
 
 **중요**: 
 - 위 HTML 구조를 반드시 따르세요
+- 뉴스/자료 인용 시 반드시 [1], [2] 형태로 본문에 표기하고, 참고 자료 섹션에 상세 정보 기재
 - 구체적인 수치와 데이터를 활용하세요
 - 객관적이고 전문적인 문체를 유지하세요`;
 
@@ -262,9 +285,9 @@ export async function POST(request: NextRequest) {
     }
 
     // 최신 검색 데이터 추가
-    if (searchData) {
-      prompt += searchData;
-      prompt += `\n위 최신 뉴스와 자료를 참고하여 보고서를 작성하세요. 실제 데이터와 통계를 인용하고 출처를 명시하세요.`;
+    if (searchData.text) {
+      prompt += searchData.text;
+      prompt += `\n\n**중요**: 위 뉴스/자료를 인용할 때는 반드시 [번호] 형태로 본문에 표기하고, 보고서 마지막 "참고 자료" 섹션에 제목, 출처, 날짜, 링크를 명시하세요.`;
     }
 
     // 추가 참고 자료

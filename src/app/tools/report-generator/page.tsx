@@ -84,6 +84,33 @@ export default function ReportGeneratorPage() {
     URL.revokeObjectURL(url);
   };
 
+  // 보고서 유형별 포인트 예시
+  const getPointPlaceholders = () => {
+    const placeholders = {
+      market: [
+        '예: 2025년 국내 시장 규모 및 성장률 분석',
+        '예: 주요 경쟁사 (A사, B사) 시장 점유율 비교',
+        '예: 향후 3년간 시장 전망 및 기회 요인'
+      ],
+      industry: [
+        '예: 산업 밸류체인 구조 및 주요 플레이어 분석',
+        '예: 기술 발전 동향 및 혁신 사례',
+        '예: 규제 환경 및 정책 변화 영향'
+      ],
+      project: [
+        '예: 프로젝트 목표 대비 달성률 (90% 완료)',
+        '예: 주요 이슈 및 리스크 관리 현황',
+        '예: 향후 일정 및 추가 소요 자원'
+      ],
+      research: [
+        '예: 연구 방법론 및 데이터 수집 과정',
+        '예: 주요 발견사항 및 통계적 유의성',
+        '예: 연구의 의의, 한계점 및 향후 연구 방향'
+      ]
+    };
+    return placeholders[reportType] || placeholders.market;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -155,21 +182,21 @@ export default function ReportGeneratorPage() {
                 type="text"
                 value={point1}
                 onChange={(e) => setPoint1(e.target.value)}
-                placeholder="포인트 1"
+                placeholder={getPointPlaceholders()[0]}
                 className="w-full px-4 py-2 mb-2 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
               />
               <input
                 type="text"
                 value={point2}
                 onChange={(e) => setPoint2(e.target.value)}
-                placeholder="포인트 2"
+                placeholder={getPointPlaceholders()[1]}
                 className="w-full px-4 py-2 mb-2 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
               />
               <input
                 type="text"
                 value={point3}
                 onChange={(e) => setPoint3(e.target.value)}
-                placeholder="포인트 3"
+                placeholder={getPointPlaceholders()[2]}
                 className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
               />
             </div>
@@ -252,10 +279,18 @@ export default function ReportGeneratorPage() {
               <textarea
                 value={additionalContent}
                 onChange={(e) => setAdditionalContent(e.target.value)}
-                placeholder="보고서에 포함할 추가 정보나 데이터를 입력하세요..."
-                rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none resize-none"
+                placeholder={`예시:
+• 당사 내부 설문조사 결과 (2024년 4분기, 응답자 500명)
+• 2024년 실적: 매출 150억원 (전년 대비 15% ↑), 영업이익률 8.2%
+• 업계 전문가 김○○ 교수: "AI 시장은 2030년까지 연평균 25% 성장 전망"
+• 정부 정책: AI 산업 육성 위한 5000억원 투자 계획 (2025.01 발표)
+• 경쟁사 A사 사례: 자동화 도입으로 업무 효율 40% 향상`}
+                rows={6}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none resize-none text-sm"
               />
+              <p className="text-xs text-gray-500 mt-2">
+                💡 구체적인 수치, 출처, 날짜를 포함하면 더 신뢰성 있는 보고서가 생성됩니다
+              </p>
             </div>
 
             {/* 생성 버튼 */}
