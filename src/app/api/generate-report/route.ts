@@ -48,12 +48,14 @@ async function searchLatestData(topic: string): Promise<{ text: string; referenc
     }));
 
     // GPT에 전달할 텍스트 (출처 번호 포함)
-    let searchResults = '\n\n[최신 뉴스 및 자료 - 인용 시 반드시 [번호] 형태로 출처 표기]\n\n';
+    let searchResults = '\n\n[최신 뉴스 및 자료 - 인용 시 반드시 아래 정보를 정확히 사용]\n\n';
     references.forEach((ref) => {
-      searchResults += `[${ref.id}] ${ref.title}\n`;
-      searchResults += `    ${ref.description}\n`;
-      searchResults += `    출처: ${ref.link}\n`;
-      searchResults += `    날짜: ${new Date(ref.pubDate).toLocaleDateString('ko-KR')}\n\n`;
+      searchResults += `[${ref.id}]\n`;
+      searchResults += `제목: ${ref.title}\n`;
+      searchResults += `내용: ${ref.description}\n`;
+      searchResults += `링크 URL (참고 자료에 이 링크를 정확히 사용하세요): ${ref.link}\n`;
+      searchResults += `발행일: ${new Date(ref.pubDate).toLocaleDateString('ko-KR')}\n`;
+      searchResults += `---\n\n`;
     });
 
     console.log('[SEARCH] 검색 결과 수집 완료:', references.length);
@@ -202,7 +204,8 @@ export async function POST(request: NextRequest) {
 4. 체계적인 구조 (서론 → 본론 → 결론)
 5. 실행 가능한 인사이트 제공
 6. **출처 명시 필수**: 뉴스/자료 인용 시 반드시 [번호] 형태로 출처 표기 (예: "AI 시장은 25% 성장할 것으로 전망된다 [1]")
-7. 구체적인 수치, 날짜, 출처를 최대한 활용하여 신뢰성 확보`;
+7. 구체적인 수치, 날짜, 출처를 최대한 활용하여 신뢰성 확보
+8. **⚠️ 매우 중요**: 참고 자료의 링크 URL은 제공된 실제 URL을 정확히 복사해서 사용하세요. 절대로 임의로 만들지 마세요!`;
 
     // 프롬프트 구성
     let prompt = `다음 주제로 전문 보고서를 작성하세요: "${topic}"
@@ -264,33 +267,30 @@ export async function POST(request: NextRequest) {
   </p>
 </article>
 
-**작성 예시 (반드시 참고):**
+**작성 예시:**
 
-[본문 내 출처 표기 예시]
+[본문 내 출처 표기 방법]
 "AI 시장은 2030년까지 연평균 25% 성장할 것으로 전망된다 [1]. 특히 국내 시장 규모는 2025년 15조원에서 2030년 45조원으로 3배 증가할 것으로 예상된다 [2]. 이러한 성장은 자동화 기술의 발전과 기업들의 디지털 전환 가속화에 기인한다 [3]."
 
-[참고 자료 섹션 작성 예시]
+[참고 자료 섹션 형식]
 <h2>참고 자료 (References)</h2>
 <ol style="font-size: 14px; line-height: 1.8;">
-  <li>[1] "AI 시장 2030년까지 25% 성장 전망" - 한국경제, 2025년 1월 2일
-      <br><a href="https://www.hankyung.com/article/2025010212345" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
-  </li>
-  <li>[2] "국내 AI 시장 규모 3배 성장 예상" - 디지털타임스, 2025년 1월 1일
-      <br><a href="https://www.dt.co.kr/article/2025010112345" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
-  </li>
-  <li>[3] "기업 디지털 전환 가속화, AI 도입 확대" - 테크크런치코리아, 2024년 12월 30일
-      <br><a href="https://techcrunch.kr/2024/12/30/ai-adoption" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
+  <li>[1] "기사 제목" - 출처명, 날짜
+      <br><a href="실제_링크_URL" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
   </li>
 </ol>
-<p style="font-size: 12px; color: #6b7280; margin-top: 20px;">
-  * 본 보고서는 위 참고 자료를 기반으로 AI가 작성하였습니다.
-</p>
+
+**⚠️ 중요 - 링크 사용 규칙:**
+1. 참고 자료의 링크는 **반드시 검색 결과로 제공된 실제 URL만 사용**하세요
+2. 절대로 임의로 링크를 만들거나 수정하지 마세요
+3. 제공된 [최신 뉴스 및 자료]의 "출처:" 다음에 나오는 URL을 정확히 복사해서 사용하세요
+4. 링크가 없는 자료는 참고 자료에 포함하지 마세요
 
 **중요 규칙**: 
-- 위 HTML 구조와 예시를 정확히 따르세요
-- 뉴스/자료 인용 시 반드시 [번호] 형태로 본문에 표기
-- 참고 자료는 반드시 위 예시처럼 제목, 출처, 날짜, 링크 모두 포함
-- 구체적인 수치와 데이터를 최대한 활용
+- 본문에 [번호] 형태로 출처 표기
+- 참고 자료는 제목, 출처, 날짜, **실제 링크** 모두 포함
+- **링크는 검색 결과에서 제공된 실제 URL만 사용 (절대 임의 생성 금지)**
+- 구체적인 수치와 데이터 활용
 - 객관적이고 전문적인 문체 유지`;
 
     // 주요 분석 포인트 추가
@@ -310,7 +310,12 @@ export async function POST(request: NextRequest) {
     // 최신 검색 데이터 추가
     if (searchData.text) {
       prompt += searchData.text;
-      prompt += `\n\n**중요**: 위 뉴스/자료를 인용할 때는 반드시 [번호] 형태로 본문에 표기하고, 보고서 마지막 "참고 자료" 섹션에 제목, 출처, 날짜, 링크를 명시하세요.`;
+      prompt += `\n\n**⚠️ 매우 중요 - 링크 사용 지침:**
+위 뉴스/자료를 참고 자료로 작성할 때:
+1. "링크 URL" 다음에 나오는 URL을 **정확히 그대로 복사**해서 <a href="여기에"> 넣으세요
+2. URL을 절대 수정하거나 임의로 만들지 마세요
+3. 제공된 실제 URL만 사용하세요 (예: ${searchData.references?.[0]?.link || 'https://n.news.naver.com/...'})
+4. 본문에는 [번호]로 표기하고, 참고 자료에는 위 정보를 정확히 사용하세요`;
     }
 
     // 추가 참고 자료
