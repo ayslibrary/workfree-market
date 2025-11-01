@@ -422,7 +422,7 @@ export default function Home() {
                 지금 바로 사용 가능
               </h2>
               <p className="text-[#1E1B33]/70 text-lg">
-                NEW 서비스 5개를 먼저 만나보세요
+                NEW 서비스 6개를 먼저 만나보세요
               </p>
             </div>
           </FadeIn>
@@ -875,6 +875,88 @@ export default function Home() {
                   <div className="mt-6 text-center">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       📧 IF-THEN 규칙 | 💎 5 크레딧/월 | 🎉 베타 가입 시 무료 10 크레딧
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 검색어 자동 크롤링 */}
+            <FadeIn delay={0.6}>
+              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-emerald-200 dark:border-emerald-800 relative overflow-hidden h-full">
+                {/* 배경 장식 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl -z-0"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl -z-0"></div>
+
+                <div className="relative z-10">
+                  {/* 뱃지 */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                      ✨ NEW!
+                    </span>
+                    <span className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      🎁 Beta 무료
+                    </span>
+                  </div>
+
+                  {/* 메인 제목 */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                    검색어 자동 크롤링
+                  </h2>
+                  <p className="text-center text-gray-600 dark:text-gray-300 mb-2">
+                    구글/네이버 검색 결과를 <strong className="text-emerald-600 dark:text-emerald-400">매일 자동 수집</strong>
+                  </p>
+                  <p className="text-center text-sm text-emerald-600 dark:text-emerald-400 font-semibold mb-6">
+                    💡 베타 기간 동안 <span className="underline decoration-wavy">완전 무료</span>로 사용하세요
+                  </p>
+
+                  {/* 주요 기능 */}
+                  <div className="space-y-3 mb-6">
+                    <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 rounded-xl p-3 border border-emerald-200 dark:border-emerald-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">🔍</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">구글/네이버 동시 검색</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Top 10-20 결과 수집</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-xl p-3 border border-teal-200 dark:border-teal-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">📧</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">이메일 자동 발송</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">CSV 파일 첨부</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">⏰</div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">매일 자동 실행</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">매일 아침 9시</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA 버튼 */}
+                  <Link
+                    href="/tools/search-crawler"
+                    className="group block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">🔍</span>
+                      <span>검색 크롤링 시작하기</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </Link>
+
+                  {/* 하단 설명 */}
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      🔍 구글+네이버 | 📧 이메일 발송 | ⏰ 매일 자동 실행
                     </p>
                   </div>
                 </div>
