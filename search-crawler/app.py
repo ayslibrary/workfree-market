@@ -47,6 +47,14 @@ app.add_middleware(
 GMAIL_USER = os.getenv("GMAIL_USER", "")
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "")
 
+# Google Custom Search API
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+GOOGLE_SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID", "")
+
+# Naver Search API
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
+
 # Request Models
 class SearchRequest(BaseModel):
     keyword: str
@@ -89,87 +97,104 @@ async def health_check():
     }
 
 def search_google(keyword: str, max_results: int = 10) -> List[dict]:
-    """구글 검색 크롤링"""
+    """구글 검색 - Custom Search API 사용"""
     results = []
+    
+    if not GOOGLE_API_KEY or not GOOGLE_SEARCH_ENGINE_ID:
+        print("Google API 키가 설정되지 않았습니다. 데모 데이터를 반환합니다.")
+        # 데모 데이터 반환
+        for i in range(min(max_results, 5)):
+            results.append({
+                'title': f'[데모] {keyword} 관련 결과 {i+1}',
+                'url': f'https://example.com/result-{i+1}',
+                'description': f'{keyword}에 대한 검색 결과입니다. Google API 키를 설정하면 실제 검색 결과를 받을 수 있습니다.',
+                'rank': i + 1,
+                'engine': 'google'
+            })
+        return results
+    
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            'key': GOOGLE_API_KEY,
+            'cx': GOOGLE_SEARCH_ENGINE_ID,
+            'q': keyword,
+            'num': min(max_results, 10),  # API 제한: 최대 10개
+            'hl': 'ko'
         }
-        url = f"https://www.google.com/search?q={keyword}&num={max_results}"
-        response = requests.get(url, headers=headers, timeout=10)
+        
+        response = requests.get(url, params=params, timeout=10)
         response.raise_for_status()
+        data = response.json()
         
-        soup = BeautifulSoup(response.text, 'html.parser')
+        if 'items' in data:
+            for idx, item in enumerate(data['items'], 1):
+                results.append({
+                    'title': item.get('title', ''),
+                    'url': item.get('link', ''),
+                    'description': item.get('snippet', '')[:200],
+                    'rank': idx,
+                    'engine': 'google'
+                })
         
-        # 구글 검색 결과 파싱
-        search_results = soup.find_all('div', class_='g')
-        
-        for idx, result in enumerate(search_results[:max_results], 1):
-            try:
-                title_elem = result.find('h3')
-                link_elem = result.find('a')
-                desc_elem = result.find('div', class_=['VwiC3b', 'yXK7lf'])
-                
-                if title_elem and link_elem:
-                    title = title_elem.get_text()
-                    url = link_elem.get('href', '')
-                    description = desc_elem.get_text() if desc_elem else ""
-                    
-                    results.append({
-                        'title': title,
-                        'url': url,
-                        'description': description[:200],
-                        'rank': idx,
-                        'engine': 'google'
-                    })
-            except Exception as e:
-                print(f"Error parsing Google result: {e}")
-                continue
+        print(f"Google API: {len(results)} 결과 반환")
                 
     except Exception as e:
-        print(f"Google search error: {e}")
+        print(f"Google API error: {e}")
     
     return results
 
 def search_naver(keyword: str, max_results: int = 10) -> List[dict]:
-    """네이버 검색 크롤링"""
+    """네이버 검색 - Naver Search API 사용"""
     results = []
+    
+    if not NAVER_CLIENT_ID or not NAVER_CLIENT_SECRET:
+        print("Naver API 키가 설정되지 않았습니다. 데모 데이터를 반환합니다.")
+        # 데모 데이터 반환
+        for i in range(min(max_results, 5)):
+            results.append({
+                'title': f'[데모] {keyword} 검색 결과 {i+1}',
+                'url': f'https://example.com/naver-result-{i+1}',
+                'description': f'{keyword}에 대한 네이버 검색 결과입니다. Naver API 키를 설정하면 실제 검색 결과를 받을 수 있습니다.',
+                'rank': i + 1,
+                'engine': 'naver'
+            })
+        return results
+    
     try:
+        url = "https://openapi.naver.com/v1/search/webkr.json"
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            'X-Naver-Client-Id': NAVER_CLIENT_ID,
+            'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
         }
-        url = f"https://search.naver.com/search.naver?query={keyword}&where=web&sm=top_hty&fbm=0&ie=utf8"
-        response = requests.get(url, headers=headers, timeout=10)
+        params = {
+            'query': keyword,
+            'display': min(max_results, 100),  # API 제한: 최대 100개
+            'sort': 'sim'  # sim (유사도순) or date (날짜순)
+        }
+        
+        response = requests.get(url, headers=headers, params=params, timeout=10)
         response.raise_for_status()
+        data = response.json()
         
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # 네이버 검색 결과 파싱
-        search_results = soup.find_all('div', class_='total_wrap')
-        
-        for idx, result in enumerate(search_results[:max_results], 1):
-            try:
-                title_elem = result.find('a', class_='link_tit')
-                desc_elem = result.find('div', class_='total_dsc')
+        if 'items' in data:
+            for idx, item in enumerate(data['items'], 1):
+                # HTML 태그 제거
+                title = item.get('title', '').replace('<b>', '').replace('</b>', '')
+                description = item.get('description', '').replace('<b>', '').replace('</b>', '')
                 
-                if title_elem:
-                    title = title_elem.get_text().strip()
-                    url = title_elem.get('href', '')
-                    description = desc_elem.get_text().strip() if desc_elem else ""
-                    
-                    results.append({
-                        'title': title,
-                        'url': url,
-                        'description': description[:200],
-                        'rank': idx,
-                        'engine': 'naver'
-                    })
-            except Exception as e:
-                print(f"Error parsing Naver result: {e}")
-                continue
+                results.append({
+                    'title': title,
+                    'url': item.get('link', ''),
+                    'description': description[:200],
+                    'rank': idx,
+                    'engine': 'naver'
+                })
+        
+        print(f"Naver API: {len(results)} 결과 반환")
                 
     except Exception as e:
-        print(f"Naver search error: {e}")
+        print(f"Naver API error: {e}")
     
     return results
 
