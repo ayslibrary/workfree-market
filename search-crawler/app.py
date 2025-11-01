@@ -46,16 +46,19 @@ app.add_middleware(
 )
 
 # 환경 변수
-GMAIL_USER = os.getenv("GMAIL_USER", "ayoung1034@gmail.com")
-GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "jpbxhzbbcehrheyt")
+GMAIL_USER = os.getenv("GMAIL_USER")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
 
 # Google Custom Search API
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 GOOGLE_SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID", "")
 
 # Naver Search API
-NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "9TwaneM1ZKXAWzXY_AMp")
-NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "GLKgCQiy96")
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
+
+# Resend API
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 # Request Models
 class SearchRequest(BaseModel):
