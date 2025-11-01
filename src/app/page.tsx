@@ -104,6 +104,29 @@ export default function Home() {
     <div className="min-h-screen bg-[#f5f0ff]">
       <MainNavigation />
 
+      {/* 플로팅 버튼 - 퇴근 유형 테스트 */}
+      <Link href="/tools/work-exit-test">
+        <div className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-50 group">
+          {/* 메인 버튼 - 시계만 */}
+          <div className="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-white rounded-full shadow-2xl group-hover:shadow-3xl group-hover:scale-110 transition-all duration-300 cursor-pointer border-2 border-gray-100">
+            <div className="text-5xl md:text-6xl leading-none">🕐</div>
+          </div>
+          
+          {/* HOT 배지 */}
+          <div className="absolute -top-2 -right-2 bg-[#FF9A7A] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-lg animate-bounce">
+            HOT
+          </div>
+          
+          {/* 툴팁 - 위에 표시 */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-white px-3 py-2 rounded-xl shadow-xl border-2 border-[#AFA6FF] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap">
+            <div className="text-xs font-bold text-[#6A5CFF]">퇴근 유형 테스트</div>
+            <div className="text-[10px] text-gray-500">30초 완성!</div>
+            {/* 화살표 */}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-[#AFA6FF]"></div>
+          </div>
+        </div>
+      </Link>
+
       {/* Hero 섹션 */}
       <section className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-[#f5f0ff] relative overflow-hidden">
         {/* 떠다니는 Office 아이콘들 */}
@@ -154,86 +177,20 @@ export default function Home() {
           <FadeIn delay={0.6}>
             <div className="flex gap-6 justify-center items-center mb-12 relative">
               {!isLoading && !user ? (
-                <>
-                  {/* 왼쪽에 프리(Fri) 캐릭터 - 데스크톱만 */}
-                  <div 
-                    className="hidden md:flex flex-col items-center cursor-pointer group"
-                    onClick={handleFriClick}
-                  >
-                    <div className="relative">
-                      {/* 글로우 효과 배경 */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                      {/* 프리 캐릭터 */}
-                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110 overflow-hidden">
-                        <img 
-                          src="/fri-free.png" 
-                          alt="WorkFree 마스코트 프리(Fri)" 
-                          className={`w-24 h-24 object-cover rounded-full ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
-                        />
-                      </div>
-                    </div>
-                    {/* 말풍선 */}
-                    <div className="mt-3 bg-white px-4 py-2 rounded-full shadow-lg border-2 border-purple-200 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-y-0 translate-y-2">
-                      <p className="text-xs font-bold text-purple-600 whitespace-nowrap">클릭해보세요! 🐰</p>
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/kits"
-                    className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
-                  >
-                    🚀 지금 칼퇴 클릭
-                  </Link>
-
-                  {/* 큰 커서 아이콘 - 데스크톱만 */}
-                  <div className="hidden md:block animate-bounce">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#6A5CFF]">
-                      <path d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                </>
+                <Link
+                  href="/kits"
+                  className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
+                >
+                  🚀 지금 칼퇴 클릭
+                </Link>
               ) : (
-                <>
-                  {/* 로그인 시에도 프리(Fri) 표시 */}
-                  <div 
-                    className="hidden md:flex flex-col items-center cursor-pointer group"
-                    onClick={handleFriClick}
-                  >
-                    <div className="relative">
-                      {/* 글로우 효과 배경 */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                      {/* 프리 캐릭터 */}
-                      <div className="relative bg-white rounded-full p-3 shadow-2xl group-hover:shadow-purple-300 transition-all group-hover:scale-110 overflow-hidden">
-                        <img 
-                          src="/fri-free.png" 
-                          alt="WorkFree 마스코트 프리(Fri)" 
-                          className={`w-24 h-24 object-cover rounded-full ${isFriWaggling ? 'animate-bounce' : 'group-hover:animate-pulse'}`}
-                        />
-                      </div>
-                    </div>
-                    {/* 말풍선 */}
-                    <div className="mt-3 bg-white px-4 py-2 rounded-full shadow-lg border-2 border-purple-200 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-y-0 translate-y-2">
-                      <p className="text-xs font-bold text-purple-600 whitespace-nowrap">반가워요! 🐰</p>
-                    </div>
-                  </div>
-
-                  <Link
-                    href={user ? "/beta/dashboard" : "/beta/dashboard"}
-                    className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
-                  >
-                    {user ? (
-                      <>
-                        <span className="text-2xl">⚡</span>
-                        <span>내 WorkFree 허브로 이동</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-xl">🚀</span>
-                        <span>지금 칼퇴 클릭</span>
-                      </>
-                    )}
-                  </Link>
-                </>
+                <Link
+                  href="/beta/dashboard"
+                  className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
+                >
+                  <span className="text-2xl">⚡</span>
+                  <span>내 WorkFree 허브로 이동</span>
+                </Link>
               )}
             </div>
           </FadeIn>

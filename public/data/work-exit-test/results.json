@@ -1,0 +1,60 @@
+{
+  "optimizer": {
+    "title": "⚙️ 시스템 마스터",
+    "subtitle": "일은 내가, 실행은 자동화가.",
+    "theory": "McClelland의 성취욕구와 Kolb의 수렴형 학습자 이론 기반.",
+    "time_philosophy": "시간을 쓰는 게 아니라 설계하는 것",
+    "traits": {
+      "behavioral": "똑같은 일 두 번 하면 자동화 스크립트 짠다. RPA, 매크로, AI 도구를 마치 손발처럼 사용.",
+      "emotional": "시스템이 돌아가는 걸 보면 도파민 폭발. 수동 반복 작업은 생각만 해도 스트레스."
+    },
+    "strength": "생산성 끝판왕, 실행력, 기술 활용 능력",
+    "weakness": "사람 중심 협업은 좀... 감정 노동 회피 경향",
+    "share_text": "난 ⚙️ 시스템 마스터 — 일은 내가, 실행은 자동화가. 당신의 퇴근 유형은?",
+    "recommended_kit": "AutoKit Pro"
+  },
+  "planner": {
+    "title": "📊 플래닝 신",
+    "subtitle": "투두리스트가 내 인생의 OS다.",
+    "theory": "Kolb의 동화형 학습자 + Herzberg의 안정욕구 이론 기반.",
+    "time_philosophy": "예측 가능한 하루 = 통제 가능한 인생",
+    "traits": {
+      "behavioral": "Notion, Google Calendar, 간트차트는 기본 장착. 일정표 없이는 불안해서 못 산다.",
+      "emotional": "계획대로 흘러가면 세상 행복. 갑작스런 변경사항은 멘탈 붕괴의 시작."
+    },
+    "strength": "정확성, 책임감, 리스크 관리 능력",
+    "weakness": "\"융통성이 좀...\" 소리 자주 듣는다. 즉흥은 적",
+    "share_text": "난 📊 플래닝 신 — 투두리스트가 내 인생의 OS. 당신의 퇴근 유형은?",
+    "recommended_kit": "DataKit"
+  },
+  "harmonizer": {
+    "title": "🤝 팀 무드메이커",
+    "subtitle": "분위기가 살아야 일도 산다.",
+    "theory": "McClelland의 친화욕구 + Herzberg의 사회적 동기요인 기반.",
+    "time_philosophy": "관계가 좋으면 시간도 빠르다",
+    "traits": {
+      "behavioral": "팀 단톡방 최다 발언자. 누가 힘들어하면 제일 먼저 알아챈다. 칭찬과 공감의 화신.",
+      "emotional": "팀이 웃으면 내가 행복. 갈등 상황에서는 중재자 역할하다 혼자 에너지 다 소진."
+    },
+    "strength": "공감력, 팀 빌딩, 관계 조율 능력",
+    "weakness": "NO라고 못해서 내 일 못할 때 많음. 감정 소모 과다",
+    "share_text": "난 🤝 팀 무드메이커 — 분위기가 살아야 일도 산다. 당신의 퇴근 유형은?",
+    "recommended_kit": "CollaboKit"
+  },
+  "innovator": {
+    "title": "🎨 영감 컬렉터",
+    "subtitle": "루틴은 창의성의 무덤이다.",
+    "theory": "Kolb의 확산형 학습자 + Big Five의 개방성 요인 기반.",
+    "time_philosophy": "재미있으면 시간은 그냥 따라온다",
+    "traits": {
+      "behavioral": "새로운 툴, 새로운 방법론, 새로운 접근... '새로운'이 키워드. 매일 같은 일? 지옥.",
+      "emotional": "새 프로젝트 시작할 때 최고 텐션. 반복 업무 들어가면 영혼 나간 좀비 모드."
+    },
+    "strength": "창의력, 문제 해결, 트렌드 민감도",
+    "weakness": "루틴 유지 못함. 멀티태스킹하다 집중력 분산되는 편",
+    "share_text": "난 🎨 영감 컬렉터 — 루틴은 창의성의 무덤. 당신의 퇴근 유형은?",
+    "recommended_kit": "DesignKit"
+  }
+}
+
+
