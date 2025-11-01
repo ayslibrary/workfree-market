@@ -206,13 +206,22 @@ export function isDemoMode(): boolean {
 
 // 데모 사용자 가져오기
 export function getDemoUser(): DemoUser | null {
-  // 개발용으로 고정된 데모 사용자 반환
-  return {
-    uid: 'demo-user-123',
-    email: 'demo@workfree.com',
-    displayName: '데모 사용자',
-    photoURL: null,
-  };
+  // localStorage 확인 (로그아웃 상태 반영)
+  if (typeof window !== 'undefined') {
+    const storedUser = localStorage.getItem('demo_user');
+    const demoMode = localStorage.getItem('demo_mode');
+    
+    if (storedUser && demoMode === 'true') {
+      try {
+        return JSON.parse(storedUser);
+      } catch {
+        return null;
+      }
+    }
+  }
+  
+  // 로그아웃 상태 또는 localStorage 없음
+  return null;
 }
 
 export default app;

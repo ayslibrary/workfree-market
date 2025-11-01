@@ -4,15 +4,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "@/lib/firebase";
+import { useAuthStore } from "@/store/authStore";
 
 export default function MainNavigation() {
   const { user, isLoading } = useAuth();
+  const { clearUser } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleSignOut = async () => {
+    // Firebase/데모 로그아웃
     await signOut();
+    
+    // 상태 관리 초기화
+    clearUser();
+    
+    // UI 초기화
     setShowUserMenu(false);
+    
+    // 홈으로 리다이렉트
     window.location.href = '/';
   };
 
