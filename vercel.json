@@ -28,6 +28,12 @@
         }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/search-crawler",
+      "schedule": "0 9 * * *"
+    }
   ]
 }
 
