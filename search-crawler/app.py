@@ -12,15 +12,12 @@ from bs4 import BeautifulSoup
 import csv
 from io import StringIO, BytesIO
 from datetime import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
+import base64
 import os
 from dotenv import load_dotenv
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
+import resend
 
 # .env 파일 로드
 load_dotenv()
@@ -46,19 +43,16 @@ app.add_middleware(
 )
 
 # 환경 변수
-GMAIL_USER = os.getenv("GMAIL_USER")
-GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
+# Resend API (이메일 발송)
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
-# Google Custom Search API
+# Google Custom Search API (선택사항)
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 GOOGLE_SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID", "")
 
 # Naver Search API
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
-
-# Resend API
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 # Request Models
 class SearchRequest(BaseModel):
@@ -258,53 +252,86 @@ def create_excel(results: List[dict]) -> bytes:
     return output.getvalue()
 
 def send_email(recipient: str, keyword: str, excel_content: bytes, results_count: int):
-    """이메일 발송"""
-    if not GMAIL_USER or not GMAIL_APP_PASSWORD:
-        raise Exception("Gmail 설정이 없습니다")
+    """이메일 발송 - Resend API 사용"""
+    if not RESEND_API_KEY:
+        raise Exception("Resend API 키가 설정되지 않았습니다")
     
-    # 이메일 구성
-    msg = MIMEMultipart()
-    msg['From'] = GMAIL_USER
-    msg['To'] = recipient
-    msg['Subject'] = f"[WorkFree] '{keyword}' 뉴스 검색 결과 ({results_count}개)"
+    # Resend API 키 설정
+    resend.api_key = RESEND_API_KEY
     
-    # 본문
-    body = f"""
+    # 파일명 생성
+    date_str = datetime.now().strftime('%Y%m%d_%H%M')
+    filename = f"WorkFree_뉴스검색_{keyword}_{date_str}.xlsx"
+    
+    # Excel 파일을 base64로 인코딩
+    excel_base64 = base64.b64encode(excel_content).decode('utf-8')
+    
+    # HTML 이메일 본문
+    html_body = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #6A5CFF;">📰 WorkFree 뉴스 검색 결과</h2>
+            <p>안녕하세요, <strong>WorkFree</strong>입니다.</p>
+            <p><strong>'{keyword}'</strong> 검색어에 대한 최신 뉴스 검색 결과를 보내드립니다.</p>
+            
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 5px 0;"><strong>📰 검색 결과:</strong> {results_count}개</p>
+                <p style="margin: 5px 0;"><strong>📅 검색 일시:</strong> {datetime.now().strftime('%Y년 %m월 %d일 %H:%M')}</p>
+                <p style="margin: 5px 0;"><strong>🔍 검색 엔진:</strong> 네이버 뉴스 (최신순)</p>
+            </div>
+            
+            <p>첨부된 <strong>Excel 파일</strong>을 확인해주세요.</p>
+            
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />
+            
+            <p style="color: #666; font-size: 12px;">
+                이 이메일은 WorkFree 뉴스 크롤링 서비스에서 자동으로 발송되었습니다.<br>
+                <a href="https://workfreemarket.com" style="color: #6A5CFF;">workfreemarket.com</a>
+            </p>
+        </div>
+    </body>
+    </html>
+    """
+    
+    # 텍스트 이메일 본문 (HTML 미지원 클라이언트용)
+    text_body = f"""
 안녕하세요, WorkFree입니다.
 
 '{keyword}' 검색어에 대한 최신 뉴스 검색 결과를 보내드립니다.
 
 📰 검색 결과: {results_count}개
-📅 검색 일시: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-🔍 검색 엔진: 네이버 뉴스
+📅 검색 일시: {datetime.now().strftime('%Y년 %m월 %d일 %H:%M')}
+🔍 검색 엔진: 네이버 뉴스 (최신순)
 
 첨부된 Excel 파일을 확인해주세요.
 
-감사합니다.
-WorkFree Team
+---
+이 이메일은 WorkFree 뉴스 크롤링 서비스에서 자동으로 발송되었습니다.
+https://workfreemarket.com
     """
     
-    msg.attach(MIMEText(body, 'plain', 'utf-8'))
-    
-    # Excel 첨부
-    attachment = MIMEBase('application', 'vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    attachment.set_payload(excel_content)
-    encoders.encode_base64(attachment)
-    
-    # 파일명 생성 (한글 지원)
-    from email.utils import encode_rfc2231
-    date_str = datetime.now().strftime('%Y%m%d_%H%M')
-    filename = f"WorkFree_뉴스검색_{keyword}_{date_str}.xlsx"
-    
-    # RFC 2231 인코딩으로 한글 파일명 지원
-    encoded_filename = encode_rfc2231(filename, charset='utf-8')
-    attachment.add_header('Content-Disposition', 'attachment', filename=encoded_filename)
-    msg.attach(attachment)
-    
-    # 발송
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-        server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
-        server.send_message(msg)
+    try:
+        # Resend API로 이메일 발송
+        params = {
+            "from": "WorkFree <noreply@workfreemarket.com>",
+            "to": [recipient],
+            "subject": f"[WorkFree] '{keyword}' 뉴스 검색 결과 ({results_count}개)",
+            "html": html_body,
+            "text": text_body,
+            "attachments": [{
+                "filename": filename,
+                "content": excel_base64,
+            }]
+        }
+        
+        email = resend.Emails.send(params)
+        print(f"[SUCCESS] Email sent via Resend: {email}")
+        return email
+        
+    except Exception as e:
+        print(f"[ERROR] Resend API error: {e}")
+        raise Exception(f"이메일 발송 실패: {str(e)}")
 
 @app.post("/api/search")
 async def search(request: SearchRequest):

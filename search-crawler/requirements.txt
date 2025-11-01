@@ -6,4 +6,5 @@ python-dotenv
 pydantic[email]
 lxml
 openpyxl
+resend
 
