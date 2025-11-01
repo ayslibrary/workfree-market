@@ -24,8 +24,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI(
-    title="WorkFree Search Crawler API",
-    description="검색어 자동 검색 & 메일 발송 API",
+    title="WorkFree 뉴스 크롤링 API",
+    description="검색어 기반 뉴스 자동 크롤링 & 메일 발송 API",
     version="1.0.0"
 )
 
@@ -52,8 +52,8 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 GOOGLE_SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID", "")
 
 # Naver Search API
-NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
-NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "9TwaneM1ZKXAWzXY_AMp")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "GLKgCQiy96")
 
 # Request Models
 class SearchRequest(BaseModel):
@@ -78,9 +78,10 @@ class SearchResult(BaseModel):
 @app.get("/")
 async def root():
     return {
-        "service": "WorkFree Search Crawler API",
+        "service": "WorkFree 뉴스 크롤링 API",
         "version": "1.0.0",
         "status": "running",
+        "description": "검색어 기반 뉴스 자동 크롤링",
         "endpoints": {
             "search": "/api/search",
             "email": "/api/email",
@@ -145,24 +146,27 @@ def search_google(keyword: str, max_results: int = 10) -> List[dict]:
     return results
 
 def search_naver(keyword: str, max_results: int = 10) -> List[dict]:
-    """네이버 검색 - Naver Search API 사용"""
+    """네이버 뉴스 검색 - Naver News API 사용"""
     results = []
+    
+    print(f"[DEBUG] NAVER_CLIENT_ID: {NAVER_CLIENT_ID[:10] if NAVER_CLIENT_ID else 'NOT SET'}...")
+    print(f"[DEBUG] NAVER_CLIENT_SECRET: {'SET' if NAVER_CLIENT_SECRET else 'NOT SET'}")
     
     if not NAVER_CLIENT_ID or not NAVER_CLIENT_SECRET:
         print("Naver API 키가 설정되지 않았습니다. 데모 데이터를 반환합니다.")
         # 데모 데이터 반환
         for i in range(min(max_results, 5)):
             results.append({
-                'title': f'[데모] {keyword} 검색 결과 {i+1}',
-                'url': f'https://example.com/naver-result-{i+1}',
-                'description': f'{keyword}에 대한 네이버 검색 결과입니다. Naver API 키를 설정하면 실제 검색 결과를 받을 수 있습니다.',
+                'title': f'[데모] {keyword} 관련 뉴스 {i+1}',
+                'url': f'https://example.com/naver-news-{i+1}',
+                'description': f'{keyword}에 대한 최신 뉴스입니다. Naver API 키를 설정하면 실제 뉴스 결과를 받을 수 있습니다.',
                 'rank': i + 1,
                 'engine': 'naver'
             })
         return results
     
     try:
-        url = "https://openapi.naver.com/v1/search/webkr.json"
+        url = "https://openapi.naver.com/v1/search/news.json"
         headers = {
             'X-Naver-Client-Id': NAVER_CLIENT_ID,
             'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
@@ -170,12 +174,19 @@ def search_naver(keyword: str, max_results: int = 10) -> List[dict]:
         params = {
             'query': keyword,
             'display': min(max_results, 100),  # API 제한: 최대 100개
-            'sort': 'sim'  # sim (유사도순) or date (날짜순)
+            'sort': 'date'  # date (최신순) or sim (관련도순)
         }
         
+        print(f"[DEBUG] Naver API 요청 URL: {url}")
+        print(f"[DEBUG] Naver API 요청 params: {params}")
+        
         response = requests.get(url, headers=headers, params=params, timeout=10)
+        print(f"[DEBUG] Naver API 응답 상태: {response.status_code}")
+        
         response.raise_for_status()
         data = response.json()
+        
+        print(f"[DEBUG] Naver API 응답 데이터 키: {data.keys()}")
         
         if 'items' in data:
             for idx, item in enumerate(data['items'], 1):
@@ -194,7 +205,9 @@ def search_naver(keyword: str, max_results: int = 10) -> List[dict]:
         print(f"Naver API: {len(results)} 결과 반환")
                 
     except Exception as e:
-        print(f"Naver API error: {e}")
+        print(f"[ERROR] Naver API error: {e}")
+        import traceback
+        print(f"[ERROR] Traceback: {traceback.format_exc()}")
     
     return results
 
