@@ -264,11 +264,34 @@ export async function POST(request: NextRequest) {
   </p>
 </article>
 
-**중요**: 
-- 위 HTML 구조를 반드시 따르세요
-- 뉴스/자료 인용 시 반드시 [1], [2] 형태로 본문에 표기하고, 참고 자료 섹션에 상세 정보 기재
-- 구체적인 수치와 데이터를 활용하세요
-- 객관적이고 전문적인 문체를 유지하세요`;
+**작성 예시 (반드시 참고):**
+
+[본문 내 출처 표기 예시]
+"AI 시장은 2030년까지 연평균 25% 성장할 것으로 전망된다 [1]. 특히 국내 시장 규모는 2025년 15조원에서 2030년 45조원으로 3배 증가할 것으로 예상된다 [2]. 이러한 성장은 자동화 기술의 발전과 기업들의 디지털 전환 가속화에 기인한다 [3]."
+
+[참고 자료 섹션 작성 예시]
+<h2>참고 자료 (References)</h2>
+<ol style="font-size: 14px; line-height: 1.8;">
+  <li>[1] "AI 시장 2030년까지 25% 성장 전망" - 한국경제, 2025년 1월 2일
+      <br><a href="https://www.hankyung.com/article/2025010212345" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
+  </li>
+  <li>[2] "국내 AI 시장 규모 3배 성장 예상" - 디지털타임스, 2025년 1월 1일
+      <br><a href="https://www.dt.co.kr/article/2025010112345" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
+  </li>
+  <li>[3] "기업 디지털 전환 가속화, AI 도입 확대" - 테크크런치코리아, 2024년 12월 30일
+      <br><a href="https://techcrunch.kr/2024/12/30/ai-adoption" target="_blank" style="color: #3b82f6; text-decoration: none;">기사 보기 →</a>
+  </li>
+</ol>
+<p style="font-size: 12px; color: #6b7280; margin-top: 20px;">
+  * 본 보고서는 위 참고 자료를 기반으로 AI가 작성하였습니다.
+</p>
+
+**중요 규칙**: 
+- 위 HTML 구조와 예시를 정확히 따르세요
+- 뉴스/자료 인용 시 반드시 [번호] 형태로 본문에 표기
+- 참고 자료는 반드시 위 예시처럼 제목, 출처, 날짜, 링크 모두 포함
+- 구체적인 수치와 데이터를 최대한 활용
+- 객관적이고 전문적인 문체 유지`;
 
     // 주요 분석 포인트 추가
     const points = [];
