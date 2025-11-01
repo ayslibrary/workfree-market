@@ -881,7 +881,7 @@ export default function Home() {
               </div>
             </FadeIn>
 
-            {/* 검색어 자동 크롤링 */}
+            {/* 검색어 기반 뉴스 자동 크롤링 */}
             <FadeIn delay={0.6}>
               <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-emerald-200 dark:border-emerald-800 relative overflow-hidden h-full">
                 {/* 배경 장식 */}
@@ -901,10 +901,10 @@ export default function Home() {
 
                   {/* 메인 제목 */}
                   <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                    검색어 자동 크롤링
+                    뉴스 자동 크롤링
                   </h2>
                   <p className="text-center text-gray-600 dark:text-gray-300 mb-2">
-                    구글/네이버 검색 결과를 <strong className="text-emerald-600 dark:text-emerald-400">매일 자동 수집</strong>
+                    검색어 기반 <strong className="text-emerald-600 dark:text-emerald-400">최신 뉴스 자동 수집</strong>
                   </p>
                   <p className="text-center text-sm text-emerald-600 dark:text-emerald-400 font-semibold mb-6">
                     💡 베타 기간 동안 <span className="underline decoration-wavy">완전 무료</span>로 사용하세요
@@ -914,10 +914,10 @@ export default function Home() {
                   <div className="space-y-3 mb-6">
                     <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 rounded-xl p-3 border border-emerald-200 dark:border-emerald-700">
                       <div className="flex items-center gap-3">
-                        <div className="text-2xl">🔍</div>
+                        <div className="text-2xl">📰</div>
                         <div>
-                          <div className="font-bold text-gray-900 dark:text-white text-sm">구글/네이버 동시 검색</div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Top 10-20 결과 수집</div>
+                          <div className="font-bold text-gray-900 dark:text-white text-sm">네이버 뉴스 검색</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">최신순 뉴스 수집</div>
                         </div>
                       </div>
                     </div>
@@ -947,8 +947,8 @@ export default function Home() {
                     className="group block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
                   >
                     <div className="flex items-center justify-center gap-2">
-                      <span className="text-xl">🔍</span>
-                      <span>검색 크롤링 시작하기</span>
+                      <span className="text-xl">📰</span>
+                      <span>뉴스 크롤링 시작하기</span>
                       <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                     </div>
                   </Link>
@@ -956,7 +956,7 @@ export default function Home() {
                   {/* 하단 설명 */}
                   <div className="mt-6 text-center">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      🔍 구글+네이버 | 📧 이메일 발송 | ⏰ 매일 자동 실행
+                      📰 네이버 뉴스 | 📧 이메일 발송 | ⏰ 매일 자동 실행
                     </p>
                   </div>
                 </div>

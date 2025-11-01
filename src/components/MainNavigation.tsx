@@ -74,7 +74,7 @@ export default function MainNavigation() {
                   href="/tools/search-crawler"
                   className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                 >
-                  🔍 검색어 자동 크롤링
+                  📰 뉴스 자동 크롤링
                 </Link>
                 <hr className="my-2 border-[#AFA6FF]/30" />
                 <Link
@@ -272,7 +272,7 @@ export default function MainNavigation() {
                 className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
                 onClick={() => setShowMobileMenu(false)}
               >
-                🔍 검색어 자동 크롤링
+                📰 뉴스 자동 크롤링
               </Link>
               <Link
                 href="/automation/microsoft"

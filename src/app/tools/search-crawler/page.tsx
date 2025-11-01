@@ -102,10 +102,10 @@ export default function SearchCrawlerPage() {
         {/* 헤더 */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            🔍 검색어 자동 크롤링
+            📰 검색어 기반 뉴스 자동 크롤링
           </h1>
           <p className="text-gray-600 text-lg">
-            구글/네이버 검색 결과를 자동으로 수집하고 이메일로 받아보세요
+            네이버 최신 뉴스를 자동으로 수집하고 이메일로 받아보세요
           </p>
         </div>
 
