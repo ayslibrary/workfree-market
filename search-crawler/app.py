@@ -10,7 +10,7 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 import csv
-from io import StringIO
+from io import StringIO, BytesIO
 from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
@@ -19,6 +19,8 @@ from email.mime.base import MIMEBase
 from email import encoders
 import os
 from dotenv import load_dotenv
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
 
 # .env 파일 로드
 load_dotenv()
@@ -44,8 +46,8 @@ app.add_middleware(
 )
 
 # 환경 변수
-GMAIL_USER = os.getenv("GMAIL_USER", "")
-GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "")
+GMAIL_USER = os.getenv("GMAIL_USER", "ayoung1034@gmail.com")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "jpbxhzbbcehrheyt")
 
 # Google Custom Search API
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
@@ -211,25 +213,48 @@ def search_naver(keyword: str, max_results: int = 10) -> List[dict]:
     
     return results
 
-def create_csv(results: List[dict]) -> str:
-    """검색 결과를 CSV로 변환"""
-    output = StringIO()
-    fieldnames = ['순위', '검색엔진', '제목', 'URL', '설명']
-    writer = csv.DictWriter(output, fieldnames=fieldnames)
+def create_excel(results: List[dict]) -> bytes:
+    """검색 결과를 Excel로 변환"""
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "뉴스 검색 결과"
     
-    writer.writeheader()
-    for r in results:
-        writer.writerow({
-            '순위': r['rank'],
-            '검색엔진': r['engine'].upper(),
-            '제목': r['title'],
-            'URL': r['url'],
-            '설명': r['description']
-        })
+    # 헤더 스타일
+    header_fill = PatternFill(start_color="4472C4", end_color="4472C4", fill_type="solid")
+    header_font = Font(bold=True, color="FFFFFF", size=12)
+    header_alignment = Alignment(horizontal="center", vertical="center")
+    
+    # 헤더 작성
+    headers = ['순위', '검색엔진', '제목', 'URL', '설명']
+    for col_num, header in enumerate(headers, 1):
+        cell = ws.cell(row=1, column=col_num, value=header)
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = header_alignment
+    
+    # 데이터 작성
+    for row_num, r in enumerate(results, 2):
+        ws.cell(row=row_num, column=1, value=r['rank'])
+        ws.cell(row=row_num, column=2, value=r['engine'].upper())
+        ws.cell(row=row_num, column=3, value=r['title'])
+        ws.cell(row=row_num, column=4, value=r['url'])
+        ws.cell(row=row_num, column=5, value=r['description'])
+    
+    # 열 너비 조정
+    ws.column_dimensions['A'].width = 8
+    ws.column_dimensions['B'].width = 12
+    ws.column_dimensions['C'].width = 50
+    ws.column_dimensions['D'].width = 60
+    ws.column_dimensions['E'].width = 80
+    
+    # BytesIO로 저장
+    output = BytesIO()
+    wb.save(output)
+    output.seek(0)
     
     return output.getvalue()
 
-def send_email(recipient: str, keyword: str, csv_content: str, results_count: int):
+def send_email(recipient: str, keyword: str, excel_content: bytes, results_count: int):
     """이메일 발송"""
     if not GMAIL_USER or not GMAIL_APP_PASSWORD:
         raise Exception("Gmail 설정이 없습니다")
@@ -238,31 +263,39 @@ def send_email(recipient: str, keyword: str, csv_content: str, results_count: in
     msg = MIMEMultipart()
     msg['From'] = GMAIL_USER
     msg['To'] = recipient
-    msg['Subject'] = f"[WorkFree] '{keyword}' 검색 결과 ({results_count}개)"
+    msg['Subject'] = f"[WorkFree] '{keyword}' 뉴스 검색 결과 ({results_count}개)"
     
     # 본문
     body = f"""
-    안녕하세요, WorkFree입니다.
-    
-    '{keyword}' 검색어에 대한 자동 검색 결과를 보내드립니다.
-    
-    📊 검색 결과: {results_count}개
-    📅 검색 일시: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-    
-    첨부된 CSV 파일을 확인해주세요.
-    
-    감사합니다.
-    WorkFree Team
+안녕하세요, WorkFree입니다.
+
+'{keyword}' 검색어에 대한 최신 뉴스 검색 결과를 보내드립니다.
+
+📰 검색 결과: {results_count}개
+📅 검색 일시: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+🔍 검색 엔진: 네이버 뉴스
+
+첨부된 Excel 파일을 확인해주세요.
+
+감사합니다.
+WorkFree Team
     """
     
     msg.attach(MIMEText(body, 'plain', 'utf-8'))
     
-    # CSV 첨부
-    attachment = MIMEBase('application', 'octet-stream')
-    attachment.set_payload(csv_content.encode('utf-8-sig'))
+    # Excel 첨부
+    attachment = MIMEBase('application', 'vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    attachment.set_payload(excel_content)
     encoders.encode_base64(attachment)
-    filename = f"search_results_{keyword}_{datetime.now().strftime('%Y%m%d')}.csv"
-    attachment.add_header('Content-Disposition', f'attachment; filename={filename}')
+    
+    # 파일명 생성 (한글 지원)
+    from email.utils import encode_rfc2231
+    date_str = datetime.now().strftime('%Y%m%d_%H%M')
+    filename = f"WorkFree_뉴스검색_{keyword}_{date_str}.xlsx"
+    
+    # RFC 2231 인코딩으로 한글 파일명 지원
+    encoded_filename = encode_rfc2231(filename, charset='utf-8')
+    attachment.add_header('Content-Disposition', 'attachment', filename=encoded_filename)
     msg.attach(attachment)
     
     # 발송
@@ -311,11 +344,11 @@ async def search_and_email(request: EmailRequest):
         if not all_results:
             raise HTTPException(status_code=404, detail="검색 결과를 찾을 수 없습니다")
         
-        # CSV 생성
-        csv_content = create_csv(all_results)
+        # Excel 생성
+        excel_content = create_excel(all_results)
         
         # 이메일 발송
-        send_email(request.recipient_email, request.keyword, csv_content, len(all_results))
+        send_email(request.recipient_email, request.keyword, excel_content, len(all_results))
         
         return {
             "success": True,
