@@ -118,6 +118,7 @@ export default function GamificationDemo() {
           {
             id: '1',
             userId: demoUser.uid,
+            toolId: 'excel-dashboard',
             name: '엑셀 정기 대시보드',
             description: '매주 월요일 9시에 자동으로 대시보드를 생성합니다',
             icon: '📊',
@@ -136,6 +137,7 @@ export default function GamificationDemo() {
           {
             id: '2',
             userId: demoUser.uid,
+            toolId: 'report-generator',
             name: '보고서 자동 생성',
             description: '매일 오후 6시에 일일 보고서를 자동 작성합니다',
             icon: '📄',

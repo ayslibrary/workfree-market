@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
         });
 
         // 클라이언트에서 전송한 로고가 포함된 이미지 사용
+        let finalBuffer = pngBuffer;
         
         if (qr.imageData) {
           try {
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
           .trim();
         const fileName = safeText || `qr-code-${i + 1}`;
 
-        qrFolder?.file(`${fileName}.png`, pngBuffer);
+        qrFolder?.file(`${fileName}.png`, finalBuffer);
 
         // SVG 형식도 추가
         const svgString = await QRCode.toString(qr.text, {
@@ -102,7 +103,7 @@ https://workfree.app/tools/qr-generator
     // ZIP 파일 생성
     const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
 
-    return new NextResponse(zipBuffer, {
+    return new NextResponse(new Uint8Array(zipBuffer), {
       headers: {
         "Content-Type": "application/zip",
         "Content-Disposition": `attachment; filename="qr-codes-${new Date().getTime()}.zip"`,

@@ -36,8 +36,6 @@ export default function Home() {
     setTimeout(() => {
       setIsFriWaggling(false);
     }, 600);
-    
-    console.log("🐰 칼퇴하고 프리(Fri) 귀가 쫑긋!");
   };
 
   // 베타 신청 핸들러
@@ -95,7 +93,6 @@ export default function Home() {
         window.location.href = '/signup';
       }
     } catch (error) {
-      console.error("베타 신청 오류:", error);
       alert("⚠️ 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };

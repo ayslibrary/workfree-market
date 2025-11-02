@@ -6,6 +6,7 @@ const automationSettings: {
     currencies: string[];
     emails: string[];
     sendTime: string;
+    includeBokReference?: boolean;
     createdAt: string;
     isActive: boolean;
   };

@@ -15,9 +15,6 @@ export async function POST(request: NextRequest) {
 
     // OpenAI API 키 확인
     const apiKey = process.env.OPENAI_API_KEY;
-    console.log('🔑 API Key exists:', !!apiKey);
-    console.log('🔑 API Key length:', apiKey?.length || 0);
-    console.log('🔑 API Key preview:', apiKey ? apiKey.substring(0, 20) + '...' : 'undefined');
     
     if (!apiKey) {
       // 데모 모드: API 키가 없으면 샘플 블로그 글 반환
@@ -377,10 +374,8 @@ ${length === 'long' ? `\n## FAQ\n\n**Q: ${keyword}는 어려운가요?**\nA: 처
           tokensUsed: completion.usage?.total_tokens || 0,
           createdAt: new Date().toISOString(),
         });
-        console.log('✅ Blog history saved:', historyId);
       } catch (error) {
-        console.error('❌ Failed to save blog history:', error);
-        // 저장 실패해도 블로그는 반환
+        // 저장 실패해도 블로그는 반환 (프로덕션에서는 로깅 서비스 사용 권장)
       }
     }
 
@@ -392,7 +387,7 @@ ${length === 'long' ? `\n## FAQ\n\n**Q: ${keyword}는 어려운가요?**\nA: 처
       historyId,
     });
   } catch (error: unknown) {
-    console.error('Blog generation error:', error);
+    // 프로덕션에서는 Sentry 등의 로깅 서비스 사용 권장
     
     // OpenAI API 에러 처리
     const err = error as { code?: string; message?: string };

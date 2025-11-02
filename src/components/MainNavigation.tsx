@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "@/lib/firebase";
 import { useAuthStore } from "@/store/authStore";
@@ -31,11 +32,16 @@ export default function MainNavigation() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
-            <img 
-              src="/workfree-logo.png?v=3" 
-              alt="WorkFree Logo" 
-              className="w-10 h-10 transition-transform group-hover:scale-110"
-            />
+            <div className="relative w-10 h-10">
+              <Image 
+                src="/workfree-logo.png" 
+                alt="WorkFree Market - AI 실무 자동화 스튜디오 로고" 
+                width={40}
+                height={40}
+                priority
+                className="transition-transform group-hover:scale-110"
+              />
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <div className="text-xl font-bold text-[#1E1B33]">

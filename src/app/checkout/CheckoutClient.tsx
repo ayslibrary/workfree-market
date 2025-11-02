@@ -7,7 +7,9 @@ import MainNavigation from "@/components/MainNavigation";
 
 export const dynamic = 'force-dynamic';
 
+// Toss Payments 클라이언트 키 (환경 변수에서만 가져오기)
 const TOSS_CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+
 const CUSTOMER_KEY = "customer_" + Math.random().toString(36).substring(2, 15);
 
 export default function CheckoutClient() {
@@ -36,7 +38,6 @@ export default function CheckoutClient() {
           setIsPaymentReady(true);
         }, 500);
       } catch (error) {
-        console.error("결제 위젯 초기화 실패:", error);
         alert("결제 시스템을 불러오는데 실패했습니다.");
         setIsLoading(false);
       }
@@ -67,7 +68,6 @@ export default function CheckoutClient() {
         customerName: "고객",
       });
     } catch (error) {
-      console.error("결제 요청 실패:", error);
       alert("결제 요청 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };

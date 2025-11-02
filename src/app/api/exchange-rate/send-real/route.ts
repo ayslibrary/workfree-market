@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 // Gmail SMTP 설정
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.GMAIL_USER, // Gmail 주소

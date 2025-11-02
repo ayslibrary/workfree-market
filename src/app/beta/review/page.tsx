@@ -34,15 +34,6 @@ export default function ReviewPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reviewCount, setReviewCount] = useState(0);
 
-  useEffect(() => {
-    if (!user) {
-      alert('로그인이 필요합니다.');
-      router.push('/login');
-      return;
-    }
-    loadReviewCount();
-  }, [user, router, loadReviewCount]);
-
   const loadReviewCount = useCallback(async () => {
     if (!user) return;
     try {
@@ -52,6 +43,15 @@ export default function ReviewPage() {
       console.error('후기 수 로딩 실패:', error);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      alert('로그인이 필요합니다.');
+      router.push('/login');
+      return;
+    }
+    loadReviewCount();
+  }, [user, router, loadReviewCount]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

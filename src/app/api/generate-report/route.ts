@@ -39,7 +39,15 @@ async function searchLatestData(topic: string): Promise<{ text: string; referenc
     }
 
     // 검색 결과를 구조화된 데이터로 변환
-    const references = data.items.slice(0, 8).map((item: any, index: number) => ({
+    interface Reference {
+      id: number;
+      title: string;
+      description: string;
+      link: string;
+      pubDate: string;
+    }
+    
+    const references: Reference[] = data.items.slice(0, 8).map((item: any, index: number) => ({
       id: index + 1,
       title: item.title.replace(/<\/?b>/g, ''),
       description: item.description.replace(/<\/?b>/g, ''),
@@ -49,7 +57,7 @@ async function searchLatestData(topic: string): Promise<{ text: string; referenc
 
     // GPT에 전달할 텍스트 (출처 번호 포함)
     let searchResults = '\n\n[최신 뉴스 및 자료 - 인용 시 반드시 아래 정보를 정확히 사용]\n\n';
-    references.forEach((ref) => {
+    references.forEach((ref: Reference) => {
       searchResults += `[${ref.id}]\n`;
       searchResults += `제목: ${ref.title}\n`;
       searchResults += `내용: ${ref.description}\n`;

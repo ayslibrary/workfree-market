@@ -1,0 +1,16 @@
+# WorkFree Market - robots.txt
+# https://workfreemarket.com/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /my/
+Disallow: /checkout/
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://workfreemarket.com/sitemap.xml
+
