@@ -12,43 +12,83 @@ import {
   onAuthStateChanged,
   User as FirebaseUser
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Firebase 설정 완전 비활성화 (데모 모드)
-const firebaseConfig = null;
-const isConfigured = false;
-const app = null;
+// Firebase 설정
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDtRQXr_vORnHcY_teMD_qNzkwbzTOz2h0",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "workfree-market.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "workfree-market",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "workfree-market.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "946819262789",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:946819262789:web:57015dd0b89cdef6e7762c",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-JVB1D0EXGL"
+};
+
+const isConfigured = true;
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
 // Auth 인스턴스
-export const auth = app ? getAuth(app) : (null as unknown as ReturnType<typeof getAuth>);
+export const auth = getAuth(app);
 
 // Firestore 인스턴스
-export const db = app ? getFirestore(app) : (null as unknown as ReturnType<typeof getFirestore>);
+export const db = getFirestore(app);
 
 // 데모 사용자 생성 (아래에서 함수로 재정의됨)
 
 // Storage 인스턴스
-export const storage = app ? getStorage(app) : (null as unknown as ReturnType<typeof getStorage>);
+export const storage = getStorage(app);
 
 // Google Provider
-export const googleProvider = auth ? new GoogleAuthProvider() : (null as unknown as GoogleAuthProvider);
-if (googleProvider) {
-  googleProvider.setCustomParameters({
-    prompt: 'select_account'
-  });
-}
+export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
 
 // Google 로그인
 export async function signInWithGoogle() {
-  if (!auth) {
-    return { user: null, error: 'Firebase가 설정되지 않았습니다. .env.local 파일을 설정해주세요.' };
-  }
   try {
     const result = await signInWithPopup(auth, googleProvider);
+    
+    // Firestore에 사용자 정보 저장
+    await saveUserToFirestore(result.user);
+    
     return { user: result.user, error: null };
   } catch (error) {
-    return { user: null, error: error instanceof Error ? error.message : 'An error occurred' };
+    return { user: null, error: error instanceof Error ? error.message : '로그인에 실패했습니다.' };
+  }
+}
+
+// Firestore에 사용자 정보 저장
+async function saveUserToFirestore(user: FirebaseUser) {
+  try {
+    const userRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userRef);
+    
+    // 이미 존재하는 사용자는 업데이트만
+    if (userDoc.exists()) {
+      await setDoc(userRef, {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+    } else {
+      // 새 사용자는 전체 정보 생성
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        role: 'buyer',
+        credits: 10, // 초기 크레딧 10개 제공
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    }
+  } catch (error) {
+    console.error('Firestore 사용자 저장 실패:', error);
   }
 }
 
@@ -58,9 +98,6 @@ export async function registerWithEmail(
   password: string, 
   displayName: string
 ) {
-  if (!auth) {
-    return { user: null, error: 'Firebase가 설정되지 않았습니다. .env.local 파일을 설정해주세요.' };
-  }
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     
@@ -68,6 +105,9 @@ export async function registerWithEmail(
     await updateProfile(result.user, {
       displayName: displayName
     });
+    
+    // Firestore에 사용자 정보 저장
+    await saveUserToFirestore(result.user);
     
     return { user: result.user, error: null };
   } catch (error) {
@@ -90,11 +130,12 @@ export async function registerWithEmail(
 
 // 이메일/비밀번호로 로그인
 export async function loginWithEmail(email: string, password: string) {
-  if (!auth) {
-    return { user: null, error: 'Firebase가 설정되지 않았습니다. .env.local 파일을 설정해주세요.' };
-  }
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
+    
+    // Firestore에 사용자 정보 업데이트 (로그인 시간 등)
+    await saveUserToFirestore(result.user);
+    
     return { user: result.user, error: null };
   } catch (error) {
     let errorMessage = '로그인에 실패했습니다.';
@@ -107,6 +148,8 @@ export async function loginWithEmail(email: string, password: string) {
         errorMessage = '잘못된 비밀번호입니다.';
       } else if (firebaseError.code === 'auth/invalid-email') {
         errorMessage = '유효하지 않은 이메일 형식입니다.';
+      } else if (firebaseError.code === 'auth/invalid-credential') {
+        errorMessage = '이메일 또는 비밀번호가 올바르지 않습니다.';
       }
     }
     
@@ -116,113 +159,37 @@ export async function loginWithEmail(email: string, password: string) {
 
 // 로그아웃
 export async function signOut() {
-  // 데모 모드 확인
-  if (isDemoMode()) {
-    return signOutDemo();
-  }
-  
-  if (!auth) {
-    return { error: 'Firebase가 설정되지 않았습니다.' };
-  }
   try {
     await firebaseSignOut(auth);
     return { error: null };
   } catch (error) {
-    return { error: error instanceof Error ? error.message : 'An error occurred' };
+    return { error: error instanceof Error ? error.message : '로그아웃에 실패했습니다.' };
   }
 }
 
 // 인증 상태 변경 감지
 export function onAuthStateChange(callback: (user: FirebaseUser | null) => void) {
-  if (!auth) {
-    callback(null);
-    return () => {}; // noop unsubscribe
-  }
   return onAuthStateChanged(auth, callback);
 }
 
-// ==================== 데모 모드 ====================
-// Firebase 미설정 시 임시로 사용할 데모 로그인
-
-export interface DemoUser {
-  uid: string;
-  email: string;
-  displayName: string;
-  photoURL?: string;
-}
-
-// 데모 사용자 정보
-const DEMO_USERS = {
-  demo: {
-    uid: 'demo-user-001',
-    email: 'demo@workfree.com',
-    displayName: '데모 사용자',
-    photoURL: undefined,
-  },
-  admin: {
-    uid: 'demo-admin-001',
-    email: 'admin@workfree.com',
-    displayName: '관리자',
-    photoURL: undefined,
-  }
-};
-
-// 데모 로그인
-export async function loginWithDemo(userType: 'demo' | 'admin' = 'demo') {
+// Firestore에서 사용자 정보 가져오기
+export async function getUserFromFirestore(uid: string) {
   try {
-    const demoUser = DEMO_USERS[userType];
+    const userRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userRef);
     
-    // localStorage에 저장
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('demo_user', JSON.stringify(demoUser));
-      localStorage.setItem('demo_mode', 'true');
+    if (userDoc.exists()) {
+      return { data: userDoc.data(), error: null };
+    } else {
+      return { data: null, error: '사용자 정보를 찾을 수 없습니다.' };
     }
-    
-    return { 
-      user: demoUser as any, // FirebaseUser 타입으로 캐스팅
-      error: null 
-    };
   } catch (error) {
-    return { 
-      user: null, 
-      error: '데모 로그인에 실패했습니다.' 
-    };
+    return { data: null, error: '사용자 정보 조회에 실패했습니다.' };
   }
 }
 
-// 데모 로그아웃
-export async function signOutDemo() {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('demo_user');
-    localStorage.removeItem('demo_mode');
-  }
-  return { error: null };
-}
-
-// 데모 모드 확인 (개발용으로 항상 true)
-export function isDemoMode(): boolean {
-  return true; // 개발용으로 항상 데모 모드 활성화
-}
-
-// 데모 사용자 가져오기
-export function getDemoUser(): DemoUser | null {
-  // localStorage 확인 (로그아웃 상태 반영)
-  if (typeof window !== 'undefined') {
-    const storedUser = localStorage.getItem('demo_user');
-    const demoMode = localStorage.getItem('demo_mode');
-    
-    if (storedUser && demoMode === 'true') {
-      try {
-        return JSON.parse(storedUser);
-      } catch {
-        return null;
-      }
-    }
-  }
-  
-  // 로그아웃 상태 또는 localStorage 없음
-  return null;
-}
+// ==================== 데모 모드 제거됨 ====================
+// 실제 Firebase 인증을 사용합니다
 
 export default app;
 

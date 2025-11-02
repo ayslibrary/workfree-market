@@ -13,6 +13,7 @@ export interface User {
   photoURL?: string;
   role: UserRole;
   sellerLevel?: SellerLevel;
+  credits?: number; // 크레딧 잔액
   createdAt: Date;
   updatedAt: Date;
 }
