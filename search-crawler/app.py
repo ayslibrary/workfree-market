@@ -373,8 +373,17 @@ async def search_and_email(request: EmailRequest):
             naver_results = search_naver(request.keyword, request.max_results)
             all_results.extend(naver_results)
         
+        # 검색 결과가 없으면 데모 데이터 생성
         if not all_results:
-            raise HTTPException(status_code=404, detail="검색 결과를 찾을 수 없습니다")
+            print("[INFO] 검색 결과가 없어 데모 데이터를 생성합니다.")
+            for i in range(min(request.max_results, 5)):
+                all_results.append({
+                    'title': f'[Demo] {request.keyword} 관련 뉴스 {i+1}',
+                    'url': f'https://workfreemarket.com/demo-{i+1}',
+                    'description': f'{request.keyword}에 대한 검색 결과입니다. 실제 API 키를 설정하면 실시간 뉴스 결과를 받을 수 있습니다.',
+                    'rank': i + 1,
+                    'engine': 'demo'
+                })
         
         # Excel 생성
         excel_content = create_excel(all_results)
