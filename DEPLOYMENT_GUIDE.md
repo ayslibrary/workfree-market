@@ -1,204 +1,230 @@
-# 🚀 Vercel 배포 가이드
+# 🚀 WorkFree 배포 가이드
 
-## ✅ Git 커밋 완료!
+## ✅ 배포 전 체크리스트
 
-변경사항이 성공적으로 GitHub에 푸시되었습니다:
-- Repository: `https://github.com/ayslibrary/workfree-market.git`
-- Branch: `main`
-- 최신 커밋: "feat: AI 화보 갤러리 페이지 추가"
+### 1. 빌드 테스트 완료
+```bash
+npm run build
+```
+✅ **완료** - 빌드 성공 (warnings만 있고 errors 없음)
 
 ---
 
-## 🌐 Vercel 배포 방법 (2가지)
+## 📦 Vercel 배포 (권장)
 
-### 방법 1: Vercel 웹사이트에서 배포 (추천 ⭐)
+### 방법 1: Vercel CLI로 배포 (빠름)
 
-**가장 쉽고 안정적인 방법입니다!**
-
-#### 1단계: Vercel 웹사이트 접속
-```
-https://vercel.com
+#### 1단계: Vercel CLI 설치
+```bash
+npm install -g vercel
 ```
 
-#### 2단계: GitHub로 로그인
-- "Sign Up" 또는 "Log In" 클릭
-- "Continue with GitHub" 선택
-- GitHub 계정으로 로그인
-
-#### 3단계: 새 프로젝트 Import
-1. Dashboard에서 **"Add New..."** → **"Project"** 클릭
-2. "Import Git Repository" 섹션에서 GitHub 연결
-3. `workfree-market` 저장소 찾기
-4. **"Import"** 버튼 클릭
-
-#### 4단계: 프로젝트 설정
-- **Framework Preset**: Next.js (자동 감지됨)
-- **Root Directory**: `./` (기본값)
-- **Build Command**: `npm run build` (자동)
-- **Output Directory**: `.next` (자동)
-- **Environment Variables**: (Firebase 설정이 있다면 추가)
-
-#### 5단계: Deploy!
-- **"Deploy"** 버튼 클릭
-- 2-3분 후 배포 완료! 🎉
-
-#### 배포 완료 후
-- 자동으로 생성된 URL: `https://workfree-market-xxx.vercel.app`
-- 커스텀 도메인 연결 가능
-- **GitHub에 push할 때마다 자동 배포됨!**
-
----
-
-### 방법 2: Vercel CLI로 배포 (고급)
-
-**CLI 오류가 있어서 현재는 방법 1을 추천합니다.**
-
-만약 나중에 CLI로 배포하고 싶다면:
-
-#### 1단계: Vercel 웹사이트에서 토큰 생성
-1. https://vercel.com/account/tokens
-2. "Create Token" 클릭
-3. 토큰 복사
-
-#### 2단계: PowerShell에서 환경 변수 설정
-```powershell
-$env:VERCEL_TOKEN="여기에_토큰_붙여넣기"
+#### 2단계: Vercel 로그인
+```bash
+vercel login
 ```
 
 #### 3단계: 배포
-```powershell
-vercel --prod --token $env:VERCEL_TOKEN
+```bash
+# 프로덕션 배포
+vercel --prod
+
+# 또는 미리보기 배포
+vercel
 ```
 
 ---
 
-## 🔥 자동 배포 설정 (추천!)
+### 방법 2: Vercel 웹사이트에서 배포 (간편)
 
-Vercel과 GitHub를 연결하면:
-- ✅ `main` 브랜치에 push → 자동으로 프로덕션 배포
-- ✅ Pull Request 생성 → 자동으로 프리뷰 배포
-- ✅ 배포 상태 GitHub에 표시
-- ✅ 롤백 기능 (이전 버전으로 즉시 복구)
+#### 1. Vercel 웹사이트 접속
+https://vercel.com
+
+#### 2. GitHub 연동
+1. "New Project" 클릭
+2. GitHub repository 선택
+3. Import
+
+#### 3. 프로젝트 설정
+- **Framework Preset**: Next.js 자동 감지됨
+- **Root Directory**: `.` (기본값)
+- **Build Command**: `npm run build` (자동 설정됨)
+- **Output Directory**: `.next` (자동 설정됨)
+
+#### 4. 환경 변수 설정 ⚠️ **중요!**
+
+Vercel 프로젝트 설정 > Environment Variables에서 다음을 추가:
+
+```
+# Firebase
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+
+# OpenAI
+OPENAI_API_KEY=
+
+# Toss Payments
+NEXT_PUBLIC_TOSS_CLIENT_KEY=
+TOSS_SECRET_KEY=
+
+# Resend (Email)
+RESEND_API_KEY=
+
+# 기타 (필요시)
+NEXT_PUBLIC_SITE_URL=https://workfree.app
+```
+
+**💡 Tip:** 로컬의 `.env.local` 파일에서 복사하세요.
+
+#### 5. 배포 시작
+"Deploy" 버튼 클릭!
 
 ---
 
-## 📋 배포 전 체크리스트
+## 🌐 커스텀 도메인 설정
 
-- [x] Git 커밋 완료
-- [x] GitHub에 push 완료
-- [ ] Vercel 계정 생성/로그인
-- [ ] GitHub 저장소 Import
-- [ ] 배포 완료
-- [ ] 배포된 URL 확인
+### Vercel에서 도메인 연결
 
----
-
-## 🌍 배포 후 확인사항
-
-### 1. 새로운 갤러리 페이지 테스트
-```
-https://your-domain.vercel.app/gallery
-```
-
-### 2. 주요 기능 확인
-- ✅ 20가지 AI 화보 스타일 표시
-- ✅ 카테고리 필터링 작동
-- ✅ 카드 클릭 시 모달 팝업
-- ✅ "이렇게 만들기" 버튼 작동
-- ✅ 반응형 디자인 (모바일/태블릿)
-
-### 3. 메인 페이지 확인
-```
-https://your-domain.vercel.app
-```
-- "AI 화보 갤러리 보기" 버튼이 제대로 보이는지 확인
-
----
-
-## 🔧 환경 변수 설정 (선택사항)
-
-만약 Firebase를 사용 중이라면 Vercel에서 환경 변수를 설정해야 합니다:
-
-1. Vercel Dashboard → 프로젝트 선택
-2. "Settings" → "Environment Variables"
-3. 다음 변수들 추가:
-   ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   ```
-
----
-
-## 🎉 배포 완료 후
-
-### 배포된 사이트 URL:
-```
-https://workfree-market-xxx.vercel.app
-```
-
-### 갤러리 페이지 직접 링크:
-```
-https://workfree-market-xxx.vercel.app/gallery
-```
-
-### 커스텀 도메인 연결하기:
-1. Vercel Dashboard → 프로젝트 → "Settings" → "Domains"
-2. 도메인 입력 (예: `workfree.com`)
-3. DNS 설정 안내에 따라 설정
-4. 10분 후 SSL 인증서 자동 발급 완료!
-
----
-
-## 📱 공유하기
-
-배포가 완료되면 다음과 같이 공유할 수 있습니다:
+1. Vercel 프로젝트 > Settings > Domains
+2. 도메인 입력: `workfree.app`
+3. DNS 설정 (도메인 제공업체에서):
 
 ```
-🎨 AI 화보 갤러리가 오픈했습니다!
+# A Record
+Type: A
+Name: @
+Value: 76.76.21.21
 
-5분 만에 프로급 화보 제작
-20가지 스타일 | 무제한 재촬영
-
-👉 https://your-domain.vercel.app/gallery
-
-#AI화보 #프로필사진 #LinkedInProfile
+# CNAME Record  
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com
 ```
 
 ---
 
-## 🆘 문제 해결
+## 🔧 배포 후 확인 사항
 
-### 배포가 실패하는 경우:
-1. Vercel Dashboard에서 "Deployment" 로그 확인
-2. Build Error 메시지 확인
-3. 환경 변수 설정 확인
+### 1. 기본 기능 테스트
+- [ ] 홈페이지 로딩
+- [ ] 베타 신청 페이지 (/beta)
+- [ ] 베타 미션 페이지 (/beta/missions)
+- [ ] Firebase 연동 확인
+- [ ] 이미지 로딩 확인
 
-### 페이지가 로드되지 않는 경우:
-1. 브라우저 캐시 삭제 (Ctrl + Shift + R)
-2. Vercel Dashboard에서 "Redeploy" 클릭
+### 2. 베타 테스트 기능
+- [ ] 모집 현황 배너 정상 작동
+- [ ] Firebase에서 참가자 수 가져오기
+- [ ] 크레딧 표시 확인
+- [ ] 미션 진행 상황 저장
 
-### Firebase 오류가 나는 경우:
-1. 환경 변수가 올바르게 설정되었는지 확인
-2. Firebase 프로젝트에서 도메인이 승인되었는지 확인
+### 3. API 엔드포인트
+- [ ] /api/generate-blog
+- [ ] /api/generate-report
+- [ ] /api/qr-generator
+- [ ] /api/image-finder/search
+
+---
+
+## 🔐 환경 변수 설정 상세
+
+### Firebase 설정
+Firebase Console > 프로젝트 설정 > 일반 > 내 앱 > SDK 설정 및 구성
+
+```javascript
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+```
+
+### OpenAI API Key
+https://platform.openai.com/api-keys
+
+### Toss Payments
+https://developers.tosspayments.com/
+
+### Resend (Email)
+https://resend.com/api-keys
+
+---
+
+## 📊 베타 테스트 날짜 설정 (중요!)
+
+배포 전에 실제 베타 시작일로 업데이트하세요:
+
+**파일:** `src/types/beta-onboarding.ts`
+
+```typescript
+export const BETA_CONFIG = {
+  // 실제 날짜로 변경!
+  BETA_START_DATE: new Date('2025-11-03'),      // 베타 시작일
+  RECRUITMENT_END_DATE: new Date('2025-11-23'), // 3주 후
+  BETA_END_DATE: new Date('2025-11-30'),        // 4주 후
+};
+```
+
+---
+
+## 🚨 트러블슈팅
+
+### 빌드 에러 발생 시
+```bash
+# 캐시 삭제
+rm -rf .next
+npm run build
+```
+
+### 환경 변수가 적용 안 될 때
+1. Vercel 대시보드에서 확인
+2. `NEXT_PUBLIC_` 접두사 확인
+3. 재배포: `vercel --prod --force`
+
+### Firebase 연결 안 될 때
+- Firebase 프로젝트에서 도메인 승인 필요
+- Firebase Console > Authentication > Settings > Authorized domains
+- `workfree.app` 추가
+
+---
+
+## 📈 배포 후 모니터링
+
+### Vercel Analytics
+- 자동으로 활성화됨
+- 페이지 뷰, 성능 메트릭 확인
+
+### Firebase Console
+- 베타 테스터 수 실시간 모니터링
+- `beta_testers` 컬렉션 확인
 
 ---
 
 ## 🎯 다음 단계
 
-배포가 완료되면:
-1. ✅ URL을 명함/프로필에 추가
-2. ✅ SNS에 공유
-3. ✅ Google Analytics 설정
-4. ✅ SEO 최적화 (meta tags)
-5. ✅ 실제 AI 생성 이미지 업로드
+1. ✅ **배포 완료**
+2. 🧪 **베타 테스트 시작** (Week 1-3)
+3. 📊 **데이터 수집** (4주간)
+4. 🚀 **정식 런칭**
 
 ---
 
-**지금 바로 Vercel 웹사이트로 가서 배포하세요!** 🚀
+## 📞 지원
 
-👉 https://vercel.com
+배포 문제 발생 시:
+- Vercel Support: https://vercel.com/support
+- Next.js Discord: https://nextjs.org/discord
 
+---
+
+**배포 날짜**: 2025-11-02  
+**버전**: v1.0 (베타 테스트)
