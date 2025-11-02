@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
-// Gmail SMTP 설정
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER, // Gmail 주소
-      pass: process.env.GMAIL_APP_PASSWORD, // Gmail 앱 비밀번호
-    },
-  });
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// 통화 정보 매핑
+const CURRENCY_INFO = {
+  USD: { name: "미국 달러", flag: "🇺🇸" },
+  EUR: { name: "유로", flag: "🇪🇺" },
+  JPY: { name: "일본 엔", flag: "🇯🇵" },
+  CNY: { name: "중국 위안", flag: "🇨🇳" },
+  GBP: { name: "영국 파운드", flag: "🇬🇧" },
+  AUD: { name: "호주 달러", flag: "🇦🇺" },
+  CAD: { name: "캐나다 달러", flag: "🇨🇦" },
+  CHF: { name: "스위스 프랑", flag: "🇨🇭" },
+  HKD: { name: "홍콩 달러", flag: "🇭🇰" },
+  SGD: { name: "싱가포르 달러", flag: "🇸🇬" },
 };
 
 // 환율 데이터 가져오기
@@ -27,31 +32,41 @@ async function getExchangeRates(currencies: string[]) {
     }
     
     const data = await response.json();
-    return data.rates || [];
+    
+    // 통화 정보 추가
+    const ratesWithInfo = (data.rates || []).map((rate: any) => ({
+      ...rate,
+      name: CURRENCY_INFO[rate.currency as keyof typeof CURRENCY_INFO]?.name || rate.currency,
+      flag: CURRENCY_INFO[rate.currency as keyof typeof CURRENCY_INFO]?.flag || "🌍",
+    }));
+    
+    return ratesWithInfo;
   } catch (error) {
     console.error('환율 데이터 가져오기 실패:', error);
     return [];
   }
 }
 
-// 실제 이메일 발송
+// Resend로 이메일 발송
 async function sendRealEmail(to: string[], subject: string, htmlContent: string) {
   try {
-    const transporter = createTransporter();
-    
-    const mailOptions = {
-      from: `"WorkFree 자동화" <${process.env.GMAIL_USER}>`,
-      to: to.join(', '),
+    const { data, error } = await resend.emails.send({
+      from: 'WorkFree <noreply@workfreemarket.com>',
+      to: to,
       subject: subject,
       html: htmlContent,
-    };
+    });
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('이메일 발송 성공:', result.messageId);
-    return { success: true, messageId: result.messageId };
+    if (error) {
+      console.error('[Resend Error]:', error);
+      throw new Error(`이메일 발송 실패: ${error.message}`);
+    }
+
+    console.log('[SUCCESS] 이메일 발송 성공:', data);
+    return { success: true, messageId: data?.id };
   } catch (error) {
-    console.error('이메일 발송 실패:', error);
-    throw new Error('이메일 발송에 실패했습니다');
+    console.error('[ERROR] 이메일 발송 실패:', error);
+    throw error;
   }
 }
 
@@ -131,11 +146,6 @@ function generateEmailTemplate(rates: any[], date: string, includeBokReference: 
         }
         .rates-table tr:hover { 
           background-color: #f9fafb; 
-        }
-        .currency-cell {
-          display: flex;
-          align-items: center;
-          gap: 12px;
         }
         .currency-flag {
           font-size: 24px;
@@ -220,7 +230,7 @@ function generateEmailTemplate(rates: any[], date: string, includeBokReference: 
               ${rates.map(rate => `
                 <tr>
                   <td>
-                    <div class="currency-cell">
+                    <div style="display: flex; align-items: center; gap: 12px;">
                       <span class="currency-flag">${rate.flag || '🌍'}</span>
                       <div class="currency-info">
                         <h3>${rate.currency}</h3>
@@ -229,7 +239,7 @@ function generateEmailTemplate(rates: any[], date: string, includeBokReference: 
                     </div>
                   </td>
                   <td style="text-align: right;">
-                    <span class="rate-value">${rate.seoulRate?.toLocaleString() || rate.rate.toLocaleString()}원</span>
+                    <span class="rate-value">${(rate.seoulRate || rate.rate).toLocaleString()}원</span>
                   </td>
                   <td style="text-align: right;" class="${rate.change > 0 ? 'change-positive' : rate.change < 0 ? 'change-negative' : 'change-neutral'}">
                     ${rate.change > 0 ? '↗️' : rate.change < 0 ? '↘️' : '➡️'} ${rate.change > 0 ? '+' : ''}${rate.change.toFixed(2)}원
@@ -257,6 +267,9 @@ function generateEmailTemplate(rates: any[], date: string, includeBokReference: 
         <div class="footer">
           <p><strong>WorkFree 자동화 시스템</strong></p>
           <p>매일 아침 서울외국환중개 매매기준율을 전해드립니다</p>
+          <p style="margin-top: 10px; font-size: 12px;">
+            <a href="https://workfreemarket.com" style="color: #6b7280; text-decoration: none;">workfreemarket.com</a>
+          </p>
         </div>
       </div>
     </body>
@@ -282,10 +295,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Gmail 설정 확인
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    // Resend API 키 확인
+    if (!process.env.RESEND_API_KEY) {
       return NextResponse.json(
-        { error: 'Gmail 설정이 필요합니다. GMAIL_USER와 GMAIL_APP_PASSWORD 환경변수를 설정해주세요.' },
+        { error: 'Resend API 키가 설정되지 않았습니다. RESEND_API_KEY 환경변수를 설정해주세요.' },
         { status: 500 }
       );
     }

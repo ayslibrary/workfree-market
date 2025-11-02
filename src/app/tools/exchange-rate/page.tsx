@@ -78,6 +78,46 @@ export default function ExchangeRatePage() {
     }
   };
 
+  const handleSendNow = async () => {
+    if (selectedCurrencies.length === 0) {
+      setError("최소 1개 통화를 선택해주세요");
+      return;
+    }
+
+    if (!emailList.trim()) {
+      setError("이메일 목록을 입력해주세요");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/exchange-rate/send-real", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          currencies: selectedCurrencies,
+          emails: emailList.split('\n').map(email => email.trim()).filter(email => email),
+          includeBokReference: includeBokReference
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "이메일 발송 실패");
+      }
+
+      const data = await response.json();
+      setSuccess(true);
+      alert(`✅ 이메일이 성공적으로 발송되었습니다!\n\n발송 대상: ${data.details.emailCount}명\n통화: ${data.details.currencies.join(', ')}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "이메일 발송 중 오류가 발생했습니다");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSetup = async () => {
     if (selectedCurrencies.length === 0) {
       setError("최소 1개 통화를 선택해주세요");
@@ -259,13 +299,13 @@ export default function ExchangeRatePage() {
                 <button
                   onClick={handlePreview}
                   disabled={selectedCurrencies.length === 0 || loading}
-                  className="
+                  className={`
                     w-full py-4 rounded-xl font-bold text-lg transition-all mb-4
                     ${selectedCurrencies.length === 0 || loading
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:shadow-lg hover:scale-[1.02]'
                     }
-                  "
+                  `}
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
@@ -281,17 +321,42 @@ export default function ExchangeRatePage() {
                 </button>
               </div>
 
+              {/* 즉시 발송 버튼 */}
+              <button
+                onClick={handleSendNow}
+                disabled={selectedCurrencies.length === 0 || !emailList.trim() || loading}
+                className={`
+                  w-full py-4 rounded-xl font-bold text-lg transition-all mb-4
+                  ${selectedCurrencies.length === 0 || !emailList.trim() || loading
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:shadow-lg hover:scale-[1.02]'
+                  }
+                `}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    발송 중...
+                  </span>
+                ) : (
+                  "📧 지금 바로 발송하기"
+                )}
+              </button>
+
               {/* 설정 완료 버튼 */}
               <button
                 onClick={handleSetup}
                 disabled={selectedCurrencies.length === 0 || !emailList.trim() || loading}
-                className="
+                className={`
                   w-full py-4 rounded-xl font-bold text-lg transition-all
                   ${selectedCurrencies.length === 0 || !emailList.trim() || loading
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-[1.02]'
                   }
-                "
+                `}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
