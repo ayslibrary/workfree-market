@@ -20,6 +20,7 @@ export default function Navigation() {
 
   const navItems = [
     { href: '/', label: '🏠 홈' },
+    { href: '/tools/search-crawler', label: '📰 뉴스 브리핑' },
     { href: '/about', label: '💡 소개' },
     { href: '/community', label: '💬 커뮤니티' },
     { href: '/kits', label: '🧩 키트' },

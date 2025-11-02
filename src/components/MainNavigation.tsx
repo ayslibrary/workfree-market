@@ -59,6 +59,15 @@ export default function MainNavigation() {
 
           {/* 데스크톱 메뉴 */}
           <div className="hidden md:flex gap-6 items-center">
+            {/* 📰 뉴스 브리핑 - 메인 메뉴로 승격! */}
+            <Link
+              href="/tools/search-crawler"
+              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-bold text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
+            >
+              📰 뉴스 브리핑
+              <span className="text-[10px] bg-gradient-to-r from-green-500 to-emerald-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">NEW</span>
+            </Link>
+
             {/* 🤖 AI 크리에이티브 */}
             <div className="relative group">
               <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
@@ -103,16 +112,7 @@ export default function MainNavigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <Link
-                  href="/tools/search-crawler"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  <div className="flex items-center justify-between">
-                    <span>📰 뉴스 자동 크롤링</span>
-                    <span className="text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-full">NEW</span>
-                  </div>
-                </Link>
+              <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                 <Link
                   href="/automation/crawling"
                   className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
@@ -313,7 +313,17 @@ export default function MainNavigation() {
           <div className="md:hidden mt-4 pb-4 border-t border-[#AFA6FF]/30 pt-4">
             <div className="flex flex-col gap-2">
               {/* 도구 섹션 (통합) */}
-              <div className="px-4 py-2 text-[#6A5CFF] text-xs font-bold uppercase tracking-wider">
+              {/* 📰 뉴스 브리핑 - 맨 위로! */}
+              <Link
+                href="/tools/search-crawler"
+                className="text-left px-4 py-2.5 text-[#1E1B33] bg-gradient-to-r from-green-50 to-emerald-50 hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-bold border-2 border-green-200 flex items-center justify-between"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                <span>📰 뉴스 브리핑</span>
+                <span className="text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-full">NEW</span>
+              </Link>
+
+              <div className="px-4 py-2 text-[#6A5CFF] text-xs font-bold uppercase tracking-wider mt-2">
                 도구
               </div>
               <Link
@@ -336,13 +346,6 @@ export default function MainNavigation() {
                 onClick={() => setShowMobileMenu(false)}
               >
                 자동화 스텝
-              </Link>
-              <Link
-                href="/tools/search-crawler"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                📰 뉴스 자동 크롤링
               </Link>
               <Link
                 href="/tools/report-generator"
