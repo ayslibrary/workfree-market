@@ -8,7 +8,7 @@ export default function SearchCrawlerPage() {
   const { user } = useAuth();
   const [keyword, setKeyword] = useState('');
   const [email, setEmail] = useState('');
-  const [engines, setEngines] = useState<string[]>(['google', 'naver']);
+  const [engines, setEngines] = useState<string[]>(['naver']); // Google API는 나중에 연결 예정
   const [maxResults, setMaxResults] = useState(10);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
@@ -145,21 +145,21 @@ export default function SearchCrawlerPage() {
               검색 엔진
             </label>
             <div className="flex gap-4">
-              <label className="flex items-center cursor-pointer">
+              <label className="flex items-center cursor-not-allowed opacity-50">
                 <input
                   type="checkbox"
-                  checked={engines.includes('google')}
-                  onChange={() => handleEngineToggle('google')}
-                  className="w-5 h-5 mr-2"
+                  checked={false}
+                  disabled
+                  className="w-5 h-5 mr-2 cursor-not-allowed"
                 />
-                <span className="text-gray-700">구글</span>
+                <span className="text-gray-400">구글 (API 연결 예정)</span>
               </label>
               <label className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={engines.includes('naver')}
                   onChange={() => handleEngineToggle('naver')}
-                  className="w-5 h-5 mr-2"
+                  className="w-5 h-5 mr-2 accent-purple-600"
                 />
                 <span className="text-gray-700">네이버</span>
               </label>
@@ -257,11 +257,11 @@ export default function SearchCrawlerPage() {
         <div className="mt-8 bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl p-6">
           <h3 className="font-bold text-gray-900 mb-3">✨ 주요 기능</h3>
           <ul className="space-y-2 text-gray-700">
-            <li>✅ 구글/네이버 동시 검색</li>
+            <li>✅ 네이버 뉴스 실시간 검색</li>
             <li>✅ Top 10~20 검색 결과 자동 수집</li>
-            <li>✅ CSV 파일로 정리</li>
+            <li>✅ Excel 파일로 정리</li>
             <li>✅ 이메일 자동 발송</li>
-            <li>✅ 매일 자동 검색 (예정)</li>
+            <li>🔜 구글 검색 API 연동 (예정)</li>
           </ul>
         </div>
 
