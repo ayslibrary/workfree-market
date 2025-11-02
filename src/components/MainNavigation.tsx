@@ -76,31 +76,34 @@ export default function MainNavigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                {/* 실제 작동 */}
                 <Link
                   href="/tools/blog-generator"
                   className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                 >
                   ✍️ AI 블로그 생성
                 </Link>
-                <Link
-                  href="/gallery"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  📸 AI 화보 메이커
-                </Link>
-                <Link
-                  href="/tools/report-generator"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  📋 AI 보고서 생성
-                </Link>
-                <Link
-                  href="/automation/prompts"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  💬 AI 프롬프트
-                </Link>
+                
+                {/* 오픈 예정 */}
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>📸 AI 화보 메이커</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>📋 AI 보고서 생성</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>💬 AI 프롬프트</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -112,19 +115,8 @@ export default function MainNavigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <Link
-                  href="/automation/crawling"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  🕷️ 웹 크롤링
-                </Link>
-                <Link
-                  href="/tools/image-finder"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  🖼️ 이미지 파인더
-                </Link>
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                {/* 실제 작동 */}
                 <Link
                   href="/tools/exchange-rate"
                   className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
@@ -134,6 +126,20 @@ export default function MainNavigation() {
                     <span className="text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-full">NEW</span>
                   </div>
                 </Link>
+                
+                {/* 오픈 예정 */}
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>🕷️ 웹 크롤링</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>🖼️ 이미지 파인더</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -145,41 +151,44 @@ export default function MainNavigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <Link
-                  href="/tools/outlook-mail-builder"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  📬 Outlook 자동메일
-                </Link>
-                <Link
-                  href="/automation/microsoft"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  📊 Microsoft 자동화
-                </Link>
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                {/* 실제 작동 */}
                 <Link
                   href="/tools/qr-generator"
                   className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
                 >
                   📱 QR 생성기
                 </Link>
-                <Link
-                  href="/automation/steps"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  ⚙️ 자동화 스텝
-                </Link>
+                
+                {/* 오픈 예정 */}
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>📬 Outlook 자동메일</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>📊 Microsoft 자동화</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
+                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
+                  <div className="flex items-center justify-between">
+                    <span>⚙️ 자동화 스텝</span>
+                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 📊 대시보드 */}
-            <Link
-              href="/automation/visualization"
-              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
-            >
-              📊 대시보드
-            </Link>
+            {/* 📊 대시보드 - 오픈 예정 */}
+            <div className="relative group">
+              <div className="text-[#1E1B33]/40 cursor-not-allowed font-medium text-[14px] flex items-center gap-2">
+                📊 대시보드
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+              </div>
+            </div>
 
             {/* 🛒 마켓 */}
             <Link
@@ -189,33 +198,11 @@ export default function MainNavigation() {
               🛒 마켓
             </Link>
 
-            {/* 👥 커뮤니티 */}
+            {/* 👥 커뮤니티 - 오픈 예정 */}
             <div className="relative group">
-              <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
+              <div className="text-[#1E1B33]/40 cursor-not-allowed font-medium text-[14px] flex items-center gap-2">
                 👥 커뮤니티
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <Link
-                  href="/community"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  💬 커뮤니티 홈
-                </Link>
-                <Link
-                  href="/community/lounge"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  🗨️ 직장인 라운지
-                </Link>
-                <Link
-                  href="/community/career"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  🚀 커리어
-                </Link>
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
               </div>
             </div>
             
@@ -326,88 +313,52 @@ export default function MainNavigation() {
               <div className="px-4 py-2 text-[#6A5CFF] text-xs font-bold uppercase tracking-wider mt-2">
                 도구
               </div>
+              {/* 실제 작동하는 도구들 */}
               <Link
                 href="/tools/blog-generator"
                 className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
                 onClick={() => setShowMobileMenu(false)}
               >
-                블로그 생성기
+                ✍️ 블로그 생성기
               </Link>
               <Link
-                href="/gallery"
+                href="/tools/qr-generator"
                 className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
                 onClick={() => setShowMobileMenu(false)}
               >
-                AI 갤러리
+                📱 QR 생성기
               </Link>
               <Link
-                href="/automation/steps"
+                href="/tools/exchange-rate"
                 className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
                 onClick={() => setShowMobileMenu(false)}
               >
-                자동화 스텝
+                💱 환율 자동 공유
               </Link>
-              <Link
-                href="/tools/report-generator"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                📋 AI 보고서 생성기
-              </Link>
-              <Link
-                href="/automation/microsoft"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                Microsoft 자동화
-              </Link>
-              <Link
-                href="/automation/crawling"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                웹 크롤링
-              </Link>
-              <Link
-                href="/automation/visualization"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                데이터 시각화
-              </Link>
-              <Link
-                href="/automation/prompts"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                AI 프롬프트
-              </Link>
-
-              {/* 커뮤니티 섹션 */}
-              <div className="px-4 py-2 text-[#6A5CFF] text-xs font-bold uppercase tracking-wider mt-2">
-                커뮤니티
+              
+              {/* 오픈 예정 - 비활성화 */}
+              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
+                <span>📸 AI 갤러리</span>
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
               </div>
-              <Link
-                href="/community"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                커뮤니티 홈
-              </Link>
-              <Link
-                href="/community/lounge"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                직장인 라운지
-              </Link>
-              <Link
-                href="/community/career"
-                className="text-left px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/10 hover:text-[#6A5CFF] rounded-lg transition-colors font-medium"
-                onClick={() => setShowMobileMenu(false)}
-              >
-                커리어
-              </Link>
+              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
+                <span>📋 AI 보고서</span>
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+              </div>
+              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
+                <span>🕷️ 웹 크롤링</span>
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+              </div>
+              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
+                <span>📊 데이터 시각화</span>
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
+              </div>
+
+              {/* 커뮤니티 섹션 - 오픈 예정 */}
+              <div className="px-4 py-2 text-[#6A5CFF]/50 text-xs font-bold uppercase tracking-wider mt-2 flex items-center gap-2">
+                커뮤니티
+                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full normal-case">준비중</span>
+              </div>
 
               {/* 기타 */}
               <hr className="my-2 border-[#AFA6FF]/30" />
