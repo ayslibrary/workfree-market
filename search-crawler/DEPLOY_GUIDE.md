@@ -19,16 +19,24 @@ New Project > Deploy from GitHub repo
 Railway Dashboard > Variables 탭:
 
 ```bash
-GMAIL_USER=your-email@gmail.com
-GMAIL_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
+# Resend API (이메일 발송)
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Google Custom Search API (선택)
+GOOGLE_API_KEY=your_google_api_key
+GOOGLE_SEARCH_ENGINE_ID=your_search_engine_id
+
+# Naver Search API (선택)
+NAVER_CLIENT_ID=your_naver_client_id
+NAVER_CLIENT_SECRET=your_naver_client_secret
 ```
 
-### 5. Gmail 앱 비밀번호 생성
-1. https://myaccount.google.com/security
-2. "2단계 인증" 활성화
-3. "앱 비밀번호" 검색
-4. "메일" 선택 후 생성
-5. 16자리 코드 복사
+### 5. Resend API 키 생성
+1. https://resend.com/api-keys
+2. "Create API Key" 클릭
+3. Domain: `workfreemarket.com` 선택
+4. Permissions: "Sending access" 선택
+5. API 키 복사 (re_로 시작)
 
 ### 6. 배포 확인
 ```bash
@@ -88,9 +96,10 @@ curl -X POST https://your-app.railway.app/api/email \
 - requirements.txt 의존성 확인
 
 ### 이메일 발송 실패
-- Gmail 앱 비밀번호 재생성
-- 2단계 인증 활성화 확인
-- GMAIL_USER, GMAIL_APP_PASSWORD 확인
+- Resend API 키 확인
+- DNS 설정 확인 (DKIM, SPF, MX)
+- 발신자 도메인 인증 완료 확인
+- RESEND_API_KEY 환경 변수 확인
 
 ### Cron Job 실행 안 됨
 - CRON_SECRET 설정 확인

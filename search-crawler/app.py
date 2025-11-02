@@ -92,7 +92,9 @@ async def root():
 async def health_check():
     return {
         "status": "healthy",
-        "gmail_configured": bool(GMAIL_USER and GMAIL_APP_PASSWORD),
+        "resend_configured": bool(RESEND_API_KEY),
+        "google_api_configured": bool(GOOGLE_API_KEY and GOOGLE_SEARCH_ENGINE_ID),
+        "naver_api_configured": bool(NAVER_CLIENT_ID and NAVER_CLIENT_SECRET),
         "timestamp": datetime.now().isoformat()
     }
 
