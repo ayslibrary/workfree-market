@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
+import { deductCredits, getUserCredits } from '@/lib/credits';
 
 export default function SearchCrawlerPage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -129,46 +130,69 @@ export default function SearchCrawlerPage() {
     }
   };
 
+  // 이메일 유효성 검사
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleCreateSchedule = async () => {
+    // 로그인 확인
+    if (!user || !user.id) {
+      setScheduleError('로그인이 필요합니다');
+      return;
+    }
+
+    // 키워드 확인
     const validKeywords = scheduleKeywords.filter(k => k.trim() !== '');
     if (validKeywords.length === 0) {
       setScheduleError('최소 1개의 키워드를 입력하세요');
       return;
     }
 
+    // 요일 확인
     if (scheduleWeekdays.length === 0) {
       setScheduleError('최소 1개의 요일을 선택하세요');
       return;
     }
 
-    // 이메일 확인
-    if (!scheduleEmail || !scheduleEmail.includes('@')) {
-      setScheduleError('올바른 이메일 주소를 입력해주세요');
+    // 이메일 유효성 검사
+    if (!scheduleEmail || !validateEmail(scheduleEmail)) {
+      setScheduleError('올바른 이메일 주소를 입력해주세요 (예: example@domain.com)');
       return;
     }
-
-    // user 객체에서 id 또는 uid 가져오기
-    const userId = user?.id || user?.uid || `user_${Date.now()}`;
-
-    console.log('🔍 사용자 정보:', { userId, email: scheduleEmail, user });
 
     setScheduleLoading(true);
     setScheduleError('');
 
     try {
-      console.log('스케줄 생성 요청:', {
-        user_id: userId,
-        email: scheduleEmail,
-        keywords: validKeywords,
-        time: scheduleTime,
-        weekdays: scheduleWeekdays
-      });
+      // 1. 기존 스케줄 확인 (중복 방지)
+      const existingScheduleRes = await fetch(`${API_URL}/api/schedule/${user.id}`).catch(() => null);
+      if (existingScheduleRes && existingScheduleRes.ok) {
+        const confirmOverwrite = confirm('이미 등록된 스케줄이 있습니다. 덮어쓰시겠습니까?');
+        if (!confirmOverwrite) {
+          setScheduleLoading(false);
+          return;
+        }
+        // 기존 스케줄 삭제
+        await fetch(`${API_URL}/api/schedule/${user.id}`, { method: 'DELETE' });
+      }
 
+      // 2. 크레딧 확인 (뉴스 자동 발송은 5크레딧)
+      const { credits } = await getUserCredits(user.id);
+      const requiredCredits = 5;
+      
+      if (credits < requiredCredits) {
+        setScheduleError(`크레딧이 부족합니다. (필요: ${requiredCredits}개, 보유: ${credits}개)`);
+        return;
+      }
+
+      // 3. 스케줄 생성
       const response = await fetch(`${API_URL}/api/schedule`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: userId,
+          user_id: user.id,
           email: scheduleEmail,
           keywords: validKeywords,
           time: scheduleTime,
@@ -180,14 +204,30 @@ export default function SearchCrawlerPage() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('스케줄 생성 실패:', errorData);
         throw new Error(errorData.detail || '스케줄 생성 실패');
       }
 
       const data = await response.json();
+
+      // 4. 크레딧 차감
+      const deductResult = await deductCredits(
+        user.id,
+        requiredCredits,
+        '뉴스 브리핑 자동 발송 설정',
+        'news-briefing'
+      );
+
+      if (!deductResult.success) {
+        // 스케줄은 생성되었지만 크레딧 차감 실패 - 관리자에게 알림 필요
+        console.error('⚠️ 크레딧 차감 실패:', deductResult.error);
+      }
+
       setMySchedule(data);
       
-      alert('✅ 매일 자동 발송 스케줄이 등록되었습니다!');
+      alert(`✅ 매일 자동 발송 스케줄이 등록되었습니다!\n차감 크레딧: ${requiredCredits}개\n남은 크레딧: ${deductResult.newBalance}개`);
+      
+      // 페이지 새로고침하여 크레딧 업데이트 반영
+      window.location.reload();
     } catch (err: any) {
       console.error('스케줄 생성 오류:', err);
       setScheduleError(err.message || '스케줄 생성 중 오류가 발생했습니다');

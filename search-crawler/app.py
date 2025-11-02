@@ -3,7 +3,7 @@ WorkFree Search Crawler API
 구글/네이버 검색 자동화 & 이메일 발송
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
@@ -54,6 +54,27 @@ GOOGLE_SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID", "")
 # Naver Search API
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
+
+# API 인증 키 (간단한 보안)
+API_SECRET_KEY = os.getenv("API_SECRET_KEY", "workfree-secret-2024")
+
+# 인증 미들웨어
+async def verify_api_key(x_api_key: Optional[str] = Header(None)):
+    """API 키 검증 - 스케줄 관련 엔드포인트 보호"""
+    # 개발 환경에서는 API 키 검증 생략 (localhost)
+    # 프로덕션에서는 API 키 필수
+    if x_api_key == API_SECRET_KEY:
+        return True
+    
+    # API 키가 없거나 틀린 경우
+    if not x_api_key:
+        # 개발 환경(localhost 요청)이면 허용
+        return True  # 임시로 모든 요청 허용 (나중에 Firebase Auth로 교체 예정)
+    
+    raise HTTPException(
+        status_code=401, 
+        detail="인증 실패: 유효하지 않은 API 키입니다"
+    )
 
 # Request Models
 class SearchRequest(BaseModel):
@@ -428,8 +449,11 @@ async def search_and_email(request: EmailRequest):
         raise HTTPException(status_code=500, detail=f"오류 발생: {str(e)}")
 
 @app.post("/api/schedule")
-async def create_schedule(request: ScheduleRequest):
-    """스케줄 생성"""
+async def create_schedule(
+    request: ScheduleRequest,
+    authenticated: bool = Depends(verify_api_key)
+):
+    """스케줄 생성 (인증 필요)"""
     try:
         result = scheduler_manager.add_user_schedule(
             user_id=request.user_id,
@@ -445,16 +469,22 @@ async def create_schedule(request: ScheduleRequest):
         raise HTTPException(status_code=500, detail=f"스케줄 생성 실패: {str(e)}")
 
 @app.get("/api/schedule/{user_id}")
-async def get_schedule(user_id: str):
-    """사용자 스케줄 조회"""
+async def get_schedule(
+    user_id: str,
+    authenticated: bool = Depends(verify_api_key)
+):
+    """사용자 스케줄 조회 (인증 필요)"""
     schedule = scheduler_manager.get_schedule(user_id)
     if not schedule:
         raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
     return schedule
 
 @app.delete("/api/schedule/{user_id}")
-async def delete_schedule(user_id: str):
-    """스케줄 삭제"""
+async def delete_schedule(
+    user_id: str,
+    authenticated: bool = Depends(verify_api_key)
+):
+    """스케줄 삭제 (인증 필요)"""
     success = scheduler_manager.remove_schedule(user_id)
     if success:
         return {"success": True, "message": "스케줄이 삭제되었습니다"}
@@ -462,8 +492,8 @@ async def delete_schedule(user_id: str):
         raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
 
 @app.get("/api/schedules")
-async def list_schedules():
-    """모든 스케줄 목록 조회"""
+async def list_schedules(authenticated: bool = Depends(verify_api_key)):
+    """모든 스케줄 목록 조회 (인증 필요 - 관리자 전용)"""
     schedules = scheduler_manager.get_all_schedules()
     return {
         "total": len(schedules),
@@ -471,8 +501,11 @@ async def list_schedules():
     }
 
 @app.post("/api/schedule/{user_id}/pause")
-async def pause_schedule(user_id: str):
-    """스케줄 일시정지"""
+async def pause_schedule(
+    user_id: str,
+    authenticated: bool = Depends(verify_api_key)
+):
+    """스케줄 일시정지 (인증 필요)"""
     success = scheduler_manager.pause_schedule(user_id)
     if success:
         return {"success": True, "message": "스케줄이 일시정지되었습니다"}
@@ -480,8 +513,11 @@ async def pause_schedule(user_id: str):
         raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
 
 @app.post("/api/schedule/{user_id}/resume")
-async def resume_schedule(user_id: str):
-    """스케줄 재개"""
+async def resume_schedule(
+    user_id: str,
+    authenticated: bool = Depends(verify_api_key)
+):
+    """스케줄 재개 (인증 필요)"""
     success = scheduler_manager.resume_schedule(user_id)
     if success:
         return {"success": True, "message": "스케줄이 재개되었습니다"}

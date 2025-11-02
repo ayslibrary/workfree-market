@@ -10,23 +10,42 @@ import {
   signOut as firebaseSignOut,
   updateProfile,
   onAuthStateChanged,
+  sendEmailVerification,
   User as FirebaseUser
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
+// Firebase 환경변수 검증
+const requiredEnvVars = [
+  'NEXT_PUBLIC_FIREBASE_API_KEY',
+  'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+  'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+  'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+  'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+  'NEXT_PUBLIC_FIREBASE_APP_ID',
+];
+
+const missingEnvVars = requiredEnvVars.filter(
+  (envVar) => !process.env[envVar]
+);
+
+if (missingEnvVars.length > 0) {
+  console.error('🔴 Firebase 환경변수가 설정되지 않았습니다:', missingEnvVars);
+}
+
 // Firebase 설정
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDtRQXr_vORnHcY_teMD_qNzkwbzTOz2h0",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "workfree-market.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "workfree-market",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "workfree-market.firebasestorage.app",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "946819262789",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:946819262789:web:57015dd0b89cdef6e7762c",
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-JVB1D0EXGL"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const isConfigured = true;
+const isConfigured = missingEnvVars.length === 0;
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
 // Auth 인스턴스
@@ -106,10 +125,23 @@ export async function registerWithEmail(
       displayName: displayName
     });
     
+    // 이메일 인증 발송
+    try {
+      await sendEmailVerification(result.user);
+      console.log('✅ 이메일 인증 링크가 발송되었습니다.');
+    } catch (emailError) {
+      console.error('⚠️ 이메일 인증 발송 실패:', emailError);
+      // 이메일 발송 실패해도 회원가입은 완료
+    }
+    
     // Firestore에 사용자 정보 저장
     await saveUserToFirestore(result.user);
     
-    return { user: result.user, error: null };
+    return { 
+      user: result.user, 
+      error: null,
+      message: '회원가입이 완료되었습니다. 이메일을 확인해 인증을 완료해주세요.'
+    };
   } catch (error) {
     let errorMessage = '회원가입에 실패했습니다.';
     
@@ -125,6 +157,25 @@ export async function registerWithEmail(
     }
     
     return { user: null, error: errorMessage };
+  }
+}
+
+// 이메일 인증 재발송
+export async function resendVerificationEmail() {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      return { success: false, error: '로그인된 사용자가 없습니다.' };
+    }
+    
+    if (user.emailVerified) {
+      return { success: false, error: '이미 이메일 인증이 완료되었습니다.' };
+    }
+    
+    await sendEmailVerification(user);
+    return { success: true, error: null };
+  } catch (error) {
+    return { success: false, error: '이메일 인증 발송에 실패했습니다.' };
   }
 }
 
