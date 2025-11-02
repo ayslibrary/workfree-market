@@ -7,4 +7,7 @@ pydantic[email]
 lxml
 openpyxl
 resend
+apscheduler
+pytz
+sqlalchemy
 

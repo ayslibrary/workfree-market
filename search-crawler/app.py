@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 import resend
+from scheduler import scheduler_manager
 
 # .env 파일 로드
 load_dotenv()
@@ -66,6 +67,15 @@ class EmailRequest(BaseModel):
     engines: List[str] = ["google", "naver"]
     max_results: int = 10
 
+class ScheduleRequest(BaseModel):
+    user_id: str
+    email: EmailStr
+    keywords: List[str]
+    time: str  # "08:00" 형식
+    weekdays: List[int]  # [0,1,2,3,4] = 월-금
+    max_results: int = 10
+    engines: List[str] = ["naver"]
+
 # Response Models
 class SearchResult(BaseModel):
     title: str
@@ -74,16 +84,30 @@ class SearchResult(BaseModel):
     rank: int
     engine: str
 
+@app.on_event("startup")
+async def startup_event():
+    """앱 시작 시 스케줄러 시작"""
+    scheduler_manager.start()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """앱 종료 시 스케줄러 종료"""
+    scheduler_manager.shutdown()
+
 @app.get("/")
 async def root():
     return {
         "service": "WorkFree 뉴스 크롤링 API",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "status": "running",
-        "description": "검색어 기반 뉴스 자동 크롤링",
+        "description": "검색어 기반 뉴스 자동 크롤링 + 스케줄 자동발송",
         "endpoints": {
             "search": "/api/search",
             "email": "/api/email",
+            "schedule_create": "/api/schedule",
+            "schedule_get": "/api/schedule/{user_id}",
+            "schedule_delete": "/api/schedule/{user_id}",
+            "schedule_list": "/api/schedules",
             "health": "/health"
         }
     }
@@ -402,6 +426,67 @@ async def search_and_email(request: EmailRequest):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"오류 발생: {str(e)}")
+
+@app.post("/api/schedule")
+async def create_schedule(request: ScheduleRequest):
+    """스케줄 생성"""
+    try:
+        result = scheduler_manager.add_user_schedule(
+            user_id=request.user_id,
+            email=request.email,
+            keywords=request.keywords,
+            time_str=request.time,
+            weekdays=request.weekdays,
+            max_results=request.max_results,
+            engines=request.engines
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"스케줄 생성 실패: {str(e)}")
+
+@app.get("/api/schedule/{user_id}")
+async def get_schedule(user_id: str):
+    """사용자 스케줄 조회"""
+    schedule = scheduler_manager.get_schedule(user_id)
+    if not schedule:
+        raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
+    return schedule
+
+@app.delete("/api/schedule/{user_id}")
+async def delete_schedule(user_id: str):
+    """스케줄 삭제"""
+    success = scheduler_manager.remove_schedule(user_id)
+    if success:
+        return {"success": True, "message": "스케줄이 삭제되었습니다"}
+    else:
+        raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
+
+@app.get("/api/schedules")
+async def list_schedules():
+    """모든 스케줄 목록 조회"""
+    schedules = scheduler_manager.get_all_schedules()
+    return {
+        "total": len(schedules),
+        "schedules": schedules
+    }
+
+@app.post("/api/schedule/{user_id}/pause")
+async def pause_schedule(user_id: str):
+    """스케줄 일시정지"""
+    success = scheduler_manager.pause_schedule(user_id)
+    if success:
+        return {"success": True, "message": "스케줄이 일시정지되었습니다"}
+    else:
+        raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
+
+@app.post("/api/schedule/{user_id}/resume")
+async def resume_schedule(user_id: str):
+    """스케줄 재개"""
+    success = scheduler_manager.resume_schedule(user_id)
+    if success:
+        return {"success": True, "message": "스케줄이 재개되었습니다"}
+    else:
+        raise HTTPException(status_code=404, detail="스케줄을 찾을 수 없습니다")
 
 if __name__ == "__main__":
     import uvicorn
