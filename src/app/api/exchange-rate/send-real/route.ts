@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Resend 인스턴스를 lazy하게 생성 (빌드 시점이 아닌 실행 시점에 생성)
+let resend: Resend | null = null;
+const getResend = () => {
+  if (!resend && process.env.RESEND_API_KEY) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+};
 
 // 통화 정보 매핑
 const CURRENCY_INFO = {
@@ -50,7 +57,12 @@ async function getExchangeRates(currencies: string[]) {
 // Resend로 이메일 발송
 async function sendRealEmail(to: string[], subject: string, htmlContent: string) {
   try {
-    const { data, error } = await resend.emails.send({
+    const resendInstance = getResend();
+    if (!resendInstance) {
+      throw new Error('Resend API 키가 설정되지 않았습니다');
+    }
+    
+    const { data, error } = await resendInstance.emails.send({
       from: 'WorkFree <noreply@workfreemarket.com>',
       to: to,
       subject: subject,
