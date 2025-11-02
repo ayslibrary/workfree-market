@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "@/lib/firebase";
 import { useAuthStore } from "@/store/authStore";
+import { CreditBalance } from "@/components/CreditBalance";
 
 export default function MainNavigation() {
   const { user, isLoading } = useAuth();
@@ -209,16 +210,20 @@ export default function MainNavigation() {
             {!isLoading && (
               <>
                 {user ? (
-                  <div className="relative">
-                    <button
-                      onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex items-center gap-2 bg-[#6A5CFF] text-white px-5 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all text-[16px]"
-                    >
-                      <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-bold">{user.displayName?.[0] || 'U'}</span>
-                      </div>
-                      <span>{user.displayName || '사용자'}</span>
-                    </button>
+                  <>
+                    {/* 크레딧 표시 */}
+                    <CreditBalance />
+                    
+                    <div className="relative">
+                      <button
+                        onClick={() => setShowUserMenu(!showUserMenu)}
+                        className="flex items-center gap-2 bg-[#6A5CFF] text-white px-5 py-2.5 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all text-[16px]"
+                      >
+                        <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold">{user.displayName?.[0] || 'U'}</span>
+                        </div>
+                        <span>{user.displayName || '사용자'}</span>
+                      </button>
                     
                     {showUserMenu && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 z-50">
@@ -267,7 +272,8 @@ export default function MainNavigation() {
                         </button>
                       </div>
                     )}
-                  </div>
+                    </div>
+                  </>
                 ) : (
                   <Link
                     href="/login"

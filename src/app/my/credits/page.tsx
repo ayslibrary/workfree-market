@@ -7,13 +7,8 @@ import MainNavigation from '@/components/MainNavigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations';
 import { useAuth } from '@/hooks/useAuth';
-
-// 데모 데이터
-const DEMO_CREDITS = {
-  balance: 10,
-  isBetaTester: true,
-  subscriptionTier: 'free' as const,
-};
+import { getUserCredits, getCreditHistory, CREDIT_PACKAGES } from '@/lib/credits';
+import { CreditTransaction } from '@/lib/credits';
 
 const SUBSCRIPTION_PLANS = [
   {
@@ -71,6 +66,8 @@ export default function CreditsPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [currentCredits, setCurrentCredits] = useState(0);
+  const [transactions, setTransactions] = useState<CreditTransaction[]>([]);
 
   // 로그인 체크
   useEffect(() => {
@@ -80,10 +77,22 @@ export default function CreditsPage() {
   }, [user, isLoading, router]);
 
   useEffect(() => {
-    // 로딩 시뮬레이션
-    const timer = setTimeout(() => setLoading(false), 300);
-    return () => clearTimeout(timer);
-  }, []);
+    async function loadCreditData() {
+      if (user) {
+        const { credits } = await getUserCredits(user.id);
+        setCurrentCredits(credits);
+        
+        const { transactions: history } = await getCreditHistory(user.id);
+        setTransactions(history);
+        
+        setLoading(false);
+      }
+    }
+    
+    if (user) {
+      loadCreditData();
+    }
+  }, [user]);
 
   if (isLoading || loading || !user) {
     return <LoadingSpinner message="로딩 중..." variant="purple" />;
@@ -116,17 +125,15 @@ export default function CreditsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm opacity-90 mb-2">보유 크레딧</div>
-                  <div className="text-5xl font-bold">{DEMO_CREDITS.balance}</div>
-                  {DEMO_CREDITS.isBetaTester && (
-                    <div className="mt-3 inline-block bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-                      🎁 베타 테스터
-                    </div>
-                  )}
+                  <div className="text-5xl font-bold">{currentCredits}</div>
+                  <div className="mt-3 inline-block bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
+                    🎁 베타 테스터
+                  </div>
                 </div>
                 <div className="text-8xl opacity-20">💎</div>
               </div>
               
-              {DEMO_CREDITS.balance < 5 && (
+              {currentCredits < 5 && (
                 <div className="mt-6 bg-white/20 backdrop-blur-sm rounded-xl p-4">
                   <p className="text-sm">
                     ⚠️ 크레딧이 부족합니다. 아래에서 충전하세요!
@@ -136,6 +143,37 @@ export default function CreditsPage() {
             </div>
           </div>
         </FadeIn>
+
+        {/* 크레딧 사용 내역 */}
+        {transactions.length > 0 && (
+          <FadeIn delay={0.15}>
+            <div className="max-w-4xl mx-auto mb-16">
+              <h2 className="text-2xl font-bold text-[#1E1B33] mb-6">💳 최근 사용 내역</h2>
+              <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-[#AFA6FF]/20">
+                <div className="space-y-4">
+                  {transactions.map((transaction) => (
+                    <div key={transaction.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                      <div className="flex items-center gap-3">
+                        <div className={`text-2xl ${transaction.amount > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                          {transaction.amount > 0 ? '➕' : '➖'}
+                        </div>
+                        <div>
+                          <div className="font-medium text-[#1E1B33]">{transaction.description}</div>
+                          <div className="text-sm text-[#1E1B33]/60">
+                            {transaction.createdAt.toLocaleDateString('ko-KR')}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`font-bold ${transaction.amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {transaction.amount > 0 ? '+' : ''}{transaction.amount}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        )}
 
         {/* 구독 플랜 */}
         <FadeIn delay={0.2}>
@@ -208,10 +246,10 @@ export default function CreditsPage() {
 
                     {/* CTA 버튼 */}
                     <button
-                      disabled={plan.comingSoon || (plan.id === 'free' && DEMO_CREDITS.isBetaTester)}
+                      disabled={plan.comingSoon || plan.id === 'free'}
                       className={`
                         w-full py-4 rounded-xl font-bold transition-all
-                        ${plan.comingSoon || (plan.id === 'free' && DEMO_CREDITS.isBetaTester)
+                        ${plan.comingSoon || plan.id === 'free'
                           ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
                           : plan.recommended
                           ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-105'
@@ -220,9 +258,7 @@ export default function CreditsPage() {
                       `}
                     >
                       {plan.comingSoon ? '출시 예정' : 
-                       plan.id === 'free' && DEMO_CREDITS.isBetaTester ? '이미 가입됨' :
-                       plan.id === 'free' ? '무료로 시작하기' :
-                       plan.id === DEMO_CREDITS.subscriptionTier ? '현재 플랜' :
+                       plan.id === 'free' ? '이미 가입됨' :
                        '플랜 선택하기'}
                     </button>
                   </div>
