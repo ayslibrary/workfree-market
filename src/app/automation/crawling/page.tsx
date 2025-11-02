@@ -40,20 +40,22 @@ export default function CrawlingPage() {
       id: 1,
       icon: "🔍",
       name: "검색어 매일 자동검색 & 메일발송",
-      price: "₩29,900",
-      originalPrice: "₩49,900",
-      badge: "인기 🔥",
-      category: ["검색자동화", "메일발송", "Python"],
-      description: "구글/네이버에서 특정 검색어를 매일 자동으로 검색하고 결과를 정리해서 이메일로 발송",
+      price: "무료",
+      originalPrice: "",
+      badge: "Beta 무료 🎁",
+      category: ["검색자동화", "메일발송", "Next.js"],
+      description: "네이버에서 특정 검색어를 자동으로 검색하고 결과를 정리해서 이메일로 발송",
       features: [
-        "구글, 네이버 동시 검색",
-        "검색 결과 Top 10 자동 수집",
-        "엑셀(CSV) 파일로 정리",
-        "매일 아침 9시 자동 메일 발송",
-        "여러 검색어 동시 모니터링"
+        "네이버 뉴스 실시간 검색",
+        "검색 결과 Top 10~20 자동 수집",
+        "Excel 파일로 정리",
+        "이메일 자동 발송",
+        "여러 검색어 동시 모니터링 (예정)"
       ],
-      included: ["Python 스크립트 (.py)", "config.json 설정 파일", "자동 실행 스케줄러 (.bat)", "10분 설치 가이드 영상"],
-      difficulty: 2
+      included: ["웹 기반 서비스 (설치 불필요)", "이메일 발송", "Excel 파일 다운로드", "베타 기간 무료 사용"],
+      difficulty: 1,
+      isWebService: true,
+      link: "/tools/search-crawler"
     },
     {
       id: 2,
