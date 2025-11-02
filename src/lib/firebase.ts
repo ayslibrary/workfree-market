@@ -34,15 +34,15 @@ if (missingEnvVars.length > 0) {
   console.error('🔴 Firebase 환경변수가 설정되지 않았습니다:', missingEnvVars);
 }
 
-// Firebase 설정
+// Firebase 설정 (환경변수 우선, 없으면 fallback 사용)
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDtRQXr_vORnHcY_teMD_qNzkwbzTOz2h0",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "workfree-market.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "workfree-market",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "workfree-market.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "946819262789",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:946819262789:web:57015dd0b89cdef6e7762c",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-JVB1D0EXGL",
 };
 
 const isConfigured = missingEnvVars.length === 0;
