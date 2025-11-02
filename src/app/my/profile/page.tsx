@@ -6,8 +6,10 @@ import { useRouter } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { updateProfile, changePassword } from '@/lib/profile';
+import { deleteAccount } from '@/lib/firebase';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import toast from 'react-hot-toast';
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -84,6 +86,33 @@ export default function ProfilePage() {
       }
     } catch (err) {
       setError('비밀번호 변경 중 오류가 발생했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const confirmation = prompt(
+      '계정을 삭제하면 모든 데이터가 영구적으로 삭제됩니다.\n정말 삭제하시려면 "삭제"를 입력하세요:'
+    );
+
+    if (confirmation !== '삭제') {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { success: deleteSuccess, error: deleteError } = await deleteAccount();
+
+      if (deleteError) {
+        toast.error(deleteError);
+      } else {
+        toast.success('계정이 삭제되었습니다. 그동안 이용해주셔서 감사합니다.');
+        setTimeout(() => router.push('/'), 2000);
+      }
+    } catch (err) {
+      toast.error('계정 삭제 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
@@ -179,7 +208,7 @@ export default function ProfilePage() {
 
           {/* 비밀번호 변경 */}
           <FadeIn delay={0.3}>
-            <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-[#AFA6FF]/20">
+            <div className="bg-white rounded-3xl shadow-xl p-8 mb-6 border-2 border-[#AFA6FF]/20">
               <h2 className="text-2xl font-bold text-[#1E1B33] mb-6">비밀번호 변경</h2>
               
               <form onSubmit={handlePasswordChange} className="space-y-6">
@@ -210,6 +239,34 @@ export default function ProfilePage() {
                   비밀번호 변경
                 </Button>
               </form>
+            </div>
+          </FadeIn>
+
+          {/* 계정 삭제 */}
+          <FadeIn delay={0.4}>
+            <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-3xl shadow-xl p-8 border-2 border-red-300">
+              <h2 className="text-2xl font-bold text-red-800 mb-3">⚠️ 위험 구역</h2>
+              <p className="text-red-700 mb-6">
+                계정을 삭제하면 모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다.
+              </p>
+              
+              <div className="bg-white/60 rounded-xl p-4 mb-6">
+                <h3 className="font-bold text-red-800 mb-2">삭제되는 데이터:</h3>
+                <ul className="text-sm text-red-700 space-y-1">
+                  <li>• 프로필 정보</li>
+                  <li>• 크레딧 내역</li>
+                  <li>• 뉴스 브리핑 스케줄</li>
+                  <li>• 모든 서비스 이용 기록</li>
+                </ul>
+              </div>
+
+              <button
+                onClick={handleDeleteAccount}
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-4 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+              >
+                {isLoading ? '처리 중...' : '🗑️ 계정 영구 삭제'}
+              </button>
             </div>
           </FadeIn>
         </div>

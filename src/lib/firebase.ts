@@ -11,6 +11,7 @@ import {
   updateProfile,
   onAuthStateChanged,
   sendEmailVerification,
+  deleteUser,
   User as FirebaseUser
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
@@ -236,6 +237,40 @@ export async function getUserFromFirestore(uid: string) {
     }
   } catch (error) {
     return { data: null, error: '사용자 정보 조회에 실패했습니다.' };
+  }
+}
+
+// 계정 삭제
+export async function deleteAccount() {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      return { success: false, error: '로그인된 사용자가 없습니다.' };
+    }
+    
+    // Firestore에서 사용자 데이터 삭제
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      await setDoc(userRef, { deletedAt: serverTimestamp() }, { merge: true });
+    } catch (firestoreError) {
+      console.error('Firestore 데이터 삭제 실패:', firestoreError);
+    }
+    
+    // Firebase Auth에서 사용자 삭제
+    await deleteUser(user);
+    
+    return { success: true, error: null };
+  } catch (error) {
+    let errorMessage = '계정 삭제에 실패했습니다.';
+    
+    if (error && typeof error === 'object' && 'code' in error) {
+      const firebaseError = error as { code: string };
+      if (firebaseError.code === 'auth/requires-recent-login') {
+        errorMessage = '보안을 위해 다시 로그인한 후 계정을 삭제해주세요.';
+      }
+    }
+    
+    return { success: false, error: errorMessage };
   }
 }
 

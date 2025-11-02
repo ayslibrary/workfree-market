@@ -1,93 +1,35 @@
-@import "tailwindcss";
-
-:root {
-  /* WorkFree Brand Colors */
-  --main-violet: #6A5CFF;
-  --soft-lilac: #AFA6FF;
-  --midnight-navy: #1E1B33;
-  --warm-white: #FAFAFF;
-  --peach-accent: #FFBCA7;
-  
-  /* Legacy colors */
-  --background: var(--warm-white);
-  --foreground: var(--midnight-navy);
-}
-
-@theme inline {
-  /* Brand Colors */
-  --color-brand-violet: var(--main-violet);
-  --color-brand-lilac: var(--soft-lilac);
-  --color-brand-navy: var(--midnight-navy);
-  --color-brand-white: var(--warm-white);
-  --color-brand-peach: var(--peach-accent);
-  
-  /* Primary/Secondary mappings */
-  --color-primary: var(--main-violet);
-  --color-secondary: var(--soft-lilac);
-  --color-accent: var(--peach-accent);
-  
-  /* Background & Text */
-  --color-background: var(--warm-white);
-  --color-foreground: var(--midnight-navy);
-  
-  /* Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
-  /* Border Radius */
-  --radius-card: 12px;
-  --radius-button: 8px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--midnight-navy);
-    --foreground: var(--warm-white);
-  }
-}
-
-/* Next.js 라우트 전환 시 부드러운 스크롤 비활성화 */
-@media (prefers-reduced-motion: no-preference) {
-  html:not([data-scroll-disabled]) {
-    scroll-behavior: smooth;
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  background: #f5f0ff; /* Soft Lilac Background */
-  color: #1E1B33; /* Midnight Navy */
-  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', system-ui, sans-serif;
-  word-break: keep-all;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 모바일 최적화 */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-    line-height: 1.6;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-/* 한글 텍스트 최적화 */
-.break-keep {
-  word-break: keep-all;
-  overflow-wrap: break-word;
-}
-
-/* 떠다니는 아이콘 애니메이션 - 심플하고 전문적 */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.6;
+/* 로딩 스켈레톤 애니메이션 */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
   }
-  50% {
-    transform: translateY(-20px);
-    opacity: 0.8;
+  100% {
+    background-position: 200% 0;
   }
 }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 20%,
+    #f0f0f0 40%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
 }

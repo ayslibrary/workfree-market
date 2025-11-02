@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { deductCredits, getUserCredits } from '@/lib/credits';
+import toast from 'react-hot-toast';
 
 export default function SearchCrawlerPage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -99,7 +100,7 @@ export default function SearchCrawlerPage() {
 
       const data = await response.json();
       setResult(data);
-      alert('이메일이 발송되었습니다! 📧');
+      toast.success('이메일이 발송되었습니다! 📧');
     } catch (err: any) {
       setError(err.message || '이메일 발송 중 오류가 발생했습니다');
     } finally {
@@ -224,10 +225,13 @@ export default function SearchCrawlerPage() {
 
       setMySchedule(data);
       
-      alert(`✅ 매일 자동 발송 스케줄이 등록되었습니다!\n차감 크레딧: ${requiredCredits}개\n남은 크레딧: ${deductResult.newBalance}개`);
+      toast.success(
+        `✅ 매일 자동 발송 스케줄이 등록되었습니다!\n차감 크레딧: ${requiredCredits}개\n남은 크레딧: ${deductResult.newBalance}개`,
+        { duration: 4000 }
+      );
       
       // 페이지 새로고침하여 크레딧 업데이트 반영
-      window.location.reload();
+      setTimeout(() => window.location.reload(), 1500);
     } catch (err: any) {
       console.error('스케줄 생성 오류:', err);
       setScheduleError(err.message || '스케줄 생성 중 오류가 발생했습니다');
@@ -268,9 +272,45 @@ export default function SearchCrawlerPage() {
       if (!response.ok) throw new Error('스케줄 삭제 실패');
 
       setMySchedule(null);
-      alert('스케줄이 삭제되었습니다');
+      toast.success('스케줄이 삭제되었습니다');
     } catch (err: any) {
-      alert(err.message || '스케줄 삭제 중 오류가 발생했습니다');
+      toast.error(err.message || '스케줄 삭제 중 오류가 발생했습니다');
+    }
+  };
+
+  const handlePauseSchedule = async () => {
+    const userId = user?.id || user?.uid;
+    if (!userId) return;
+
+    try {
+      const response = await fetch(`${API_URL}/api/schedule/${userId}/pause`, {
+        method: 'POST'
+      });
+
+      if (!response.ok) throw new Error('스케줄 일시정지 실패');
+
+      await fetchMySchedule();
+      toast.success('⏸️ 스케줄이 일시정지되었습니다');
+    } catch (err: any) {
+      toast.error(err.message || '스케줄 일시정지 중 오류가 발생했습니다');
+    }
+  };
+
+  const handleResumeSchedule = async () => {
+    const userId = user?.id || user?.uid;
+    if (!userId) return;
+
+    try {
+      const response = await fetch(`${API_URL}/api/schedule/${userId}/resume`, {
+        method: 'POST'
+      });
+
+      if (!response.ok) throw new Error('스케줄 재개 실패');
+
+      await fetchMySchedule();
+      toast.success('▶️ 스케줄이 재개되었습니다');
+    } catch (err: any) {
+      toast.error(err.message || '스케줄 재개 중 오류가 발생했습니다');
     }
   };
 
@@ -507,12 +547,29 @@ export default function SearchCrawlerPage() {
                           설정한 시간에 자동으로 뉴스를 수집해서 이메일로 보내드립니다
                         </p>
                       </div>
-                      <button
-                        onClick={handleDeleteSchedule}
-                        className="px-5 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
-                      >
-                        🗑️ 삭제
-                      </button>
+                      <div className="flex gap-2">
+                        {mySchedule.is_paused ? (
+                          <button
+                            onClick={handleResumeSchedule}
+                            className="px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
+                          >
+                            ▶️ 재개
+                          </button>
+                        ) : (
+                          <button
+                            onClick={handlePauseSchedule}
+                            className="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
+                          >
+                            ⏸️ 일시정지
+                          </button>
+                        )}
+                        <button
+                          onClick={handleDeleteSchedule}
+                          className="px-5 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
+                        >
+                          🗑️ 삭제
+                        </button>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
