@@ -31,8 +31,9 @@ const missingEnvVars = requiredEnvVars.filter(
   (envVar) => !process.env[envVar]
 );
 
+// 환경변수 없으면 fallback 사용 (베타 기간 동안)
 if (missingEnvVars.length > 0) {
-  console.error('🔴 Firebase 환경변수가 설정되지 않았습니다:', missingEnvVars);
+  console.warn('⚠️ Firebase 환경변수 미설정 - fallback 값 사용 중');
 }
 
 // Firebase 설정 (환경변수 우선, 없으면 fallback 사용)

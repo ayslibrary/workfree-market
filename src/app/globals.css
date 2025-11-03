@@ -1,9 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
