@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { registerWithEmail, signInWithGoogle } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 import { FadeIn } from '@/components/animations';
+import { setReferrer, grantReferralReward, initializeReferral } from '@/lib/referral';
+import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
 

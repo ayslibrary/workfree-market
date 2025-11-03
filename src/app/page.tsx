@@ -238,6 +238,122 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Fri Manual Bot 히어로 배너 */}
+      <section className="py-20 px-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
+        {/* 배경 애니메이션 */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+          <div className="absolute top-0 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* 좌측: 텍스트 */}
+            <div className="text-white">
+              <div className="inline-block mb-4">
+                <span className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-bold">
+                  🚀 NEW! 킬러 기능
+                </span>
+              </div>
+              
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                Fri Manual Bot
+              </h2>
+              
+              <p className="text-2xl md:text-3xl mb-4 font-semibold text-white/90">
+                업무 매뉴얼 AI 어시스턴트
+              </p>
+              
+              <p className="text-lg md:text-xl mb-8 text-white/80 leading-relaxed">
+                매뉴얼 찾느라 <span className="font-bold text-yellow-300">30분 낭비?</span><br />
+                AI에게 질문하면 <span className="font-bold text-yellow-300">2분 안에 정확한 답변</span>
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="flex items-center space-x-2">
+                  <svg className="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-white font-medium">내 문서 학습</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <svg className="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-white font-medium">즉시 답변</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <svg className="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-white font-medium">플로팅 접근</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/frimanualbot"
+                  className="inline-flex items-center justify-center bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
+                >
+                  자세히 보기 →
+                </Link>
+                <Link
+                  href="/tools/frimanualbot"
+                  className="inline-flex items-center justify-center bg-white/20 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-all"
+                >
+                  무료로 시작하기
+                </Link>
+              </div>
+            </div>
+
+            {/* 우측: 데모 */}
+            <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 space-y-4">
+                {/* 사용자 질문 */}
+                <div className="flex justify-end">
+                  <div className="bg-indigo-600 text-white px-4 py-3 rounded-2xl rounded-br-sm max-w-[80%]">
+                    <p className="text-sm">휴가 신청은 어떻게 하나요?</p>
+                  </div>
+                </div>
+                
+                {/* AI 답변 */}
+                <div className="flex justify-start">
+                  <div className="bg-white text-gray-900 px-4 py-3 rounded-2xl rounded-bl-sm max-w-[85%] shadow-md border border-gray-200">
+                    <p className="text-sm mb-2">
+                      휴가 신청은 다음과 같이 진행하시면 됩니다:
+                    </p>
+                    <ol className="text-xs text-gray-700 space-y-1 list-decimal list-inside">
+                      <li>그룹웨어 접속</li>
+                      <li>전자결재 {">"} 휴가신청 클릭</li>
+                      <li>기간 및 사유 입력 후 제출</li>
+                    </ol>
+                    <div className="mt-3 pt-2 border-t border-gray-200">
+                      <p className="text-xs text-gray-500">📚 참고: 인사규정.pdf</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 타이핑 중... */}
+                <div className="flex justify-start">
+                  <div className="bg-white px-4 py-3 rounded-2xl shadow-sm border border-gray-200">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-center space-x-2 text-gray-600 text-sm">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span>우측 하단 버튼으로 언제든 접근 가능</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 4개 카테고리 섹션 */}
       <section className="py-24 px-6 bg-white">
