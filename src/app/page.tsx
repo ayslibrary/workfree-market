@@ -193,43 +193,43 @@ export default function Home() {
           </FadeIn>
           
           {/* 통계 */}
-          <StaggerContainer staggerDelay={0.15} className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+          <StaggerContainer staggerDelay={0.15} className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-12">
             <StaggerItem>
-              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
-                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
+              <div className="bg-white p-6 rounded-2xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-3xl font-bold text-[#6A5CFF] mb-2">
                   100명 한정
                 </div>
-                <div className="text-[#1E1B33]/70 text-xs font-medium">
+                <div className="text-[#1E1B33]/70 text-sm font-medium">
                   베타 테스터 모집
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
-                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
+              <div className="bg-white p-6 rounded-2xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-3xl font-bold text-[#6A5CFF] mb-2">
                   10개
                 </div>
-                <div className="text-[#1E1B33]/70 text-xs font-medium">
+                <div className="text-[#1E1B33]/70 text-sm font-medium">
                   무료 크레딧
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
-                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
+              <div className="bg-white p-6 rounded-2xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-3xl font-bold text-[#6A5CFF] mb-2">
                   AI 기반
                 </div>
-                <div className="text-[#1E1B33]/70 text-xs font-medium">
+                <div className="text-[#1E1B33]/70 text-sm font-medium">
                   스마트 자동화
                 </div>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="bg-white p-4 rounded-xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
-                <div className="text-2xl font-bold text-[#6A5CFF] mb-1">
+              <div className="bg-white p-6 rounded-2xl border-2 border-[#AFA6FF] hover:scale-105 transition-transform hover:border-[#6A5CFF] shadow-lg">
+                <div className="text-3xl font-bold text-[#6A5CFF] mb-2">
                   1개월
                 </div>
-                <div className="text-[#1E1B33]/70 text-xs font-medium">
+                <div className="text-[#1E1B33]/70 text-sm font-medium">
                   무료 체험 기간
                 </div>
               </div>
@@ -256,7 +256,7 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <StaggerContainer staggerDelay={0.15} className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Microsoft 사무자동화 */}
             <StaggerItem>
               <Link href="/automation/microsoft" className="block group">
