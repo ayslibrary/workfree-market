@@ -9,6 +9,18 @@ import { AUTOMATION_SERVICES, getServicesByCategory, getPopularServices } from '
 
 const TOOLS = [
   {
+    id: 'salary-calculator',
+    name: '연봉 실수령 계산기',
+    icon: '💰',
+    description: '국세청 기준 실수령액 계산 + 이직 시 기업 비교 분석',
+    credits: 0,
+    timeSaved: 30,
+    color: 'from-blue-500 to-purple-600',
+    bgColor: 'from-blue-50 to-purple-100',
+    link: '/tools/salary-calculator',
+    isNew: true,
+  },
+  {
     id: 'exchange-rate',
     name: '환율 자동 공유',
     icon: '💱',
