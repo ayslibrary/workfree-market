@@ -10,6 +10,7 @@ interface Message {
   sources?: Array<{ title: string; url: string }>;
   relatedTools?: Array<{ name: string; url: string }>;
   feedbackSubmitted?: boolean;
+  chatLogId?: string; // Supabase chat_logs ID
 }
 
 export default function AIAssistant() {
@@ -53,6 +54,7 @@ export default function AIAssistant() {
         content: data.answer || '답변을 생성할 수 없습니다.',
         sources: data.sources || [],
         relatedTools: data.relatedTools || [],
+        chatLogId: data.chatLogId, // Supabase ID 저장
       };
 
       setMessages(prev => [...prev, assistantMessage]);
@@ -69,12 +71,16 @@ export default function AIAssistant() {
     }
   };
 
-  const handleFeedback = async (messageId: string, helpful: boolean) => {
+  const handleFeedback = async (messageId: string, chatLogId: string | undefined, helpful: boolean) => {
     try {
       await fetch('/api/rag-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messageId, helpful }),
+        body: JSON.stringify({ 
+          messageId, 
+          chatLogId, 
+          helpful 
+        }),
       });
       
       setMessages(prev =>
@@ -145,13 +151,13 @@ export default function AIAssistant() {
                         {msg.role === 'assistant' && !msg.feedbackSubmitted && (
                           <div className="mt-3 flex gap-2 justify-end">
                             <button
-                              onClick={() => handleFeedback(msg.id, true)}
+                              onClick={() => handleFeedback(msg.id, msg.chatLogId, true)}
                               className="text-xs px-2 py-1 bg-green-100 text-green-700 hover:bg-green-200 rounded transition-colors"
                             >
                               👍
                             </button>
                             <button
-                              onClick={() => handleFeedback(msg.id, false)}
+                              onClick={() => handleFeedback(msg.id, msg.chatLogId, false)}
                               className="text-xs px-2 py-1 bg-red-100 text-red-700 hover:bg-red-200 rounded transition-colors"
                             >
                               👎
