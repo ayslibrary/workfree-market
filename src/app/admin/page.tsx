@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSnapshot, DocumentData, Timestamp } from 'firebase/firestore';
 import MainNavigation from '@/components/MainNavigation';
@@ -130,6 +131,18 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 pt-24 md:pt-20">
+        {/* 헤더 + Analytics 버튼 */}
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">관리자 대시보드</h1>
+          <Link
+            href="/admin/analytics"
+            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+          >
+            <span>📊</span>
+            <span>RAG Analytics</span>
+          </Link>
+        </div>
+
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-6 md:mb-8">
           <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-400">
