@@ -355,6 +355,113 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 연봉 실수령 계산기 배너 */}
+      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+        {/* 배경 애니메이션 */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+          <div className="absolute top-0 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* 좌측: 텍스트 */}
+            <div>
+              <div className="inline-block mb-4">
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                  💰 NEW! 무료 도구
+                </span>
+              </div>
+              
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
+                연봉 실수령 계산기
+              </h2>
+              
+              <p className="text-2xl md:text-3xl mb-4 font-semibold text-gray-800">
+                국세청 기준 정확한 계산
+              </p>
+              
+              <p className="text-lg md:text-xl mb-8 text-gray-700 leading-relaxed">
+                4200만원 받으면 실제 통장에 <span className="font-bold text-blue-600">얼마?</span><br />
+                <span className="font-bold text-purple-600">이직하면 얼마나 더</span> 받을 수 있을까?
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span className="text-gray-700 font-medium">실수령액 즉시 계산</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span className="text-gray-700 font-medium">기업 간 이직 비교</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                  <span className="text-gray-700 font-medium">AI 추천 기업</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/tools/salary-calculator"
+                  className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-2xl"
+                >
+                  💰 지금 바로 계산하기 →
+                </Link>
+              </div>
+            </div>
+
+            {/* 우측: 미리보기 카드 */}
+            <div className="bg-white rounded-2xl shadow-2xl p-6 lg:p-8 border-2 border-blue-200">
+              <div className="space-y-4">
+                {/* 입력 예시 */}
+                <div className="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
+                  <p className="text-sm text-gray-600 mb-2">입력</p>
+                  <p className="text-2xl font-bold text-gray-900">연봉 4,200만원</p>
+                </div>
+                
+                {/* 결과 예시 */}
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl p-6 text-white">
+                  <p className="text-sm opacity-90 mb-1">월 실수령액</p>
+                  <p className="text-4xl font-bold">2,863,032원</p>
+                </div>
+
+                {/* 상세 내역 */}
+                <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">국민연금</span>
+                    <span className="font-semibold text-gray-900">157,500원</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">건강보험</span>
+                    <span className="font-semibold text-gray-900">124,075원</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">소득세</span>
+                    <span className="font-semibold text-gray-900">280,000원</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">지방소득세</span>
+                    <span className="font-semibold text-gray-900">28,000원</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="bg-purple-50 rounded-xl p-4 border-2 border-purple-200 text-center">
+                  <p className="text-sm font-bold text-purple-900 mb-1">
+                    🚀 이직 모드(Pro)
+                  </p>
+                  <p className="text-xs text-purple-700">
+                    기업 간 비교 + AI 추천까지!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4개 카테고리 섹션 */}
       <section className="py-24 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
