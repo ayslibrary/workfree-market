@@ -11,7 +11,9 @@
     "embed": "dotenv -e .env.local -- tsx scripts/generate-embeddings.ts",
     "test:rag": "dotenv -e .env.local -- tsx scripts/test-rag-search.ts",
     "test:db": "dotenv -e .env.local -- tsx scripts/test-db-query.ts",
-    "debug:search": "dotenv -e .env.local -- tsx scripts/debug-search.ts"
+    "debug:search": "dotenv -e .env.local -- tsx scripts/debug-search.ts",
+    "add:context": "tsx scripts/add-context-to-knowledge.ts",
+    "embed:contextual": "dotenv -e .env.local -- tsx scripts/embed-contextual.ts"
   },
   "dependencies": {
     "@pinecone-database/pinecone": "^6.1.2",

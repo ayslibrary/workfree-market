@@ -8,6 +8,7 @@ export interface SalaryInput {
   annualSalary: number; // 만원 단위
   region?: string;
   yearsOfService?: number;
+  includeSeverance?: boolean; // 퇴직금 포함 여부
 }
 
 export interface TakeHomePayResult {
@@ -15,6 +16,7 @@ export interface TakeHomePayResult {
   monthlyGross: number; // 월 총급여
   taxRate: number; // 총 공제율 (%)
   annualTax: number; // 연간 총 공제액
+  severancePay?: number; // 예상 퇴직금
   breakdown: {
     pension: number; // 국민연금
     healthInsurance: number; // 건강보험
@@ -23,6 +25,14 @@ export interface TakeHomePayResult {
     incomeTax: number; // 소득세
     localIncomeTax: number; // 지방소득세
   };
+}
+
+export interface InvestmentSimulation {
+  principal: number; // 원금 (퇴직금)
+  years: number; // 투자 기간
+  returnRate: number; // 연 수익률 (%)
+  futureValue: number; // 미래 가치
+  totalReturn: number; // 총 수익
 }
 
 export interface CompanyInput {
