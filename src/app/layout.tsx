@@ -4,6 +4,7 @@ import "./globals.css";
 import ToastProvider from "@/components/ToastProvider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import FloatingCopilot from "@/components/FloatingCopilot";
+import AIAssistant from "@/components/AIAssistant";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,6 +98,7 @@ export default function RootLayout({
         <ToastProvider />
         {children}
         <FloatingCopilot />
+        <AIAssistant />
       </body>
     </html>
   );
