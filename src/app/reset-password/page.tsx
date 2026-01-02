@@ -134,13 +134,13 @@ export default function ResetPasswordPage() {
                 {/* 다른 옵션 */}
                 <div className="mt-6 p-4 bg-[#f5f0ff] rounded-xl">
                   <p className="text-sm text-[#1E1B33]/70 text-center mb-3">
-                    💡 Google 계정이시라면?
+                    💡 비밀번호가 계속 안 오나요?
                   </p>
                   <Link
                     href="/login"
                     className="block text-center text-[#6A5CFF] font-semibold hover:underline"
                   >
-                    Google로 바로 로그인하기 →
+                    로그인 페이지로 돌아가기 →
                   </Link>
                 </div>
               </>

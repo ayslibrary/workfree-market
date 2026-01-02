@@ -4,13 +4,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { useAuth } from '@/hooks/useAuth';
 import { isAdmin } from '@/lib/admin';
+import { db as firebaseDb } from '@/lib/firebase';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
+type ViewMode = 'users' | 'logins';
 
 interface LoginLog {
   id: string;
@@ -34,12 +38,28 @@ interface UserStats {
   emailLogins: number;
 }
 
+interface FirestoreUser {
+  id: string; // uid
+  email?: string;
+  displayName?: string;
+  role?: string;
+  credits?: number;
+  createdAt?: any;
+  updatedAt?: any;
+}
+
 export default function AdminUsersPage() {
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
+  const [view, setView] = useState<ViewMode>('users');
+
+  const [users, setUsers] = useState<FirestoreUser[]>([]);
+  const [userSearch, setUserSearch] = useState('');
+  const [usersLoading, setUsersLoading] = useState(true);
+
   const [loginLogs, setLoginLogs] = useState<LoginLog[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [logsLoading, setLogsLoading] = useState(true);
   const [days, setDays] = useState(7);
   const [filter, setFilter] = useState<'all' | 'success' | 'failed'>('all');
 
@@ -53,12 +73,51 @@ export default function AdminUsersPage() {
 
   useEffect(() => {
     if (!authLoading && user && isAdmin(user.email)) {
-      loadData();
+      // 최초 진입 시 둘 다 로드(탭 전환 시 즉시 보여주기 위함)
+      loadUsers();
+      loadLoginLogs();
     }
-  }, [days, authLoading, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading, user]);
 
-  const loadData = async () => {
-    setLoading(true);
+  useEffect(() => {
+    if (!authLoading && user && isAdmin(user.email)) {
+      loadLoginLogs();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [days]);
+
+  const loadUsers = async () => {
+    setUsersLoading(true);
+    try {
+      if (!firebaseDb) {
+        console.error('Firebase DB가 초기화되지 않았습니다.');
+        setUsers([]);
+        return;
+      }
+
+      const q = query(
+        collection(firebaseDb, 'users'),
+        orderBy('createdAt', 'desc'),
+        limit(200)
+      );
+      const snapshot = await getDocs(q);
+
+      const list: FirestoreUser[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as any),
+      }));
+      setUsers(list);
+    } catch (error) {
+      console.error('회원 목록 로딩 실패:', error);
+      setUsers([]);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
+
+  const loadLoginLogs = async () => {
+    setLogsLoading(true);
     try {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - days);
@@ -69,33 +128,38 @@ export default function AdminUsersPage() {
         .select('*')
         .gte('created_at', startDate.toISOString())
         .order('created_at', { ascending: false })
-        .limit(100);
+        .limit(200);
 
       if (error) {
         console.error('로그인 로그 조회 실패:', error);
-      } else {
-        setLoginLogs(logs || []);
-
-        // 통계 계산
-        const totalLogins = logs?.length || 0;
-        const successfulLogins = logs?.filter(l => l.success).length || 0;
-        const uniqueUsers = new Set(logs?.filter(l => l.user_id).map(l => l.user_id)).size;
-        const googleLogins = logs?.filter(l => l.login_type === 'google').length || 0;
-        const emailLogins = logs?.filter(l => l.login_type === 'email').length || 0;
-
-        setStats({
-          totalLogins,
-          successfulLogins,
-          failedLogins: totalLogins - successfulLogins,
-          uniqueUsers,
-          googleLogins,
-          emailLogins,
-        });
+        setLoginLogs([]);
+        setStats(null);
+        return;
       }
+
+      setLoginLogs(logs || []);
+
+      // 통계 계산
+      const totalLogins = logs?.length || 0;
+      const successfulLogins = logs?.filter((l) => l.success).length || 0;
+      const uniqueUsers = new Set(logs?.filter((l) => l.user_id).map((l) => l.user_id)).size;
+      const googleLogins = logs?.filter((l) => l.login_type === 'google').length || 0;
+      const emailLogins = logs?.filter((l) => l.login_type === 'email').length || 0;
+
+      setStats({
+        totalLogins,
+        successfulLogins,
+        failedLogins: totalLogins - successfulLogins,
+        uniqueUsers,
+        googleLogins,
+        emailLogins,
+      });
     } catch (error) {
-      console.error('데이터 로딩 실패:', error);
+      console.error('로그인 로그 로딩 실패:', error);
+      setLoginLogs([]);
+      setStats(null);
     } finally {
-      setLoading(false);
+      setLogsLoading(false);
     }
   };
 
@@ -103,6 +167,35 @@ export default function AdminUsersPage() {
     if (filter === 'success') return log.success;
     if (filter === 'failed') return !log.success;
     return true;
+  });
+
+  const normalizeDate = (value: any): Date | null => {
+    if (!value) return null;
+    if (typeof value === 'string' || typeof value === 'number') return new Date(value);
+    if (typeof value?.toDate === 'function') return value.toDate();
+    return null;
+  };
+
+  const formatDateTime = (value: any) => {
+    const d = normalizeDate(value);
+    if (!d) return '-';
+    return d.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const filteredUsers = users.filter((u) => {
+    const q = userSearch.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      (u.email || '').toLowerCase().includes(q) ||
+      (u.displayName || '').toLowerCase().includes(q) ||
+      (u.id || '').toLowerCase().includes(q)
+    );
   });
 
   const formatDate = (dateStr: string) => {
@@ -127,28 +220,57 @@ export default function AdminUsersPage() {
               </h1>
               <p className="text-gray-600">회원가입 및 로그인 기록을 확인합니다</p>
             </div>
-            
-            {/* 기간 선택 */}
-            <div className="flex gap-2">
-              {[7, 14, 30].map(d => (
+
+            <div className="flex items-center gap-2">
+              {/* 탭 */}
+              <div className="bg-white border rounded-xl p-1 flex gap-1">
                 <button
-                  key={d}
-                  onClick={() => setDays(d)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    days === d
-                      ? 'bg-[#6A5CFF] text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  onClick={() => setView('users')}
+                  className={`px-4 py-2 rounded-lg font-bold transition-colors ${
+                    view === 'users' ? 'bg-[#6A5CFF] text-white' : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  {d}일
+                  👤 회원 목록
                 </button>
-              ))}
-              <button
-                onClick={loadData}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-              >
-                🔄 새로고침
-              </button>
+                <button
+                  onClick={() => setView('logins')}
+                  className={`px-4 py-2 rounded-lg font-bold transition-colors ${
+                    view === 'logins' ? 'bg-[#6A5CFF] text-white' : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  🔐 로그인 내역
+                </button>
+              </div>
+
+              {/* 액션 */}
+              {view === 'logins' ? (
+                <div className="flex gap-2">
+                  {[7, 14, 30].map((d) => (
+                    <button
+                      key={d}
+                      onClick={() => setDays(d)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        days === d ? 'bg-[#6A5CFF] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      {d}일
+                    </button>
+                  ))}
+                  <button
+                    onClick={loadLoginLogs}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    🔄 새로고침
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={loadUsers}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  🔄 새로고침
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -158,137 +280,200 @@ export default function AdminUsersPage() {
             <div className="text-6xl mb-4">🔐</div>
             <p className="text-gray-600">권한 확인 중...</p>
           </div>
-        ) : loading ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">⏳</div>
-            <p className="text-gray-600">데이터 로딩 중...</p>
-          </div>
         ) : (
           <>
-            {/* 통계 카드 */}
-            {stats && (
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200">
-                  <p className="text-sm text-gray-600 mb-1">총 로그인</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats.totalLogins}</p>
+            {view === 'users' ? (
+              <>
+                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-200 mb-4">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-900">👤 회원 목록 (최근 200명)</h2>
+                      <p className="text-sm text-gray-600">Firebase Firestore `users` 컬렉션 기준</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        value={userSearch}
+                        onChange={(e) => setUserSearch(e.target.value)}
+                        placeholder="이메일/이름/UID 검색"
+                        className="w-full md:w-80 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6A5CFF]/40"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-green-200">
-                  <p className="text-sm text-gray-600 mb-1">성공</p>
-                  <p className="text-3xl font-bold text-green-600">{stats.successfulLogins}</p>
-                </div>
+                {usersLoading ? (
+                  <div className="text-center py-20">
+                    <div className="text-6xl mb-4">⏳</div>
+                    <p className="text-gray-600">회원 목록 로딩 중...</p>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-200">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">가입일</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">이름</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">이메일</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">역할</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">크레딧</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">최근 업데이트</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">UID</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                          {filteredUsers.length > 0 ? (
+                            filteredUsers.map((u) => (
+                              <tr key={u.id} className="hover:bg-gray-50">
+                                <td className="px-6 py-4 text-sm text-gray-600">{formatDateTime(u.createdAt)}</td>
+                                <td className="px-6 py-4 text-sm font-medium text-gray-900">{u.displayName || '-'}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{u.email || '-'}</td>
+                                <td className="px-6 py-4 text-sm text-gray-700">{u.role || '-'}</td>
+                                <td className="px-6 py-4 text-sm text-gray-700">{u.credits ?? '-'}</td>
+                                <td className="px-6 py-4 text-sm text-gray-600">{formatDateTime(u.updatedAt)}</td>
+                                <td className="px-6 py-4 text-xs text-gray-500 font-mono">{u.id}</td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                                회원 정보가 없습니다
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {logsLoading ? (
+                  <div className="text-center py-20">
+                    <div className="text-6xl mb-4">⏳</div>
+                    <p className="text-gray-600">로그인 내역 로딩 중...</p>
+                  </div>
+                ) : (
+                  <>
+                    {/* 통계 카드 */}
+                    {stats && (
+                      <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200">
+                          <p className="text-sm text-gray-600 mb-1">총 로그인</p>
+                          <p className="text-3xl font-bold text-blue-600">{stats.totalLogins}</p>
+                        </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-red-200">
-                  <p className="text-sm text-gray-600 mb-1">실패</p>
-                  <p className="text-3xl font-bold text-red-600">{stats.failedLogins}</p>
-                </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-green-200">
+                          <p className="text-sm text-gray-600 mb-1">성공</p>
+                          <p className="text-3xl font-bold text-green-600">{stats.successfulLogins}</p>
+                        </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-200">
-                  <p className="text-sm text-gray-600 mb-1">고유 사용자</p>
-                  <p className="text-3xl font-bold text-purple-600">{stats.uniqueUsers}</p>
-                </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-red-200">
+                          <p className="text-sm text-gray-600 mb-1">실패</p>
+                          <p className="text-3xl font-bold text-red-600">{stats.failedLogins}</p>
+                        </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-orange-200">
-                  <p className="text-sm text-gray-600 mb-1">Google 로그인</p>
-                  <p className="text-3xl font-bold text-orange-600">{stats.googleLogins}</p>
-                </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-200">
+                          <p className="text-sm text-gray-600 mb-1">고유 사용자</p>
+                          <p className="text-3xl font-bold text-purple-600">{stats.uniqueUsers}</p>
+                        </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-pink-200">
-                  <p className="text-sm text-gray-600 mb-1">이메일 로그인</p>
-                  <p className="text-3xl font-bold text-pink-600">{stats.emailLogins}</p>
-                </div>
-              </div>
-            )}
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-orange-200">
+                          <p className="text-sm text-gray-600 mb-1">Google 로그인</p>
+                          <p className="text-3xl font-bold text-orange-600">{stats.googleLogins}</p>
+                        </div>
 
-            {/* 필터 */}
-            <div className="flex gap-2 mb-4">
-              {[
-                { key: 'all', label: '전체', icon: '📋' },
-                { key: 'success', label: '성공', icon: '✅' },
-                { key: 'failed', label: '실패', icon: '❌' },
-              ].map(f => (
-                <button
-                  key={f.key}
-                  onClick={() => setFilter(f.key as any)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    filter === f.key
-                      ? 'bg-[#6A5CFF] text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border'
-                  }`}
-                >
-                  {f.icon} {f.label}
-                </button>
-              ))}
-            </div>
-
-            {/* 로그인 로그 테이블 */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-200">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">시간</th>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">이메일</th>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">방식</th>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">상태</th>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">기기</th>
-                      <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">브라우저</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {filteredLogs.length > 0 ? (
-                      filteredLogs.map((log) => (
-                        <tr key={log.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 text-sm text-gray-600">
-                            {formatDate(log.created_at)}
-                          </td>
-                          <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                            {log.email}
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                              log.login_type === 'google'
-                                ? 'bg-blue-100 text-blue-700'
-                                : 'bg-gray-100 text-gray-700'
-                            }`}>
-                              {log.login_type === 'google' ? '🔵 Google' : '📧 Email'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            {log.success ? (
-                              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                                ✅ 성공
-                              </span>
-                            ) : (
-                              <div>
-                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
-                                  ❌ 실패
-                                </span>
-                                {log.error_message && (
-                                  <p className="text-xs text-red-500 mt-1">{log.error_message}</p>
-                                )}
-                              </div>
-                            )}
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-600">
-                            {log.device_type || '-'}
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-600">
-                            {log.browser || '-'} / {log.os || '-'}
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
-                          로그인 기록이 없습니다
-                        </td>
-                      </tr>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-pink-200">
+                          <p className="text-sm text-gray-600 mb-1">이메일 로그인</p>
+                          <p className="text-3xl font-bold text-pink-600">{stats.emailLogins}</p>
+                        </div>
+                      </div>
                     )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+
+                    {/* 필터 */}
+                    <div className="flex gap-2 mb-4">
+                      {[
+                        { key: 'all', label: '전체', icon: '📋' },
+                        { key: 'success', label: '성공', icon: '✅' },
+                        { key: 'failed', label: '실패', icon: '❌' },
+                      ].map((f) => (
+                        <button
+                          key={f.key}
+                          onClick={() => setFilter(f.key as any)}
+                          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                            filter === f.key ? 'bg-[#6A5CFF] text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border'
+                          }`}
+                        >
+                          {f.icon} {f.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* 로그인 로그 테이블 */}
+                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-200">
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead className="bg-gray-50">
+                            <tr>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">시간</th>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">이메일</th>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">방식</th>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">상태</th>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">기기</th>
+                              <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">브라우저</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            {filteredLogs.length > 0 ? (
+                              filteredLogs.map((log) => (
+                                <tr key={log.id} className="hover:bg-gray-50">
+                                  <td className="px-6 py-4 text-sm text-gray-600">{formatDate(log.created_at)}</td>
+                                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{log.email}</td>
+                                  <td className="px-6 py-4">
+                                    <span
+                                      className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                                        log.login_type === 'google' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
+                                      }`}
+                                    >
+                                      {log.login_type === 'google' ? '🔵 Google' : '📧 Email'}
+                                    </span>
+                                  </td>
+                                  <td className="px-6 py-4">
+                                    {log.success ? (
+                                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                        ✅ 성공
+                                      </span>
+                                    ) : (
+                                      <div>
+                                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                          ❌ 실패
+                                        </span>
+                                        {log.error_message && <p className="text-xs text-red-500 mt-1">{log.error_message}</p>}
+                                      </div>
+                                    )}
+                                  </td>
+                                  <td className="px-6 py-4 text-sm text-gray-600">{log.device_type || '-'}</td>
+                                  <td className="px-6 py-4 text-sm text-gray-600">
+                                    {log.browser || '-'} / {log.os || '-'}
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                                  로그인 기록이 없습니다
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
 
             {/* 빠른 링크 */}
             <div className="mt-8 bg-gradient-to-r from-[#6A5CFF] to-[#AFA6FF] rounded-2xl shadow-lg p-8 text-white">

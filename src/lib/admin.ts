@@ -3,6 +3,7 @@
 // 관리자 이메일 목록
 export const ADMIN_EMAILS = [
   'ayoung1034@gmail.com',
+  'poy6714@gmail.com',
 ];
 
 // 관리자 여부 확인
