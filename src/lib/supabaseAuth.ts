@@ -142,10 +142,15 @@ export async function signInWithEmail(email: string, password: string) {
 
 export async function signInWithGoogle() {
   try {
+    // 브라우저 환경 체크
+    const redirectUrl = typeof window !== 'undefined' 
+      ? `${window.location.origin}/auth/callback`
+      : '/auth/callback';
+      
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: redirectUrl,
       },
     });
 
