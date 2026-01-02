@@ -234,7 +234,12 @@ export async function logClickEvent(data: ClickEvent): Promise<boolean> {
       });
 
     if (error) {
-      console.error('❌ 클릭 이벤트 저장 실패:', error);
+      const maybeCode = (error as any)?.code;
+      if (maybeCode === 'PGRST205') {
+        console.warn('⚠️ click_events 테이블이 없어 클릭 이벤트 저장을 건너뜁니다. (Supabase SQL 실행 필요)');
+      } else {
+        console.error('❌ 클릭 이벤트 저장 실패:', error);
+      }
       return false;
     }
 
@@ -342,7 +347,12 @@ export async function logPageView(data?: Partial<PageView>): Promise<boolean> {
       });
 
     if (error) {
-      console.error('❌ 페이지 뷰 저장 실패:', error);
+      const maybeCode = (error as any)?.code;
+      if (maybeCode === 'PGRST205') {
+        console.warn('⚠️ page_views 테이블이 없어 페이지 뷰 저장을 건너뜁니다. (Supabase SQL 실행 필요)');
+      } else {
+        console.error('❌ 페이지 뷰 저장 실패:', error);
+      }
       return false;
     }
 
