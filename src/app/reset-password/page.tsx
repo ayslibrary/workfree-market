@@ -23,6 +23,7 @@ export default function ResetPasswordPage() {
       await sendPasswordResetEmail(auth, email);
       setSuccess(true);
     } catch (err: any) {
+      console.error('Password reset error:', err);
       let errorMessage = '비밀번호 재설정 이메일 발송에 실패했습니다.';
       
       if (err.code === 'auth/user-not-found') {
@@ -86,9 +87,14 @@ export default function ResetPasswordPage() {
                   <span className="font-semibold text-[#6A5CFF]">{email}</span>로
                   <br />비밀번호 재설정 링크를 보냈습니다.
                 </p>
-                <p className="text-sm text-[#1E1B33]/50 mb-6">
-                  이메일이 도착하지 않았다면 스팸함을 확인해주세요.
-                </p>
+                <div className="text-sm text-[#1E1B33]/60 mb-6 space-y-2">
+                  <p>이메일이 안 보이면 아래를 순서대로 확인해주세요.</p>
+                  <ul className="text-left bg-[#f5f0ff] p-4 rounded-xl border border-[#AFA6FF]/40 space-y-1">
+                    <li>- 스팸함 / 프로모션함 / 전체메일에서 “WorkFree” 또는 “Firebase”로 검색</li>
+                    <li>- 1~5분 정도 기다린 뒤 다시 시도(너무 자주 시도하면 제한될 수 있어요)</li>
+                    <li>- Google로 가입/로그인한 계정이면 비밀번호 재설정보다 <b>Google로 로그인</b>이 더 빠를 수 있어요</li>
+                  </ul>
+                </div>
                 <Link
                   href="/login"
                   className="inline-block bg-[#6A5CFF] text-white px-8 py-3 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all"
