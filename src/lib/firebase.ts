@@ -61,6 +61,18 @@ export const db = getFirestore(app);
 // Storage 인스턴스
 export const storage = getStorage(app);
 
+function ensureFirebaseConfigured(): boolean {
+  if (isConfigured) return true;
+  // 배포 환경에서 fallback 키로 인증 시도하면 identitytoolkit 400이 자주 발생하므로,
+  // 실제 인증 호출은 막고 "환경변수 설정 필요" 메시지로 유도한다.
+  if (process.env.NODE_ENV === 'production') {
+    console.error('❌ Firebase 환경변수가 설정되지 않았습니다:', missingEnvVars);
+    return false;
+  }
+  // 개발 환경은 fallback로 계속 진행(기존 동작 유지)
+  return true;
+}
+
 // Google Provider
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -70,6 +82,9 @@ googleProvider.setCustomParameters({
 // Google 로그인
 export async function signInWithGoogle() {
   try {
+    if (!ensureFirebaseConfigured()) {
+      return { user: null, error: 'Firebase 환경변수 설정이 필요합니다. (Vercel 환경변수 확인)' };
+    }
     const result = await signInWithPopup(auth, googleProvider);
     
     // Firestore에 사용자 정보 저장
@@ -144,6 +159,9 @@ export async function registerWithEmail(
   displayName: string
 ) {
   try {
+    if (!ensureFirebaseConfigured()) {
+      return { user: null, error: 'Firebase 환경변수 설정이 필요합니다. (Vercel 환경변수 확인)' };
+    }
     const result = await createUserWithEmailAndPassword(auth, email, password);
     
     // 프로필 업데이트
@@ -231,6 +249,9 @@ export async function resendVerificationEmail() {
 // 이메일/비밀번호로 로그인
 export async function loginWithEmail(email: string, password: string) {
   try {
+    if (!ensureFirebaseConfigured()) {
+      return { user: null, error: 'Firebase 환경변수 설정이 필요합니다. (Vercel 환경변수 확인)' };
+    }
     const result = await signInWithEmailAndPassword(auth, email, password);
     
     // Firestore에 사용자 정보 업데이트 (로그인 시간 등)

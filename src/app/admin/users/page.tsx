@@ -56,10 +56,12 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<FirestoreUser[]>([]);
   const [userSearch, setUserSearch] = useState('');
   const [usersLoading, setUsersLoading] = useState(true);
+  const [usersError, setUsersError] = useState<string | null>(null);
 
   const [loginLogs, setLoginLogs] = useState<LoginLog[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [logsLoading, setLogsLoading] = useState(true);
+  const [logsError, setLogsError] = useState<string | null>(null);
   const [days, setDays] = useState(7);
   const [filter, setFilter] = useState<'all' | 'success' | 'failed'>('all');
 
@@ -89,10 +91,12 @@ export default function AdminUsersPage() {
 
   const loadUsers = async () => {
     setUsersLoading(true);
+    setUsersError(null);
     try {
       if (!firebaseDb) {
         console.error('Firebase DB가 초기화되지 않았습니다.');
         setUsers([]);
+        setUsersError('Firebase DB가 초기화되지 않았습니다. (환경변수/네트워크 확인)');
         return;
       }
 
@@ -111,6 +115,7 @@ export default function AdminUsersPage() {
     } catch (error) {
       console.error('회원 목록 로딩 실패:', error);
       setUsers([]);
+      setUsersError('회원 목록을 불러오지 못했습니다. (Firestore 권한/네트워크 확인)');
     } finally {
       setUsersLoading(false);
     }
@@ -118,6 +123,7 @@ export default function AdminUsersPage() {
 
   const loadLoginLogs = async () => {
     setLogsLoading(true);
+    setLogsError(null);
     try {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - days);
@@ -134,6 +140,12 @@ export default function AdminUsersPage() {
         console.error('로그인 로그 조회 실패:', error);
         setLoginLogs([]);
         setStats(null);
+        const maybeCode = (error as any)?.code;
+        if (maybeCode === 'PGRST205') {
+          setLogsError('Supabase에 login_logs 테이블이 없습니다. supabase/create-login-logs-table.sql 을 SQL Editor에서 실행하세요.');
+        } else {
+          setLogsError('로그인 내역을 불러오지 못했습니다. (Supabase 설정/권한 확인)');
+        }
         return;
       }
 
@@ -158,6 +170,7 @@ export default function AdminUsersPage() {
       console.error('로그인 로그 로딩 실패:', error);
       setLoginLogs([]);
       setStats(null);
+      setLogsError('로그인 내역을 불러오지 못했습니다. (네트워크/설정 확인)');
     } finally {
       setLogsLoading(false);
     }
@@ -301,6 +314,12 @@ export default function AdminUsersPage() {
                   </div>
                 </div>
 
+                {usersError && (
+                  <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-700 font-medium">
+                    ⚠️ {usersError}
+                  </div>
+                )}
+
                 {usersLoading ? (
                   <div className="text-center py-20">
                     <div className="text-6xl mb-4">⏳</div>
@@ -356,6 +375,11 @@ export default function AdminUsersPage() {
                   </div>
                 ) : (
                   <>
+                    {logsError && (
+                      <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-700 font-medium">
+                        ⚠️ {logsError}
+                      </div>
+                    )}
                     {/* 통계 카드 */}
                     {stats && (
                       <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">

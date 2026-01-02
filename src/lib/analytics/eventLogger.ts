@@ -156,7 +156,13 @@ export async function logLogin(data: LoginLog): Promise<boolean> {
       });
 
     if (error) {
-      console.error('❌ 로그인 로그 저장 실패:', error);
+      // 테이블이 없을 때(초기 설정 전) 콘솔 스팸을 줄이기 위해 메시지 단순화
+      const maybeCode = (error as any)?.code;
+      if (maybeCode === 'PGRST205') {
+        console.warn('⚠️ login_logs 테이블이 없어 로그인 로그 저장을 건너뜁니다. (Supabase SQL 실행 필요)');
+      } else {
+        console.error('❌ 로그인 로그 저장 실패:', error);
+      }
       return false;
     }
 
