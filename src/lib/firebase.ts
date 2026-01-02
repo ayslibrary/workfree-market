@@ -75,8 +75,32 @@ export async function signInWithGoogle() {
     // Firestore에 사용자 정보 저장
     await saveUserToFirestore(result.user);
     
+    // Supabase에 로그인 로그 저장
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        userId: result.user.uid,
+        email: result.user.email || '',
+        loginType: 'google',
+        success: true,
+      });
+    } catch (logError) {
+      console.error('로그인 로그 저장 실패:', logError);
+    }
+    
     return { user: result.user, error: null };
   } catch (error) {
+    // 실패 로그
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        email: 'google_login_attempt',
+        loginType: 'google',
+        success: false,
+        errorMessage: error instanceof Error ? error.message : '알 수 없는 오류',
+      });
+    } catch {}
+    
     return { user: null, error: error instanceof Error ? error.message : '로그인에 실패했습니다.' };
   }
 }
@@ -133,11 +157,23 @@ export async function registerWithEmail(
       console.log('✅ 이메일 인증 링크가 발송되었습니다.');
     } catch (emailError) {
       console.error('⚠️ 이메일 인증 발송 실패:', emailError);
-      // 이메일 발송 실패해도 회원가입은 완료
     }
     
     // Firestore에 사용자 정보 저장
     await saveUserToFirestore(result.user);
+    
+    // Supabase에 회원가입 로그 저장
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        userId: result.user.uid,
+        email: email,
+        loginType: 'email',
+        success: true,
+      });
+    } catch (logError) {
+      console.error('회원가입 로그 저장 실패:', logError);
+    }
     
     return { 
       user: result.user, 
@@ -157,6 +193,17 @@ export async function registerWithEmail(
         errorMessage = '유효하지 않은 이메일 형식입니다.';
       }
     }
+    
+    // 실패 로그
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        email: email,
+        loginType: 'email',
+        success: false,
+        errorMessage: errorMessage,
+      });
+    } catch {}
     
     return { user: null, error: errorMessage };
   }
@@ -189,6 +236,19 @@ export async function loginWithEmail(email: string, password: string) {
     // Firestore에 사용자 정보 업데이트 (로그인 시간 등)
     await saveUserToFirestore(result.user);
     
+    // Supabase에 로그인 로그 저장
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        userId: result.user.uid,
+        email: email,
+        loginType: 'email',
+        success: true,
+      });
+    } catch (logError) {
+      console.error('로그인 로그 저장 실패:', logError);
+    }
+    
     return { user: result.user, error: null };
   } catch (error) {
     let errorMessage = '로그인에 실패했습니다.';
@@ -205,6 +265,17 @@ export async function loginWithEmail(email: string, password: string) {
         errorMessage = '이메일 또는 비밀번호가 올바르지 않습니다.';
       }
     }
+    
+    // 실패 로그
+    try {
+      const { logLogin } = await import('@/lib/analytics/eventLogger');
+      await logLogin({
+        email: email,
+        loginType: 'email',
+        success: false,
+        errorMessage: errorMessage,
+      });
+    } catch {}
     
     return { user: null, error: errorMessage };
   }
