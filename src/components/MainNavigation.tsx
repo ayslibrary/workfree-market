@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "@/lib/firebase";
 import { useAuthStore } from "@/store/authStore";
 import { CreditBalance } from "@/components/CreditBalance";
+import { isAdmin } from "@/lib/admin";
 
 export default function MainNavigation() {
   const { user, isLoading } = useAuth();
@@ -157,6 +158,25 @@ export default function MainNavigation() {
                         >
                           💌 피드백 보내기
                         </Link>
+                        {isAdmin(user.email) && (
+                          <>
+                            <hr className="my-2 border-[#AFA6FF]/30" />
+                            <Link
+                              href="/admin"
+                              className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
+                              onClick={() => setShowUserMenu(false)}
+                            >
+                              🔐 관리자
+                            </Link>
+                            <Link
+                              href="/admin/users"
+                              className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
+                              onClick={() => setShowUserMenu(false)}
+                            >
+                              👥 회원 관리
+                            </Link>
+                          </>
+                        )}
                         <hr className="my-2 border-[#AFA6FF]/30" />
                         <button
                           onClick={handleSignOut}

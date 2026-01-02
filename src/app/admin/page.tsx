@@ -8,6 +8,7 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc, QueryDocumentSn
 import MainNavigation from '@/components/MainNavigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { useAuth } from '@/hooks/useAuth';
+import { isAdmin } from '@/lib/admin';
 
 interface Request {
   id: string;
@@ -34,14 +35,14 @@ export default function AdminPage() {
 
   // 관리자 권한 체크
   useEffect(() => {
-    if (!isLoading && (!user || user.role !== 'admin')) {
+    if (!isLoading && (!user || !isAdmin(user.email))) {
       alert('관리자만 접근할 수 있습니다.');
       router.push('/');
     }
   }, [user, isLoading, router]);
 
   useEffect(() => {
-    if (!isLoading && (!user || user.role !== 'admin')) {
+    if (!isLoading && (!user || !isAdmin(user.email))) {
       // 관리자가 아니면 데이터 로드하지 않음
       return;
     }
@@ -121,7 +122,7 @@ export default function AdminPage() {
   }
 
   // 관리자 권한 없음
-  if (!user || user.role !== 'admin') {
+  if (!user || !isAdmin(user.email)) {
     return null;
   }
 
@@ -134,13 +135,22 @@ export default function AdminPage() {
         {/* 헤더 + Analytics 버튼 */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-gray-900">관리자 대시보드</h1>
-          <Link
-            href="/admin/analytics"
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
-          >
-            <span>📊</span>
-            <span>RAG Analytics</span>
-          </Link>
+          <div className="flex gap-3">
+            <Link
+              href="/admin/users"
+              className="px-6 py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl font-bold hover:from-green-700 hover:to-teal-700 transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+            >
+              <span>👥</span>
+              <span>회원 관리</span>
+            </Link>
+            <Link
+              href="/admin/analytics"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+            >
+              <span>📊</span>
+              <span>RAG Analytics</span>
+            </Link>
+          </div>
         </div>
 
         {/* Stats Grid */}

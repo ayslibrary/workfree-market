@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
+import { useAuth } from '@/hooks/useAuth';
+import { isAdmin } from '@/lib/admin';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,15 +35,27 @@ interface UserStats {
 }
 
 export default function AdminUsersPage() {
+  const { user, isLoading: authLoading } = useAuth();
+  const router = useRouter();
   const [loginLogs, setLoginLogs] = useState<LoginLog[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [days, setDays] = useState(7);
   const [filter, setFilter] = useState<'all' | 'success' | 'failed'>('all');
 
+  // 관리자 권한 체크
   useEffect(() => {
-    loadData();
-  }, [days]);
+    if (!authLoading && (!user || !isAdmin(user.email))) {
+      alert('관리자만 접근할 수 있습니다.');
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
+
+  useEffect(() => {
+    if (!authLoading && user && isAdmin(user.email)) {
+      loadData();
+    }
+  }, [days, authLoading, user]);
 
   const loadData = async () => {
     setLoading(true);
@@ -138,7 +153,12 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
-        {loading ? (
+        {authLoading || !user || !isAdmin(user.email) ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">🔐</div>
+            <p className="text-gray-600">권한 확인 중...</p>
+          </div>
+        ) : loading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">⏳</div>
             <p className="text-gray-600">데이터 로딩 중...</p>
