@@ -1,32 +1,10 @@
-// 미들웨어: 로그인 필수 + 보호된 경로 처리
-import { createServerClient } from '@supabase/ssr';
+// 미들웨어: MVP 기간 중 숨김 경로 리다이렉트/정적 파일 패스스루
+// NOTE: 현재 앱의 실제 로그인/상태관리는 Firebase(`src/lib/firebase.ts`, `src/hooks/useAuth.ts`) 기반인데,
+// 이 파일은 Supabase 세션 쿠키 기준으로 보호 경로를 강제하고 있어 로그인 후에도 /login으로 튕기는 문제가 발생할 수 있음.
+// 따라서 인증 강제는 클라이언트 가드(useAuth/RoleGuard/AdminGuard)로 맡기고,
+// 미들웨어는 숨김 경로 처리와 정적 리소스 패스스루만 담당한다.
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
-// 로그인 없이 접근 가능한 공개 경로
-const publicPaths = [
-  '/',
-  '/login',
-  '/signup',
-  '/about',
-  '/pricing',
-  '/reset-password',
-  '/auth/callback',
-  '/api',
-];
-
-// 로그인 필수 경로 (이 경로들은 로그인이 필요함)
-const protectedPaths = [
-  '/my',
-  '/tools',
-  '/kits',
-  '/community',
-  '/admin',
-  '/checkout',
-  '/feedback',
-  '/request',
-  '/frimanualbot',
-];
 
 // MVP 기간 중 숨김 처리된 경로 (리다이렉트)
 const hiddenPaths = [
@@ -63,53 +41,8 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Supabase 클라이언트 생성
-  const response = NextResponse.next({
-    request: {
-      headers: req.headers,
-    },
-  });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return req.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  // 세션 확인
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // 보호된 경로 체크
-  const isProtectedPath = protectedPaths.some((path) =>
-    pathname.startsWith(path)
-  );
-
-  // 로그인된 사용자가 로그인/회원가입 페이지 접근 시 대시보드로 리다이렉트
-  if (user && (pathname === '/login' || pathname === '/signup')) {
-    return NextResponse.redirect(new URL('/my/dashboard', req.url));
-  }
-
-  // 보호된 경로에 비로그인 사용자 접근 시 로그인 페이지로 리다이렉트
-  if (!user && isProtectedPath) {
-    const redirectUrl = new URL('/login', req.url);
-    redirectUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  return response;
+  // 인증 강제는 클라이언트(페이지/가드)에서 수행
+  return NextResponse.next();
 }
 
 // 미들웨어가 적용될 경로 설정
