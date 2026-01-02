@@ -69,143 +69,37 @@ export default function MainNavigation() {
               <span className="text-[10px] bg-gradient-to-r from-green-500 to-emerald-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">NEW</span>
             </Link>
 
-            {/* 🤖 AI 크리에이티브 */}
-            <div className="relative group">
-              <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
-                🤖 AI 크리에이티브
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                {/* 실제 작동 */}
-                <Link
-                  href="/tools/blog-generator"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  ✍️ AI 블로그 생성
-                </Link>
-                
-                {/* 오픈 예정 */}
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>📸 AI 화보 메이커</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>📋 AI 보고서 생성</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>💬 AI 프롬프트</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* 🤖 AI 크리에이티브 - 활성화된 도구만 표시 */}
+            <Link
+              href="/tools/blog-generator"
+              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
+            >
+              ✍️ AI 블로그 생성
+            </Link>
 
-            {/* 🕸️ 데이터 수집 */}
-            <div className="relative group">
-              <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
-                🕸️ 데이터 수집
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                {/* 실제 작동 */}
-                <Link
-                  href="/tools/exchange-rate"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  <div className="flex items-center justify-between">
-                    <span>💱 환율 자동 공유</span>
-                    <span className="text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-full">NEW</span>
-                  </div>
-                </Link>
-                
-                {/* 오픈 예정 */}
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>🕷️ 웹 크롤링</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>🖼️ 이미지 파인더</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* 💱 환율 자동 공유 - 활성화된 도구만 표시 */}
+            <Link
+              href="/tools/exchange-rate"
+              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
+            >
+              💱 환율 자동 공유
+            </Link>
 
-            {/* 📧 비즈니스 자동화 */}
-            <div className="relative group">
-              <button className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-1">
-                📧 비즈니스
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border-2 border-[#AFA6FF] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                {/* 실제 작동 */}
-                <Link
-                  href="/tools/qr-generator"
-                  className="block px-4 py-2.5 text-[#1E1B33] hover:bg-[#AFA6FF]/20 hover:text-[#6A5CFF] transition-colors text-[14px] font-medium"
-                >
-                  📱 QR 생성기
-                </Link>
-                
-                {/* 오픈 예정 */}
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>📬 Outlook 자동메일</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>📊 Microsoft 자동화</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-                <div className="block px-4 py-2.5 text-[#1E1B33]/40 cursor-not-allowed text-[14px] font-medium opacity-60">
-                  <div className="flex items-center justify-between">
-                    <span>⚙️ 자동화 스텝</span>
-                    <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 📊 대시보드 - 오픈 예정 */}
-            <div className="relative group">
-              <div className="text-[#1E1B33]/40 cursor-not-allowed font-medium text-[14px] flex items-center gap-2">
-                📊 대시보드
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-            </div>
+            {/* 📱 QR 생성기 - 활성화된 도구만 표시 */}
+            <Link
+              href="/tools/qr-generator"
+              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
+            >
+              📱 QR 생성기
+            </Link>
 
             {/* 🛒 마켓 */}
             <Link
               href="/kits"
-              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px]"
+              className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
             >
               🛒 마켓
             </Link>
-
-            {/* 👥 커뮤니티 - 오픈 예정 */}
-            <div className="relative group">
-              <div className="text-[#1E1B33]/40 cursor-not-allowed font-medium text-[14px] flex items-center gap-2">
-                👥 커뮤니티
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-            </div>
             
             {!isLoading && (
               <>
@@ -342,29 +236,6 @@ export default function MainNavigation() {
                 💱 환율 자동 공유
               </Link>
               
-              {/* 오픈 예정 - 비활성화 */}
-              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
-                <span>📸 AI 갤러리</span>
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
-                <span>📋 AI 보고서</span>
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
-                <span>🕷️ 웹 크롤링</span>
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-              <div className="text-left px-4 py-2.5 text-[#1E1B33]/40 rounded-lg font-medium opacity-60 flex items-center justify-between">
-                <span>📊 데이터 시각화</span>
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full">준비중</span>
-              </div>
-
-              {/* 커뮤니티 섹션 - 오픈 예정 */}
-              <div className="px-4 py-2 text-[#6A5CFF]/50 text-xs font-bold uppercase tracking-wider mt-2 flex items-center gap-2">
-                커뮤니티
-                <span className="text-[9px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded-full normal-case">준비중</span>
-              </div>
 
               {/* 기타 */}
               <hr className="my-2 border-[#AFA6FF]/30" />

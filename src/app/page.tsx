@@ -3,15 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { useClickTracker } from "@/hooks/useClickTracker";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import KitOptionsModal from "@/components/KitOptionsModal";
 import RoulettePopup from "@/components/RoulettePopup";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import MainNavigation from "@/components/MainNavigation";
+import { TrackedLink } from "@/components/TrackedLink";
 
 export default function Home() {
   const { user, isLoading } = useAuth();
+  const { trackBannerClick, trackCTAClick } = useClickTracker({ trackPageViews: true, trackScrollDepth: true });
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [isBetaFull, setIsBetaFull] = useState<boolean>(false);
   const [isFriWaggling, setIsFriWaggling] = useState<boolean>(false);
@@ -174,20 +177,26 @@ export default function Home() {
           <FadeIn delay={0.6}>
             <div className="flex gap-6 justify-center items-center mb-12 relative">
               {!isLoading && !user ? (
-                <Link
+                <TrackedLink
                   href="/kits"
+                  trackType="cta"
+                  trackId="hero-cta-main"
+                  trackName="Hero 지금 칼퇴 클릭"
                   className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   🚀 지금 칼퇴 클릭
-                </Link>
+                </TrackedLink>
               ) : (
-                <Link
-                  href="/beta/dashboard"
+                <TrackedLink
+                  href="/my/dashboard"
+                  trackType="cta"
+                  trackId="hero-cta-dashboard"
+                  trackName="Hero 내 대시보드로 이동"
                   className="bg-[#6A5CFF] hover:bg-[#5A4CEF] text-white px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-3"
                 >
                   <span className="text-2xl">⚡</span>
                   <span>내 WorkFree 허브로 이동</span>
-                </Link>
+                </TrackedLink>
               )}
             </div>
           </FadeIn>
@@ -292,18 +301,24 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
+                <TrackedLink
                   href="/frimanualbot"
+                  trackType="banner"
+                  trackId="frimanualbot-detail"
+                  trackName="Fri Manual Bot 자세히 보기"
                   className="inline-flex items-center justify-center bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
                 >
                   자세히 보기 →
-                </Link>
-                <Link
+                </TrackedLink>
+                <TrackedLink
                   href="/tools/frimanualbot"
+                  trackType="cta"
+                  trackId="frimanualbot-start"
+                  trackName="Fri Manual Bot 무료로 시작하기"
                   className="inline-flex items-center justify-center bg-white/20 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-all"
                 >
                   무료로 시작하기
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
@@ -403,12 +418,15 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
+                <TrackedLink
                   href="/tools/salary-calculator"
+                  trackType="banner"
+                  trackId="salary-calculator-cta"
+                  trackName="연봉 계산기 지금 바로 계산하기"
                   className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-2xl"
                 >
                   💰 지금 바로 계산하기 →
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
@@ -873,8 +891,11 @@ export default function Home() {
                   </div>
 
                   {/* CTA 버튼 */}
-                  <Link
+                  <TrackedLink
                     href="/tools/search-crawler"
+                    trackType="banner"
+                    trackId="news-crawler-cta"
+                    trackName="뉴스 크롤링 시작하기"
                     className="group block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
                   >
                     <div className="flex items-center justify-center gap-2">
@@ -882,7 +903,7 @@ export default function Home() {
                       <span>뉴스 크롤링 시작하기</span>
                       <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                     </div>
-                  </Link>
+                  </TrackedLink>
 
                   {/* 하단 설명 */}
                   <div className="mt-6 text-center">
@@ -955,8 +976,11 @@ export default function Home() {
                 </div>
 
                 {/* CTA 버튼 */}
-                <Link
+                <TrackedLink
                   href="/tools/blog-generator"
+                  trackType="banner"
+                  trackId="blog-generator-cta"
+                  trackName="AI 블로그 생성 체험하기"
                   className="group block w-full bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-6 py-4 rounded-xl font-bold text-center hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -964,7 +988,7 @@ export default function Home() {
                     <span>AI 블로그 생성 체험하기</span>
                     <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                   </div>
-                </Link>
+                </TrackedLink>
 
                 {/* 하단 설명 */}
                 <div className="mt-6 text-center">

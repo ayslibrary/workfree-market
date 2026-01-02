@@ -13,10 +13,14 @@
     "test:db": "dotenv -e .env.local -- tsx scripts/test-db-query.ts",
     "debug:search": "dotenv -e .env.local -- tsx scripts/debug-search.ts",
     "add:context": "tsx scripts/add-context-to-knowledge.ts",
-    "embed:contextual": "dotenv -e .env.local -- tsx scripts/embed-contextual.ts"
+    "embed:contextual": "dotenv -e .env.local -- tsx scripts/embed-contextual.ts",
+    "set:admin": "dotenv -e .env.local -- tsx scripts/set-admin.ts",
+    "create:admin": "dotenv -e .env.local -- tsx scripts/create-admin-user.ts"
   },
   "dependencies": {
     "@pinecone-database/pinecone": "^6.1.2",
+    "@supabase/auth-helpers-nextjs": "^0.15.0",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.80.0",
     "@tosspayments/payment-widget-sdk": "^0.12.0",
     "@types/nodemailer": "^7.0.3",
@@ -31,11 +35,13 @@
     "nodemailer": "^7.0.10",
     "openai": "^6.6.0",
     "pdf-parse": "^2.4.5",
+    "pptxgenjs": "^4.0.1",
     "qrcode": "^1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hot-toast": "^2.6.0",
     "resend": "^4.8.0",
+    "xlsx": "^0.18.5",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

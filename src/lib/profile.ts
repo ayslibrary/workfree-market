@@ -113,3 +113,76 @@ export async function uploadProfileImage(
   }
 }
 
+// ============================================
+// 확장 프로필 (개인정보) - Supabase
+// ============================================
+
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export interface ExtendedProfile {
+  phone?: string;
+  company?: string;
+  job_title?: string;
+  industry?: string;
+  team_size?: string;
+  how_found_us?: string;
+  interests?: string[];
+  marketing_consent?: boolean;
+  privacy_consent?: boolean;
+}
+
+/**
+ * 확장 프로필 조회
+ */
+export async function getExtendedProfile(userId: string): Promise<ExtendedProfile | null> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('phone, company, job_title, industry, team_size, how_found_us, interests, marketing_consent, privacy_consent')
+      .eq('id', userId)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('확장 프로필 조회 실패:', error);
+    return null;
+  }
+}
+
+/**
+ * 확장 프로필 업데이트
+ */
+export async function updateExtendedProfile(
+  userId: string,
+  data: ExtendedProfile
+): Promise<{ success: boolean; error: string | null }> {
+  try {
+    const { error } = await supabase
+      .from('users')
+      .update({
+        phone: data.phone,
+        company: data.company,
+        job_title: data.job_title,
+        industry: data.industry,
+        team_size: data.team_size,
+        how_found_us: data.how_found_us,
+        interests: data.interests,
+        marketing_consent: data.marketing_consent,
+        privacy_consent: data.privacy_consent,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId);
+    
+    if (error) throw error;
+    return { success: true, error: null };
+  } catch (error: any) {
+    console.error('확장 프로필 업데이트 실패:', error);
+    return { success: false, error: error.message || '프로필 업데이트에 실패했습니다.' };
+  }
+}
+
