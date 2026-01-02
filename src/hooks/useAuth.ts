@@ -26,7 +26,8 @@ export function useAuth() {
         
         const user: User = {
           id: firebaseUser.uid,
-          email: firebaseUser.email || '',
+          // 일부 케이스(프로바이더/설정)에선 firebaseUser.email이 비어 있을 수 있어 Firestore 값을 보정으로 사용
+          email: firebaseUser.email || userData?.email || '',
           displayName: firebaseUser.displayName || userData?.displayName || '사용자',
           photoURL: firebaseUser.photoURL || userData?.photoURL,
           role: userData?.role || 'buyer',

@@ -9,6 +9,7 @@ export const ADMIN_EMAILS = [
 // 관리자 여부 확인
 export function isAdmin(email: string | null | undefined): boolean {
   if (!email) return false;
-  return ADMIN_EMAILS.includes(email.toLowerCase());
+  const normalized = email.trim().toLowerCase();
+  return ADMIN_EMAILS.includes(normalized);
 }
 
