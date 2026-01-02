@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { signUpWithEmail, signInWithGoogle } from '@/lib/supabaseAuth';
+import { registerWithEmail, signInWithGoogle } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 import { FadeIn } from '@/components/animations';
 import { setReferrer, grantReferralReward, initializeReferral } from '@/lib/referral';
@@ -23,7 +23,6 @@ export default function SignupPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'buyer' as 'buyer' | 'seller',
     agreeTerms: false,
   });
   
@@ -78,7 +77,7 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const { user, error, message } = await signUpWithEmail(
+      const { user, error, message } = await registerWithEmail(
         formData.email,
         formData.password,
         formData.displayName
@@ -105,14 +104,17 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const { error } = await signInWithGoogle();
+      const { user, error } = await signInWithGoogle();
       
       if (error) {
         setLocalError(error);
         setError(error);
         setIsLoading(false);
+      } else if (user) {
+        // 로그인 성공 - 대시보드로 이동
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
       }
-      // Google 로그인은 리다이렉트되므로 여기서 처리 불필요
     } catch (err) {
       setLocalError('Google 회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
@@ -165,7 +167,7 @@ export default function SignupPage() {
             회원가입
           </h1>
           <p className="text-base md:text-lg text-[#1E1B33]/70 mb-8 text-center">
-            자동화 키트를 구매하거나 판매하세요
+            AI 실무 자동화 스튜디오에 오신 것을 환영합니다
           </p>
 
           {/* 에러 메시지 */}
@@ -211,45 +213,6 @@ export default function SignupPage() {
               <span className="px-4 bg-white text-[#1E1B33]/70">
                 또는
               </span>
-            </div>
-          </div>
-
-          {/* 회원 유형 선택 */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-[#1E1B33] mb-3">
-              가입 유형
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => handleChange('role', 'buyer')}
-                className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
-                  formData.role === 'buyer'
-                    ? 'border-[#6A5CFF] bg-[#f5f0ff] shadow-lg'
-                    : 'border-[#AFA6FF]/50 hover:border-[#6A5CFF]'
-                }`}
-              >
-                <div className="text-2xl mb-2">🛒</div>
-                <div className="font-semibold text-[#1E1B33]">구매자</div>
-                <div className="text-xs text-[#1E1B33]/70 mt-1">
-                  키트 구매
-                </div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChange('role', 'seller')}
-                className={`p-4 rounded-xl border-2 transition-all hover:scale-105 ${
-                  formData.role === 'seller'
-                    ? 'border-[#6A5CFF] bg-[#f5f0ff] shadow-lg'
-                    : 'border-[#AFA6FF]/50 hover:border-[#6A5CFF]'
-                }`}
-              >
-                <div className="text-2xl mb-2">💼</div>
-                <div className="font-semibold text-[#1E1B33]">판매자</div>
-                <div className="text-xs text-[#1E1B33]/70 mt-1">
-                  키트 판매
-                </div>
-              </button>
             </div>
           </div>
 
