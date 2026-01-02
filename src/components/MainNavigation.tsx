@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
-import { signOut } from "@/lib/firebase";
+import { signOut } from "@/lib/supabaseAuth";
 import { useAuthStore } from "@/store/authStore";
 import { CreditBalance } from "@/components/CreditBalance";
 

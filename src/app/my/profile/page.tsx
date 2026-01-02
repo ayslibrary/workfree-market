@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import MainNavigation from '@/components/MainNavigation';
 import { FadeIn } from '@/components/animations';
 import { updateProfile, changePassword, getExtendedProfile, updateExtendedProfile } from '@/lib/profile';
-import { deleteAccount } from '@/lib/firebase';
+import { deleteAccount } from '@/lib/supabaseAuth';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';

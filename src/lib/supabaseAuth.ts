@@ -281,7 +281,28 @@ export async function updateCredits(userId: string, amount: number) {
   }
 }
 
+// ============================================
+// 계정 삭제
+// ============================================
 
+export async function deleteAccount(): Promise<{ success: boolean; error: string | null }> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return { success: false, error: '로그인이 필요합니다.' };
+    }
 
-
+    // users 테이블에서 사용자 데이터 삭제
+    await supabase.from('users').delete().eq('id', user.id);
+    
+    // Supabase Auth에서 사용자 삭제 (admin API 필요 - 클라이언트에서는 로그아웃만)
+    await supabase.auth.signOut();
+    
+    return { success: true, error: null };
+  } catch (error: any) {
+    console.error('계정 삭제 실패:', error);
+    return { success: false, error: error.message || '계정 삭제에 실패했습니다.' };
+  }
+}
 
