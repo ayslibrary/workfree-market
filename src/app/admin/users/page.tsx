@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { useAuth } from '@/hooks/useAuth';
 import { isAdmin } from '@/lib/admin';
-import { db as firebaseDb } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -93,29 +92,32 @@ export default function AdminUsersPage() {
     setUsersLoading(true);
     setUsersError(null);
     try {
-      if (!firebaseDb) {
-        console.error('Firebase DB가 초기화되지 않았습니다.');
+      const token = await auth.currentUser?.getIdToken();
+      if (!token) {
         setUsers([]);
-        setUsersError('Firebase DB가 초기화되지 않았습니다. (환경변수/네트워크 확인)');
+        setUsersError('로그인 세션을 확인할 수 없습니다. 다시 로그인 후 시도해주세요.');
         return;
       }
 
-      const q = query(
-        collection(firebaseDb, 'users'),
-        orderBy('createdAt', 'desc'),
-        limit(200)
-      );
-      const snapshot = await getDocs(q);
+      const res = await fetch('/api/admin/users', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: 'no-store',
+      });
 
-      const list: FirestoreUser[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as any),
-      }));
-      setUsers(list);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setUsers([]);
+        setUsersError(json?.error || '회원 목록을 불러오지 못했습니다.');
+        return;
+      }
+
+      setUsers((json?.users || []) as FirestoreUser[]);
     } catch (error) {
       console.error('회원 목록 로딩 실패:', error);
       setUsers([]);
-      setUsersError('회원 목록을 불러오지 못했습니다. (Firestore 권한/네트워크 확인)');
+      setUsersError('회원 목록을 불러오지 못했습니다. (서버/API/환경변수 확인)');
     } finally {
       setUsersLoading(false);
     }
