@@ -288,10 +288,35 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
-        {authLoading || !user || !isAdmin(user.email) ? (
+        {authLoading ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🔐</div>
             <p className="text-gray-600">권한 확인 중...</p>
+          </div>
+        ) : !user ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">🔑</div>
+            <p className="text-gray-700 font-bold text-lg mb-2">로그인이 필요합니다</p>
+            <p className="text-gray-600 mb-6">관리자 페이지는 로그인 후 이용할 수 있습니다.</p>
+            <Link
+              href="/login?redirect=/admin/users"
+              className="inline-flex items-center justify-center px-6 py-3 bg-[#6A5CFF] text-white rounded-xl font-bold hover:bg-[#5B4DEE] transition-all"
+            >
+              로그인 하러가기
+            </Link>
+          </div>
+        ) : !isAdmin(user.email) ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">⛔</div>
+            <p className="text-gray-700 font-bold text-lg mb-2">관리자 권한이 없습니다</p>
+            <p className="text-gray-600 mb-2">현재 로그인 이메일: <b>{user.email || '(없음)'}</b></p>
+            <p className="text-gray-600 mb-6">허용된 관리자 이메일만 접근 가능합니다.</p>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-6 py-3 bg-gray-800 text-white rounded-xl font-bold hover:bg-black transition-all"
+            >
+              홈으로
+            </Link>
           </div>
         ) : (
           <>
