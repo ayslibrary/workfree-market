@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
-import { signOut } from "@/lib/supabaseAuth";
+import { signOut } from "@/lib/firebase";
 import { useAuthStore } from "@/store/authStore";
 import { CreditBalance } from "@/components/CreditBalance";
 
@@ -70,28 +70,28 @@ export default function MainNavigation() {
             </Link>
 
             {/* 🤖 AI 크리에이티브 - 활성화된 도구만 표시 */}
-            <Link
-              href="/tools/blog-generator"
+                <Link
+                  href="/tools/blog-generator"
               className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
-            >
-              ✍️ AI 블로그 생성
-            </Link>
-
+                >
+                  ✍️ AI 블로그 생성
+                </Link>
+                
             {/* 💱 환율 자동 공유 - 활성화된 도구만 표시 */}
-            <Link
-              href="/tools/exchange-rate"
+                <Link
+                  href="/tools/exchange-rate"
               className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
-            >
+                >
               💱 환율 자동 공유
-            </Link>
-
+                </Link>
+                
             {/* 📱 QR 생성기 - 활성화된 도구만 표시 */}
-            <Link
-              href="/tools/qr-generator"
+                <Link
+                  href="/tools/qr-generator"
               className="text-[#1E1B33] hover:text-[#6A5CFF] transition-colors font-medium text-[14px] flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#AFA6FF]/10"
-            >
-              📱 QR 생성기
-            </Link>
+                >
+                  📱 QR 생성기
+                </Link>
 
             {/* 🛒 마켓 */}
             <Link

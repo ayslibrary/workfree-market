@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { registerWithEmail, signInWithGoogle } from '@/lib/firebase';
+import { signUpWithEmail, signInWithGoogle } from '@/lib/supabaseAuth';
 import { useAuthStore } from '@/store/authStore';
 import { FadeIn } from '@/components/animations';
 import { setReferrer, grantReferralReward, initializeReferral } from '@/lib/referral';
@@ -78,7 +78,7 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const { user, error } = await registerWithEmail(
+      const { user, error, message } = await signUpWithEmail(
         formData.email,
         formData.password,
         formData.displayName
@@ -89,7 +89,7 @@ export default function SignupPage() {
         setError(error);
         setIsLoading(false);
       } else if (user) {
-        // TODO: Firestore에 추가 사용자 정보 저장 (role 등)
+        toast.success(message || '회원가입 완료!');
         const redirect = searchParams.get('redirect') || '/my/dashboard';
         router.push(redirect);
       }
@@ -105,16 +105,14 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const { user, error } = await signInWithGoogle();
+      const { error } = await signInWithGoogle();
       
       if (error) {
         setLocalError(error);
         setError(error);
         setIsLoading(false);
-      } else if (user) {
-        const redirect = searchParams.get('redirect') || '/my/dashboard';
-        router.push(redirect);
       }
+      // Google 로그인은 리다이렉트되므로 여기서 처리 불필요
     } catch (err) {
       setLocalError('Google 회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);

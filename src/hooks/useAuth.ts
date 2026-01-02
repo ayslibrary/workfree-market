@@ -1,10 +1,10 @@
-// 인증 관련 커스텀 Hook (Supabase 완전 통합)
+// 인증 관련 커스텀 Hook (Firebase 인증)
 
 'use client';
 
 import { useEffect, useRef } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { onAuthStateChange, getCurrentUser } from '@/lib/supabaseAuth';
+import { onAuthStateChange, getUserFromFirestore } from '@/lib/firebase';
 import type { User } from '@/types/user';
 
 export function useAuth() {
@@ -18,37 +18,33 @@ export function useAuth() {
     
     setLoading(true);
 
-    // 1. 먼저 현재 세션 확인 (즉시)
-    const checkInitialSession = async () => {
-      try {
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          setUser(currentUser);
-        } else {
-          clearUser();
-        }
-      } catch (error) {
-        console.error('Initial session check failed:', error);
-        clearUser();
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkInitialSession();
-
-    // 2. 인증 상태 변경 감지 (로그인/로그아웃 시)
-    const { data: { subscription } } = onAuthStateChange(async (supabaseUser) => {
-      if (supabaseUser) {
-        setUser(supabaseUser);
+    // Firebase 인증 상태 변경 감지
+    const unsubscribe = onAuthStateChange(async (firebaseUser) => {
+      if (firebaseUser) {
+        // Firestore에서 추가 사용자 정보 가져오기
+        const { data: userData } = await getUserFromFirestore(firebaseUser.uid);
+        
+        const user: User = {
+          id: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          displayName: firebaseUser.displayName || userData?.displayName || '사용자',
+          photoURL: firebaseUser.photoURL || userData?.photoURL,
+          role: userData?.role || 'buyer',
+          credits: userData?.credits || 0,
+          createdAt: userData?.createdAt?.toDate() || new Date(),
+          updatedAt: userData?.updatedAt?.toDate() || new Date(),
+        };
+        
+        setUser(user);
       } else {
         clearUser();
       }
+      setLoading(false);
     });
 
     // Cleanup
     return () => {
-      subscription.unsubscribe();
+      unsubscribe();
     };
   }, [setUser, setLoading, clearUser, setError]);
   

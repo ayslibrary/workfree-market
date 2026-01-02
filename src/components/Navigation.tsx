@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { signOut } from '@/lib/supabaseAuth';
+import { signOut } from '@/lib/firebase';
 
 export default function Navigation() {
   const pathname = usePathname();
