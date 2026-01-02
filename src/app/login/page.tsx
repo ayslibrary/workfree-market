@@ -58,14 +58,17 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const { error } = await signInWithGoogle();
+      const { user, error } = await signInWithGoogle();
       
       if (error) {
         setLocalError(error);
         setError(error);
         setIsLoading(false);
+      } else if (user) {
+        // 로그인 성공 - 대시보드로 이동
+        const redirect = searchParams.get('redirect') || '/my/dashboard';
+        router.push(redirect);
       }
-      // Google 로그인은 리다이렉트되므로 여기서 처리 불필요
     } catch {
       setLocalError('Google 로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       setIsLoading(false);
