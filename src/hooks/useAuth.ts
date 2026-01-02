@@ -1,58 +1,55 @@
-// 인증 관련 커스텀 Hook
+// 인증 관련 커스텀 Hook (Supabase 완전 통합)
 
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { onAuthStateChange, getUserFromFirestore } from '@/lib/firebase';
-import { User } from '@/types/user';
+import { onAuthStateChange, getCurrentUser } from '@/lib/supabaseAuth';
+import type { User } from '@/types/user';
 
 export function useAuth() {
   const { user, isLoading, error, setUser, setLoading, clearUser, setError } = useAuthStore();
+  const initialized = useRef(false);
   
   useEffect(() => {
+    // 이미 초기화되었으면 skip
+    if (initialized.current) return;
+    initialized.current = true;
+    
     setLoading(true);
 
-    // Firebase 인증 상태 감지
-    const unsubscribe = onAuthStateChange(async (firebaseUser) => {
-      if (firebaseUser) {
-        // Firestore에서 사용자 정보 가져오기
-        const { data, error: firestoreError } = await getUserFromFirestore(firebaseUser.uid);
-        
-        if (data) {
-          const user: User = {
-            id: firebaseUser.uid,
-            email: firebaseUser.email || data.email,
-            displayName: firebaseUser.displayName || data.displayName,
-            photoURL: firebaseUser.photoURL || data.photoURL,
-            role: data.role || 'buyer',
-            credits: data.credits || 0,
-            createdAt: data.createdAt?.toDate() || new Date(),
-            updatedAt: data.updatedAt?.toDate() || new Date(),
-          };
-          setUser(user);
+    // 1. 먼저 현재 세션 확인 (즉시)
+    const checkInitialSession = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          setUser(currentUser);
         } else {
-          // Firestore에 정보가 없는 경우 기본 정보만 사용
-          const user: User = {
-            id: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            displayName: firebaseUser.displayName || '사용자',
-            photoURL: firebaseUser.photoURL,
-            role: 'buyer',
-            credits: 0,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          };
-          setUser(user);
+          clearUser();
         }
+      } catch (error) {
+        console.error('Initial session check failed:', error);
+        clearUser();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkInitialSession();
+
+    // 2. 인증 상태 변경 감지 (로그인/로그아웃 시)
+    const { data: { subscription } } = onAuthStateChange(async (supabaseUser) => {
+      if (supabaseUser) {
+        setUser(supabaseUser);
       } else {
         clearUser();
       }
-      setLoading(false);
     });
 
     // Cleanup
-    return () => unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [setUser, setLoading, clearUser, setError]);
   
   return {
@@ -62,17 +59,3 @@ export function useAuth() {
     isAuthenticated: !!user,
   };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
