@@ -92,24 +92,46 @@ export default function AdminUsersPage() {
     setUsersLoading(true);
     setUsersError(null);
     try {
-      const token = await auth.currentUser?.getIdToken();
+      // 토큰이 오래된 경우가 있어 강제 갱신을 우선 시도
+      let token = await auth.currentUser?.getIdToken(true);
       if (!token) {
         setUsers([]);
         setUsersError('로그인 세션을 확인할 수 없습니다. 다시 로그인 후 시도해주세요.');
         return;
       }
 
-      const res = await fetch('/api/admin/users', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        cache: 'no-store',
-      });
+      const callApi = async (t: string) => {
+        const res = await fetch('/api/admin/users', {
+          headers: {
+            Authorization: `Bearer ${t}`,
+          },
+          cache: 'no-store',
+        });
+        const json = await res.json().catch(() => ({}));
+        return { res, json };
+      };
 
-      const json = await res.json().catch(() => ({}));
+      // 1차 호출
+      let { res, json } = await callApi(token);
+
+      // 401이면 토큰 재갱신 후 1회 재시도
+      if (res.status === 401) {
+        token = await auth.currentUser?.getIdToken(true);
+        if (token) {
+          ({ res, json } = await callApi(token));
+        }
+      }
+
       if (!res.ok) {
         setUsers([]);
-        setUsersError(json?.error || '회원 목록을 불러오지 못했습니다.');
+        const errMsg = json?.error || '회원 목록을 불러오지 못했습니다.';
+        if (res.status === 401 && /invalid token/i.test(errMsg)) {
+          setUsersError(
+            'Invalid token: Firebase 웹앱(NEXT_PUBLIC_FIREBASE_*)과 Firebase Admin(FIREBASE_ADMIN_*)이 같은 프로젝트인지 확인 후, 로그아웃→로그인으로 세션을 갱신해주세요.'
+          );
+        } else {
+          setUsersError(errMsg);
+        }
         return;
       }
 
