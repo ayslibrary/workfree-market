@@ -1,4 +1,14 @@
+// 클라이언트 컴포넌트, App router 에서 기본은 서버 컴포넌트
+// UI 상태/이벤트가 있으려면 use client 필요
+
 'use client';
+
+// useState/useEffect : 입력값(email, passoword), 로딩 상태, 에러메세지 상태관리
+// useRouter : 로그인 상태에서 페이지 이동
+// useSearchParams : URL 쿼리스트링 읽기
+// Link : Next.js 의 클라이언트 네비게이션 링크
+// loginWithEmail : Firebase 이메일 로그인 함수
+// useAuthStore : 전역상태 store(user, error 관리)
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -9,13 +19,28 @@ import { loginWithEmail } from '@/lib/firebase';
 import { useAuthStore } from '@/store/authStore';
 import { FadeIn } from '@/components/animations';
 
+// 해당 페이지를 항상 동적으로 렌더링하도록 강제
+// 로그인 페이지는 사용자 상태, redirect 에 따라 결과 달라질 수 있음
+
+// 앱 전체에서 에러를 표시해야 할 수 있으니까 전역 및 로컬 에러를 동시에 관리
+
+//전역 store(authStore)
+
+// user : 현재 로그인한 사용자 객체(있으면 로그인 상태)
+// setUser : 아직까지 실제로 코드에서 사용하지는 않음(활용예정)
+
+// 로컬 state
+
+// email, password : 입력값
+// isLoading : 로그인 요청 중 버튼/입력 비활성화
+// localError : 해당 페이지에서 보여줄 에러 메세지
+
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, setUser, setError, clearError } = useAuthStore();
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
