@@ -1,0 +1,5 @@
+# Exclude heavy local video directory from Vercel deployment payload
+public/lectures
+public/lectures/*
+*.mp4
+*.mkv
