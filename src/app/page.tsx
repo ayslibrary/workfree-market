@@ -1241,7 +1241,7 @@ export default function Home() {
                     setLicenseInput(e.target.value);
                     setLicenseError("");
                   }}
-                  placeholder="라이선스 비번 입력 (예: workfreemarketyaho)"
+                  placeholder="라이선스 비번 입력 (예: workfree1)"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-center text-white placeholder-slate-500 focus:outline-none transition-all font-mono tracking-wider"
                   autoFocus
                 />
