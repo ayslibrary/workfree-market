@@ -383,7 +383,7 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
               <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold shadow-lg shadow-cyan-500/10">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                <span>실무 중심 생성형 AI 엑셀 매크로 클래스</span>
+                <span>🗺️ 사무자동화 테크트리 LV.01 · 입문 마스터클래스</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight">
@@ -406,7 +406,7 @@ export default function Home() {
                   onClick={() => setViewMode("classroom")}
                   className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
                 >
-                  <span>🚀 10강 마스터클래스 바로 수강하기</span>
+                  <span>🚀 LV.01 10강 마스터클래스 바로 수강하기</span>
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
                 <a
@@ -994,11 +994,11 @@ export default function Home() {
             <div className="space-y-3 pb-3 border-b border-slate-800">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-sm sm:text-base text-white">강의 교육 과정 커리큘럼</h3>
+                  <h3 className="font-bold text-sm sm:text-base text-white">테크트리 LV.01 10강 커리큘럼</h3>
                   <p className="text-[11px] sm:text-xs text-slate-400">총 10강 • 100분 완강 코스</p>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-slate-800 text-cyan-400 text-[10px] sm:text-xs font-extrabold border border-slate-700">
-                  10강 세트
+                <span className="px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] sm:text-xs font-extrabold border border-cyan-500/30">
+                  LV.01 수강 중
                 </span>
               </div>
 
