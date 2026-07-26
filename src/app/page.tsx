@@ -7,6 +7,7 @@ interface Lecture {
   title: string;
   duration: string;
   filename: string;
+  driveUrl?: string;
   summary: string;
   keyPoints: string[];
   resources: { name: string; type: string }[];
@@ -18,6 +19,7 @@ const LECTURES: Lecture[] = [
     title: "01강: WorkFree Market 오리엔테이션 및 플랫폼 핵심 개요",
     duration: "10:00",
     filename: "Lecture_01.mp4",
+    driveUrl: "",
     summary: "WorkFree Market 전체 강의의 비전과 10강으로 구성된 단기 마스터클래스 핵심 로드맵을 소개합니다.",
     keyPoints: ["강의 학습 목표 설정", "워크프리 시스템 3단계 이해", "수강생 완료 리포트 구성"],
     resources: [
@@ -30,6 +32,7 @@ const LECTURES: Lecture[] = [
     title: "02강: 실전 워크플로우 구성 및 초기 환경 세팅",
     duration: "10:00",
     filename: "Lecture_02.mp4",
+    driveUrl: "",
     summary: "효율적인 작업을 위한 개발 환경 세팅 및 도구 설치 가이드입니다.",
     keyPoints: ["개발 및 자동화 환경 구성", "필수 필수 도구 설치", "폴더 구조 및 파일 관리 규칙"],
     resources: [{ name: "02강_환경세팅_체크리스트.pdf", type: "PDF" }],
@@ -39,6 +42,7 @@ const LECTURES: Lecture[] = [
     title: "03강: 핵심 도구 활용 및 프로세스 최적화 기법",
     duration: "10:00",
     filename: "Lecture_03.mp4",
+    driveUrl: "",
     summary: "핵심 기능을 빠르게 익히고 반복 작업 시간을 80% 줄이는 프레임워크 테크닉입니다.",
     keyPoints: ["핵심 도구 100% 활용하기", "작업 속도 3배 향상 팁", "자주 발생하는 착오 방지"],
     resources: [{ name: "03강_단축키_및_치트시트.pdf", type: "PDF" }],
@@ -48,6 +52,7 @@ const LECTURES: Lecture[] = [
     title: "04강: 효율성을 극대화하는 파이프라인 자동화",
     duration: "10:00",
     filename: "Lecture_04.mp4",
+    driveUrl: "",
     summary: "수동 작업을 자동화로 전환하여 작업 시간과 오차를 최소화합니다.",
     keyPoints: ["스마트 파이프라인 설계", "조건별 자동 실행 세팅", "오류 모니터링 가이드"],
     resources: [{ name: "04강_자동화_템플릿.zip", type: "ZIP" }],
@@ -57,6 +62,7 @@ const LECTURES: Lecture[] = [
     title: "05강: 실전 응용 케이스 분석 (Part 1)",
     duration: "10:00",
     filename: "Lecture_05.mp4",
+    driveUrl: "",
     summary: "실제 비즈니스 프로젝트에서 바로 사용 가능한 응용 케이스를 분석하고 구현합니다.",
     keyPoints: ["실전 케이스 실습 분석", "핵심 데이터 가공 전략", "결과물 품질 검증"],
     resources: [{ name: "05강_실습_소스코드.zip", type: "ZIP" }],
@@ -66,6 +72,7 @@ const LECTURES: Lecture[] = [
     title: "06강: 실전 응용 케이스 분석 (Part 2)",
     duration: "10:00",
     filename: "Lecture_06.mp4",
+    driveUrl: "",
     summary: "고급 파이프라인 구축 및 확장 가능한 아키텍처 패턴을 실습합니다.",
     keyPoints: ["고급 적용 사례 트러블슈팅", "확장 가능한 패턴 적용", "실시간 연동 체계 구축"],
     resources: [{ name: "06강_심화_케이스_가이드.pdf", type: "PDF" }],
@@ -75,6 +82,7 @@ const LECTURES: Lecture[] = [
     title: "07강: 문제 해결 및 트러블슈팅 디버깅 가이드",
     duration: "10:00",
     filename: "Lecture_07.mp4",
+    driveUrl: "",
     summary: "실행 중 발생할 수 있는 에러 유형과 신속한 원인 분석 및 해결 팁입니다.",
     keyPoints: ["에러 로그 분석 3단계", "자주 묻는 예외 상황 조치법", "안정성 확보 테크닉"],
     resources: [{ name: "07강_에러조치_매뉴얼.pdf", type: "PDF" }],
@@ -84,6 +92,7 @@ const LECTURES: Lecture[] = [
     title: "08강: 서비스 런칭 및 운영 최적화 전략",
     duration: "10:00",
     filename: "Lecture_08.mp4",
+    driveUrl: "",
     summary: "실제 도메인에 런칭하고 지속 가능한 운영 프로세스를 확립하는 전략을 설명합니다.",
     keyPoints: ["도메인 연결 및 SEO 기본", "성능 모니터링 체계", "고객/사용자 반응 수집"],
     resources: [{ name: "08강_런칭_체크리스트.pdf", type: "PDF" }],
@@ -93,6 +102,7 @@ const LECTURES: Lecture[] = [
     title: "09강: 마스터클래스 핵심 개념 총정리",
     duration: "10:00",
     filename: "Lecture_09.mp4",
+    driveUrl: "",
     summary: "1강부터 8강까지의 핵심 내용을 요약 정리하고 전체 흐름을 최종점검합니다.",
     keyPoints: ["전체 과목 핵심 요약", "핵심 포인트 복습", "수강 완료 테스트 검토"],
     resources: [{ name: "09강_최종_마스터_요약집.pdf", type: "PDF" }],
@@ -102,6 +112,7 @@ const LECTURES: Lecture[] = [
     title: "10강: 프로젝트 완성 및 최종 비전 가이드",
     duration: "10:00",
     filename: "Lecture_10.mp4",
+    driveUrl: "",
     summary: "10강 마스터클래스를 마무리하며 향후 발전 방향과 수강 완료 후 다음 단계를 안내합니다.",
     keyPoints: ["최종 프로젝트 완료 수료", "다음 단계 심화 과정 안내", "커뮤니티 및 지속 지원"],
     resources: [{ name: "10강_수료증_및_커뮤니티_안내.pdf", type: "PDF" }],
@@ -114,8 +125,31 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"summary" | "notes" | "resources">("summary");
   const [userNote, setUserNote] = useState<string>("");
   const [showDeployModal, setShowDeployModal] = useState<boolean>(false);
+  const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
+  const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Load drive links and completion state from localStorage
+  useEffect(() => {
+    const savedCompleted = localStorage.getItem("workfree_completed");
+    if (savedCompleted) {
+      try {
+        setCompletedLectures(JSON.parse(savedCompleted));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const savedDrive = localStorage.getItem("workfree_drive_links");
+    if (savedDrive) {
+      try {
+        setDriveLinks(JSON.parse(savedDrive));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
 
   // Sync playback speed to video element
   useEffect(() => {
@@ -124,19 +158,6 @@ export default function Home() {
     }
   }, [playbackSpeed, currentLecture]);
 
-  // Load completion state from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("workfree_completed");
-    if (saved) {
-      try {
-        setCompletedLectures(JSON.parse(saved));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, []);
-
-
   const toggleComplete = (id: number) => {
     const updated = completedLectures.includes(id)
       ? completedLectures.filter((item) => item !== id)
@@ -144,6 +165,25 @@ export default function Home() {
     setCompletedLectures(updated);
     localStorage.setItem("workfree_completed", JSON.stringify(updated));
   };
+
+  const handleSaveDriveLink = (lectureId: number, url: string) => {
+    const updated = { ...driveLinks, [lectureId]: url };
+    setDriveLinks(updated);
+    localStorage.setItem("workfree_drive_links", JSON.stringify(updated));
+  };
+
+  const extractDriveId = (inputUrl: string): string | null => {
+    if (!inputUrl) return null;
+    const cleanUrl = inputUrl.trim();
+    // Matches /file/d/ID/ or ?id=ID or raw ID
+    const match = cleanUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || 
+                  cleanUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
+                  cleanUrl.match(/^([a-zA-Z0-9_-]{25,50})$/);
+    return match ? match[1] : null;
+  };
+
+  const currentDriveUrl = driveLinks[currentLecture.id] || currentLecture.driveUrl || "";
+  const currentDriveId = extractDriveId(currentDriveUrl);
 
   const progressPercent = Math.round((completedLectures.length / LECTURES.length) * 100);
 
@@ -167,21 +207,32 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Course Progress Indicator */}
-        <div className="hidden md:flex items-center space-x-6">
-          <div className="flex flex-col items-end">
+        {/* Course Progress & Actions */}
+        <div className="hidden md:flex items-center space-x-4">
+          <div className="flex flex-col items-end pr-2">
             <div className="flex items-center space-x-2 text-xs font-semibold">
               <span className="text-slate-400">전체 수강률:</span>
               <span className="text-cyan-400 font-bold text-sm">{progressPercent}%</span>
               <span className="text-slate-500">({completedLectures.length}/10 완료)</span>
             </div>
-            <div className="w-48 h-2 bg-slate-800 rounded-full overflow-hidden mt-1 border border-slate-700/50">
+            <div className="w-44 h-2 bg-slate-800 rounded-full overflow-hidden mt-1 border border-slate-700/50">
               <div
                 className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500 ease-out"
                 style={{ width: `${progressPercent}%` }}
               ></div>
             </div>
           </div>
+
+          {/* Google Drive Video Connect Button */}
+          <button
+            onClick={() => setShowDriveModal(true)}
+            className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all duration-200 cursor-pointer active:scale-95 shadow-md"
+          >
+            <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 15a4 4 0 014-4h10a4 4 0 014 4M3 15V9a4 4 0 014-4h10a4 4 0 014 4v6" />
+            </svg>
+            <span>📁 구글드라이브 영상 연동</span>
+          </button>
 
           {/* Vercel & Domain Deploy Button */}
           <button
@@ -191,7 +242,7 @@ export default function Home() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
             </svg>
-            <span>도메인(www.workfreemarket.com) 배포 안내</span>
+            <span>도메인(www.workfreemarket.com) 배포</span>
           </button>
         </div>
       </header>
@@ -202,23 +253,35 @@ export default function Home() {
         <section className="lg:col-span-8 p-4 md:p-6 space-y-6 overflow-y-auto border-r border-slate-800/80">
           {/* Video Player Container */}
           <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl shadow-black/80 group">
-            <video
-              ref={videoRef}
-              key={currentLecture.id}
-              className="w-full aspect-video object-contain bg-black"
-              controls
-              autoPlay
-              preload="metadata"
-              src={`/lectures/${currentLecture.filename}`}
-            >
-              <source src={`/lectures/${currentLecture.filename}`} type="video/mp4" />
-              브라우저가 동영상 재생을 지원하지 않습니다.
-            </video>
+            {currentDriveId ? (
+              <iframe
+                key={`drive-${currentDriveId}`}
+                src={`https://drive.google.com/file/d/${currentDriveId}/preview`}
+                className="w-full aspect-video border-0 bg-black"
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <video
+                ref={videoRef}
+                key={currentLecture.id}
+                className="w-full aspect-video object-contain bg-black"
+                controls
+                autoPlay
+                preload="metadata"
+                src={`/lectures/${currentLecture.filename}`}
+              >
+                <source src={`/lectures/${currentLecture.filename}`} type="video/mp4" />
+                브라우저가 동영상 재생을 지원하지 않습니다.
+              </video>
+            )}
 
             {/* Top Badge Overlay */}
-            <div className="absolute top-4 left-4 flex items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold">
+            <div className="absolute top-4 left-4 flex items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-slate-200">현재 재생 중: {currentLecture.title}</span>
+              <span className="text-slate-200">
+                현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
+              </span>
             </div>
           </div>
 
@@ -538,6 +601,94 @@ export default function Home() {
                 className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors"
               >
                 확인 완료
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Google Drive Video Links Management Modal */}
+      {showDriveModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 my-8">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-base">
+                  📁
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">
+                    구글 드라이브 동영상 연동 관리
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    구글 드라이브 폴더의 10개 강의 영상 공유 링크/파일 ID를 등록하면 웹사이트에서 바로 스트리밍 시청이 가능합니다.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowDriveModal(false)}
+                className="text-slate-400 hover:text-white text-lg font-bold p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/20 text-xs text-cyan-200 space-y-1">
+              <p className="font-bold">💡 구글 드라이브 공유 권한 설정 팁:</p>
+              <p className="text-[11px] text-cyan-300/80">
+                1. 구글 드라이브 영상 우클릭 ➔ <strong>[공유] ➔ [링크 공유]</strong>에서 권한을 <strong>&apos;링크가 있는 모든 사용자&apos;</strong>로 변경해 주세요.
+                <br />
+                2. 주소창의 공유 링크(<code className="text-white">https://drive.google.com/file/d/FILE_ID/view</code>)를 복사해서 아래 해당 강의란에 붙여넣으시면 자동 인식됩니다.
+              </p>
+            </div>
+
+            {/* 10 Lectures Input List */}
+            <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+              {LECTURES.map((lec) => {
+                const currentVal = driveLinks[lec.id] || "";
+
+                return (
+                  <div key={lec.id} className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <span className="text-cyan-400">{lec.id}강: {lec.title}</span>
+                      <span className="text-[10px] text-slate-500">기본 파일: {lec.filename}</span>
+                    </div>
+                    <div className="flex space-x-2">
+                      <input
+                        type="text"
+                        value={currentVal}
+                        onChange={(e) => handleSaveDriveLink(lec.id, e.target.value)}
+                        placeholder="예: https://drive.google.com/file/d/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF/view 또는 파일 ID"
+                        className="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500/60 font-mono"
+                      />
+                      {currentVal && (
+                        <button
+                          onClick={() => handleSaveDriveLink(lec.id, "")}
+                          className="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 text-xs"
+                        >
+                          초기화
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-between items-center pt-2 border-t border-slate-800">
+              <a
+                href="https://drive.google.com/drive/folders/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-cyan-400 hover:underline font-semibold"
+              >
+                🔗 구글 드라이브 폴더 바로가기 ↗
+              </a>
+              <button
+                onClick={() => setShowDriveModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition-colors shadow-lg shadow-cyan-600/20"
+              >
+                설정 완료 및 창 닫기
               </button>
             </div>
           </div>
