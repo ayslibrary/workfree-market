@@ -331,6 +331,15 @@ export default function Home() {
               <span>🎓 10강 마스터클래스 (강의실)</span>
             </button>
 
+            {viewMode === "landing" && (
+              <a
+                href="#techtree"
+                className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
+              >
+                🗺️ 테크트리
+              </a>
+            )}
+
             {/* License Status Badge */}
             {isAuthenticated ? (
               <button
@@ -568,6 +577,195 @@ export default function Home() {
               >
                 🎓 10강 수강실 입장하기 ➔
               </button>
+            </div>
+          </section>
+
+          {/* OFFICE AUTOMATION TECH TREE (사무자동화 테크트리) SECTION */}
+          <section id="techtree" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8 scroll-mt-20">
+            <div className="text-center space-y-3">
+              <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30 tracking-wider">
+                OFFICE AUTOMATION ROADMAP
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                반복업무 제로를 향한 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">사무자동화 테크트리</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                VBA로 파일과 메일을 다루는 법부터, Power Automate로 사람 손을 완전히 떠나는 자동화까지 — 순서대로 밟아가는 5단계 실무 로드맵입니다.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs text-slate-400">
+                <span className="flex items-center space-x-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-cyan-400"></span>
+                  <span>VBA · 로컬 자동화 (LV.01~02)</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-blue-500"></span>
+                  <span>Power Automate · 클라우드 자동화 (LV.03~04)</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>
+                  <span>캡스톤 · 완전자동화 (LV.05)</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Tech Tree Stage Cards List */}
+            <div className="space-y-4 max-w-3xl mx-auto">
+              {/* LV.01 (CURRENT ACTIVE CLASS) */}
+              <div className="p-6 rounded-3xl bg-gradient-to-r from-slate-900 via-cyan-950/30 to-slate-900 border-2 border-cyan-500/60 shadow-xl shadow-cyan-500/10 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 px-4 py-1 rounded-bl-2xl bg-cyan-500 text-slate-950 font-black text-[10px] uppercase tracking-wider">
+                  ▶ 현재 수강 중 (1단계)
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center font-mono font-black text-cyan-300 text-base shrink-0">
+                    01
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-mono text-[10px] font-bold border border-cyan-500/30">
+                        LV.01 · VBA 기초
+                      </span>
+                      <span className="text-xs font-bold text-emerald-400">온라인 10강 수강 가능</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white">반복작업 자동화 입문</h3>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      AI로 VBA 코드를 만들고 고치는 법을 배웁니다. 엑셀 하나 안에서 반복되는 손작업을 없애는 첫 단계입니다.
+                    </p>
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                      <div className="flex space-x-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300">
+                          Copilot 코드 생성
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300">
+                          에러 디버깅
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setViewMode("classroom")}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-extrabold text-xs shadow-md cursor-pointer hover:from-cyan-400 hover:to-blue-500 transition-all"
+                      >
+                        🎓 1단계 10강 마스터클래스 바로 수강 ➔
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LV.02 */}
+              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center font-mono font-bold text-slate-400 text-base shrink-0">
+                    02
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-mono text-[10px] font-bold border border-cyan-500/30">
+                        LV.02 · VBA 중급
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-200">파일 · 메일 파이프라인 자동화</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      데이터 추출부터 양식 작성, 파일명 규칙 저장, 메일 발송까지 — 하나의 업무를 처음부터 끝까지 VBA로 잇습니다.
+                    </p>
+                    <div className="flex space-x-2 pt-1">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        Outlook 연동
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        엔드투엔드 매크로
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LV.03 */}
+              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-center font-mono font-bold text-blue-400 text-base shrink-0">
+                    03
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
+                        LV.03 · Power Automate 입문
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-200">트리거 자동화 — 손 안 대는 자동화</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      실행 버튼 없이도 폴더 감시, 조건 분기, 알림까지 알아서 도는 흐름을 설계합니다. VBA와의 역할 차이를 여기서 체감합니다.
+                    </p>
+                    <div className="flex space-x-2 pt-1">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        이벤트 트리거
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        승인 흐름
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LV.04 */}
+              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-center font-mono font-bold text-blue-400 text-base shrink-0">
+                    04
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
+                        LV.04 · 하이브리드 연동
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-200">VBA + Power Automate 결합 설계</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Power Automate가 감지·알림·승인을 맡고, VBA가 무거운 엑셀 가공을 맡는 역할 분담 구조를 직접 설계합니다.
+                    </p>
+                    <div className="flex space-x-2 pt-1">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        Office Script
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                        역할 분담 설계
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LV.05 CAPSTONE */}
+              <div className="p-6 rounded-3xl bg-slate-900/80 border border-amber-500/30 relative overflow-hidden">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center font-mono font-bold text-amber-400 text-base shrink-0">
+                    05
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold border border-amber-500/30">
+                        LV.05 · 캡스톤
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 프로젝트 준비 중</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-amber-200">완전자동화 프로젝트</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      실제 입금전처리 매크로 사례를 완전자동화로 재설계합니다. 수강생은 자신의 업무 하나를 골라 같은 구조로 직접 구현합니다.
+                    </p>
+                    <div className="flex space-x-2 pt-1">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-amber-400/80">
+                        실무 사례 재설계
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-amber-400/80">
+                        개인 프로젝트 완성
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
