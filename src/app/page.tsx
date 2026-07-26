@@ -17,7 +17,7 @@ const LECTURES: Lecture[] = [
   {
     id: 1,
     title: "01강: 환경 세팅 마무리 — 애드인 폴더 등록과 신뢰할 수 있는 위치",
-    duration: "10:00",
+    duration: "04:39",
     filename: "Lecture_01.mp4",
     driveUrl: "https://drive.google.com/file/d/18wF4n2_E1xkf-_SA8OBDOT_atiT6FG0G/view?usp=drive_link",
     summary: "엑셀 개발 도구 탭 활성화, 매크로 보안 설정 해제 및 Microsoft AddIns 폴더(.xlam) 등록과 신뢰할 수 있는 위치 경로 설정을 진행합니다.",
@@ -365,7 +365,7 @@ export default function Home() {
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
                   강의 #{currentLecture.id}
                 </span>
-                <span className="text-[11px] sm:text-xs text-slate-400 font-medium">재생시간 10:00</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-medium">재생시간 {currentLecture.duration}</span>
               </div>
               <h2 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
                 {currentLecture.title}
