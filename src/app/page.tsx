@@ -922,68 +922,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Custom Touch-Friendly Control Bar (Play, Stop, Seek, Fullscreen) */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 p-3.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-              {currentDriveId ? (
-                <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-2">
-                  <button
-                    onClick={handleToggleFullscreen}
-                    className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/20 flex items-center justify-center space-x-2 cursor-pointer active:scale-95 transition-all"
-                  >
-                    <span className="text-sm">⛶</span>
-                    <span>모바일 화면 가득 전체화면 확장하기</span>
-                  </button>
-                  {currentDriveUrl && (
-                    <a
-                      href={currentDriveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full sm:w-auto px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-colors text-center flex items-center justify-center space-x-1 cursor-pointer shrink-0"
-                    >
-                      <span>📱 구글 드라이브 앱/새창으로 크게 보기 ↗</span>
-                    </a>
-                  )}
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={handlePlayPause}
-                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all"
-                    >
-                      <span>{isPlaying ? "❚❚ 일시정지" : "▶ 영상 재생"}</span>
-                    </button>
-                    <button
-                      onClick={handleStop}
-                      className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition-colors cursor-pointer active:scale-95"
-                      title="처음으로 정지"
-                    >
-                      ⏹ 정지
-                    </button>
-                  </div>
-
-                  <div className="flex items-center space-x-1.5">
-                    <button
-                      onClick={() => handleSeek(-10)}
-                      className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
-                    >
-                      ⏪ -10초
-                    </button>
-                    <button
-                      onClick={() => handleSeek(10)}
-                      className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
-                    >
-                      ⏩ +10초
-                    </button>
-                    <button
-                      onClick={handleToggleFullscreen}
-                      className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md cursor-pointer active:scale-95 transition-all flex items-center space-x-1"
-                    >
-                      <span>⛶ 화면 가득 확장</span>
-                    </button>
-                  </div>
-                </>
-              )}
+            {/* Single Action Button: Open Large in Google Drive Window */}
+            <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+              <a
+                href={currentDriveUrl || "https://drive.google.com"}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/20 text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95 transition-all"
+              >
+                <span className="text-base">📱</span>
+                <span>구글드라이브 창으로 크게 보기 ↗</span>
+              </a>
             </div>
 
             {/* Lecture Controls & Prev/Next Navigation */}
