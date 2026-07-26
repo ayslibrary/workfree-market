@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Lecture {
   id: number;
@@ -115,6 +115,14 @@ export default function Home() {
   const [userNote, setUserNote] = useState<string>("");
   const [showDeployModal, setShowDeployModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Sync playback speed to video element
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = playbackSpeed;
+    }
+  }, [playbackSpeed, currentLecture]);
 
   // Load completion state from localStorage
   useEffect(() => {
@@ -127,6 +135,7 @@ export default function Home() {
       }
     }
   }, []);
+
 
   const toggleComplete = (id: number) => {
     const updated = completedLectures.includes(id)
@@ -194,12 +203,12 @@ export default function Home() {
           {/* Video Player Container */}
           <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl shadow-black/80 group">
             <video
+              ref={videoRef}
               key={currentLecture.id}
               className="w-full aspect-video object-contain bg-black"
               controls
               autoPlay
               preload="metadata"
-              playbackRate={playbackSpeed}
               src={`/lectures/${currentLecture.filename}`}
             >
               <source src={`/lectures/${currentLecture.filename}`} type="video/mp4" />
