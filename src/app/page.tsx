@@ -168,10 +168,24 @@ export default function Home() {
   const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
+  
+  // License Lock States
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [licenseInput, setLicenseInput] = useState<string>("");
+  const [licenseError, setLicenseError] = useState<string>("");
+  const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
+
+  const VALID_LICENSE_KEY = "workfreemarketyaho";
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Load drive links and completion state from localStorage
+  // Load drive links, completion state, and license auth from localStorage
   useEffect(() => {
+    const authStatus = localStorage.getItem("workfree_license_auth");
+    if (authStatus === "true") {
+      setIsAuthenticated(true);
+    }
+    setIsLoadingAuth(false);
+
     const savedCompleted = localStorage.getItem("workfree_completed");
     if (savedCompleted) {
       try {
@@ -190,6 +204,23 @@ export default function Home() {
       }
     }
   }, []);
+
+  const handleVerifyLicense = () => {
+    if (licenseInput.trim() === VALID_LICENSE_KEY) {
+      setIsAuthenticated(true);
+      setLicenseError("");
+      localStorage.setItem("workfree_license_auth", "true");
+    } else {
+      setLicenseError("올바르지 않은 수강 비번입니다. 강사에게 전달받은 수강 라이선스 키를 확인해 주세요.");
+    }
+  };
+
+  const handleLogoutLicense = () => {
+    if (confirm("수강 잠금 상태로 전환하시겠습니까? 다시 입장하려면 수강 비번을 입력해야 합니다.")) {
+      setIsAuthenticated(false);
+      localStorage.removeItem("workfree_license_auth");
+    }
+  };
 
   // Sync playback speed to video element
   useEffect(() => {
@@ -262,6 +293,22 @@ export default function Home() {
               ></div>
             </div>
           </div>
+
+          {/* License Status Badge Button */}
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogoutLicense}
+              className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer shadow-md"
+              title="클릭 시 수강인증 잠금 상태로 전환"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>🔑 수강인증 완료</span>
+            </button>
+          ) : (
+            <span className="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
+              🔒 수강 권한 미인증
+            </span>
+          )}
 
           {/* Google Drive Video Connect Button */}
           <button
@@ -730,6 +777,69 @@ export default function Home() {
               >
                 설정 완료 및 창 닫기
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* License Key Gatekeeper Modal Overlay */}
+      {!isAuthenticated && !isLoadingAuth && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl">
+          <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-3xl p-8 shadow-2xl shadow-cyan-500/10 space-y-6 text-center">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-2xl shadow-lg shadow-cyan-500/20">
+              🔒
+            </div>
+
+            <div className="space-y-2">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[11px] font-bold tracking-wide uppercase">
+                WorkFree Market 수강생 전용
+              </span>
+              <h2 className="text-xl font-extrabold text-white tracking-tight">
+                수강생 전용 라이선스 인증
+              </h2>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                본 클래스는 실시간 강의 수강생 전용 마스터클래스입니다.
+                <br />
+                강사로부터 전달받으신 <strong>수강 라이선스 비번</strong>을 입력해 주세요.
+              </p>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleVerifyLicense();
+              }}
+              className="space-y-4"
+            >
+              <div className="space-y-2">
+                <input
+                  type="password"
+                  value={licenseInput}
+                  onChange={(e) => {
+                    setLicenseInput(e.target.value);
+                    setLicenseError("");
+                  }}
+                  placeholder="라이선스 비번 입력"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-center text-white placeholder-slate-500 focus:outline-none transition-all font-mono tracking-wider"
+                  autoFocus
+                />
+                {licenseError && (
+                  <p className="text-xs text-rose-400 font-semibold animate-pulse">
+                    ⚠️ {licenseError}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95"
+              >
+                🔑 수강 승인 및 클래스 입장
+              </button>
+            </form>
+
+            <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-500">
+              라이선스 비번 문의: 강사 안내 메시지 / 카카오톡
             </div>
           </div>
         </div>
