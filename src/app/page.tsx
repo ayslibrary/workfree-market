@@ -167,13 +167,23 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const VALID_LICENSE_KEY = "workfreemarketyaho";
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playerContainerRef = useRef<HTMLDivElement>(null);
 
   const handleToggleFullscreen = () => {
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      } else if ((videoRef.current as any).webkitRequestFullscreen) {
-        (videoRef.current as any).webkitRequestFullscreen();
+    const elem = playerContainerRef.current || videoRef.current;
+    if (elem) {
+      if (document.fullscreenElement) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      } else {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if ((elem as any).webkitRequestFullscreen) {
+          (elem as any).webkitRequestFullscreen();
+        } else if ((elem as any).msRequestFullscreen) {
+          (elem as any).msRequestFullscreen();
+        }
       }
     }
   };
@@ -878,7 +888,7 @@ export default function Home() {
           {/* Left Column: Video Player & Lecture Details (8 cols) */}
           <section className="lg:col-span-8 p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto lg:border-r border-slate-800/80">
             {/* Responsive 16:9 Video Player Container */}
-            <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
+            <div ref={playerContainerRef} className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
               {currentDriveId ? (
                 <iframe
                   key={`drive-${currentDriveId}`}
@@ -907,49 +917,73 @@ export default function Home() {
               <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="text-slate-200">
-                  현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
+                  현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 비디오)"}
                 </span>
               </div>
             </div>
 
             {/* Custom Touch-Friendly Control Bar (Play, Stop, Seek, Fullscreen) */}
             <div className="flex flex-wrap items-center justify-between gap-2.5 p-3.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={handlePlayPause}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all"
-                >
-                  <span>{isPlaying ? "❚❚ 일시정지" : "▶ 영상 재생"}</span>
-                </button>
-                <button
-                  onClick={handleStop}
-                  className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition-colors cursor-pointer active:scale-95"
-                  title="처음으로 정지"
-                >
-                  ⏹ 정지
-                </button>
-              </div>
+              {currentDriveId ? (
+                <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-2">
+                  <button
+                    onClick={handleToggleFullscreen}
+                    className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/20 flex items-center justify-center space-x-2 cursor-pointer active:scale-95 transition-all"
+                  >
+                    <span className="text-sm">⛶</span>
+                    <span>모바일 화면 가득 전체화면 확장하기</span>
+                  </button>
+                  {currentDriveUrl && (
+                    <a
+                      href={currentDriveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full sm:w-auto px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-colors text-center flex items-center justify-center space-x-1 cursor-pointer shrink-0"
+                    >
+                      <span>📱 구글 드라이브 앱/새창으로 크게 보기 ↗</span>
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={handlePlayPause}
+                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all"
+                    >
+                      <span>{isPlaying ? "❚❚ 일시정지" : "▶ 영상 재생"}</span>
+                    </button>
+                    <button
+                      onClick={handleStop}
+                      className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition-colors cursor-pointer active:scale-95"
+                      title="처음으로 정지"
+                    >
+                      ⏹ 정지
+                    </button>
+                  </div>
 
-              <div className="flex items-center space-x-1.5">
-                <button
-                  onClick={() => handleSeek(-10)}
-                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
-                >
-                  ⏪ -10초
-                </button>
-                <button
-                  onClick={() => handleSeek(10)}
-                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
-                >
-                  ⏩ +10초
-                </button>
-                <button
-                  onClick={handleToggleFullscreen}
-                  className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md cursor-pointer active:scale-95 transition-all flex items-center space-x-1"
-                >
-                  <span>⛶ 화면 가득 확장</span>
-                </button>
-              </div>
+                  <div className="flex items-center space-x-1.5">
+                    <button
+                      onClick={() => handleSeek(-10)}
+                      className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
+                    >
+                      ⏪ -10초
+                    </button>
+                    <button
+                      onClick={() => handleSeek(10)}
+                      className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
+                    >
+                      ⏩ +10초
+                    </button>
+                    <button
+                      onClick={handleToggleFullscreen}
+                      className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md cursor-pointer active:scale-95 transition-all flex items-center space-x-1"
+                    >
+                      <span>⛶ 화면 가득 확장</span>
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Lecture Controls & Prev/Next Navigation */}
