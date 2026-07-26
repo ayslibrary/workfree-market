@@ -651,6 +651,14 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* LEVEL 1 ONLINE / LEVEL 2 LIVE NOTICE BANNER */}
+              <div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200 flex items-center space-x-3 shadow-lg my-2">
+                <span className="text-base shrink-0">💡</span>
+                <p className="leading-relaxed">
+                  <strong className="text-cyan-400 font-bold">수강 관련 꿀팁:</strong> 1단계(LV.01)는 본 페이지의 온라인 10강 마스터클래스로 자유롭게 완강하시고, <strong>2단계(LV.02)부터 실강(오프라인/라이브)에 바로 참여하셔도 무방합니다!</strong>
+                </p>
+              </div>
+
               {/* LV.02 */}
               <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
                 <div className="flex items-start space-x-4">
@@ -781,6 +789,9 @@ export default function Home() {
               </h2>
               <div className="inline-block p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-base sm:text-lg font-mono font-bold text-cyan-300 shadow-inner tracking-wider">
                 💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-lg mx-auto leading-relaxed font-semibold shadow-inner">
+                💡 1단계는 본 온라인 10강 마스터클래스로 완강하시고, 2단계(LV.02)부터 실강(오프라인/라이브)에 참여하셔도 무방합니다.
               </div>
               <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
                 오프라인 정모 및 실시간 라이브 클래스 참여 문의는 위의 카카오톡 ID(ayoi1034)로 편하게 메시지 남겨주세요!
