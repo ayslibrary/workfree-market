@@ -163,8 +163,19 @@ export default function Home() {
   const [licenseError, setLicenseError] = useState<string>("");
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
 
+  const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const VALID_LICENSE_KEY = "workfreemarketyaho";
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleToggleFullscreen = () => {
+    if (videoRef.current) {
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen();
+      } else if ((videoRef.current as any).webkitRequestFullscreen) {
+        (videoRef.current as any).webkitRequestFullscreen();
+      }
+    }
+  };
 
   // Load drive links, completion state, and license auth from localStorage
   useEffect(() => {
@@ -856,6 +867,7 @@ export default function Home() {
                   className="w-full h-full aspect-video object-contain bg-black"
                   controls
                   autoPlay
+                  playsInline
                   preload="metadata"
                   src={`/lectures/${currentLecture.filename}`}
                 >
@@ -888,22 +900,31 @@ export default function Home() {
               </div>
 
               <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80">
-                {/* Prev / Next Navigation Buttons */}
+                {/* Prev / Next & Fullscreen Navigation Buttons */}
                 <div className="flex items-center space-x-1.5">
                   <button
                     onClick={handlePrevLecture}
                     disabled={currentLecture.id === 1}
                     className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 transition-colors"
                   >
-                    ◀ 이전 강좌
+                    ◀ 이전
                   </button>
                   <button
                     onClick={handleNextLecture}
                     disabled={currentLecture.id === LECTURES.length}
                     className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 transition-colors"
                   >
-                    다음 강좌 ▶
+                    다음 ▶
                   </button>
+                  {!currentDriveId && (
+                    <button
+                      onClick={handleToggleFullscreen}
+                      className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-400 border border-slate-700 transition-colors"
+                      title="전체화면 / 크게보기"
+                    >
+                      🖥️ 전체화면
+                    </button>
+                  )}
                 </div>
 
                 {/* Complete Toggle Button */}
