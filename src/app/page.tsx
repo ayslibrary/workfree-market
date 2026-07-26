@@ -10,7 +10,6 @@ interface Lecture {
   driveUrl?: string;
   summary: string;
   keyPoints: string[];
-  resources: { name: string; type: string }[];
 }
 
 const LECTURES: Lecture[] = [
@@ -26,10 +25,6 @@ const LECTURES: Lecture[] = [
       "매크로 디렉토리(.xlam) 파일을 Microsoft AddIns 폴더에 등록",
       "신뢰할 수 있는 위치 경로 설정 및 즐겨찾기 고정",
     ],
-    resources: [
-      { name: "01강_애드인_설정가이드.pdf", type: "PDF" },
-      { name: "WorkFree_AddIn_Template.xlam", type: "XLAM" },
-    ],
   },
   {
     id: 2,
@@ -43,7 +38,6 @@ const LECTURES: Lecture[] = [
       "생성형 AI(ChatGPT 등)를 활용한 VBA 파일 열기 코드 생성",
       "비주얼 베이직 편집기(Alt + F11)와 모듈 삽입 후 테스트 실행",
     ],
-    resources: [{ name: "02강_파일오픈_프롬프트.txt", type: "TXT" }],
   },
   {
     id: 3,
@@ -57,7 +51,6 @@ const LECTURES: Lecture[] = [
       "엑셀 리본 메뉴 사용자 지정 (새 탭 및 새 그룹 생성)",
       "등록한 매크로에 아이콘(이모티콘)을 부여하고 상단 탭에 연동하기",
     ],
-    resources: [{ name: "03강_리본메뉴_커스텀_가이드.pdf", type: "PDF" }],
   },
   {
     id: 4,
@@ -71,7 +64,6 @@ const LECTURES: Lecture[] = [
       "만기일, 통화, 금액 등이 위치한 열(Column) 정보를 AI에게 명확히 전달하는 요령",
       "활성화된 시트 내에서 집계 범위를 지정하는 자연어 프롬프트 작성법",
     ],
-    resources: [{ name: "04강_헤더매핑_프롬프트_템플릿.zip", type: "ZIP" }],
   },
   {
     id: 5,
@@ -85,7 +77,6 @@ const LECTURES: Lecture[] = [
       "코드 복사 후 모듈에 붙여넣기 및 실행 (F5 / F8 디버깅)",
       "실행 결과 데이터 검증 및 오류 발생 시 대처 요령",
     ],
-    resources: [{ name: "05강_합산표_샘플데이터.xlsx", type: "XLSX" }],
   },
   {
     id: 6,
@@ -99,7 +90,6 @@ const LECTURES: Lecture[] = [
       "리본 메뉴에 데이터 가공용 그룹 및 버튼 추가",
       "디버그 오류 발생 시 AI에게 에러 화면을 공유하고 코드를 수정(리팩토링)하는 방법",
     ],
-    resources: [{ name: "06강_실전디버깅_체크리스트.pdf", type: "PDF" }],
   },
   {
     id: 7,
@@ -113,7 +103,6 @@ const LECTURES: Lecture[] = [
       "다중 개별 거래처/시트를 한 번에 PDF 파일로 일괄 변환 저장",
       "폴더 자동 생성 및 파일명 규칙(거래처명_날짜.pdf) 적용",
     ],
-    resources: [{ name: "07강_100개_PDF_일괄생성_코드.txt", type: "TXT" }],
   },
   {
     id: 8,
@@ -127,7 +116,6 @@ const LECTURES: Lecture[] = [
       "저장 폴더 경로 지정 및 파일명 덮어쓰기 방지 처리",
       "일괄 PDF 저장 매크로의 리본 메뉴 등록 및 최종 검증",
     ],
-    resources: [{ name: "08강_PDF매크로_최종본.xlam", type: "XLAM" }],
   },
   {
     id: 9,
@@ -141,7 +129,6 @@ const LECTURES: Lecture[] = [
       "특정 폴더의 파일을 열지 않고도 필요한 데이터만 추출해 MsgBox로 띄우기",
       "데이터 조회 자동화 매크로 작성 및 리본 메뉴 연동",
     ],
-    resources: [{ name: "09강_인풋박스_조회매크로.pdf", type: "PDF" }],
   },
   {
     id: 10,
@@ -155,7 +142,6 @@ const LECTURES: Lecture[] = [
       "아웃룩(Outlook) API 등을 연동하여 PDF 청구서를 이메일로 자동 전송하는 개념 소개",
       "이벤트 기반 매크로 및 업무 효율 극대화를 위한 최적화 팁 공유",
     ],
-    resources: [{ name: "10강_수료증_및_다음단계_로드맵.pdf", type: "PDF" }],
   },
 ];
 
@@ -945,21 +931,6 @@ export default function Home() {
                 <div className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
                   📝 강의 요약 &amp; 학습 포인트
                 </div>
-
-                {/* Lecture Practice Resources Download Link */}
-                {currentLecture.resources && currentLecture.resources.length > 0 && (
-                  <div className="flex items-center space-x-2">
-                    {currentLecture.resources.map((res, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => alert(`${res.name} 실습 자료를 다운로드합니다.`)}
-                        className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all cursor-pointer"
-                      >
-                        📥 {res.name} 다운로드
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
 
               <div className="space-y-4 text-sm leading-relaxed text-slate-300">
