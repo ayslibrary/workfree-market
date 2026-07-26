@@ -164,6 +164,7 @@ export default function Home() {
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
 
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const VALID_LICENSE_KEY = "workfreemarketyaho";
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -174,6 +175,32 @@ export default function Home() {
       } else if ((videoRef.current as any).webkitRequestFullscreen) {
         (videoRef.current as any).webkitRequestFullscreen();
       }
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const handleStop = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+      setIsPlaying(false);
+    }
+  };
+
+  const handleSeek = (seconds: number) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime + seconds);
     }
   };
 
@@ -882,6 +909,46 @@ export default function Home() {
                 <span className="text-slate-200">
                   현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
                 </span>
+              </div>
+            </div>
+
+            {/* Custom Touch-Friendly Control Bar (Play, Stop, Seek, Fullscreen) */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 p-3.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={handlePlayPause}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all"
+                >
+                  <span>{isPlaying ? "❚❚ 일시정지" : "▶ 영상 재생"}</span>
+                </button>
+                <button
+                  onClick={handleStop}
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs border border-slate-700 transition-colors cursor-pointer active:scale-95"
+                  title="처음으로 정지"
+                >
+                  ⏹ 정지
+                </button>
+              </div>
+
+              <div className="flex items-center space-x-1.5">
+                <button
+                  onClick={() => handleSeek(-10)}
+                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
+                >
+                  ⏪ -10초
+                </button>
+                <button
+                  onClick={() => handleSeek(10)}
+                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 cursor-pointer active:scale-95"
+                >
+                  ⏩ +10초
+                </button>
+                <button
+                  onClick={handleToggleFullscreen}
+                  className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md cursor-pointer active:scale-95 transition-all flex items-center space-x-1"
+                >
+                  <span>⛶ 화면 가득 확장</span>
+                </button>
               </div>
             </div>
 
