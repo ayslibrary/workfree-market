@@ -34,7 +34,7 @@ const LECTURES: Lecture[] = [
   {
     id: 2,
     title: "02강: 첫 자동화, 파일 여는 엑셀 매크로",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_02.mp4",
     driveUrl: "https://drive.google.com/file/d/1OILzj22t9tqfGGObI7wUTXZuKexmAps7/view?usp=drive_link",
     summary: "반복적으로 여는 업무 파일 경로를 복사하고, 생성형 AI(ChatGPT 등)를 활용하여 VBA 파일 열기 코드를 생성 및 테스트합니다.",
@@ -48,7 +48,7 @@ const LECTURES: Lecture[] = [
   {
     id: 3,
     title: "03강: 이름이 핵심이다 — 매크로를 리본 메뉴에 심기",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_03.mp4",
     driveUrl: "https://drive.google.com/file/d/1WsgiGEcj3hT3bQqQBN7PgVhua6zxhwxl/view?usp=drive_link",
     summary: "서브루틴 이름 규칙과 모듈 속성창 설정법을 익히고, 엑셀 상단 리본 메뉴에 커스텀 탭/그룹과 아이콘을 연결합니다.",
@@ -62,7 +62,7 @@ const LECTURES: Lecture[] = [
   {
     id: 4,
     title: "04강: 데이터 구조를 AI에게 설명하는 법 — 헤더와 열 매핑 알려주기",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_04.mp4",
     driveUrl: "https://drive.google.com/file/d/1ERAkv39bUEENU84bEboyRhUvIMhEiz9S/view?usp=drive_link",
     summary: "로우 데이터의 헤더 위치와 만기일·통화·금액 열 구조를 파악하고, AI에게 명확하게 집계 범위를 명령하는 프롬프트 작성법을 배웁니다.",
@@ -76,7 +76,7 @@ const LECTURES: Lecture[] = [
   {
     id: 5,
     title: "05강: 합산표 코드 받고 실행해보기",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_05.mp4",
     driveUrl: "https://drive.google.com/file/d/1_GRqa9866tnjskM1z0sWoIROU8OIar3s/view?usp=drive_link",
     summary: "만기 월별·통화별 금액 합산표 생성 VBA 코드를 생성형 AI에게 요청하고, 모듈 붙여넣기 및 F5/F8 단계별 디버깅을 실행합니다.",
@@ -90,7 +90,7 @@ const LECTURES: Lecture[] = [
   {
     id: 6,
     title: "06강: 합산표 매크로, 리본에 등록하기 — 실전 디버깅",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_06.mp4",
     driveUrl: "https://drive.google.com/file/d/1NsCiH48wUlahexDx3iFpJ1FRrSmz1nxm/view?usp=drive_link",
     summary: "작성한 매크로를 .xlam 추가 기능에 이관하여 리본 메뉴 버튼으로 등록하고, 디버그 오류 시 AI에게 캡처를 공유하여 리팩토링하는 기법입니다.",
@@ -104,7 +104,7 @@ const LECTURES: Lecture[] = [
   {
     id: 7,
     title: "07강: 한 번에 100개 PDF 만들기",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_07.mp4",
     driveUrl: "https://drive.google.com/file/d/1CYEGZXmEyXx9MU9UUq-vy5AoyZC2lA0I/view?usp=drive_link",
     summary: "거래처 목록이나 조건 키값을 자동으로 순회하여 수십~수백 개의 엑셀 보고서/청구서를 한 번에 PDF로 일괄 저장하는 매크로를 작성합니다.",
@@ -118,7 +118,7 @@ const LECTURES: Lecture[] = [
   {
     id: 8,
     title: "08강: 인쇄영역 디버깅과 완성",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_08.mp4",
     driveUrl: "https://drive.google.com/file/d/1Dd6eE2HNdHd9GQ1OWpgZov0uTeV5GV3Q/view?usp=drive_link",
     summary: "페이지 레이아웃 인쇄 영역 자동 조절, 지정 폴더 저장 경로 세팅 및 파일명 덮어쓰기 방지 로직을 추가하여 PDF 매크로를 완성합니다.",
@@ -132,7 +132,7 @@ const LECTURES: Lecture[] = [
   {
     id: 9,
     title: "09강: 원하는 값만 조회하기 — 인풋박스와 메시지 박스",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_09.mp4",
     driveUrl: "https://drive.google.com/file/d/1Z7MTyDaBgT2bhxn_pSIFCfBNBFedv370/view?usp=drive_link",
     summary: "사용자 조회를 위한 InputBox 대화상자와 MsgBox 알림창을 도입하여, 특정 폴더 파일을 직접 열지 않고 데이터를 빠르게 조회합니다.",
@@ -146,7 +146,7 @@ const LECTURES: Lecture[] = [
   {
     id: 10,
     title: "10강: 다음 단계 예고 — 템플릿 매핑, 메일 자동화 개념 소개",
-    duration: "10:00",
+    duration: "08:20",
     filename: "Lecture_10.mp4",
     driveUrl: "https://drive.google.com/file/d/15Gt6LYITrFez6PDz7DVLMB7wzxItu3u4/view?usp=drive_link",
     summary: "매일 받는 로우 데이터의 고정 템플릿 자동 매핑, 아웃룩(Outlook) API 연동 PDF 청구서 메일 자동 전송 및 이벤트 기반 매크로의 발전 방향을 제시합니다.",
