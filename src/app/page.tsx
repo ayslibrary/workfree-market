@@ -162,8 +162,6 @@ const LECTURES: Lecture[] = [
 export default function Home() {
   const [currentLecture, setCurrentLecture] = useState<Lecture>(LECTURES[0]);
   const [completedLectures, setCompletedLectures] = useState<number[]>([]);
-  const [activeTab, setActiveTab] = useState<"summary" | "notes" | "resources">("summary");
-  const [userNote, setUserNote] = useState<string>("");
   const [showDeployModal, setShowDeployModal] = useState<boolean>(false);
   const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
@@ -421,107 +419,32 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom Tabs (Summary, Notes, Resources) */}
+          {/* Lecture Summary & Core Points Section */}
           <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
             <div className="flex items-center space-x-2 border-b border-slate-800 pb-3">
-              <button
-                onClick={() => setActiveTab("summary")}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "summary"
-                    ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                📝 강의 요약 & 핵심 포인트
-              </button>
-              <button
-                onClick={() => setActiveTab("notes")}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "notes"
-                    ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                ✏️ 개인 수강 메모
-              </button>
-              <button
-                onClick={() => setActiveTab("resources")}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "resources"
-                    ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                📎 수강 자료 ({currentLecture.resources.length})
-              </button>
+              <div className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+                📝 강의 요약 &amp; 학습 포인트
+              </div>
             </div>
 
-            {/* Tab 1: Summary */}
-            {activeTab === "summary" && (
-              <div className="space-y-4 text-sm leading-relaxed text-slate-300">
-                <p className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 text-slate-300">
-                  {currentLecture.summary}
-                </p>
-                <div>
-                  <h4 className="font-bold text-xs text-cyan-400 uppercase tracking-wider mb-2">
-                    주요 학습 체크포인트
-                  </h4>
-                  <ul className="space-y-2">
-                    {currentLecture.keyPoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start space-x-2 text-xs">
-                        <span className="text-cyan-500 font-bold mt-0.5">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+              <p className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 text-slate-300">
+                {currentLecture.summary}
+              </p>
+              <div>
+                <h4 className="font-bold text-xs text-cyan-400 uppercase tracking-wider mb-2">
+                  주요 학습 체크포인트
+                </h4>
+                <ul className="space-y-2">
+                  {currentLecture.keyPoints.map((point, idx) => (
+                    <li key={idx} className="flex items-start space-x-2 text-xs">
+                      <span className="text-cyan-500 font-bold mt-0.5">•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
-
-            {/* Tab 2: Personal Notes */}
-            {activeTab === "notes" && (
-              <div className="space-y-3">
-                <textarea
-                  value={userNote}
-                  onChange={(e) => setUserNote(e.target.value)}
-                  placeholder="이 강좌에 대해 기억해야 할 점이나 메모를 자유롭게 남겨보세요..."
-                  className="w-full h-32 p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500/60 transition-colors"
-                ></textarea>
-                <div className="flex justify-end">
-                  <button
-                    onClick={() => alert("메모가 성공적으로 저장되었습니다!")}
-                    className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition-colors"
-                  >
-                    메모 저장하기
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Tab 3: Resources */}
-            {activeTab === "resources" && (
-              <div className="space-y-2">
-                {currentLecture.resources.map((res, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 transition-colors"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-400 text-[10px] font-extrabold uppercase">
-                        {res.type}
-                      </span>
-                      <span className="text-xs font-semibold text-slate-200">{res.name}</span>
-                    </div>
-                    <button
-                      onClick={() => alert(`${res.name} 다운로드를 시작합니다.`)}
-                      className="text-xs text-cyan-400 font-medium hover:underline cursor-pointer"
-                    >
-                      다운로드 ↓
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
         </section>
 
