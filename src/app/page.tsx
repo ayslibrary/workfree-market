@@ -516,7 +516,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-1">
                   <div className="text-sm font-bold text-emerald-400">⚡ 실무 성과 80% 개선</div>
-                  <div className="text-xs text-slate-400">주 40시간 소요 업무 ➔ 8시간 단축 수강생 전원 검증</div>
+                  <div className="text-xs text-slate-400">주 40시간 소요 업무 ➔ 8시간 단축</div>
                 </div>
               </div>
             </div>
@@ -780,10 +780,10 @@ export default function Home() {
                 현강 진행 중 · 실강 참여 원할 시 문의
               </h2>
               <div className="inline-block p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-base sm:text-lg font-mono font-bold text-cyan-300 shadow-inner tracking-wider">
-                💬 KAKAOTALK ID : <span className="text-white select-all">AYOI1034</span>
+                💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
               </div>
               <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
-                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 위의 카카오톡 ID(AYOI1034)로 편하게 메시지 남겨주세요!
+                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 위의 카카오톡 ID(ayoi1034)로 편하게 메시지 남겨주세요!
               </p>
             </div>
           </section>
@@ -829,7 +829,7 @@ export default function Home() {
 
           {/* FOOTER */}
           <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 text-center text-xs text-slate-500 space-y-2 border-t border-slate-800">
-            <p className="font-semibold text-slate-400">WorkFree Market • ai딸깍샘 윤아영</p>
+            <p className="font-semibold text-slate-400">WorkFree Market • ai딸깍샘</p>
             <p>www.workfreemarket.com • 클릭 1번으로 끝내는 엑셀 자동화 마스터클래스</p>
           </footer>
         </div>
@@ -907,23 +907,6 @@ export default function Home() {
                   >
                     다음 강좌 ▶
                   </button>
-                </div>
-
-                {/* Playback Speed Switcher */}
-                <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-[11px] sm:text-xs">
-                  {[1.0, 1.25, 1.5, 2.0].map((speed) => (
-                    <button
-                      key={speed}
-                      onClick={() => setPlaybackSpeed(speed)}
-                      className={`px-2 sm:px-2.5 py-1 rounded-lg font-medium transition-all ${
-                        playbackSpeed === speed
-                          ? "bg-blue-600 text-white font-bold"
-                          : "text-slate-400 hover:text-slate-200"
-                      }`}
-                    >
-                      {speed}x
-                    </button>
-                  ))}
                 </div>
 
                 {/* Complete Toggle Button */}
