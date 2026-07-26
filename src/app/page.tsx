@@ -99,7 +99,7 @@ const LECTURES: Lecture[] = [
       "리본 메뉴에 데이터 가공용 그룹 및 버튼 추가",
       "디버그 오류 발생 시 AI에게 에러 화면을 공유하고 코드를 수정(리팩토링)하는 방법",
     ],
-    resources: [{ name: "06강_디버깅_체크리스트.pdf", type: "PDF" }],
+    resources: [{ name: "06강_실전디버깅_체크리스트.pdf", type: "PDF" }],
   },
   {
     id: 7,
@@ -107,13 +107,13 @@ const LECTURES: Lecture[] = [
     duration: "10:00",
     filename: "Lecture_07.mp4",
     driveUrl: "https://drive.google.com/file/d/1CYEGZXmEyXx9MU9UUq-vy5AoyZC2lA0I/view?usp=drive_link",
-    summary: "거래처 키값 변경에 따른 템플릿 자동 반영 원리와 반복문(Loop) 구조를 활용해 수십 개의 시트를 일괄 PDF 저장하는 자동화를 구축합니다.",
+    summary: "거래처 목록이나 조건 키값을 자동으로 순회하여 수십~수백 개의 엑셀 보고서/청구서를 한 번에 PDF로 일괄 저장하는 매크로를 작성합니다.",
     keyPoints: [
-      "키값(거래처 번호 등)이 바뀔 때마다 템플릿 서식이 자동으로 반영되는 원리",
-      "반복문 구조를 활용해 수많은 시트를 일괄 PDF로 변환 및 저장하는 자동화",
-      "인쇄 영역 설정 오류 해결 및 결과물 확인",
+      "거래처 키값 자동 변경 원리 (Loop 반복문 이해)",
+      "다중 개별 거래처/시트를 한 번에 PDF 파일로 일괄 변환 저장",
+      "폴더 자동 생성 및 파일명 규칙(거래처명_날짜.pdf) 적용",
     ],
-    resources: [{ name: "07강_일괄PDF_소스코드.vba", type: "VBA" }],
+    resources: [{ name: "07강_100개_PDF_일괄생성_코드.txt", type: "TXT" }],
   },
   {
     id: 8,
@@ -160,13 +160,17 @@ const LECTURES: Lecture[] = [
 ];
 
 export default function Home() {
+  // Navigation View State: "landing" (Homepage) vs "classroom" (10-Lecture Video Learning Platform)
+  const [viewMode, setViewMode] = useState<"landing" | "classroom">("landing");
   const [currentLecture, setCurrentLecture] = useState<Lecture>(LECTURES[0]);
   const [completedLectures, setCompletedLectures] = useState<number[]>([]);
   const [showDeployModal, setShowDeployModal] = useState<boolean>(false);
   const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
+  const [showCertificateModal, setShowCertificateModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
-  
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   // License Lock States
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [licenseInput, setLicenseInput] = useState<string>("");
@@ -233,6 +237,24 @@ export default function Home() {
       : [...completedLectures, id];
     setCompletedLectures(updated);
     localStorage.setItem("workfree_completed", JSON.stringify(updated));
+
+    if (updated.length === LECTURES.length) {
+      setShowCertificateModal(true);
+    }
+  };
+
+  const handlePrevLecture = () => {
+    const currentIndex = LECTURES.findIndex((lec) => lec.id === currentLecture.id);
+    if (currentIndex > 0) {
+      setCurrentLecture(LECTURES[currentIndex - 1]);
+    }
+  };
+
+  const handleNextLecture = () => {
+    const currentIndex = LECTURES.findIndex((lec) => lec.id === currentLecture.id);
+    if (currentIndex < LECTURES.length - 1) {
+      setCurrentLecture(LECTURES[currentIndex + 1]);
+    }
   };
 
   const handleSaveDriveLink = (lectureId: number, url: string) => {
@@ -244,7 +266,6 @@ export default function Home() {
   const extractDriveId = (inputUrl: string): string | null => {
     if (!inputUrl) return null;
     const cleanUrl = inputUrl.trim();
-    // Matches /file/d/ID/ or ?id=ID or raw ID
     const match = cleanUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || 
                   cleanUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
                   cleanUrl.match(/^([a-zA-Z0-9_-]{25,50})$/);
@@ -256,375 +277,636 @@ export default function Home() {
 
   const progressPercent = Math.round((completedLectures.length / LECTURES.length) * 100);
 
+  const filteredLectures = LECTURES.filter(
+    (lec) =>
+      lec.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lec.summary.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
       {/* Top Header Navbar */}
-      <header className="sticky top-0 z-30 px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="flex flex-wrap items-center justify-between gap-2.5">
-          {/* Logo & Title */}
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20 text-xs sm:text-base">
+      <header className="sticky top-0 z-40 px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto w-full">
+          {/* Logo & Main Title */}
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setViewMode("landing")}>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-extrabold text-white shadow-lg shadow-cyan-500/20 text-sm tracking-tighter">
               WF
             </div>
             <div>
-              <h1 className="font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                WorkFree Market
-              </h1>
-              <p className="text-[10px] sm:text-[11px] text-cyan-400 font-medium tracking-wide">
-                AI 엑셀 매크로 마스터클래스
+              <div className="flex items-center space-x-2">
+                <h1 className="font-extrabold text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                  WorkFree Market
+                </h1>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                  ai딸깍샘 클래스
+                </span>
+              </div>
+              <p className="text-[11px] text-cyan-400 font-medium tracking-wide">
+                클릭 1번 엑셀 자동화: 8시간 업무를 1시간으로!
               </p>
             </div>
           </div>
 
-          {/* Action Buttons & License Status */}
+          {/* Navigation View Switcher & Action Buttons */}
           <div className="flex items-center space-x-2 sm:space-x-3">
+            <button
+              onClick={() => setViewMode("landing")}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                viewMode === "landing"
+                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20"
+                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
+              }`}
+            >
+              🏠 클래스 소개 (홈)
+            </button>
+            <button
+              onClick={() => setViewMode("classroom")}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 ${
+                viewMode === "classroom"
+                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20"
+                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
+              }`}
+            >
+              <span>🎓 10강 마스터클래스 (강의실)</span>
+            </button>
+
             {/* License Status Badge */}
             {isAuthenticated ? (
               <button
                 onClick={handleLogoutLicense}
-                className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-[11px] sm:text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer"
+                className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer"
                 title="클릭 시 수강인증 잠금 상태로 전환"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>🔑 수강인증 완료</span>
               </button>
             ) : (
-              <span className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-[11px] sm:text-xs font-semibold border border-amber-500/30">
+              <span className="hidden sm:inline-block px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
                 🔒 수강 미인증
               </span>
             )}
 
-            {/* Google Drive Connect */}
+            {/* Google Drive Connect Button */}
             <button
               onClick={() => setShowDriveModal(true)}
-              className="flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-[11px] sm:text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer active:scale-95"
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer active:scale-95"
             >
               <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 15a4 4 0 014-4h10a4 4 0 014 4M3 15V9a4 4 0 014-4h10a4 4 0 014 4v6" />
               </svg>
-              <span className="hidden sm:inline">📁 구글드라이브 영상 연동</span>
+              <span className="hidden sm:inline">📁 드라이브 연동</span>
               <span className="sm:hidden">📁 연동</span>
-            </button>
-
-            {/* Vercel & Domain Deploy Button */}
-            <button
-              onClick={() => setShowDeployModal(true)}
-              className="hidden md:flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-xs font-semibold text-white shadow-md shadow-blue-600/25 transition-all cursor-pointer active:scale-95"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-              </svg>
-              <span>도메인 배포</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-0">
-        {/* Left Column: Video Player & Lecture Details (8 cols) */}
-        <section className="lg:col-span-8 p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto lg:border-r border-slate-800/80">
-          {/* Responsive 16:9 Video Player Container */}
-          <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
-            {currentDriveId ? (
-              <iframe
-                key={`drive-${currentDriveId}`}
-                src={`https://drive.google.com/file/d/${currentDriveId}/preview`}
-                className="w-full h-full aspect-video border-0 bg-black"
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <video
-                ref={videoRef}
-                key={currentLecture.id}
-                className="w-full h-full aspect-video object-contain bg-black"
-                controls
-                autoPlay
-                preload="metadata"
-                src={`/lectures/${currentLecture.filename}`}
-              >
-                <source src={`/lectures/${currentLecture.filename}`} type="video/mp4" />
-                브라우저가 동영상 재생을 지원하지 않습니다.
-              </video>
-            )}
+      {/* ====================================================================== */}
+      {/* 1. LANDING HOMEPAGE VIEW (소개 & 수강 신청 안내 랜딩페이지) */}
+      {/* ====================================================================== */}
+      {viewMode === "landing" && (
+        <div className="flex-1 space-y-16 pb-20">
+          {/* HERO BANNER SECTION */}
+          <section className="relative overflow-hidden pt-12 pb-16 px-4 sm:px-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/80">
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-            {/* Top Badge Overlay - Desktop / Tablet only */}
-            <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-slate-200">
-                현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
-              </span>
-            </div>
-          </div>
+            <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold shadow-lg shadow-cyan-500/10">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span>실무 중심 생성형 AI 엑셀 매크로 클래스</span>
+              </div>
 
-          {/* Lecture Info & Controls */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
-            <div>
-              <div className="flex items-center space-x-2 mb-1">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                  강의 #{currentLecture.id}
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight">
+                [ai딸깍샘] 클릭 1번으로 끝내는 엑셀 자동화:
+                <br />
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  8시간 업무를 단 1시간으로!
                 </span>
-                <span className="text-[11px] sm:text-xs text-slate-400 font-medium">재생시간 {currentLecture.duration}</span>
-              </div>
-              <h2 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
-                {currentLecture.title}
-              </h2>
-            </div>
+              </h1>
 
-            <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80">
-              {/* Playback Speed Switcher */}
-              <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-[11px] sm:text-xs">
-                {[1.0, 1.25, 1.5, 2.0].map((speed) => (
-                  <button
-                    key={speed}
-                    onClick={() => setPlaybackSpeed(speed)}
-                    className={`px-2 sm:px-2.5 py-1 rounded-lg font-medium transition-all ${
-                      playbackSpeed === speed
-                        ? "bg-blue-600 text-white font-bold"
-                        : "text-slate-400 hover:text-slate-200"
-                    }`}
-                  >
-                    {speed}x
-                  </button>
-                ))}
-              </div>
-
-              {/* Complete Toggle Button */}
-              <button
-                onClick={() => toggleComplete(currentLecture.id)}
-                className={`flex items-center justify-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs transition-all duration-200 cursor-pointer ${
-                  completedLectures.includes(currentLecture.id)
-                    ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-600/30"
-                    : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-                }`}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>
-                  {completedLectures.includes(currentLecture.id) ? "수강 완료됨" : "수강 완료로 표시"}
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* Lecture Summary & Core Points Section */}
-          <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
-            <div className="flex items-center space-x-2 border-b border-slate-800 pb-3">
-              <div className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
-                📝 강의 요약 &amp; 학습 포인트
-              </div>
-            </div>
-
-            <div className="space-y-4 text-sm leading-relaxed text-slate-300">
-              <p className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 text-slate-300">
-                {currentLecture.summary}
+              <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+                매일 반복되는 엑셀 복사·붙여넣기 야근은 이제 그만!
+                <br />
+                VBA 코딩 문법을 몰라도 OK. AI와 함께 내 업무에 딱 맞는 매크로를 만들어 리본 메뉴에 심고 버튼 한 번으로 칼퇴하세요.
               </p>
-              <div>
-                <h4 className="font-bold text-xs text-cyan-400 uppercase tracking-wider mb-2">
-                  주요 학습 체크포인트
-                </h4>
-                <ul className="space-y-2">
-                  {currentLecture.keyPoints.map((point, idx) => (
-                    <li key={idx} className="flex items-start space-x-2 text-xs">
-                      <span className="text-cyan-500 font-bold mt-0.5">•</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Right Column: 10-Lecture Playlist Sidebar (4 cols) */}
-        <section className="lg:col-span-4 p-3 sm:p-4 md:p-6 bg-slate-900/40 space-y-4 lg:overflow-y-auto lg:max-h-[calc(100vh-60px)] lg:sticky lg:top-[60px]">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div>
-              <h3 className="font-bold text-sm sm:text-base text-white">강의 교육 과정 커리큘럼</h3>
-              <p className="text-[11px] sm:text-xs text-slate-400">총 10강 • 100분 완강 코스</p>
-            </div>
-            <span className="px-2.5 py-1 rounded-full bg-slate-800 text-cyan-400 text-[10px] sm:text-xs font-extrabold border border-slate-700">
-              10강 세트
-            </span>
-          </div>
-
-          {/* Lecture List Accordion */}
-          <div className="space-y-2.5">
-            {LECTURES.map((lec) => {
-              const isCurrent = lec.id === currentLecture.id;
-              const isDone = completedLectures.includes(lec.id);
-
-              return (
-                <div
-                  key={lec.id}
-                  onClick={() => setCurrentLecture(lec)}
-                  className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
-                    isCurrent
-                      ? "bg-gradient-to-r from-slate-900 to-slate-800/90 border-cyan-500/60 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40"
-                      : "bg-slate-900/60 hover:bg-slate-900 border-slate-800/80 hover:border-slate-700"
-                  }`}
+              {/* Hero Call To Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <button
+                  onClick={() => setViewMode("classroom")}
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
                 >
-                  <div className="flex items-start space-x-2.5 sm:space-x-3 overflow-hidden pr-2">
-                    {/* Checkbox / Play Icon */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleComplete(lec.id);
-                      }}
-                      className="mt-0.5 shrink-0"
-                    >
-                      {isDone ? (
-                        <div className="w-5 h-5 rounded-md bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs shadow-md">
-                          ✓
-                        </div>
-                      ) : (
-                        <div
-                          className={`w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold ${
-                            isCurrent
-                              ? "border-cyan-400 text-cyan-400"
-                              : "border-slate-700 text-slate-500 hover:border-slate-500"
-                          }`}
-                        >
-                          {lec.id}
-                        </div>
-                      )}
-                    </button>
+                  <span>🚀 10강 마스터클래스 바로 수강하기</span>
+                  <span className="text-cyan-200 font-bold">➔</span>
+                </button>
+                <a
+                  href="#schedule"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-sm sm:text-base border border-slate-800 transition-all text-center"
+                >
+                  💬 실강 참여 문의 (카카오톡) ↓
+                </a>
+              </div>
 
-                    <div className="overflow-hidden">
-                      <div className="flex items-center space-x-1.5 mb-0.5">
-                        <span
-                          className={`text-[10px] sm:text-[11px] font-extrabold ${
-                            isCurrent ? "text-cyan-400" : "text-slate-400"
-                          }`}
-                        >
-                          {lec.id}강
-                        </span>
-                        {isCurrent && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
-                        )}
-                      </div>
-                      <h4
-                        className={`text-xs font-bold leading-snug break-keep ${
-                          isCurrent ? "text-white" : "text-slate-300"
-                        }`}
-                      >
-                        {lec.title.replace(/^\d+강:\s*/, "")}
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-end shrink-0 pl-2">
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">{lec.duration}</span>
-                    {isCurrent && (
-                      <span className="text-[9px] sm:text-[10px] font-bold text-cyan-400 tracking-wider uppercase mt-1">
-                        재생 중
-                      </span>
-                    )}
-                  </div>
+              {/* Stats Highlights */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 max-w-3xl mx-auto">
+                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
+                  <div className="text-2xl font-black text-cyan-400">80% 감축</div>
+                  <div className="text-xs text-slate-400 mt-1">주 40시간 ➔ 8시간 단축 노하우</div>
                 </div>
-              );
-            })}
-          </div>
-        </section>
-      </main>
-
-      {/* Vercel & Domain Setup Modal */}
-      {showDeployModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-white font-bold text-sm border border-slate-700">
-                  ▲
+                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
+                  <div className="text-2xl font-black text-blue-400">총 9회 진행</div>
+                  <div className="text-xs text-slate-400 mt-1">사내 4회 · 외부 5회 검증된 커리큘럼</div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white">
-                    www.workfreemarket.com 도메인 배포 가이드
-                  </h3>
-                  <p className="text-xs text-slate-400">Vercel 무료 배포 및 도메인 CNAME 연동 절차</p>
+                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
+                  <div className="text-2xl font-black text-emerald-400">다음 날 즉시 적용</div>
+                  <div className="text-xs text-slate-400 mt-1">비전공자도 따라하는 실습 중심</div>
                 </div>
               </div>
-              <button
-                onClick={() => setShowDeployModal(false)}
-                className="text-slate-400 hover:text-white text-lg font-bold p-1"
-              >
-                ✕
-              </button>
+            </div>
+          </section>
+
+          {/* RECOMMENDED FOR (강력 추천 대상) */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+            <div className="text-center space-y-2">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
+                ✨ TARGET AUDIENCE
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">이런 분께 강력 추천합니다!</h2>
             </div>
 
-            <div className="space-y-4 text-xs text-slate-300">
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <h4 className="font-bold text-sm text-cyan-400">1단계: Vercel 배포 실행</h4>
-                <p>터미널에서 아래 명령어를 입력하여 이 웹 프로젝트를 Vercel에 무료로 배포합니다:</p>
-                <pre className="bg-slate-900 p-2.5 rounded-xl border border-slate-800 font-mono text-cyan-300 text-xs">
-                  npx vercel
-                </pre>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <h4 className="font-bold text-sm text-cyan-400">
-                  2단계: www.workfreemarket.com 도메인 추가
-                </h4>
-                <p>
-                  Vercel 대시보드 프로젝트 설정의 <strong>[Settings] → [Domains]</strong>에서{" "}
-                  <code className="text-emerald-400 font-mono">www.workfreemarket.com</code> 도메인을 입력하고 등록합니다.
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl font-bold">
+                  💼
+                </div>
+                <h3 className="font-bold text-base text-white">매일 똑같은 엑셀 작업으로 야근하는 분</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  회계·재무, 인사, 총무, 영업관리, 구매·SCM, 경영지원 등 단순 반복 데이터 가공이 많은 모든 사무직
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <h4 className="font-bold text-sm text-cyan-400">3단계: DNS 레코드 세팅 (가비아 / 카페24 / Cloudflare)</h4>
-                <p>도메인 구매 사이트의 DNS 설정에 아래 값을 추가합니다:</p>
-                <div className="grid grid-cols-2 gap-2 font-mono text-[11px] bg-slate-900 p-3 rounded-xl border border-slate-800">
-                  <div>
-                    <span className="text-slate-500">타입:</span> CNAME
-                    <br />
-                    <span className="text-slate-500">이름:</span> www
-                    <br />
-                    <span className="text-slate-500">값:</span> cname.vercel-dns.com
-                  </div>
-                  <div>
-                    <span className="text-slate-500">타입:</span> A
-                    <br />
-                    <span className="text-slate-500">이름:</span> @
-                    <br />
-                    <span className="text-slate-500">값:</span> 76.76.21.21
-                  </div>
+              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl font-bold">
+                  🤖
+                </div>
+                <h3 className="font-bold text-base text-white">VBA 매크로를 들어는 봤으나 시작하기 막막했던 분</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  코딩 문법 암기 없이, 생성형 AI(ChatGPT 등)를 내 개인 프로그래머처럼 부려먹는 기법 전수
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-bold">
+                  ⏱️
+                </div>
+                <h3 className="font-bold text-base text-white">AI를 활용해 업무 시간을 획기적으로 줄이고 싶은 분</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  하루 8시간 잡고 있던 노가다 작업을 클릭 한 번으로 단 1시간 안에 깔끔히 마치는 자동화 루틴 구축
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold">
+                  🖱️
+                </div>
+                <h3 className="font-bold text-base text-white">복잡한 수식 대신 버튼 하나로 끝내고 싶은 분</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  엑셀 상단 '나만의 리본 메뉴'에 이모티콘 아이콘 버튼을 심어 누구든 누르기만 하면 실행되는 완성형 환경
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* TUTOR STORY & EXPERIENCE (수업 및 강사 소개) */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/90 border border-cyan-500/30 shadow-2xl space-y-8 relative overflow-hidden">
+              <div className="space-y-4">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
+                  <span>📘📘 강사 소개 &amp; 실무 노하우</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  &quot;매일 엑셀 붙잡고 야근하시나요? 이제 클릭 1번으로 끝내세요.&quot;
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  전직 해외영업, 영업관리, SCM을 거쳐 현직 재무·회계 실무자인 저는 AI와 VBA를 활용해 주 40시간의 반복 업무를 8시간으로, 하루 8시간의 일을 단 1시간으로 단축하는 자동화 루틴을 구축했습니다.
+                  <br /><br />
+                  현재까지 **9회의 강의(사내 4회, 외부 5회)**를 통해 증명된 실무 노하우를 그대로 알려드립니다. 코딩 문법을 암기하는 강의가 아닙니다. AI와 함께 내 업무에 꼭 필요한 매크로를 만들고, &apos;나만의 리본 메뉴&apos;에 등록하여 클릭 한 번으로 끝내는 실무 환경을 만들어 드립니다. VBA를 몰라도 교육 다음 날부터 바로 실무 적용이 가능합니다.
+                </p>
+              </div>
+
+              {/* History Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800">
+                <div className="space-y-1">
+                  <div className="text-sm font-bold text-cyan-400">🏆 사내 강의 4회 진행</div>
+                  <div className="text-xs text-slate-400">실제 기업 실무 환경에 최적화된 AI 엑셀 자동화 교육</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm font-bold text-blue-400">🏆 외부 클래스 5회 진행</div>
+                  <div className="text-xs text-slate-400">당근, 소모임 등을 통해 검증된 직장인 맞춤 자동화</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm font-bold text-emerald-400">⚡ 실무 성과 80% 개선</div>
+                  <div className="text-xs text-slate-400">주 40시간 소요 업무 ➔ 8시간 단축 수강생 전원 검증</div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="flex justify-end pt-2">
+          {/* 4-STEP CORE CURRICULUM OVERVIEW */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+            <div className="text-center space-y-2">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
+                📢📢 핵심 커리큘럼
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">4단계 실무 완벽 적용 로드맵</h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">STEP 1</span>
+                <h4 className="font-bold text-sm text-white">자동화 환경 세팅</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  클릭 1번을 위한 개발도구 설정, 보안 해제 및 AddIns 폴더 신뢰 경로 구축
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                <span className="text-xs font-black text-blue-400 uppercase tracking-wider">STEP 2</span>
+                <h4 className="font-bold text-sm text-white">AI 매크로 만들기</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  자연어 업무 설명만으로 VBA 코드 자동 생성 및 오류 발생 시 AI 실시간 디버깅
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                <span className="text-xs font-black text-indigo-400 uppercase tracking-wider">STEP 3</span>
+                <h4 className="font-bold text-sm text-white">나만의 리본 메뉴</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  엑셀 상단 전용 탭에 아이콘 버튼을 만들어 클릭 한 번으로 실행하는 자동화
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                <span className="text-xs font-black text-emerald-400 uppercase tracking-wider">STEP 4</span>
+                <h4 className="font-bold text-sm text-white">실무 완벽 적용</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  PDF 일괄 변환, 조건 조회, 메일 발송 연동 등 내 실무에 직접 적용
+                </p>
+              </div>
+            </div>
+
+            {/* 10 Online Lectures Preview Banner */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-cyan-950/40 to-slate-900 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="font-extrabold text-base text-white">🎬 온라인 10강 단기 마스터클래스 동영상 제공</h3>
+                <p className="text-xs text-slate-400">환경 세팅부터 100개 PDF 생성, 인풋박스 조회, 메일 자동화까지 포함된 10강 세트</p>
+              </div>
               <button
-                onClick={() => setShowDeployModal(false)}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors"
+                onClick={() => setViewMode("classroom")}
+                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-lg transition-colors cursor-pointer shrink-0"
               >
-                확인 완료
+                🎓 10강 수강실 입장하기 ➔
               </button>
             </div>
-          </div>
+          </section>
+
+          {/* LIVE CLASS ENQUIRY BANNER */}
+          <section id="schedule" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 scroll-mt-20">
+            <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-slate-900 via-cyan-950/50 to-slate-900 border border-cyan-500/30 text-center space-y-4 shadow-2xl">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>현강 진행 중</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                현강 진행 중 · 실강 참여 원할 시 문의
+              </h2>
+              <div className="inline-block p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-base sm:text-lg font-mono font-bold text-cyan-300 shadow-inner tracking-wider">
+                💬 KAKAOTALK ID : <span className="text-white select-all">AYOI1034</span>
+              </div>
+              <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
+                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 위의 카카오톡 ID(AYOI1034)로 편하게 메시지 남겨주세요!
+              </p>
+            </div>
+          </section>
+
+          {/* 1:1 LESSON & OUTSOURCING (1:1 과외 & 외주 제작 서비스) */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+            <div className="text-center space-y-2">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
+                💎💎 수업 유형 및 외주 제작 안내
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">맞춤 과외 &amp; 자동화 대행 서비스</h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                <div className="text-cyan-400 font-extrabold text-sm uppercase">교육반</div>
+                <h3 className="font-bold text-lg text-white">2시간 집중 자동화 클래스</h3>
+                <div className="text-base font-bold text-cyan-300">4만 원</div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  AI와 함께 나만의 매크로를 직접 제작해보는 기초 집중 교육
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 ring-1 ring-cyan-500/40">
+                <div className="text-blue-400 font-extrabold text-sm uppercase">1:1 맞춤반</div>
+                <h3 className="font-bold text-lg text-white">프로젝트형 1:1 과외</h3>
+                <div className="text-base font-bold text-blue-300">별도 협의</div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  내 업무 데이터 세트를 가져와 1:1로 직접 자동화하는 맞춤형 프로젝트
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                <div className="text-emerald-400 font-extrabold text-sm uppercase">외주 제작</div>
+                <h3 className="font-bold text-lg text-white">매크로 자동화 맞춤 제작</h3>
+                <div className="text-base font-bold text-emerald-300">별도 협의</div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  당장 내일 급한 업무 자동화 매크로를 대신 개발해 드리는 대행 서비스
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FOOTER */}
+          <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 text-center text-xs text-slate-500 space-y-2 border-t border-slate-800">
+            <p className="font-semibold text-slate-400">WorkFree Market • ai딸깍샘 윤아영</p>
+            <p>www.workfreemarket.com • 클릭 1번으로 끝내는 엑셀 자동화 마스터클래스</p>
+          </footer>
         </div>
       )}
 
-      {/* Google Drive Video Links Management Modal */}
-      {showDriveModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 my-8">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-base">
-                  📁
+      {/* ====================================================================== */}
+      {/* 2. CLASSROOM VIEW (10강 동영상 마스터클래스 온라인 수강실) */}
+      {/* ====================================================================== */}
+      {viewMode === "classroom" && (
+        <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-0">
+          {/* Left Column: Video Player & Lecture Details (8 cols) */}
+          <section className="lg:col-span-8 p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto lg:border-r border-slate-800/80">
+            {/* Responsive 16:9 Video Player Container */}
+            <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
+              {currentDriveId ? (
+                <iframe
+                  key={`drive-${currentDriveId}`}
+                  src={`https://drive.google.com/file/d/${currentDriveId}/preview`}
+                  className="w-full h-full aspect-video border-0 bg-black"
+                  allow="autoplay; encrypted-media; fullscreen"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <video
+                  ref={videoRef}
+                  key={currentLecture.id}
+                  className="w-full h-full aspect-video object-contain bg-black"
+                  controls
+                  autoPlay
+                  preload="metadata"
+                  src={`/lectures/${currentLecture.filename}`}
+                >
+                  <source src={`/lectures/${currentLecture.filename}`} type="video/mp4" />
+                  브라우저가 동영상 재생을 지원하지 않습니다.
+                </video>
+              )}
+
+              {/* Top Badge Overlay - Desktop / Tablet only */}
+              <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-slate-200">
+                  현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
+                </span>
+              </div>
+            </div>
+
+            {/* Lecture Controls & Prev/Next Navigation */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+              <div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                    강의 #{currentLecture.id}
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-400 font-medium">재생시간 {currentLecture.duration}</span>
                 </div>
+                <h2 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
+                  {currentLecture.title}
+                </h2>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80">
+                {/* Prev / Next Navigation Buttons */}
+                <div className="flex items-center space-x-1.5">
+                  <button
+                    onClick={handlePrevLecture}
+                    disabled={currentLecture.id === 1}
+                    className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 transition-colors"
+                  >
+                    ◀ 이전 강좌
+                  </button>
+                  <button
+                    onClick={handleNextLecture}
+                    disabled={currentLecture.id === LECTURES.length}
+                    className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 transition-colors"
+                  >
+                    다음 강좌 ▶
+                  </button>
+                </div>
+
+                {/* Playback Speed Switcher */}
+                <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-[11px] sm:text-xs">
+                  {[1.0, 1.25, 1.5, 2.0].map((speed) => (
+                    <button
+                      key={speed}
+                      onClick={() => setPlaybackSpeed(speed)}
+                      className={`px-2 sm:px-2.5 py-1 rounded-lg font-medium transition-all ${
+                        playbackSpeed === speed
+                          ? "bg-blue-600 text-white font-bold"
+                          : "text-slate-400 hover:text-slate-200"
+                      }`}
+                    >
+                      {speed}x
+                    </button>
+                  ))}
+                </div>
+
+                {/* Complete Toggle Button */}
+                <button
+                  onClick={() => toggleComplete(currentLecture.id)}
+                  className={`flex items-center justify-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs transition-all duration-200 cursor-pointer ${
+                    completedLectures.includes(currentLecture.id)
+                      ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-600/30"
+                      : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>
+                    {completedLectures.includes(currentLecture.id) ? "수강 완료됨" : "수강 완료로 표시"}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Lecture Summary & Core Points Section */}
+            <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+                  📝 강의 요약 &amp; 학습 포인트
+                </div>
+
+                {/* Lecture Practice Resources Download Link */}
+                {currentLecture.resources && currentLecture.resources.length > 0 && (
+                  <div className="flex items-center space-x-2">
+                    {currentLecture.resources.map((res, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => alert(`${res.name} 실습 자료를 다운로드합니다.`)}
+                        className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all cursor-pointer"
+                      >
+                        📥 {res.name} 다운로드
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+                <p className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 text-slate-300">
+                  {currentLecture.summary}
+                </p>
                 <div>
-                  <h3 className="text-lg font-bold text-white">
-                    구글 드라이브 동영상 연동 관리
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    구글 드라이브 폴더의 10개 강의 영상 공유 링크/파일 ID를 등록하면 웹사이트에서 바로 스트리밍 시청이 가능합니다.
-                  </p>
+                  <h4 className="font-bold text-xs text-cyan-400 uppercase tracking-wider mb-2">
+                    주요 학습 체크포인트
+                  </h4>
+                  <ul className="space-y-2">
+                    {currentLecture.keyPoints.map((point, idx) => (
+                      <li key={idx} className="flex items-start space-x-2 text-xs">
+                        <span className="text-cyan-500 font-bold mt-0.5">•</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Right Column: 10-Lecture Playlist Sidebar (4 cols) */}
+          <section className="lg:col-span-4 p-3 sm:p-4 md:p-6 bg-slate-900/40 space-y-4 lg:overflow-y-auto lg:max-h-[calc(100vh-60px)] lg:sticky lg:top-[60px]">
+            <div className="space-y-3 pb-3 border-b border-slate-800">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-sm sm:text-base text-white">강의 교육 과정 커리큘럼</h3>
+                  <p className="text-[11px] sm:text-xs text-slate-400">총 10강 • 100분 완강 코스</p>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-slate-800 text-cyan-400 text-[10px] sm:text-xs font-extrabold border border-slate-700">
+                  10강 세트
+                </span>
+              </div>
+
+              {/* Search Bar for Curriculum */}
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="🔍 강의 검색 (예: PDF, 인쇄, 매크로...)"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 transition-all"
+              />
+            </div>
+
+            {/* Lecture List Accordion */}
+            <div className="space-y-2.5">
+              {filteredLectures.map((lec) => {
+                const isCurrent = lec.id === currentLecture.id;
+                const isDone = completedLectures.includes(lec.id);
+
+                return (
+                  <div
+                    key={lec.id}
+                    onClick={() => setCurrentLecture(lec)}
+                    className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
+                      isCurrent
+                        ? "bg-gradient-to-r from-slate-900 to-slate-800/90 border-cyan-500/60 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40"
+                        : "bg-slate-900/60 hover:bg-slate-900 border-slate-800/80 hover:border-slate-700"
+                    }`}
+                  >
+                    <div className="flex items-start space-x-2.5 sm:space-x-3 overflow-hidden pr-2">
+                      {/* Checkbox / Play Icon */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleComplete(lec.id);
+                        }}
+                        className="mt-0.5 shrink-0"
+                      >
+                        {isDone ? (
+                          <div className="w-5 h-5 rounded-md bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs shadow-md">
+                            ✓
+                          </div>
+                        ) : (
+                          <div
+                            className={`w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold ${
+                              isCurrent
+                                ? "border-cyan-400 text-cyan-400"
+                                : "border-slate-700 text-slate-500 hover:border-slate-500"
+                            }`}
+                          >
+                            {lec.id}
+                          </div>
+                        )}
+                      </button>
+
+                      <div className="overflow-hidden">
+                        <div className="flex items-center space-x-1.5 mb-0.5">
+                          <span
+                            className={`text-[10px] sm:text-[11px] font-extrabold ${
+                              isCurrent ? "text-cyan-400" : "text-slate-400"
+                            }`}
+                          >
+                            {lec.id}강
+                          </span>
+                          {isCurrent && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                          )}
+                        </div>
+                        <h4
+                          className={`text-xs font-bold leading-snug break-keep ${
+                            isCurrent ? "text-white" : "text-slate-300"
+                          }`}
+                        >
+                          {lec.title.replace(/^\d+강:\s*/, "")}
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end shrink-0 pl-2">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">{lec.duration}</span>
+                      {isCurrent && (
+                        <span className="text-[9px] sm:text-[10px] font-bold text-cyan-400 tracking-wider uppercase mt-1">
+                          재생 중
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </main>
+      )}
+
+      {/* ====================================================================== */}
+      {/* 3. MODALS & OVERLAYS */}
+      {/* ====================================================================== */}
+
+      {/* Google Drive Video Links Management Modal */}
+      {showDriveModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="font-bold text-base text-white flex items-center space-x-2">
+                <span>📁 구글 드라이브 동영상 연동 관리자</span>
+              </h3>
               <button
                 onClick={() => setShowDriveModal(false)}
                 className="text-slate-400 hover:text-white text-lg font-bold p-1"
@@ -686,7 +968,7 @@ export default function Home() {
               </a>
               <button
                 onClick={() => setShowDriveModal(false)}
-                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition-colors shadow-lg shadow-cyan-600/20"
+                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition-colors shadow-lg shadow-cyan-600/20 cursor-pointer"
               >
                 설정 완료 및 창 닫기
               </button>
@@ -695,8 +977,43 @@ export default function Home() {
         </div>
       )}
 
-      {/* License Key Gatekeeper Modal Overlay */}
-      {!isAuthenticated && !isLoadingAuth && (
+      {/* 100% Completion Celebration Certificate Modal */}
+      {showCertificateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
+          <div className="w-full max-w-lg bg-slate-900 border border-emerald-500/40 rounded-3xl p-8 shadow-2xl shadow-emerald-500/20 text-center space-y-6">
+            <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border border-emerald-500/40 flex items-center justify-center text-4xl shadow-xl shadow-emerald-500/20">
+              🎉
+            </div>
+
+            <div className="space-y-2">
+              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+                10강 완강 축하합니다!
+              </span>
+              <h2 className="text-2xl font-black text-white">
+                생성형 AI 엑셀 매크로 마스터 수료
+              </h2>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                축하합니다! 10개 강좌를 모두 수강하여 AI와 함께 엑셀 자동화 매크로를 작성하고 리본 메뉴를 구축할 수 있는 마스터 역량을 완성하셨습니다.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-cyan-300 space-y-1">
+              <div>🎓 <strong>수강생 인증:</strong> WorkFree Market 마스터 클래스</div>
+              <div>⚡ <strong>업무 효율:</strong> 주 40시간 ➔ 8시간 단축 완료</div>
+            </div>
+
+            <button
+              onClick={() => setShowCertificateModal(false)}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 cursor-pointer"
+            >
+              확인 및 수강실로 돌아가기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* License Key Gatekeeper Modal Overlay (For Classroom View) */}
+      {viewMode === "classroom" && !isAuthenticated && !isLoadingAuth && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/95 backdrop-blur-xl">
           <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto">
             <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-xl sm:text-2xl shadow-lg shadow-cyan-500/20">
@@ -732,7 +1049,7 @@ export default function Home() {
                     setLicenseInput(e.target.value);
                     setLicenseError("");
                   }}
-                  placeholder="라이선스 비번 입력"
+                  placeholder="라이선스 비번 입력 (예: workfreemarketyaho)"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-center text-white placeholder-slate-500 focus:outline-none transition-all font-mono tracking-wider"
                   autoFocus
                 />
@@ -760,4 +1077,3 @@ export default function Home() {
     </div>
   );
 }
-
