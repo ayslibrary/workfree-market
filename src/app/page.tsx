@@ -259,90 +259,78 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans">
       {/* Top Header Navbar */}
-      <header className="sticky top-0 z-30 flex items-center justify-between px-6 py-3.5 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="flex items-center space-x-4">
+      <header className="sticky top-0 z-30 px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
+          {/* Logo & Title */}
           <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20 text-xs sm:text-base">
               WF
             </div>
             <div>
-              <h1 className="font-extrabold text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              <h1 className="font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                 WorkFree Market
               </h1>
-              <p className="text-[11px] text-cyan-400 font-medium tracking-wide">
-                www.workfreemarket.com • 실무 중심 생성형 AI 엑셀 매크로 마스터클래스
+              <p className="text-[10px] sm:text-[11px] text-cyan-400 font-medium tracking-wide">
+                AI 엑셀 매크로 마스터클래스
               </p>
             </div>
           </div>
-        </div>
 
-        {/* Course Progress & Actions */}
-        <div className="hidden md:flex items-center space-x-4">
-          <div className="flex flex-col items-end pr-2">
-            <div className="flex items-center space-x-2 text-xs font-semibold">
-              <span className="text-slate-400">전체 수강률:</span>
-              <span className="text-cyan-400 font-bold text-sm">{progressPercent}%</span>
-              <span className="text-slate-500">({completedLectures.length}/10 완료)</span>
-            </div>
-            <div className="w-44 h-2 bg-slate-800 rounded-full overflow-hidden mt-1 border border-slate-700/50">
-              <div
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500 ease-out"
-                style={{ width: `${progressPercent}%` }}
-              ></div>
-            </div>
-          </div>
+          {/* Action Buttons & License Status */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* License Status Badge */}
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogoutLicense}
+                className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-[11px] sm:text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer"
+                title="클릭 시 수강인증 잠금 상태로 전환"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>🔑 수강인증 완료</span>
+              </button>
+            ) : (
+              <span className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-[11px] sm:text-xs font-semibold border border-amber-500/30">
+                🔒 수강 미인증
+              </span>
+            )}
 
-          {/* License Status Badge Button */}
-          {isAuthenticated ? (
+            {/* Google Drive Connect */}
             <button
-              onClick={handleLogoutLicense}
-              className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer shadow-md"
-              title="클릭 시 수강인증 잠금 상태로 전환"
+              onClick={() => setShowDriveModal(true)}
+              className="flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-[11px] sm:text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer active:scale-95"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>🔑 수강인증 완료</span>
+              <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 15a4 4 0 014-4h10a4 4 0 014 4M3 15V9a4 4 0 014-4h10a4 4 0 014 4v6" />
+              </svg>
+              <span className="hidden sm:inline">📁 구글드라이브 영상 연동</span>
+              <span className="sm:hidden">📁 연동</span>
             </button>
-          ) : (
-            <span className="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
-              🔒 수강 권한 미인증
-            </span>
-          )}
 
-          {/* Google Drive Video Connect Button */}
-          <button
-            onClick={() => setShowDriveModal(true)}
-            className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all duration-200 cursor-pointer active:scale-95 shadow-md"
-          >
-            <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 15a4 4 0 014-4h10a4 4 0 014 4M3 15V9a4 4 0 014-4h10a4 4 0 014 4v6" />
-            </svg>
-            <span>📁 구글드라이브 영상 연동</span>
-          </button>
-
-          {/* Vercel & Domain Deploy Button */}
-          <button
-            onClick={() => setShowDeployModal(true)}
-            className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-xs font-semibold text-white shadow-md shadow-blue-600/25 transition-all duration-200 cursor-pointer active:scale-95"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-            </svg>
-            <span>도메인(www.workfreemarket.com) 배포</span>
-          </button>
+            {/* Vercel & Domain Deploy Button */}
+            <button
+              onClick={() => setShowDeployModal(true)}
+              className="hidden md:flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-xs font-semibold text-white shadow-md shadow-blue-600/25 transition-all cursor-pointer active:scale-95"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+              <span>도메인 배포</span>
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Main Container */}
       <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-0">
         {/* Left Column: Video Player & Lecture Details (8 cols) */}
-        <section className="lg:col-span-8 p-4 md:p-6 space-y-6 overflow-y-auto border-r border-slate-800/80">
-          {/* Video Player Container */}
-          <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl shadow-black/80 group">
+        <section className="lg:col-span-8 p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto lg:border-r border-slate-800/80">
+          {/* Responsive 16:9 Video Player Container */}
+          <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
             {currentDriveId ? (
               <iframe
                 key={`drive-${currentDriveId}`}
                 src={`https://drive.google.com/file/d/${currentDriveId}/preview`}
-                className="w-full aspect-video border-0 bg-black"
+                className="w-full h-full aspect-video border-0 bg-black"
                 allow="autoplay; encrypted-media; fullscreen"
                 allowFullScreen
               ></iframe>
@@ -350,7 +338,7 @@ export default function Home() {
               <video
                 ref={videoRef}
                 key={currentLecture.id}
-                className="w-full aspect-video object-contain bg-black"
+                className="w-full h-full aspect-video object-contain bg-black"
                 controls
                 autoPlay
                 preload="metadata"
@@ -361,8 +349,8 @@ export default function Home() {
               </video>
             )}
 
-            {/* Top Badge Overlay */}
-            <div className="absolute top-4 left-4 flex items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
+            {/* Top Badge Overlay - Desktop / Tablet only */}
+            <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span className="text-slate-200">
                 현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 재생)"}
@@ -371,25 +359,27 @@ export default function Home() {
           </div>
 
           {/* Lecture Info & Controls */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
             <div>
-              <div className="flex items-center space-x-2 mb-1.5">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
                   강의 #{currentLecture.id}
                 </span>
-                <span className="text-xs text-slate-400 font-medium">재생시간 10:00</span>
+                <span className="text-[11px] sm:text-xs text-slate-400 font-medium">재생시간 10:00</span>
               </div>
-              <h2 className="text-xl font-bold text-white tracking-tight">{currentLecture.title}</h2>
+              <h2 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
+                {currentLecture.title}
+              </h2>
             </div>
 
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80">
               {/* Playback Speed Switcher */}
-              <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs">
+              <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-[11px] sm:text-xs">
                 {[1.0, 1.25, 1.5, 2.0].map((speed) => (
                   <button
                     key={speed}
                     onClick={() => setPlaybackSpeed(speed)}
-                    className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+                    className={`px-2 sm:px-2.5 py-1 rounded-lg font-medium transition-all ${
                       playbackSpeed === speed
                         ? "bg-blue-600 text-white font-bold"
                         : "text-slate-400 hover:text-slate-200"
@@ -403,7 +393,7 @@ export default function Home() {
               {/* Complete Toggle Button */}
               <button
                 onClick={() => toggleComplete(currentLecture.id)}
-                className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition-all duration-200 cursor-pointer ${
+                className={`flex items-center justify-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs transition-all duration-200 cursor-pointer ${
                   completedLectures.includes(currentLecture.id)
                     ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-600/30"
                     : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
@@ -449,13 +439,13 @@ export default function Home() {
         </section>
 
         {/* Right Column: 10-Lecture Playlist Sidebar (4 cols) */}
-        <section className="lg:col-span-4 p-4 md:p-6 bg-slate-900/40 space-y-4 overflow-y-auto max-h-[calc(100vh-60px)] sticky top-[60px]">
+        <section className="lg:col-span-4 p-3 sm:p-4 md:p-6 bg-slate-900/40 space-y-4 lg:overflow-y-auto lg:max-h-[calc(100vh-60px)] lg:sticky lg:top-[60px]">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
             <div>
-              <h3 className="font-bold text-base text-white">강의 교육 과정 커리큘럼</h3>
-              <p className="text-xs text-slate-400">총 10강 • 100분 완강 코스</p>
+              <h3 className="font-bold text-sm sm:text-base text-white">강의 교육 과정 커리큘럼</h3>
+              <p className="text-[11px] sm:text-xs text-slate-400">총 10강 • 100분 완강 코스</p>
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-slate-800 text-cyan-400 text-xs font-extrabold border border-slate-700">
+            <span className="px-2.5 py-1 rounded-full bg-slate-800 text-cyan-400 text-[10px] sm:text-xs font-extrabold border border-slate-700">
               10강 세트
             </span>
           </div>
@@ -470,13 +460,13 @@ export default function Home() {
                 <div
                   key={lec.id}
                   onClick={() => setCurrentLecture(lec)}
-                  className={`p-3.5 rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
+                  className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
                     isCurrent
                       ? "bg-gradient-to-r from-slate-900 to-slate-800/90 border-cyan-500/60 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40"
                       : "bg-slate-900/60 hover:bg-slate-900 border-slate-800/80 hover:border-slate-700"
                   }`}
                 >
-                  <div className="flex items-start space-x-3 overflow-hidden pr-2">
+                  <div className="flex items-start space-x-2.5 sm:space-x-3 overflow-hidden pr-2">
                     {/* Checkbox / Play Icon */}
                     <button
                       onClick={(e) => {
@@ -505,7 +495,7 @@ export default function Home() {
                     <div className="overflow-hidden">
                       <div className="flex items-center space-x-1.5 mb-0.5">
                         <span
-                          className={`text-[11px] font-extrabold ${
+                          className={`text-[10px] sm:text-[11px] font-extrabold ${
                             isCurrent ? "text-cyan-400" : "text-slate-400"
                           }`}
                         >
@@ -516,7 +506,7 @@ export default function Home() {
                         )}
                       </div>
                       <h4
-                        className={`text-xs font-bold leading-tight truncate ${
+                        className={`text-xs font-bold leading-snug break-keep ${
                           isCurrent ? "text-white" : "text-slate-300"
                         }`}
                       >
@@ -526,9 +516,9 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-col items-end shrink-0 pl-2">
-                    <span className="text-[11px] font-semibold text-slate-500">{lec.duration}</span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">{lec.duration}</span>
                     {isCurrent && (
-                      <span className="text-[10px] font-bold text-cyan-400 tracking-wider uppercase mt-1">
+                      <span className="text-[9px] sm:text-[10px] font-bold text-cyan-400 tracking-wider uppercase mt-1">
                         재생 중
                       </span>
                     )}
@@ -707,23 +697,23 @@ export default function Home() {
 
       {/* License Key Gatekeeper Modal Overlay */}
       {!isAuthenticated && !isLoadingAuth && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl">
-          <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-3xl p-8 shadow-2xl shadow-cyan-500/10 space-y-6 text-center">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-2xl shadow-lg shadow-cyan-500/20">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/95 backdrop-blur-xl">
+          <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-xl sm:text-2xl shadow-lg shadow-cyan-500/20">
               🔒
             </div>
 
             <div className="space-y-2">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[11px] font-bold tracking-wide uppercase">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-wide uppercase">
                 WorkFree Market 수강생 전용
               </span>
-              <h2 className="text-xl font-extrabold text-white tracking-tight">
+              <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
                 수강생 전용 라이선스 인증
               </h2>
               <p className="text-xs text-slate-400 leading-relaxed">
                 본 클래스는 실시간 강의 수강생 전용 마스터클래스입니다.
                 <br />
-                강사로부터 전달받으신 <strong>수강 라이선스 비번</strong>을 입력해 주세요.
+                전달받으신 <strong>수강 라이선스 비번</strong>을 입력해 주세요.
               </p>
             </div>
 
