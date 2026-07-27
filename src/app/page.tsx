@@ -226,7 +226,10 @@ export default function Home() {
     }
   };
 
-  // Load drive links and completion state from localStorage (License auth resets on refresh)
+  // Lecture Playback Progress Tracking (Resume Playback)
+  const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
+
+  // Load completion state and progress from localStorage (License auth resets on refresh)
   useEffect(() => {
     localStorage.removeItem("workfree_license_auth");
 
@@ -239,10 +242,6 @@ export default function Home() {
       }
     }
 
-  // Lecture Playback Progress Tracking (Resume Playback)
-  const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
-
-  useEffect(() => {
     const savedProgress = localStorage.getItem("workfree_lecture_progress");
     if (savedProgress) {
       try {
@@ -279,6 +278,12 @@ export default function Home() {
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [currentLecture.id]);
+
+  const formatSeconds = (sec: number): string => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}분 ${s}초`;
+  };
 
   const handleResetProgress = (lectureId: number) => {
     setLectureTimestamps((prev) => {
@@ -609,7 +614,7 @@ export default function Home() {
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                   전직 해외영업, 영업관리, SCM을 거쳐 현직 재무·회계 실무자인 저는 AI와 VBA를 활용해 주 40시간의 반복 업무를 8시간으로, 하루 8시간의 일을 단 1시간으로 단축하는 자동화 루틴을 구축했습니다.
                   <br /><br />
-                  현재까지 **9회의 강의(사내 4회, 외부 5회)**를 통해 증명된 실무 노하우를 그대로 알려드립니다. 코딩 문법을 암기하는 강의가 아닙니다. AI와 함께 내 업무에 꼭 필요한 매크로를 만들고, &apos;나만의 리본 메뉴&apos;에 등록하여 클릭 한 번으로 끝내는 실무 환경을 만들어 드립니다. VBA를 몰라도 교육 다음 날부터 바로 실무 적용이 가능합니다.
+                  현재까지 <strong>9회의 강의(사내 4회, 외부 5회)</strong>를 통해 증명된 실무 노하우를 그대로 알려드립니다. 코딩 문법을 암기하는 강의가 아닙니다. AI와 함께 내 업무에 꼭 필요한 매크로를 만들고, &apos;나만의 리본 메뉴&apos;에 등록하여 클릭 한 번으로 끝내는 실무 환경을 만들어 드립니다. VBA를 몰라도 교육 다음 날부터 바로 실무 적용이 가능합니다.
                 </p>
               </div>
 
@@ -1144,8 +1149,6 @@ export default function Home() {
                     </button>
                   )}
                 </div>
-
-                </div>
               </div>
             </div>
 
@@ -1155,7 +1158,7 @@ export default function Home() {
                 <div className="flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
                   <span>
-                    ⏱️ <strong>이전 시청 위치 ({Math.floor((lectureTimestamps[currentLecture.id] || 0) / 60)}분 {(lectureTimestamps[currentLecture.id] || 0) % 60}초)</strong>에서 이어보기 중입니다.
+                    ⏱️ <strong>이전 시청 위치 ({formatSeconds(lectureTimestamps[currentLecture.id] || 0)})</strong>에서 이어보기 중입니다.
                   </span>
                 </div>
                 <button
