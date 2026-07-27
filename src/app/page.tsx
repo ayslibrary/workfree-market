@@ -1152,12 +1152,7 @@ export default function Home() {
                 return (
                   <div
                     key={lec.id}
-                    onClick={() => {
-                      setCurrentLecture(lec);
-                      if (!isAuthenticated) {
-                        setShowLicenseModal(true);
-                      }
-                    }}
+                    onClick={() => setCurrentLecture(lec)}
                     className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
                       isCurrent
                         ? "bg-gradient-to-r from-slate-900 to-slate-800/90 border-cyan-500/60 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40"
