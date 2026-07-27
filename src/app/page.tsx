@@ -1096,7 +1096,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-semibold text-slate-300 text-sm">
               <span>상호명: 워크프리 (WorkFree)</span>
               <span>•</span>
-              <span>대표자: 안아윤</span>
+              <span>대표자: 윤아영</span>
               <span>•</span>
               <span>사업자등록번호: 310-46-01336</span>
             </div>
@@ -1111,7 +1111,7 @@ export default function Home() {
               <span>카카오톡 ID: ayoi1034</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400 text-[11px]">
-              <span>개인정보관리책임자: 안아윤</span>
+              <span>개인정보관리책임자: 윤아영</span>
               <span>•</span>
               <span>호스팅서비스 제공자: Vercel Inc.</span>
             </div>
