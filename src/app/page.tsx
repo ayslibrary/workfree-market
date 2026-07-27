@@ -288,6 +288,22 @@ export default function Home() {
     });
   };
 
+  const parseDurationSeconds = (durationStr: string): number => {
+    const parts = durationStr.split(":").map(Number);
+    if (parts.length === 2) {
+      return parts[0] * 60 + parts[1];
+    }
+    return 500;
+  };
+
+  const getLectureProgressPercent = (lec: Lecture): number => {
+    const savedTime = lectureTimestamps[lec.id] || 0;
+    const totalSec = parseDurationSeconds(lec.duration);
+    if (savedTime <= 3) return 0;
+    const pct = Math.round((savedTime / totalSec) * 100);
+    return Math.min(100, Math.max(1, pct));
+  };
+
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
       setIsAuthenticated(true);
@@ -1237,7 +1253,18 @@ export default function Home() {
 
                     <div className="flex flex-col items-end shrink-0 pl-2">
                       <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">{lec.duration}</span>
-                      {isCurrent && (
+                      {getLectureProgressPercent(lec) > 0 && (
+                        <span
+                          className={`text-[10px] font-mono font-extrabold px-1.5 py-0.5 rounded mt-1 border ${
+                            getLectureProgressPercent(lec) >= 90
+                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                              : "bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
+                          }`}
+                        >
+                          {getLectureProgressPercent(lec) >= 90 ? "✓ 100%" : `${getLectureProgressPercent(lec)}%`}
+                        </span>
+                      )}
+                      {isCurrent && getLectureProgressPercent(lec) === 0 && (
                         <span className="text-[9px] sm:text-[10px] font-bold text-cyan-400 tracking-wider uppercase mt-1">
                           재생 중
                         </span>
