@@ -174,6 +174,7 @@ export default function Home() {
   const [licenseError, setLicenseError] = useState<string>("");
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
   const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
+  const [showKeyInfo, setShowKeyInfo] = useState<boolean>(false);
 
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -1502,6 +1503,36 @@ export default function Home() {
               </button>
             </form>
 
+            {showKeyInfo && (
+              <div className="p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500/50 text-left space-y-2.5 shadow-xl shadow-emerald-500/10">
+                <div className="flex items-center space-x-2 text-xs font-black text-emerald-400">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>🎉 5,000원 결제 송금 연결 완료!</span>
+                </div>
+                <p className="text-[11px] text-emerald-200/90 leading-relaxed">
+                  카카오페이 송금 후 아래 라이선스 비번을 입력하시거나 <strong>[즉시 수강 승인]</strong> 버튼을 누르시면 10강 전체가 바로 열립니다!
+                </p>
+                <div className="p-3 bg-slate-950 rounded-xl border border-emerald-500/40 flex items-center justify-between font-mono font-bold text-xs sm:text-sm text-emerald-300">
+                  <div>
+                    <span className="text-[10px] text-slate-400 block font-sans">수강 라이선스 키:</span>
+                    <span className="text-white tracking-wider">workfreemarketyaho</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLicenseInput(VALID_LICENSE_KEY);
+                      setIsAuthenticated(true);
+                      setShowLicenseModal(false);
+                      trackGAEvent("auto_auth_success", "engagement", "modal_5k");
+                    }}
+                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs cursor-pointer shadow-md active:scale-95 transition-all"
+                  >
+                    🔑 즉시 수강 승인 ➔
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="pt-4 border-t border-slate-800 space-y-2.5">
               <p className="text-[11px] font-bold text-amber-300">
                 💳 특가 결제 &amp; 수강 신청:
@@ -1511,7 +1542,10 @@ export default function Home() {
                   href="https://qr.kakaopay.com/FVGQc7DUq"
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "modal_5k")}
+                  onClick={() => {
+                    setShowKeyInfo(true);
+                    trackGAEvent("click_kakaopay_transfer", "conversion", "modal_5k");
+                  }}
                   className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
                 >
                   💳 5,000원 결제하기 (카카오페이 1초 송금) ↗
