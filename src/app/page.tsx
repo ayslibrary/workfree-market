@@ -361,12 +361,20 @@ export default function Home() {
             </button>
 
             {viewMode === "landing" && (
-              <a
-                href="#techtree"
-                className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
-              >
-                🗺️ 테크트리
-              </a>
+              <>
+                <a
+                  href="#curriculum"
+                  className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
+                >
+                  📚 커리큘럼
+                </a>
+                <a
+                  href="#techtree"
+                  className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
+                >
+                  🗺️ 테크트리
+                </a>
+              </>
             )}
 
             {/* License Status Badge */}
@@ -608,6 +616,75 @@ export default function Home() {
               >
                 🎓 10강 수강실 입장하기 ➔
               </button>
+            </div>
+          </section>
+
+          {/* DETAILED 10-LESSON CURRICULUM SECTION */}
+          <section id="curriculum" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8 scroll-mt-20">
+            <div className="text-center space-y-3">
+              <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30 tracking-wider">
+                10-LESSON DETAILED CURRICULUM
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                LV.01 온라인 10강 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">상세 커리큘럼 &amp; 학습 포인트</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                엑셀 환경 세팅부터 AI 매크로 작성, 리본 메뉴 심기, 100개 PDF 일괄 처리 및 인풋박스 데이터 조회까지 — 10개 강좌의 요약과 주요 체크포인트를 미리 확인하세요.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {LECTURES.map((lec) => (
+                <div
+                  key={lec.id}
+                  className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800/90 hover:border-cyan-500/50 transition-all space-y-3.5 flex flex-col justify-between group shadow-lg shadow-black/40 hover:shadow-cyan-500/10"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30 font-mono">
+                          {lec.id < 10 ? `0${lec.id}강` : `${lec.id}강`}
+                        </span>
+                        <span className="text-[11px] font-semibold text-slate-400">
+                          ⏱️ {lec.duration}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setCurrentLecture(lec);
+                          setViewMode("classroom");
+                        }}
+                        className="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center space-x-1 cursor-pointer transition-colors group-hover:translate-x-0.5"
+                      >
+                        <span>강의 시청하기</span>
+                        <span>➔</span>
+                      </button>
+                    </div>
+
+                    <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+                      {lec.title}
+                    </h3>
+
+                    <p className="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-slate-800/60">
+                      {lec.summary}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-800/80 space-y-2">
+                    <div className="text-[11px] font-bold text-cyan-400 flex items-center space-x-1">
+                      <span>📌 주요 학습 체크포인트</span>
+                    </div>
+                    <ul className="space-y-1.5 pl-0.5">
+                      {lec.keyPoints.map((point, idx) => (
+                        <li key={idx} className="flex items-start space-x-2 text-xs text-slate-300 leading-snug">
+                          <span className="text-cyan-400 font-bold mt-0.5 shrink-0">•</span>
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
