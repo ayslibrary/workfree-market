@@ -497,9 +497,9 @@ export default function Home() {
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
             <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold shadow-lg shadow-cyan-500/10">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                <span>🗺️ 사무자동화 테크트리 LV.01 · 입문 마스터클래스</span>
+              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-500/10">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <span>🔥 [커피 한 잔 파격 특가] LV.01 온라인 10강 전체 시청권: 단 5,000원!</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight">
@@ -517,12 +517,12 @@ export default function Home() {
               </p>
 
               {/* Hero Call To Actions */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
                 <button
                   onClick={() => setViewMode("classroom")}
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
                 >
-                  <span>🚀 LV.01 10강 마스터클래스 바로 수강하기</span>
+                  <span>🚀 LV.01 10강 강의 바로 보기</span>
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
                 <a
@@ -532,22 +532,16 @@ export default function Home() {
                   onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "hero_button")}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                 >
-                  <span>🟡 카카오페이 5,000원 송금 ↗</span>
+                  <span>💳 5,000원 결제하기 (카카오페이 1초 송금) ↗</span>
                 </a>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "hero_button")}
-                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-600 to-orange-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-orange-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 font-bold text-xs sm:text-sm border border-amber-500/30 transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
-                  <span>🥕 당근마켓 실강 문의 ↗</span>
-                </a>
-                <a
-                  href="#schedule"
-                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-sm sm:text-base border border-slate-800 transition-all text-center"
-                >
-                  💬 카카오톡 문의 ↓
+                  <span>🥕 당근마켓 문의 ↗</span>
                 </a>
               </div>
 
