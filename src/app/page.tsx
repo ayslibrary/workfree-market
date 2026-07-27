@@ -228,8 +228,9 @@ export default function Home() {
     }
   };
 
-  // State for Privacy Policy Modal
+  // State for Privacy Policy Modal & Inquiry Choice Modal
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
 
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
@@ -577,15 +578,12 @@ export default function Home() {
                 >
                   <span>⚡ 얼리버드 90% 할인 특가 신청 ↗</span>
                 </button>
-                <a
-                  href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "hero_button")}
-                  className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 hover:text-amber-300 font-bold text-xs sm:text-sm border border-amber-500/30 transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer"
+                <button
+                  onClick={() => setShowInquiryModal(true)}
+                  className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-cyan-300 hover:text-cyan-200 font-bold text-xs sm:text-sm border border-cyan-500/30 transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
-                  <span>🥕 당근마켓 문의 ↗</span>
-                </a>
+                  <span>💬 1:1 고객 문의하기 ↗</span>
+                </button>
               </div>
 
               {/* Stats Highlights */}
@@ -939,7 +937,13 @@ export default function Home() {
                       <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
                         LV.03 · Power Automate 입문
                       </span>
-                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
+                      <button
+                        type="button"
+                        onClick={() => setShowInquiryModal(true)}
+                        className="block w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-bold text-xs transition-all text-center cursor-pointer"
+                      >
+                        💬 1:1 고객 문의하기 (카카오톡 / 이메일) ↗
+                      </button>
                     </div>
                     <h3 className="text-lg font-bold text-slate-200">트리거 자동화 — 손 안 대는 자동화</h3>
                     <p className="text-xs text-slate-400 leading-relaxed">
@@ -1042,9 +1046,12 @@ export default function Home() {
                 >
                   <span>🥕 당근마켓 실강 문의 ↗</span>
                 </a>
-                <div className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-sm font-mono font-bold text-cyan-300 shadow-inner text-center">
-                  💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
-                </div>
+                <button
+                  onClick={() => setShowInquiryModal(true)}
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-sm font-bold text-cyan-300 hover:text-cyan-200 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer shadow-inner"
+                >
+                  <span>💬 1:1 고객 문의하기 (카톡 / 이메일) ↗</span>
+                </button>
               </div>
               <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-lg mx-auto leading-relaxed font-semibold shadow-inner">
                 💡 1단계는 본 온라인 10강 마스터클래스로 완강하시고, 2단계(LV.02)부터 실강(오프라인/라이브)에 참여하셔도 무방합니다.
@@ -1731,6 +1738,95 @@ export default function Home() {
                 className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
               >
                 확인 및 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* 1:1 Inquiry Choice Modal */}
+      {showInquiryModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="font-extrabold text-base sm:text-lg text-white flex items-center space-x-2">
+                <span>💬 워크프리마켓 1:1 고객 문의</span>
+              </h3>
+              <button
+                onClick={() => setShowInquiryModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              원하시는 문의 방식을 선택해 주세요. 24시간 내 친절하고 상세하게 답변해 드립니다!
+            </p>
+
+            <div className="space-y-3 pt-1">
+              {/* Option 1: KakaoTalk Inquiry */}
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-amber-300 font-extrabold text-xs sm:text-sm">
+                    <span>🟡 카카오톡 1:1 실시간 문의</span>
+                  </div>
+                  <span className="text-[10px] text-amber-400/80 font-mono">ID: ayoi1034</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-snug">
+                  카카오톡 ID 검색창에서 <strong>ayoi1034</strong> 를 검색해 1:1 채팅 문의를 남겨주세요.
+                </p>
+                <div className="flex space-x-2 pt-1">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("ayoi1034");
+                      alert("📋 카카오톡 ID (ayoi1034)가 복사되었습니다! 카카오톡 친구추가에서 검색해 주세요.");
+                      trackGAEvent("copy_kakaotalk_id", "engagement", "inquiry_modal");
+                    }}
+                    className="flex-1 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer active:scale-95 transition-all text-center"
+                  >
+                    📋 카톡 ID 복사 (ayoi1034)
+                  </button>
+                </div>
+              </div>
+
+              {/* Option 2: Email Inquiry */}
+              <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-cyan-300 font-extrabold text-xs sm:text-sm">
+                    <span>✉️ 공식 이메일 문의</span>
+                  </div>
+                  <span className="text-[10px] text-cyan-400/80 font-mono">24h 접수</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-snug font-mono">
+                  contact@workfreemarket.com
+                </p>
+                <div className="flex space-x-2 pt-1">
+                  <a
+                    href="mailto:contact@workfreemarket.com"
+                    className="flex-1 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs cursor-pointer active:scale-95 transition-all text-center block"
+                  >
+                    ✉️ 이메일 보낼 프로그램 열기 ↗
+                  </a>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("contact@workfreemarket.com");
+                      alert("📋 이메일 주소 (contact@workfreemarket.com)가 복사되었습니다!");
+                      trackGAEvent("copy_email", "engagement", "inquiry_modal");
+                    }}
+                    className="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs cursor-pointer active:scale-95 transition-all"
+                  >
+                    📋 복사
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowInquiryModal(false)}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
+              >
+                닫기
               </button>
             </div>
           </div>
