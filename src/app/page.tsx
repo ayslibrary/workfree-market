@@ -239,15 +239,54 @@ export default function Home() {
       }
     }
 
-    const savedDrive = localStorage.getItem("workfree_drive_links");
-    if (savedDrive) {
+  // Lecture Playback Progress Tracking (Resume Playback)
+  const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
+
+  useEffect(() => {
+    const savedProgress = localStorage.getItem("workfree_lecture_progress");
+    if (savedProgress) {
       try {
-        setDriveLinks(JSON.parse(savedDrive));
+        setLectureTimestamps(JSON.parse(savedProgress));
       } catch (e) {
         console.error(e);
       }
     }
   }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        let currentTime = 0;
+        if (typeof event.data === "string") {
+          const parsed = JSON.parse(event.data);
+          currentTime = Math.floor(parsed.data?.currentTime || parsed.data?.seconds || parsed.currentTime || 0);
+        } else if (typeof event.data === "object" && event.data !== null) {
+          currentTime = Math.floor(event.data.currentTime || event.data.seconds || event.data.time || 0);
+        }
+
+        if (currentTime > 3) {
+          setLectureTimestamps((prev) => {
+            const updated = { ...prev, [currentLecture.id]: currentTime };
+            localStorage.setItem("workfree_lecture_progress", JSON.stringify(updated));
+            return updated;
+          });
+        }
+      } catch (e) {
+        // ignore non-json messages
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [currentLecture.id]);
+
+  const handleResetProgress = (lectureId: number) => {
+    setLectureTimestamps((prev) => {
+      const updated = { ...prev, [lectureId]: 0 };
+      localStorage.setItem("workfree_lecture_progress", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
@@ -989,8 +1028,8 @@ export default function Home() {
                 </div>
               ) : currentLecture.bunnyVideoId ? (
                 <iframe
-                  key={`bunny-${currentLecture.id}`}
-                  src={`https://iframe.mediadelivery.net/embed/714452/${currentLecture.bunnyVideoId}?autoplay=true&loop=false&muted=false&preload=true&responsive=true`}
+                  key={`bunny-${currentLecture.id}-${lectureTimestamps[currentLecture.id] || 0}`}
+                  src={`https://iframe.mediadelivery.net/embed/714452/${currentLecture.bunnyVideoId}?autoplay=true&loop=false&muted=false&preload=true&responsive=true${(lectureTimestamps[currentLecture.id] || 0) > 3 ? `&t=${lectureTimestamps[currentLecture.id]}` : ""}`}
                   className="w-full h-full aspect-video border-0 bg-black"
                   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
                   allowFullScreen
@@ -1072,24 +1111,27 @@ export default function Home() {
                   )}
                 </div>
 
-                {/* Complete Toggle Button */}
-                <button
-                  onClick={() => toggleComplete(currentLecture.id)}
-                  className={`flex items-center justify-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs transition-all duration-200 cursor-pointer ${
-                    completedLectures.includes(currentLecture.id)
-                      ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-600/30"
-                      : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>
-                    {completedLectures.includes(currentLecture.id) ? "수강 완료됨" : "수강 완료로 표시"}
-                  </span>
-                </button>
+                </div>
               </div>
             </div>
+
+            {/* Resume Playback Banner */}
+            {(lectureTimestamps[currentLecture.id] || 0) > 3 && (
+              <div className="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-lg">
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+                  <span>
+                    ⏱️ <strong>이전 시청 위치 ({Math.floor((lectureTimestamps[currentLecture.id] || 0) / 60)}분 {(lectureTimestamps[currentLecture.id] || 0) % 60}초)</strong>에서 이어보기 중입니다.
+                  </span>
+                </div>
+                <button
+                  onClick={() => handleResetProgress(currentLecture.id)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold border border-slate-700 transition-all cursor-pointer shrink-0"
+                >
+                  🔄 처음부터 시청하기
+                </button>
+              </div>
+            )}
 
             {/* Lecture Summary & Core Points Section */}
             <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
@@ -1160,30 +1202,15 @@ export default function Home() {
                     }`}
                   >
                     <div className="flex items-start space-x-2.5 sm:space-x-3 overflow-hidden pr-2">
-                      {/* Checkbox / Play Icon */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleComplete(lec.id);
-                        }}
-                        className="mt-0.5 shrink-0"
+                      <div
+                        className={`w-6 h-6 rounded-lg border flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-0.5 ${
+                          isCurrent
+                            ? "bg-cyan-500/20 border-cyan-400 text-cyan-300"
+                            : "bg-slate-950 border-slate-800 text-slate-400"
+                        }`}
                       >
-                        {isDone ? (
-                          <div className="w-5 h-5 rounded-md bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs shadow-md">
-                            ✓
-                          </div>
-                        ) : (
-                          <div
-                            className={`w-5 h-5 rounded-md border flex items-center justify-center text-[10px] font-bold ${
-                              isCurrent
-                                ? "border-cyan-400 text-cyan-400"
-                                : "border-slate-700 text-slate-500 hover:border-slate-500"
-                            }`}
-                          >
-                            {lec.id}
-                          </div>
-                        )}
-                      </button>
+                        {lec.id < 10 ? `0${lec.id}` : lec.id}
+                      </div>
 
                       <div className="overflow-hidden">
                         <div className="flex items-center space-x-1.5 mb-0.5">
