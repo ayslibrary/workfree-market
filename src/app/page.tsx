@@ -1533,7 +1533,24 @@ export default function Home() {
               </div>
             )}
 
-            <div className="pt-4 border-t border-slate-800 space-y-2.5">
+            {/* KakaoPay QR Code Display for PC & Mobile users */}
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-black uppercase">
+                🟡 PC 사용자 QR 스캔 결제
+              </span>
+              <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden border-2 border-yellow-400/80 shadow-2xl shadow-yellow-500/20 bg-white p-2 flex items-center justify-center">
+                <img
+                  src="/images/kakaopay_qr.png"
+                  alt="카카오페이 5,000원 송금 QR 코드"
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                스마트폰 카메라나 카카오톡 돋보기로 위 QR을 찍으시면 <strong>5,000원 송금 창이 1초 만에 실행</strong>됩니다!
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-slate-800 space-y-2.5">
               <p className="text-[11px] font-bold text-amber-300">
                 💳 얼리버드 특가 결제 &amp; 수강 신청:
               </p>
