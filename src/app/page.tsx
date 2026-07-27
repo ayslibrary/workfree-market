@@ -8,6 +8,7 @@ interface Lecture {
   duration: string;
   filename: string;
   driveUrl?: string;
+  bunnyVideoId?: string;
   summary: string;
   keyPoints: string[];
 }
@@ -19,6 +20,7 @@ const LECTURES: Lecture[] = [
     duration: "04:39",
     filename: "Lecture_01.mp4",
     driveUrl: "https://drive.google.com/file/d/18wF4n2_E1xkf-_SA8OBDOT_atiT6FG0G/view?usp=drive_link",
+    bunnyVideoId: "f464d3f6-2e1f-460b-a5a9-e6caf5c817c0",
     summary: "엑셀 개발 도구 탭 활성화, 매크로 보안 설정 해제 및 Microsoft AddIns 폴더(.xlam) 등록과 신뢰할 수 있는 위치 경로 설정을 진행합니다.",
     keyPoints: [
       "엑셀 개발 도구 탭 활성화 및 매크로 보안 설정 해제",
@@ -32,6 +34,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_02.mp4",
     driveUrl: "https://drive.google.com/file/d/1OILzj22t9tqfGGObI7wUTXZuKexmAps7/view?usp=drive_link",
+    bunnyVideoId: "73a3838c-f992-4195-83ae-6e2be38ce9d8",
     summary: "반복적으로 여는 업무 파일 경로를 복사하고, 생성형 AI(ChatGPT 등)를 활용하여 VBA 파일 열기 코드를 생성 및 테스트합니다.",
     keyPoints: [
       "반복적으로 여는 특정 업무 폴더/파일의 경로 복사",
@@ -45,6 +48,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_03.mp4",
     driveUrl: "https://drive.google.com/file/d/1WsgiGEcj3hT3bQqQBN7PgVhua6zxhwxl/view?usp=drive_link",
+    bunnyVideoId: "0b7ce959-06c0-4a03-9bb1-7778159feaf6",
     summary: "서브루틴 이름 규칙과 모듈 속성창 설정법을 익히고, 엑셀 상단 리본 메뉴에 커스텀 탭/그룹과 아이콘을 연결합니다.",
     keyPoints: [
       "서브루틴(Sub) 이름의 중요성과 유지보수를 위한 모듈 속성창 이름 변경",
@@ -58,6 +62,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_04.mp4",
     driveUrl: "https://drive.google.com/file/d/1ERAkv39bUEENU84bEboyRhUvIMhEiz9S/view?usp=drive_link",
+    bunnyVideoId: "09d12072-d2fa-4e0e-bb97-fd8a4b8f480f",
     summary: "로우 데이터의 헤더 위치와 만기일·통화·금액 열 구조를 파악하고, AI에게 명확하게 집계 범위를 명령하는 프롬프트 작성법을 배웁니다.",
     keyPoints: [
       "실무 로우 데이터의 구조 파악 (헤더 행 위치 지정)",
@@ -71,6 +76,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_05.mp4",
     driveUrl: "https://drive.google.com/file/d/1_GRqa9866tnjskM1z0sWoIROU8OIar3s/view?usp=drive_link",
+    bunnyVideoId: "3542199e-0507-4f30-b836-0ef567d6e627",
     summary: "만기 월별·통화별 금액 합산표 생성 VBA 코드를 생성형 AI에게 요청하고, 모듈 붙여넣기 및 F5/F8 단계별 디버깅을 실행합니다.",
     keyPoints: [
       "만기 월별·통화별 금액 합산표 생성을 위한 VBA 코드 요청",
@@ -84,6 +90,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_06.mp4",
     driveUrl: "https://drive.google.com/file/d/1NsCiH48wUlahexDx3iFpJ1FRrSmz1nxm/view?usp=drive_link",
+    bunnyVideoId: "d218f0b3-5c71-4e12-84ea-861a6b4e65a9",
     summary: "작성한 매크로를 .xlam 추가 기능에 이관하여 리본 메뉴 버튼으로 등록하고, 디버그 오류 시 AI에게 캡처를 공유하여 리팩토링하는 기법입니다.",
     keyPoints: [
       "작성된 합산표 매크로를 .xlam 추가 기능 폴더에 최종 이관",
@@ -97,6 +104,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_07.mp4",
     driveUrl: "https://drive.google.com/file/d/1CYEGZXmEyXx9MU9UUq-vy5AoyZC2lA0I/view?usp=drive_link",
+    bunnyVideoId: "32eb76e2-486c-4c31-96e8-3d8a4df50587",
     summary: "거래처 목록이나 조건 키값을 자동으로 순회하여 수십~수백 개의 엑셀 보고서/청구서를 한 번에 PDF로 일괄 저장하는 매크로를 작성합니다.",
     keyPoints: [
       "거래처 키값 자동 변경 원리 (Loop 반복문 이해)",
@@ -110,6 +118,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_08.mp4",
     driveUrl: "https://drive.google.com/file/d/1Dd6eE2HNdHd9GQ1OWpgZov0uTeV5GV3Q/view?usp=drive_link",
+    bunnyVideoId: "7c08da41-06fc-42fd-8a41-eddc56c33758",
     summary: "페이지 레이아웃 인쇄 영역 자동 조절, 지정 폴더 저장 경로 세팅 및 파일명 덮어쓰기 방지 로직을 추가하여 PDF 매크로를 완성합니다.",
     keyPoints: [
       "페이지 레이아웃에서 인쇄 영역 해제 및 조절하기",
@@ -123,6 +132,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_09.mp4",
     driveUrl: "https://drive.google.com/file/d/1Z7MTyDaBgT2bhxn_pSIFCfBNBFedv370/view?usp=drive_link",
+    bunnyVideoId: "118f5f65-c81c-4441-bc7d-46497cd70278",
     summary: "사용자 조회를 위한 InputBox 대화상자와 MsgBox 알림창을 도입하여, 특정 폴더 파일을 직접 열지 않고 데이터를 빠르게 조회합니다.",
     keyPoints: [
       "사용자로부터 직접 날짜나 조건을 입력받는 InputBox 개념 도입",
@@ -136,6 +146,7 @@ const LECTURES: Lecture[] = [
     duration: "08:20",
     filename: "Lecture_10.mp4",
     driveUrl: "https://drive.google.com/file/d/15Gt6LYITrFez6PDz7DVLMB7wzxItu3u4/view?usp=drive_link",
+    bunnyVideoId: "60fb450a-2e5e-4c02-a60d-0abdd6b44033",
     summary: "매일 받는 로우 데이터의 고정 템플릿 자동 매핑, 아웃룩(Outlook) API 연동 PDF 청구서 메일 자동 전송 및 이벤트 기반 매크로의 발전 방향을 제시합니다.",
     keyPoints: [
       "매일 다운로드받는 로우 데이터를 고정 템플릿에 자동으로 매핑하는 심화 과정 안내",
@@ -975,6 +986,14 @@ export default function Home() {
                     (모바일 & PC 동일: 새로고침 시 수강키 입력 필요)
                   </p>
                 </div>
+              ) : currentLecture.bunnyVideoId ? (
+                <iframe
+                  key={`bunny-${currentLecture.id}`}
+                  src={`https://iframe.mediadelivery.net/embed/714452/${currentLecture.bunnyVideoId}?autoplay=true&loop=false&muted=false&preload=true&responsive=true`}
+                  className="w-full h-full aspect-video border-0 bg-black"
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                ></iframe>
               ) : currentDriveId ? (
                 <iframe
                   key={`drive-${currentDriveId}`}
@@ -1003,7 +1022,7 @@ export default function Home() {
               <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="text-slate-200">
-                  현재 재생 중: {currentLecture.title} {currentDriveId && "(Google Drive 비디오)"}
+                  현재 재생 중: {currentLecture.title} {currentLecture.bunnyVideoId ? "(Bunny CDN 초고속 HLS 스트리밍)" : currentDriveId ? "(Google Drive 비디오)" : ""}
                 </span>
               </div>
             </div>
