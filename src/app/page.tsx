@@ -173,6 +173,7 @@ export default function Home() {
   const [licenseInput, setLicenseInput] = useState<string>("");
   const [licenseError, setLicenseError] = useState<string>("");
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
+  const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
 
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -251,6 +252,7 @@ export default function Home() {
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
       setIsAuthenticated(true);
+      setShowLicenseModal(false);
       setLicenseError("");
     } else {
       setLicenseError("올바르지 않은 수강 비번입니다. 강사에게 전달받은 수강 라이선스 키를 확인해 주세요.");
@@ -400,10 +402,14 @@ export default function Home() {
                 <span className="sm:hidden">🔑 인증됨</span>
               </button>
             ) : (
-              <span className="inline-flex items-center px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
-                <span className="hidden sm:inline">🔒 수강 미인증</span>
+              <button
+                onClick={() => setShowLicenseModal(true)}
+                className="inline-flex items-center px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold border border-amber-500/30 transition-all cursor-pointer"
+                title="클릭하여 수강생 라이선스 키 입력"
+              >
+                <span className="hidden sm:inline">🔒 수강 미인증 (키 입력)</span>
                 <span className="sm:hidden">🔒 미인증</span>
-              </span>
+              </button>
             )}
 
             {/* End Header Actions */}
@@ -965,16 +971,21 @@ export default function Home() {
             {/* Responsive 16:9 Video Player Container */}
             <div ref={playerContainerRef} className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
               {!isAuthenticated ? (
-                <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-2 sm:space-y-3 bg-slate-950/90 backdrop-blur-sm">
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg sm:text-2xl shadow-lg shadow-cyan-500/10">
-                    🔒
+                <div
+                  onClick={() => setShowLicenseModal(true)}
+                  className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-3 sm:space-y-4 bg-slate-950/95 backdrop-blur-md cursor-pointer group hover:bg-slate-950 transition-all border border-cyan-500/20 hover:border-cyan-500/50"
+                >
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 border-2 border-cyan-400 flex items-center justify-center text-white text-xl sm:text-2xl shadow-xl shadow-cyan-500/30 group-hover:scale-110 transition-transform">
+                    ▶
                   </div>
-                  <p className="text-xs sm:text-sm font-bold text-slate-200">
-                    수강생 라이선스 키 인증 후 동영상 시청이 가능합니다.
-                  </p>
-                  <p className="text-[11px] text-slate-400">
-                    (모바일 & PC 동일: 새로고침 시 수강키 입력 필요)
-                  </p>
+                  <div className="space-y-1">
+                    <p className="text-sm sm:text-base font-extrabold text-white">
+                      🔑 수강생 라이선스 키 인증 후 동영상 재생하기
+                    </p>
+                    <p className="text-xs text-cyan-400 font-semibold">
+                      클릭하여 비번 입력 및 수강 신청 안내 보기 ➔
+                    </p>
+                  </div>
                 </div>
               ) : currentLecture.bunnyVideoId ? (
                 <iframe
@@ -1141,7 +1152,12 @@ export default function Home() {
                 return (
                   <div
                     key={lec.id}
-                    onClick={() => setCurrentLecture(lec)}
+                    onClick={() => {
+                      setCurrentLecture(lec);
+                      if (!isAuthenticated) {
+                        setShowLicenseModal(true);
+                      }
+                    }}
                     className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between ${
                       isCurrent
                         ? "bg-gradient-to-r from-slate-900 to-slate-800/90 border-cyan-500/60 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40"
@@ -1330,10 +1346,17 @@ export default function Home() {
         </div>
       )}
 
-      {/* License Key Gatekeeper Modal Overlay (For Classroom View) */}
-      {viewMode === "classroom" && !isAuthenticated && !isLoadingAuth && (
-        <div className="fixed top-[61px] inset-x-0 bottom-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/95 backdrop-blur-xl">
-          <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto">
+      {/* License Key Gatekeeper Modal Overlay */}
+      {showLicenseModal && !isAuthenticated && (
+        <div className="fixed top-[61px] inset-x-0 bottom-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/90 backdrop-blur-xl">
+          <div className="w-full max-w-md bg-slate-900/95 border border-cyan-500/40 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/20 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto relative">
+            <button
+              onClick={() => setShowLicenseModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg font-bold p-1 cursor-pointer transition-colors"
+              title="닫기"
+            >
+              ✕
+            </button>
             <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-xl sm:text-2xl shadow-lg shadow-cyan-500/20">
               🔒
             </div>
