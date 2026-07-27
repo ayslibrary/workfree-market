@@ -1022,7 +1022,7 @@ export default function Home() {
               <div className="hidden sm:flex absolute top-3 left-3 items-center space-x-2 bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-xs font-semibold z-10">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="text-slate-200">
-                  현재 재생 중: {currentLecture.title} {currentLecture.bunnyVideoId ? "(Bunny CDN 초고속 HLS 스트리밍)" : currentDriveId ? "(Google Drive 비디오)" : ""}
+                  현재 재생 중: {currentLecture.title}
                 </span>
               </div>
             </div>
