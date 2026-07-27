@@ -1101,7 +1101,7 @@ export default function Home() {
               <span>사업자등록번호: 310-46-01336</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
-              <span>주소: 서울특별시 관악구 신림로 567, 529동 509호(신림동, 관악산휴먼시아5단지아파트)</span>
+              <span>주소: 서울특별시 송파구 송파대로 567, 529동 509호(잠실동, 아파트)</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
               <span>고객센터 / 대표전화: 010-2515-1034</span>
