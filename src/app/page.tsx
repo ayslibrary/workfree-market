@@ -1539,35 +1539,36 @@ export default function Home() {
               </button>
             </form>
 
-            {showKeyInfo && (
-              <div className="p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500/50 text-left space-y-2.5 shadow-xl shadow-emerald-500/10">
-                <div className="flex items-center space-x-2 text-xs font-black text-emerald-400">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>🎉 얼리버드 결제 송금 연결 완료!</span>
-                </div>
-                <p className="text-[11px] text-emerald-200/90 leading-relaxed">
-                  카카오페이 송금 후 아래 라이선스 비번을 입력하시거나 <strong>[즉시 수강 승인]</strong> 버튼을 누르시면 10강 전체가 바로 열립니다!
-                </p>
-                <div className="p-3 bg-slate-950 rounded-xl border border-emerald-500/40 flex items-center justify-between font-mono font-bold text-xs sm:text-sm text-emerald-300">
-                  <div>
-                    <span className="text-[10px] text-slate-400 block font-sans">수강 라이선스 키:</span>
-                    <span className="text-white tracking-wider">workfreemarketyaho</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLicenseInput(VALID_LICENSE_KEY);
-                      setIsAuthenticated(true);
-                      setShowLicenseModal(false);
-                      trackGAEvent("auto_auth_success", "engagement", "modal_5k");
-                    }}
-                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs cursor-pointer shadow-md active:scale-95 transition-all"
-                  >
-                    🔑 즉시 수강 승인 ➔
-                  </button>
-                </div>
+            {/* Always visible instant key & 1-click unlock box */}
+            <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/50 text-left space-y-3 shadow-xl shadow-emerald-500/10">
+              <div className="flex items-center space-x-2 text-xs font-black text-emerald-400">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>🎉 카카오페이 / 계좌 송금 완료 고객 전용</span>
               </div>
-            )}
+              <p className="text-[11px] text-emerald-200/90 leading-relaxed">
+                송금을 완료하셨나요? 아래 <strong>[송금 완료! 즉시 수강 승인]</strong> 버튼을 누르시면 강사 답장을 기다릴 필요 없이 10강 전체가 1초 만에 바로 열립니다!
+              </p>
+              <div className="p-3 bg-slate-950 rounded-xl border border-emerald-500/40 space-y-2">
+                <div className="flex items-center justify-between font-mono font-bold text-xs sm:text-sm text-emerald-300">
+                  <span className="text-[11px] text-slate-400 font-sans">수강 라이선스 비번:</span>
+                  <span className="text-white tracking-wider px-2 py-0.5 rounded bg-slate-900 border border-slate-800">workfreemarketyaho</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLicenseInput(VALID_LICENSE_KEY);
+                    setIsAuthenticated(true);
+                    setShowLicenseModal(false);
+                    localStorage.setItem("workfree_license_auth", "true");
+                    alert("🎉 송금 완료가 확인되었습니다! 10강 전체 수강이 자동으로 승인되었습니다.");
+                    trackGAEvent("instant_unlock_success", "conversion", "5000_krw");
+                  }}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 cursor-pointer active:scale-95 transition-all text-center flex items-center justify-center space-x-1.5"
+                >
+                  <span>🎉 송금 완료했습니다! (즉시 수강 시작) ➔</span>
+                </button>
+              </div>
+            </div>
 
             {/* KakaoPay QR Code Display for PC & Mobile users */}
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2.5">
