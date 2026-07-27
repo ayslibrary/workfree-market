@@ -526,6 +526,15 @@ export default function Home() {
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
                 <a
+                  href="https://qr.kakaopay.com/FVGQc7DUq"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "hero_button")}
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
+                >
+                  <span>🟡 카카오페이 5,000원 송금 ↗</span>
+                </a>
+                <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
@@ -983,12 +992,21 @@ export default function Home() {
               </h2>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
+                  href="https://qr.kakaopay.com/FVGQc7DUq"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "banner_button")}
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
+                >
+                  <span>🟡 카카오페이 5,000원 1초 송금 ↗</span>
+                </a>
+                <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
                   className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>🥕 당근마켓 프로필 &amp; 실강 참여 문의 ↗</span>
+                  <span>🥕 당근마켓 실강 문의 ↗</span>
                 </a>
                 <div className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-sm font-mono font-bold text-cyan-300 shadow-inner text-center">
                   💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
@@ -1496,6 +1514,15 @@ export default function Home() {
               </p>
               <div className="space-y-2">
                 <a
+                  href="https://qr.kakaopay.com/FVGQc7DUq"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "modal_5k")}
+                  className="block w-full py-3 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-md shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
+                >
+                  🟡 카카오페이 5,000원 1초 송금하기 ↗
+                </a>
+                <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
@@ -1512,7 +1539,7 @@ export default function Home() {
                   }}
                   className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center cursor-pointer"
                 >
-                  💬 카카오톡 5,000원 수강 신청 (카카오페이/계좌이체) ↗
+                  💬 카카오톡 1:1 상담 문의 (ayoi1034)
                 </a>
               </div>
               <button
