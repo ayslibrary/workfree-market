@@ -654,10 +654,10 @@ export default function Home() {
                           setCurrentLecture(lec);
                           setViewMode("classroom");
                         }}
-                        className="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center space-x-1 cursor-pointer transition-colors group-hover:translate-x-0.5"
+                        className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-[11px] sm:text-xs shadow-md shadow-cyan-500/20 transition-all cursor-pointer active:scale-95 flex items-center space-x-1.5 shrink-0"
                       >
-                        <span>강의 시청하기</span>
-                        <span>➔</span>
+                        <span>▶ 궁금하면 강의 바로 듣기</span>
+                        <span className="text-cyan-200">➔</span>
                       </button>
                     </div>
 
@@ -1345,12 +1345,12 @@ export default function Home() {
                 WorkFree Market 수강생 전용
               </span>
               <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
-                수강생 전용 라이선스 인증
+                수강생 전용 라이선스 인증 &amp; 결제 안내
               </h2>
               <p className="text-xs text-slate-400 leading-relaxed">
                 본 클래스는 실시간 강의 수강생 전용 마스터클래스입니다.
                 <br />
-                전달받으신 <strong>수강 라이선스 비번</strong>을 입력해 주세요.
+                전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
               </p>
             </div>
 
@@ -1388,8 +1388,23 @@ export default function Home() {
               </button>
             </form>
 
-            <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-500">
-              라이선스 비번 문의: 강사 안내 메시지 / 카카오톡
+            <div className="pt-4 border-t border-slate-800 space-y-2.5">
+              <p className="text-[11px] text-slate-400">
+                아직 수강 라이선스 키가 없으신가요?
+              </p>
+              <a
+                href="#schedule"
+                onClick={() => setViewMode("landing")}
+                className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center"
+              >
+                💳 수강 신청 &amp; 결제 문의 (카카오톡)
+              </a>
+              <button
+                onClick={() => setViewMode("landing")}
+                className="text-[11px] text-slate-500 hover:text-slate-300 underline cursor-pointer pt-1"
+              >
+                🏠 강의 소개 페이지로 돌아가기
+              </button>
             </div>
           </div>
         </div>
