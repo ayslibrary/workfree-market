@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import * as PortOne from "@portone/browser-sdk/v2";
 
 interface Lecture {
   id: number;
@@ -319,6 +320,43 @@ export default function Home() {
     }
   };
 
+  const handlePortonePayment = async () => {
+    try {
+      setIsLoadingAuth(true);
+      const paymentId = `workfree-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+      const response = await PortOne.requestPayment({
+        storeId: "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
+        paymentId: paymentId,
+        orderName: "WorkFree Market LV.01 10강 마스터클래스 수강권",
+        totalAmount: 5000,
+        currency: "CURRENCY_KRW",
+        payMethod: "EASY_PAY",
+        easyPay: {
+          easyPayProvider: "EASY_PAY_PROVIDER_KAKAOPAY",
+        },
+      });
+
+      if (response && !response.code) {
+        setIsAuthenticated(true);
+        setShowLicenseModal(false);
+        setShowKeyInfo(true);
+        localStorage.setItem("workfree_license_auth", "true");
+        alert("🎉 5,000원 결제가 성공적으로 완료되었습니다! 10강 전체 수강이 자동으로 승인되었습니다.");
+        trackGAEvent("portone_payment_success", "conversion", "5000_krw");
+      } else if (response && response.code) {
+        if (response.message && !response.message.includes("취소")) {
+          alert(`결제 안내: ${response.message}`);
+        }
+      }
+    } catch (err: any) {
+      console.error("PortOne payment error:", err);
+      window.open("https://qr.kakaopay.com/FVGQc7DUq", "_blank");
+      setShowKeyInfo(true);
+    } finally {
+      setIsLoadingAuth(false);
+    }
+  };
+
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
       setIsAuthenticated(true);
@@ -526,15 +564,12 @@ export default function Home() {
                   <span>🚀 LV.01 10강 커리큘럼 바로 보기</span>
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
-                <a
-                  href="https://qr.kakaopay.com/FVGQc7DUq"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "hero_button")}
+                <button
+                  onClick={handlePortonePayment}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                 >
-                  <span>⚡ 얼리버드 5,000원 결제하고 10강 바로 보기 ↗</span>
-                </a>
+                  <span>⚡ 얼리버드 5,000원 자동 결제하고 10강 바로 보기 ↗</span>
+                </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
@@ -986,15 +1021,12 @@ export default function Home() {
                 현강 진행 중 · 실강 참여 원할 시 문의
               </h2>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a
-                  href="https://qr.kakaopay.com/FVGQc7DUq"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "banner_button")}
+                <button
+                  onClick={handlePortonePayment}
                   className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>⚡ 얼리버드 5,000원 결제하기 (카카오페이 1초 송금) ↗</span>
-                </a>
+                  <span>⚡ 얼리버드 5,000원 자동 결제하기 (카카오페이) ↗</span>
+                </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
@@ -1555,18 +1587,12 @@ export default function Home() {
                 💳 얼리버드 특가 결제 &amp; 수강 신청:
               </p>
               <div className="space-y-2">
-                <a
-                  href="https://qr.kakaopay.com/FVGQc7DUq"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => {
-                    setShowKeyInfo(true);
-                    trackGAEvent("click_kakaopay_transfer", "conversion", "modal_5k");
-                  }}
+                <button
+                  onClick={handlePortonePayment}
                   className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
                 >
-                  ⚡ 얼리버드 5,000원 결제하고 10강 바로 보기 ↗
-                </a>
+                  ⚡ 얼리버드 5,000원 1초 자동 결제하기 (카카오페이) ↗
+                </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
