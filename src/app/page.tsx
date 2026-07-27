@@ -1462,15 +1462,15 @@ export default function Home() {
 
             <div className="space-y-2">
               <span className="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] sm:text-[11px] font-extrabold tracking-wide uppercase">
-                🔥 [커피 한 잔 파격 특가] LV.01 10강 전체: 5,000원
+                🔥 5,000원 한정 파격 특가 이벤트
               </span>
               <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
-                수강 라이선스 인증 &amp; 5,000원 수강 신청
+                수강 라이선스 인증 &amp; 5,000원 결제
               </h2>
               <p className="text-xs text-slate-300 leading-relaxed">
                 전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
                 <br />
-                아직 수강 키가 없으신 경우 아래 카카오페이나 카톡으로 문의 주시면 <strong>카카오페이 1초 송금 / 계좌 송금</strong> 확인 후 수강 키를 즉시 발급해 드립니다.
+                아직 수강 키가 없으신 경우 아래 <strong>[5,000원 결제하기]</strong> 버튼을 누르시면 1초 만에 카카오페이 송금으로 연결되며, 확인 후 키를 즉시 발급해 드립니다.
               </p>
             </div>
 
@@ -1510,7 +1510,7 @@ export default function Home() {
 
             <div className="pt-4 border-t border-slate-800 space-y-2.5">
               <p className="text-[11px] font-bold text-amber-300">
-                💳 5,000원 결제 송금 &amp; 수강 문의:
+                💳 특가 결제 &amp; 수강 신청:
               </p>
               <div className="space-y-2">
                 <a
@@ -1518,18 +1518,18 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "modal_5k")}
-                  className="block w-full py-3 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-md shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
+                  className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
                 >
-                  🟡 카카오페이 5,000원 1초 송금하기 ↗
+                  💳 5,000원 결제하기 (카카오페이 1초 송금) ↗
                 </a>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "modal_5k")}
-                  className="block w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all text-center cursor-pointer"
+                  className="block w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-400 font-bold text-xs border border-amber-500/30 transition-all text-center cursor-pointer"
                 >
-                  🥕 당근마켓 실강 / 수강 문의 ↗
+                  🥕 당근마켓 문의 ↗
                 </a>
                 <a
                   href="#schedule"
@@ -1537,9 +1537,9 @@ export default function Home() {
                     setShowLicenseModal(false);
                     trackGAEvent("click_kakaotalk_inquiry", "conversion", "modal_5k");
                   }}
-                  className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center cursor-pointer"
+                  className="block w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-semibold text-xs border border-slate-800 transition-all text-center cursor-pointer"
                 >
-                  💬 카카오톡 1:1 상담 문의 (ayoi1034)
+                  💬 카카오톡 1:1 상담 (ayoi1034)
                 </a>
               </div>
               <button
