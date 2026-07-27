@@ -511,10 +511,18 @@ export default function Home() {
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
                 <a
+                  href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-600 to-orange-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-orange-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
+                >
+                  <span>🥕 당근마켓 실강 문의 ↗</span>
+                </a>
+                <a
                   href="#schedule"
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-sm sm:text-base border border-slate-800 transition-all text-center"
                 >
-                  💬 실강 참여 문의 (카카오톡) ↓
+                  💬 카카오톡 문의 ↓
                 </a>
               </div>
 
@@ -957,14 +965,24 @@ export default function Home() {
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
                 현강 진행 중 · 실강 참여 원할 시 문의
               </h2>
-              <div className="inline-block p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-base sm:text-lg font-mono font-bold text-cyan-300 shadow-inner tracking-wider">
-                💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
+                >
+                  <span>🥕 당근마켓 프로필 &amp; 실강 참여 문의 ↗</span>
+                </a>
+                <div className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-sm font-mono font-bold text-cyan-300 shadow-inner text-center">
+                  💬 KAKAOTALK ID : <span className="text-white select-all">ayoi1034</span>
+                </div>
               </div>
               <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-lg mx-auto leading-relaxed font-semibold shadow-inner">
                 💡 1단계는 본 온라인 10강 마스터클래스로 완강하시고, 2단계(LV.02)부터 실강(오프라인/라이브)에 참여하셔도 무방합니다.
               </div>
               <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
-                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 위의 카카오톡 ID(ayoi1034)로 편하게 메시지 남겨주세요!
+                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 당근마켓 프로필이나 카카오톡 ID(ayoi1034)로 편하게 메시지 남겨주세요!
               </p>
             </div>
           </section>
@@ -1462,13 +1480,23 @@ export default function Home() {
               <p className="text-[11px] text-slate-400">
                 아직 수강 라이선스 키가 없으신가요?
               </p>
-              <a
-                href="#schedule"
-                onClick={() => setViewMode("landing")}
-                className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center"
-              >
-                💳 수강 신청 &amp; 결제 문의 (카카오톡)
-              </a>
+              <div className="space-y-2">
+                <a
+                  href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all text-center"
+                >
+                  🥕 당근마켓 프로필 &amp; 수강 문의 ↗
+                </a>
+                <a
+                  href="#schedule"
+                  onClick={() => setShowLicenseModal(false)}
+                  className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center"
+                >
+                  💬 카카오톡 수강 문의 (ayoi1034)
+                </a>
+              </div>
               <button
                 onClick={() => setViewMode("landing")}
                 className="text-[11px] text-slate-500 hover:text-slate-300 underline cursor-pointer pt-1"
