@@ -1094,7 +1094,7 @@ export default function Home() {
           {/* FOOTER & BUSINESS INFORMATION (전자상거래법 & PG 심사 100% 준수 사업자정보 표기) */}
           <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16 text-xs text-slate-500 space-y-3 border-t border-slate-800/80">
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-semibold text-slate-300 text-sm">
-              <span>상호명: 워크프리 (WorkFree)</span>
+              <span>상호명: 워크프리마켓 (WorkFree Market)</span>
               <span>•</span>
               <span>대표자: 윤아영</span>
               <span>•</span>
