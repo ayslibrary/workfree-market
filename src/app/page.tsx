@@ -572,7 +572,7 @@ export default function Home() {
                   onClick={handlePortonePayment}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                 >
-                  <span>⚡ 얼리버드 5,000원 자동 결제하고 10강 바로 보기 ↗</span>
+                  <span>⚡ 얼리버드 90% 할인 특가 신청 ↗</span>
                 </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
@@ -1029,7 +1029,7 @@ export default function Home() {
                   onClick={handlePortonePayment}
                   className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>⚡ 얼리버드 5,000원 자동 결제하기 (카카오페이) ↗</span>
+                  <span>⚡ 얼리버드 90% 할인 특가 신청 ↗</span>
                 </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
@@ -1596,7 +1596,7 @@ export default function Home() {
                   onClick={handlePortonePayment}
                   className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
                 >
-                  ⚡ 얼리버드 5,000원 1초 자동 결제하기 (카카오페이) ↗
+                  ⚡ 얼리버드 90% 할인 특가 신청 (5,000원) ↗
                 </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
