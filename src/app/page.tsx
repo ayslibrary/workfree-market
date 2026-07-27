@@ -1106,7 +1106,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
               <span>고객센터 / 대표전화: 010-2515-1034</span>
               <span>•</span>
-              <span>이메일: ayoung1034@gmail.com</span>
+              <span>이메일: contact@workfreemarket.com</span>
               <span>•</span>
               <span>카카오톡 ID: ayoi1034</span>
             </div>
