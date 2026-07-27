@@ -314,8 +314,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
-      {/* Top Header Navbar */}
-      <header className="sticky top-0 z-40 px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+      {/* Top Header Navbar (Persistent Everywhere) */}
+      <header className="sticky top-0 z-[60] px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto w-full">
           {/* Logo & Main Title */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setViewMode("landing")}>
@@ -1334,7 +1334,7 @@ export default function Home() {
 
       {/* License Key Gatekeeper Modal Overlay (For Classroom View) */}
       {viewMode === "classroom" && !isAuthenticated && !isLoadingAuth && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/95 backdrop-blur-xl">
+        <div className="fixed top-[61px] inset-x-0 bottom-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/95 backdrop-blur-xl">
           <div className="w-full max-w-md bg-slate-900/90 border border-cyan-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto">
             <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-xl sm:text-2xl shadow-lg shadow-cyan-500/20">
               🔒
