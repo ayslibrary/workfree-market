@@ -406,17 +406,7 @@ export default function Home() {
               </span>
             )}
 
-            {/* Google Drive Connect Button */}
-            <button
-              onClick={() => setShowDriveModal(true)}
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer active:scale-95"
-            >
-              <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M3 15a4 4 0 014-4h10a4 4 0 014 4M3 15V9a4 4 0 014-4h10a4 4 0 014 4v6" />
-              </svg>
-              <span className="hidden sm:inline">📁 드라이브 연동</span>
-              <span className="sm:hidden">📁 연동</span>
-            </button>
+            {/* End Header Actions */}
           </div>
         </div>
       </header>
@@ -1027,18 +1017,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Single Action Button: Open Large in Google Drive Window */}
-            <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-              <a
-                href={currentDriveUrl || "https://drive.google.com"}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/20 text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95 transition-all"
-              >
-                <span className="text-base">📱</span>
-                <span>구글드라이브 창으로 크게 보기 ↗</span>
-              </a>
-            </div>
+
 
             {/* Lecture Controls & Prev/Next Navigation */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
