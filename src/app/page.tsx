@@ -1104,7 +1104,7 @@ export default function Home() {
               <span>주소: 서울특별시 관악구 신림로 567, 529동 509호(신림동, 관악산휴먼시아5단지아파트)</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
-              <span>고객센터 / 유선전화: 02-2055-9224</span>
+              <span>고객센터 / 유선전화: 010-2515-1034</span>
               <span>•</span>
               <span>이메일 / 문의: ayoi1034@naver.com</span>
               <span>•</span>
