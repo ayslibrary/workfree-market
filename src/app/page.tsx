@@ -1443,16 +1443,16 @@ export default function Home() {
             </div>
 
             <div className="space-y-2">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-wide uppercase">
-                WorkFree Market 수강생 전용
+              <span className="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] sm:text-[11px] font-extrabold tracking-wide uppercase">
+                🔥 [커피 한 잔 파격 특가] LV.01 10강 전체: 5,000원
               </span>
               <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
-                수강생 전용 라이선스 인증 &amp; 결제 안내
+                수강 라이선스 인증 &amp; 5,000원 수강 신청
               </h2>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                본 클래스는 실시간 강의 수강생 전용 마스터클래스입니다.
-                <br />
+              <p className="text-xs text-slate-300 leading-relaxed">
                 전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
+                <br />
+                아직 수강 키가 없으신 경우 아래 당근마켓/카톡으로 문의 주시면 <strong>당근페이 / 카카오페이 / 계좌 송금</strong> 확인 후 키를 즉시 발급해 드립니다.
               </p>
             </div>
 
@@ -1491,24 +1491,28 @@ export default function Home() {
             </form>
 
             <div className="pt-4 border-t border-slate-800 space-y-2.5">
-              <p className="text-[11px] text-slate-400">
-                아직 수강 라이선스 키가 없으신가요?
+              <p className="text-[11px] font-bold text-amber-300">
+                💳 5,000원 결제 송금 &amp; 수강 키 즉시 받기:
               </p>
               <div className="space-y-2">
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
-                  className="block w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all text-center"
+                  onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "modal_5k")}
+                  className="block w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all text-center cursor-pointer"
                 >
-                  🥕 당근마켓 프로필 &amp; 수강 문의 ↗
+                  🥕 당근마켓 5,000원 수강 신청 (당근페이/채팅) ↗
                 </a>
                 <a
                   href="#schedule"
-                  onClick={() => setShowLicenseModal(false)}
-                  className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center"
+                  onClick={() => {
+                    setShowLicenseModal(false);
+                    trackGAEvent("click_kakaotalk_inquiry", "conversion", "modal_5k");
+                  }}
+                  className="block w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs border border-slate-700 transition-all text-center cursor-pointer"
                 >
-                  💬 카카오톡 수강 문의 (ayoi1034)
+                  💬 카카오톡 5,000원 수강 신청 (카카오페이/계좌이체) ↗
                 </a>
               </div>
               <button
