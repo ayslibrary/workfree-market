@@ -1114,7 +1114,7 @@ export default function Home() {
               <span>주소: 서울특별시 송파구 송파대로 567, 529동 509호(잠실동, 아파트)</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
-              <span>고객센터 / 대표전화: 010-2515-1034</span>
+              <span>고객센터 / 대표전화: 070-8080-2814</span>
               <span>•</span>
               <span>이메일: contact@workfreemarket.com</span>
               <span>•</span>
@@ -1710,7 +1710,7 @@ export default function Home() {
                 <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
                   <p>• <strong>성명 / 대표:</strong> 윤아영</p>
                   <p>• <strong>직책:</strong> 개인정보관리책임자</p>
-                  <p>• <strong>연락처:</strong> 010-2515-1034</p>
+                  <p>• <strong>연락처:</strong> 070-8080-2814</p>
                   <p>• <strong>이메일:</strong> contact@workfreemarket.com</p>
                 </div>
               </div>
