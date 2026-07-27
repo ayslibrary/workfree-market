@@ -1091,7 +1091,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* FOOTER & BUSINESS INFORMATION (PG 심사 필수 사업자정보 표기) */}
+          {/* FOOTER & BUSINESS INFORMATION (전자상거래법 & PG 심사 100% 준수 사업자정보 표기) */}
           <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16 text-xs text-slate-500 space-y-3 border-t border-slate-800/80">
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-semibold text-slate-300 text-sm">
               <span>상호명: 워크프리 (WorkFree)</span>
@@ -1104,11 +1104,16 @@ export default function Home() {
               <span>주소: 서울특별시 관악구 신림로 567, 529동 509호(신림동, 관악산휴먼시아5단지아파트)</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
-              <span>고객센터 / 유선전화: 010-2515-1034</span>
+              <span>고객센터 / 대표전화: 010-2515-1034</span>
               <span>•</span>
-              <span>이메일 / 문의: ayoi1034@naver.com</span>
+              <span>이메일: ayoung1034@gmail.com</span>
               <span>•</span>
               <span>카카오톡 ID: ayoi1034</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400 text-[11px]">
+              <span>개인정보관리책임자: 안아윤</span>
+              <span>•</span>
+              <span>호스팅서비스 제공자: Vercel Inc.</span>
             </div>
             <div className="pt-2 text-[11px] text-slate-600">
               Copyright © WorkFree (www.workfreemarket.com) All Rights Reserved. 본 사이트의 모든 동영상 강의 및 콘텐츠 무단 전재 및 재배포를 금합니다.
