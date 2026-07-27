@@ -228,6 +228,9 @@ export default function Home() {
     }
   };
 
+  // State for Privacy Policy Modal
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
 
@@ -1114,6 +1117,13 @@ export default function Home() {
               <span>개인정보관리책임자: 윤아영</span>
               <span>•</span>
               <span>호스팅서비스 제공자: Vercel Inc.</span>
+              <span>•</span>
+              <button
+                onClick={() => setShowPrivacyModal(true)}
+                className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
+              >
+                개인정보처리방침
+              </button>
             </div>
             <div className="pt-2 text-[11px] text-slate-600">
               Copyright © WorkFree (www.workfreemarket.com) All Rights Reserved. 본 사이트의 모든 동영상 강의 및 콘텐츠 무단 전재 및 재배포를 금합니다.
@@ -1615,6 +1625,112 @@ export default function Home() {
                 className="text-[11px] text-slate-500 hover:text-slate-300 underline cursor-pointer pt-1"
               >
                 🏠 강의 소개 페이지로 돌아가기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Privacy Policy Modal */}
+      {showPrivacyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[85vh] flex flex-col">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 className="font-extrabold text-lg text-white flex items-center space-x-2">
+                <span>⚖️ 워크프리마켓 개인정보처리방침</span>
+              </h3>
+              <button
+                onClick={() => setShowPrivacyModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans">
+              <p>
+                <strong>워크프리마켓</strong>(이하 &apos;회사&apos;라 한다)는 개인정보보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
+              </p>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제1조(개인정보의 수집 항목 및 수집 방법)</h4>
+                <p>회사는 회원가입, 고객상담, 각종 서비스의 제공을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>필수 수집 항목:</strong> 이메일 주소, 이름, 휴대폰 번호(연락처), 결제 및 수강 인증 정보</li>
+                  <li><strong>선택 수집 항목:</strong> 맞춤 서비스 문의 시 이용자가 직접 입력하는 텍스트 데이터 및 첨부 파일</li>
+                  <li><strong>자동 수집 항목:</strong> 서비스 이용기록, 방문기록, IP 주소, 쿠키, 접속 지표</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제2조(개인정보의 처리 목적)</h4>
+                <p>회사는 수집한 개인정보를 다음의 목적을 위해 처리합니다.</p>
+                <ol className="list-decimal pl-5 space-y-1">
+                  <li><strong>서비스 제공 및 수강 승인:</strong> 동영상 강의 마스터클래스 이용에 따른 본인 식별·인증, 수강 라이선스 승인, 요금 결제 및 정산</li>
+                  <li><strong>고객 상담 및 고충 처리:</strong> 수강 신청 문의, 환불 및 기술 지원, 서비스 공지사항 전달</li>
+                  <li><strong>신규 서비스 개발 및 마케팅:</strong> 신규 교육과정 안내, 맞춤형 서비스 제공 및 통계학적 분석</li>
+                </ol>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제3조(개인정보의 처리 및 보유 기간)</h4>
+                <p>① 회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.</p>
+                <p>② 관계 법령의 규정에 의하여 보존할 필요가 있는 경우 아래의 기간 동안 개인정보를 보존합니다.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>계약 또는 청약철회, 대금결제, 재화 등의 공급기록: 5년 (전자상거래법)</li>
+                  <li>소비자 불만 또는 분쟁처리에 관한 기록: 3년 (전자상거래법)</li>
+                  <li>웹사이트 방문기록: 3개월 (통신비밀보호법)</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제4조(개인정보 처리업무의 위탁)</h4>
+                <p>회사는 원활한 결제 서비스 제공 및 효과적인 업무 처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>수탁자(위탁받는 자):</strong> 포트원(Portone), ㈜카카오페이</li>
+                  <li><strong>위탁하는 업무의 내용:</strong> 서비스 구매 및 이용에 따른 신용카드/카카오페이 전자결제 대행, 환불 처리, 결제 도용 방지</li>
+                  <li><strong>위탁 기간:</strong> 회원 탈퇴 시 또는 위탁 계약 종료 시까지</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제5조(개인정보의 파기)</h4>
+                <p>회사는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체 없이 전자적 기록을 복구 불가능한 방법으로 파기합니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제6조(개인정보 보호책임자)</h4>
+                <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
+                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                  <p>• <strong>성명 / 대표:</strong> 윤아영</p>
+                  <p>• <strong>직책:</strong> 개인정보관리책임자</p>
+                  <p>• <strong>연락처:</strong> 010-2515-1034</p>
+                  <p>• <strong>이메일:</strong> contact@workfreemarket.com</p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제7조(권익침해 구제방법)</h4>
+                <p>정보주체는 아래의 기관에 대해 개인정보 침해에 대한 피해구제, 상담 등을 문의하실 수 있습니다.</p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-400">
+                  <li>개인정보분쟁조정위원회: 1833-6972 (www.kopico.go.kr)</li>
+                  <li>개인정보침해신고센터: 118 (privacy.kisa.or.kr)</li>
+                  <li>대검찰청: 1301 (www.spo.go.kr)</li>
+                  <li>경찰청: 182 (ecrm.cyber.go.kr)</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800">
+                <h4 className="font-bold text-cyan-400 text-sm">제8조(개인정보 처리방침 변경)</h4>
+                <p>이 개인정보 처리방침은 <strong>2026년 7월 27일</strong>부터 적용됩니다.</p>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowPrivacyModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
+              >
+                확인 및 닫기
               </button>
             </div>
           </div>
