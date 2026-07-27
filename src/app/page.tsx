@@ -321,6 +321,7 @@ export default function Home() {
   };
 
   const handlePortonePayment = async () => {
+    const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     try {
       setIsLoadingAuth(true);
       const paymentId = `workfree-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
@@ -350,7 +351,10 @@ export default function Home() {
       }
     } catch (err: any) {
       console.error("PortOne payment error:", err);
-      window.open("https://qr.kakaopay.com/FVGQc7DUq", "_blank");
+      if (isMobile) {
+        window.open("https://qr.kakaopay.com/FVGQc7DUq", "_blank");
+      }
+      setShowLicenseModal(true);
       setShowKeyInfo(true);
     } finally {
       setIsLoadingAuth(false);
