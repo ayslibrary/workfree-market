@@ -228,8 +228,9 @@ export default function Home() {
     }
   };
 
-  // State for Privacy Policy Modal & Inquiry Choice Modal
+  // State for Privacy Policy Modal, Terms Modal & Inquiry Choice Modal
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
 
   // Lecture Playback Progress Tracking (Resume Playback)
@@ -1126,6 +1127,13 @@ export default function Home() {
               <span>호스팅서비스 제공자: Vercel Inc.</span>
               <span>•</span>
               <button
+                onClick={() => setShowTermsModal(true)}
+                className="text-slate-300 hover:text-white font-bold underline cursor-pointer"
+              >
+                이용약관
+              </button>
+              <span>•</span>
+              <button
                 onClick={() => setShowPrivacyModal(true)}
                 className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
               >
@@ -1827,6 +1835,93 @@ export default function Home() {
                 className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
               >
                 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Terms of Service Modal */}
+      {showTermsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[85vh] flex flex-col">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 className="font-extrabold text-lg text-white flex items-center space-x-2">
+                <span>📄 워크프리마켓 서비스 이용약관</span>
+              </h3>
+              <button
+                onClick={() => setShowTermsModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans">
+              <p>
+                <strong>워크프리마켓</strong>(대표자 윤아영, 이하 &apos;회사&apos;라 함)이 운영하는 온라인 지식 교육 플랫폼(www.workfreemarket.com, 이하 &apos;사이트&apos;라 함)을 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
+              </p>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제1조 (목적 및 정의)</h4>
+                <p>본 약관은 회사가 제공하는 엑셀 자동화 온라인 10강 마스터클래스 동영상 콘텐츠, 수강 라이선스 승인, 1:1 맞춤 교육 및 외주 대행 서비스(이하 &apos;서비스&apos;라 함)의 이용에 관한 사항을 다룹니다.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>&apos;이용자&apos;:</strong> 사이트에 접속하여 본 약관에 따라 회사가 제공하는 서비스를 이용하는 자</li>
+                  <li><strong>&apos;수강 라이선스 키&apos;:</strong> 온라인 동영상 강의 시청 권한을 부여하는 고유 인증 코드</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제2조 (약관의 효력 및 변경)</h4>
+                <p>① 본 약관은 사이트 화면에 게시함으로써 효력이 발생합니다.</p>
+                <p>② 회사는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제에 관한 법률 등 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제3조 (서비스의 제공 및 이용 승인)</h4>
+                <p>① 회사는 수강생이 이용 요금(5,000원 얼리버드 특가 등)을 결제하거나 수강 승인을 마친 경우, 10강 동영상 마스터클래스 전 강좌 시청 권한을 즉시 승인합니다.</p>
+                <p>② 시스템 점검, 서버 오류 등 불가피한 사유가 발생한 경우 서비스 제공이 일시 중단될 수 있으며, 회사는 이를 사전 또는 사후에 공지합니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제4조 (결제 및 환불 규정)</h4>
+                <p>① 서비스 결제는 포트원(Portone), ㈜카카오페이 등 회사가 제공하는 정식 전자결제 수단을 통해 이루어집니다.</p>
+                <p>② <strong>청약철회 및 환불:</strong></p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                  <li><strong>동영상 강의를 전혀 시청하지 않은 경우:</strong> 결제일로부터 7일 이내 100% 전액 환불이 가능합니다.</li>
+                  <li><strong>동영상 강의를 시청했거나 수강 승인이 완료된 경우:</strong> 전자상거래법 제17조 제2항에 따라 복제가 가능한 디지털 콘텐츠의 시청이 개시된 경우 환불이 제한될 수 있습니다.</li>
+                </ul>
+                <p>③ 환불 신청은 고객센터(070-8080-2814 또는 contact@workfreemarket.com)를 통해 접수 처리됩니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제5조 (지식재산권의 보호)</h4>
+                <p>① 회사가 작성한 본 사이트의 동영상 강의, 학습 자료, 매크로 코드, 디자인 및 상표에 대한 지식재산권은 회사에 귀속됩니다.</p>
+                <p>② 이용자는 회사의 사전 승낙 없이 콘텐츠를 무단 캡처, 녹화, 복제, 유포, 재배포하거나 타인에게 수강 권한을 양도·판매할 수 없습니다. 이를 위반할 경우 관계 법령에 따라 민·형사상 책임을 질 수 있습니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제6조 (개인정보 보호)</h4>
+                <p>회사는 관련 법령이 정하는 바에 따라 이용자의 개인정보를 보호하기 위해 노력하며, 개인정보의 보호 및 사용에 대해서는 관련 법령 및 회사의 &apos;개인정보처리방침&apos;이 적용됩니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제7조 (면책 조항 및 분쟁 해결)</h4>
+                <p>① 회사는 천재지변, 인터넷 장애 등 불가항력적인 사유로 서비스를 제공할 수 없는 경우에는 책임이 면제됩니다.</p>
+                <p>② 본 약관과 관련된 분쟁에 대해서는 대한민국 법률을 적용하며, 관할 법원은 회사의 본사 소재지 관할 법원으로 합니다.</p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800">
+                <h4 className="font-bold text-cyan-400 text-sm">부칙</h4>
+                <p>본 약관은 <strong>2026년 7월 27일</strong>부터 시행됩니다.</p>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowTermsModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
+              >
+                확인 및 닫기
               </button>
             </div>
           </div>
