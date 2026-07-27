@@ -500,7 +500,7 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
               <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-500/10">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                <span>🔥 [커피 한 잔 파격 특가] LV.01 온라인 10강 전체 시청권: 단 5,000원!</span>
+                <span>⚡ [얼리버드 90% 특가] LV.01 온라인 10강 전체 시청권: 단 5,000원!</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight">
@@ -523,7 +523,7 @@ export default function Home() {
                   onClick={() => setViewMode("classroom")}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
                 >
-                  <span>🚀 LV.01 10강 강의 바로 보기</span>
+                  <span>🚀 LV.01 10강 커리큘럼 바로 보기</span>
                   <span className="text-cyan-200 font-bold">➔</span>
                 </button>
                 <a
@@ -533,7 +533,7 @@ export default function Home() {
                   onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "hero_button")}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                 >
-                  <span>💳 5,000원 결제하기 (카카오페이 1초 송금) ↗</span>
+                  <span>⚡ 얼리버드 5,000원 결제하고 10강 바로 보기 ↗</span>
                 </a>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
@@ -993,7 +993,7 @@ export default function Home() {
                   onClick={() => trackGAEvent("click_kakaopay_transfer", "conversion", "banner_button")}
                   className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>🟡 카카오페이 5,000원 1초 송금 ↗</span>
+                  <span>⚡ 얼리버드 5,000원 결제하기 (카카오페이 1초 송금) ↗</span>
                 </a>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
@@ -1457,15 +1457,15 @@ export default function Home() {
 
             <div className="space-y-2">
               <span className="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] sm:text-[11px] font-extrabold tracking-wide uppercase">
-                🔥 5,000원 한정 파격 특가 이벤트
+                🔥 [얼리버드 90% 할인 이벤트] 5,000원 한정 수강권
               </span>
               <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
-                수강 라이선스 인증 &amp; 5,000원 결제
+                얼리버드 특가 수강 신청 &amp; 라이선스 인증
               </h2>
               <p className="text-xs text-slate-300 leading-relaxed">
                 전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
                 <br />
-                아직 수강 키가 없으신 경우 아래 <strong>[5,000원 결제하기]</strong> 버튼을 누르시면 1초 만에 카카오페이 송금으로 연결되며, 확인 후 키를 즉시 발급해 드립니다.
+                아직 수강 키가 없으신 경우 아래 <strong>[얼리버드 5,000원 결제하기]</strong> 버튼을 누르시면 1초 만에 카카오페이 송금으로 연결되며, 수강 키가 즉시 발급됩니다.
               </p>
             </div>
 
@@ -1507,7 +1507,7 @@ export default function Home() {
               <div className="p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500/50 text-left space-y-2.5 shadow-xl shadow-emerald-500/10">
                 <div className="flex items-center space-x-2 text-xs font-black text-emerald-400">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>🎉 5,000원 결제 송금 연결 완료!</span>
+                  <span>🎉 얼리버드 결제 송금 연결 완료!</span>
                 </div>
                 <p className="text-[11px] text-emerald-200/90 leading-relaxed">
                   카카오페이 송금 후 아래 라이선스 비번을 입력하시거나 <strong>[즉시 수강 승인]</strong> 버튼을 누르시면 10강 전체가 바로 열립니다!
@@ -1535,7 +1535,7 @@ export default function Home() {
 
             <div className="pt-4 border-t border-slate-800 space-y-2.5">
               <p className="text-[11px] font-bold text-amber-300">
-                💳 특가 결제 &amp; 수강 신청:
+                💳 얼리버드 특가 결제 &amp; 수강 신청:
               </p>
               <div className="space-y-2">
                 <a
@@ -1548,7 +1548,7 @@ export default function Home() {
                   }}
                   className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
                 >
-                  💳 5,000원 결제하기 (카카오페이 1초 송금) ↗
+                  ⚡ 얼리버드 5,000원 결제하고 10강 바로 보기 ↗
                 </a>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
