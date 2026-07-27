@@ -1470,7 +1470,7 @@ export default function Home() {
               <p className="text-xs text-slate-300 leading-relaxed">
                 전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
                 <br />
-                아직 수강 키가 없으신 경우 아래 당근마켓/카톡으로 문의 주시면 <strong>당근페이 / 카카오페이 / 계좌 송금</strong> 확인 후 키를 즉시 발급해 드립니다.
+                아직 수강 키가 없으신 경우 아래 카카오페이나 카톡으로 문의 주시면 <strong>카카오페이 1초 송금 / 계좌 송금</strong> 확인 후 수강 키를 즉시 발급해 드립니다.
               </p>
             </div>
 
@@ -1510,7 +1510,7 @@ export default function Home() {
 
             <div className="pt-4 border-t border-slate-800 space-y-2.5">
               <p className="text-[11px] font-bold text-amber-300">
-                💳 5,000원 결제 송금 &amp; 수강 키 즉시 받기:
+                💳 5,000원 결제 송금 &amp; 수강 문의:
               </p>
               <div className="space-y-2">
                 <a
@@ -1529,7 +1529,7 @@ export default function Home() {
                   onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "modal_5k")}
                   className="block w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all text-center cursor-pointer"
                 >
-                  🥕 당근마켓 5,000원 수강 신청 (당근페이/채팅) ↗
+                  🥕 당근마켓 실강 / 수강 문의 ↗
                 </a>
                 <a
                   href="#schedule"
