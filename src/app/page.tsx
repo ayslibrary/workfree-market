@@ -1501,7 +1501,7 @@ export default function Home() {
               <p className="text-xs text-slate-300 leading-relaxed">
                 전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
                 <br />
-                아직 수강 키가 없으신 경우 아래 <strong>[얼리버드 5,000원 결제하기]</strong> 버튼을 누르시면 1초 만에 카카오페이 송금으로 연결되며, 수강 키가 즉시 발급됩니다.
+                아직 수강 키가 없으신 경우 아래 <strong>[얼리버드 90% 할인 특가 신청]</strong> 버튼으로 결제하신 후 카톡/당근으로 입금자명을 말씀해 주시면 수강 키를 발급해 드립니다.
               </p>
             </div>
 
@@ -1538,39 +1538,6 @@ export default function Home() {
                 🔑 수강 승인 및 클래스 입장
               </button>
             </form>
-
-            {/* Visible ONLY AFTER clicking payment button */}
-            {showKeyInfo && (
-              <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/50 text-left space-y-3 shadow-xl shadow-emerald-500/10 animate-fade-in">
-                <div className="flex items-center space-x-2 text-xs font-black text-emerald-400">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>🎉 카카오페이 / 계좌 송금 완료 고객 전용</span>
-                </div>
-                <p className="text-[11px] text-emerald-200/90 leading-relaxed">
-                  송금을 완료하셨나요? 아래 <strong>[송금 완료! 즉시 수강 승인]</strong> 버튼을 누르시면 강사 답장을 기다릴 필요 없이 10강 전체가 1초 만에 바로 열립니다!
-                </p>
-                <div className="p-3 bg-slate-950 rounded-xl border border-emerald-500/40 space-y-2">
-                  <div className="flex items-center justify-between font-mono font-bold text-xs sm:text-sm text-emerald-300">
-                    <span className="text-[11px] text-slate-400 font-sans">수강 라이선스 비번:</span>
-                    <span className="text-white tracking-wider px-2 py-0.5 rounded bg-slate-900 border border-slate-800">workfreemarketyaho</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLicenseInput(VALID_LICENSE_KEY);
-                      setIsAuthenticated(true);
-                      setShowLicenseModal(false);
-                      localStorage.setItem("workfree_license_auth", "true");
-                      alert("🎉 송금 완료가 확인되었습니다! 10강 전체 수강이 자동으로 승인되었습니다.");
-                      trackGAEvent("instant_unlock_success", "conversion", "5000_krw");
-                    }}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 cursor-pointer active:scale-95 transition-all text-center flex items-center justify-center space-x-1.5"
-                  >
-                    <span>🎉 송금 완료했습니다! (즉시 수강 시작) ➔</span>
-                  </button>
-                </div>
-              </div>
-            )}
 
             {/* KakaoPay QR Code Display for PC & Mobile users */}
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2.5">
