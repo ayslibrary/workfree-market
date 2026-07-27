@@ -157,11 +157,11 @@ export default function Home() {
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  // License Lock States
+  // License Lock States (resets on page refresh)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [licenseInput, setLicenseInput] = useState<string>("");
   const [licenseError, setLicenseError] = useState<string>("");
-  const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
+  const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
 
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -214,13 +214,9 @@ export default function Home() {
     }
   };
 
-  // Load drive links, completion state, and license auth from localStorage
+  // Load drive links and completion state from localStorage (License auth resets on refresh)
   useEffect(() => {
-    const authStatus = localStorage.getItem("workfree_license_auth");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-    }
-    setIsLoadingAuth(false);
+    localStorage.removeItem("workfree_license_auth");
 
     const savedCompleted = localStorage.getItem("workfree_completed");
     if (savedCompleted) {
@@ -245,7 +241,6 @@ export default function Home() {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
       setIsAuthenticated(true);
       setLicenseError("");
-      localStorage.setItem("workfree_license_auth", "true");
     } else {
       setLicenseError("올바르지 않은 수강 비번입니다. 강사에게 전달받은 수강 라이선스 키를 확인해 주세요.");
     }
@@ -378,15 +373,17 @@ export default function Home() {
             {isAuthenticated ? (
               <button
                 onClick={handleLogoutLicense}
-                className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer"
+                className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer"
                 title="클릭 시 수강인증 잠금 상태로 전환"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>🔑 수강인증 완료</span>
+                <span className="hidden sm:inline">🔑 수강인증 완료</span>
+                <span className="sm:hidden">🔑 인증됨</span>
               </button>
             ) : (
-              <span className="hidden sm:inline-block px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
-                🔒 수강 미인증
+              <span className="inline-flex items-center px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">
+                <span className="hidden sm:inline">🔒 수강 미인증</span>
+                <span className="sm:hidden">🔒 미인증</span>
               </span>
             )}
 
@@ -889,7 +886,19 @@ export default function Home() {
           <section className="lg:col-span-8 p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto lg:border-r border-slate-800/80">
             {/* Responsive 16:9 Video Player Container */}
             <div ref={playerContainerRef} className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-2xl shadow-black/80 group">
-              {currentDriveId ? (
+              {!isAuthenticated ? (
+                <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-2 sm:space-y-3 bg-slate-950/90 backdrop-blur-sm">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg sm:text-2xl shadow-lg shadow-cyan-500/10">
+                    🔒
+                  </div>
+                  <p className="text-xs sm:text-sm font-bold text-slate-200">
+                    수강생 라이선스 키 인증 후 동영상 시청이 가능합니다.
+                  </p>
+                  <p className="text-[11px] text-slate-400">
+                    (모바일 & PC 동일: 새로고침 시 수강키 입력 필요)
+                  </p>
+                </div>
+              ) : currentDriveId ? (
                 <iframe
                   key={`drive-${currentDriveId}`}
                   src={`https://drive.google.com/file/d/${currentDriveId}/preview`}
