@@ -1091,10 +1091,28 @@ export default function Home() {
             </div>
           </section>
 
-          {/* FOOTER */}
-          <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 text-center text-xs text-slate-500 space-y-2 border-t border-slate-800">
-            <p className="font-semibold text-slate-400">WorkFree Market • ai딸깍샘</p>
-            <p>www.workfreemarket.com • 클릭 1번으로 끝내는 엑셀 자동화 마스터클래스</p>
+          {/* FOOTER & BUSINESS INFORMATION (PG 심사 필수 사업자정보 표기) */}
+          <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16 text-xs text-slate-500 space-y-3 border-t border-slate-800/80">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-semibold text-slate-300 text-sm">
+              <span>상호명: 워크프리 (WorkFree)</span>
+              <span>•</span>
+              <span>대표자: 안아윤</span>
+              <span>•</span>
+              <span>사업자등록번호: 310-46-01336</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
+              <span>주소: 서울특별시 관악구 신림로 567, 529동 509호(신림동, 관악산휴먼시아5단지아파트)</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400">
+              <span>고객센터 / 유선전화: 02-2055-9224</span>
+              <span>•</span>
+              <span>이메일 / 문의: ayoi1034@naver.com</span>
+              <span>•</span>
+              <span>카카오톡 ID: ayoi1034</span>
+            </div>
+            <div className="pt-2 text-[11px] text-slate-600">
+              Copyright © WorkFree (www.workfreemarket.com) All Rights Reserved. 본 사이트의 모든 동영상 강의 및 콘텐츠 무단 전재 및 재배포를 금합니다.
+            </div>
           </footer>
         </div>
       )}
