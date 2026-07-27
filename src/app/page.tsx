@@ -309,11 +309,21 @@ export default function Home() {
     return Math.min(100, Math.max(1, pct));
   };
 
+  const trackGAEvent = (action: string, category: string, label?: string) => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", action, {
+        event_category: category,
+        event_label: label,
+      });
+    }
+  };
+
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
       setIsAuthenticated(true);
       setShowLicenseModal(false);
       setLicenseError("");
+      trackGAEvent("license_auth_success", "engagement", "workfree_key");
     } else {
       setLicenseError("올바르지 않은 수강 비번입니다. 강사에게 전달받은 수강 라이선스 키를 확인해 주세요.");
     }
@@ -519,6 +529,7 @@ export default function Home() {
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "hero_button")}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-600 to-orange-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-orange-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
                 >
                   <span>🥕 당근마켓 실강 문의 ↗</span>
