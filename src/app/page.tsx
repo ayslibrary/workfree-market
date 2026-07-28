@@ -276,23 +276,35 @@ export default function Home() {
     const kakaoKey = "50d59b2654d46c862f0a1934c3c8c040";
     const kakao = typeof window !== "undefined" ? (window as any).Kakao : null;
 
-    if (kakao) {
-      if (!kakao.isInitialized()) {
-        kakao.init(kakaoKey);
-      }
-      kakao.Auth.login({
-        success: function () {
-          kakao.API.request({
-            url: "/v2/user/me",
-            success: function (res: any) {
-              const name = res?.kakao_account?.profile?.nickname || res?.properties?.nickname || "카카오 수강생";
-              const email = res?.kakao_account?.email || `kakao_${res.id}@workfreemarket.com`;
-              const userObj = { name, email };
-              setCurrentUser(userObj);
-              localStorage.setItem("workfree_user", JSON.stringify(userObj));
-              setShowAuthModal(false);
-              alert(`🎉 ${name}님, 카카오 계정으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
-              setShowPaymentNoticeModal(true);
+    try {
+      if (kakao) {
+        if (!kakao.isInitialized()) {
+          kakao.init(kakaoKey);
+        }
+        if (kakao.Auth && typeof kakao.Auth.login === "function") {
+          kakao.Auth.login({
+            success: function () {
+              kakao.API.request({
+                url: "/v2/user/me",
+                success: function (res: any) {
+                  const name = res?.kakao_account?.profile?.nickname || res?.properties?.nickname || "카카오 수강생";
+                  const email = res?.kakao_account?.email || `kakao_${res.id}@workfreemarket.com`;
+                  const userObj = { name, email };
+                  setCurrentUser(userObj);
+                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
+                  setShowAuthModal(false);
+                  alert(`🎉 ${name}님, 카카오 계정으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
+                  setShowPaymentNoticeModal(true);
+                },
+                fail: function () {
+                  const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+                  setCurrentUser(userObj);
+                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
+                  setShowAuthModal(false);
+                  alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+                  setShowPaymentNoticeModal(true);
+                },
+              });
             },
             fail: function () {
               const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
@@ -303,24 +315,20 @@ export default function Home() {
               setShowPaymentNoticeModal(true);
             },
           });
-        },
-        fail: function () {
-          const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
-          setCurrentUser(userObj);
-          localStorage.setItem("workfree_user", JSON.stringify(userObj));
-          setShowAuthModal(false);
-          alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
-          setShowPaymentNoticeModal(true);
-        },
-      });
-    } else {
-      const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
-      setCurrentUser(userObj);
-      localStorage.setItem("workfree_user", JSON.stringify(userObj));
-      setShowAuthModal(false);
-      alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
-      setShowPaymentNoticeModal(true);
+          return;
+        }
+      }
+    } catch (e) {
+      console.error("Kakao Login Exception:", e);
     }
+
+    // Direct fallback execution if Kakao SDK or popup is blocked by browser
+    const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+    setCurrentUser(userObj);
+    localStorage.setItem("workfree_user", JSON.stringify(userObj));
+    setShowAuthModal(false);
+    alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+    setShowPaymentNoticeModal(true);
   };
 
   // Load completion state and progress from localStorage
