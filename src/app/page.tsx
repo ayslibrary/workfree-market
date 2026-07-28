@@ -792,14 +792,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Level 2: Power Automate No-Touch (UPCOMING) */}
+                {/* Level 2: Power Automate No-Touch (LIVE CLASS INQUIRY) */}
                 <div
                   className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] sm:h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-indigo-500/30"
                   style={{ backgroundColor: "rgb(115, 105, 243)" }}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="px-2.5 py-1 rounded-full bg-slate-950/80 text-purple-300 font-mono text-[10px] sm:text-xs font-extrabold border border-purple-400/40 whitespace-nowrap">
-                      LV.02 · 제작 예정 (Power Automate)
+                      LV.02 · 라이브 실강 신청
                     </span>
                     <div className="flex space-x-1 shrink-0">
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-[10px] sm:text-xs font-bold shadow">
@@ -829,19 +829,19 @@ export default function Home() {
                       onClick={() => setShowInquiryModal(true)}
                       className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-purple-200 font-bold text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-purple-400/30 break-keep"
                     >
-                      💬 2단계 라이브/실강 및 오픈 알림 문의 ↗
+                      💬 라이브 실강 요청 문의 ↗
                     </button>
                   </div>
                 </div>
 
-                {/* Level 3: AI Agent & Hybrid Full Automation (UPCOMING) */}
+                {/* Level 3: AI Agent & Hybrid Full Automation (1:1 TUTORING INQUIRY) */}
                 <div
                   className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] sm:h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-cyan-500/30"
                   style={{ backgroundColor: "rgb(59, 191, 238)" }}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="px-2.5 py-1 rounded-full bg-slate-950/80 text-cyan-300 font-mono text-[10px] sm:text-xs font-extrabold border border-cyan-400/40 whitespace-nowrap">
-                      LV.03 · 제작 예정 (AI Agent)
+                      LV.03 · 1:1 맞춤 과외 문의
                     </span>
                     <div className="flex space-x-1 shrink-0">
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-[10px] sm:text-xs font-bold shadow">
@@ -871,7 +871,7 @@ export default function Home() {
                       onClick={() => setShowInquiryModal(true)}
                       className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-cyan-300 font-bold text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-cyan-400/30 break-keep"
                     >
-                      🚀 3단계 완전자동화 트랙 문의하기 ↗
+                      🚀 1:1 과외 문의 ↗
                     </button>
                   </div>
                 </div>
