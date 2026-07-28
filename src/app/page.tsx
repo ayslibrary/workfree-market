@@ -1756,7 +1756,7 @@ export default function Home() {
       {/* PAYMENT PLATFORM IN PREPARATION & DEPOSIT GUIDE MODAL */}
       {showPaymentNoticeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
               <div className="flex items-center space-x-2">
@@ -1779,30 +1779,66 @@ export default function Home() {
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
               <div className="flex items-center space-x-2 text-amber-300 font-bold text-xs sm:text-sm">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0"></span>
-                <span>💳 결제 플랫폼 PG연동 심사 준비 중</span>
+                <span>💳 결제 플랫폼 PG연동 구현 중 (계좌이체 / 카카오페이 가능)</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed break-keep">
-                현재 카드/간편결제 PG 연동 심사 준비 중입니다.
+                현재 카드/간편결제 PG 연동 시스템을 구현 중입니다.
                 <br />
-                지금 당장은 <strong className="text-amber-400 font-extrabold">5,000원 무통장 입금</strong> 후 아래 메일 주소로 입금 완료 메일을 보내주시면 확인 즉시 메일로 10강 수강 라이선스 접속 주소를 발송해 드립니다!
+                당분간은 <strong className="text-amber-400 font-extrabold">계좌이체</strong> 또는 <strong className="text-yellow-400 font-extrabold">카카오페이(5,000원)</strong> 입금 후 아래 이메일로 입금 완료 메일을 남겨주시면 확인 즉시 10강 수강 라이선스 접속 주소를 메일로 발송해 드립니다!
               </p>
             </div>
 
-            {/* Bank Account & Deposit Instructions */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs text-slate-300">
+            {/* Bank Account & Payment Options Box */}
+            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3.5 text-xs text-slate-300">
               <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
                 <span className="text-slate-400 font-semibold">신청 강좌</span>
                 <span className="font-bold text-white">WorkFree LV.01 10강 마스터클래스</span>
               </div>
               <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
-                <span className="text-slate-400 font-semibold">입금 금액</span>
+                <span className="text-slate-400 font-semibold">수강료</span>
                 <span className="font-mono font-black text-amber-400 text-sm">5,000원 (얼리버드 90% 특가)</span>
               </div>
-              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
-                <span className="text-slate-400 font-semibold">입금 계좌</span>
-                <span className="font-mono font-bold text-cyan-300">카카오뱅크 3333-28-5710284 윤아영</span>
+
+              {/* Shinhan Bank */}
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-cyan-400 font-bold text-xs">🏦 신한은행 (계좌이체 1)</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("110-356-224451");
+                      alert("📋 신한은행 계좌번호 (110-356-224451)가 복사되었습니다!");
+                    }}
+                    className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 text-[10px] font-bold cursor-pointer"
+                  >
+                    계좌 복사
+                  </button>
+                </div>
+                <div className="font-mono font-extrabold text-white text-sm">
+                  110-356-224451 <span className="text-xs font-sans text-slate-400">(예금주: 윤아영)</span>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
+
+              {/* KakaoBank */}
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-yellow-400 font-bold text-xs">💛 카카오뱅크 (계좌이체 2)</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("3333-28-5710284");
+                      alert("📋 카카오뱅크 계좌번호 (3333-28-5710284)가 복사되었습니다!");
+                    }}
+                    className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-yellow-300 text-[10px] font-bold cursor-pointer"
+                  >
+                    계좌 복사
+                  </button>
+                </div>
+                <div className="font-mono font-extrabold text-white text-sm">
+                  3333-28-5710284 <span className="text-xs font-sans text-slate-400">(예금주: 윤아영)</span>
+                </div>
+              </div>
+
+              {/* KakaoPay Remittance */}
+              <div className="flex justify-between items-center pt-1 border-t border-slate-800/80">
                 <span className="text-slate-400 font-semibold">입금 확인 메일</span>
                 <span className="font-mono font-bold text-cyan-400">contact@workfreemarket.com</span>
               </div>
@@ -1811,10 +1847,19 @@ export default function Home() {
             {/* Action Buttons */}
             <div className="space-y-2.5 pt-1">
               <a
-                href="mailto:contact@workfreemarket.com?subject=%5BWorkFree%205%2C000%EC%9B%90%20%EC%9E%85%EA%B8%88%EC%99%84%EB%A3%8C%5D%20%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%20%EB%B0%9C%EC%86%A1%20%EC%9A%94%EC%B2%AD&body=%EC%9E%85%EA%B8%88%EC%9E%90%EB%AA%85%3A%20%0D%0A%EC%9E%85%EA%B8%88%20%EB%82%A0%EC%A5%9C%3A%20%0D%0A%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%EB%A5%BC%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%8B%A4%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%A3%BC%EC%86%8C%3A%20"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
+                href="https://qr.kakaopay.com/FVGQc7DUq"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-400/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
               >
-                <span>✉️ contact@workfreemarket.com 으로 입금 알리기 ↗</span>
+                <span>💛 카카오페이 5,000원 즉시 송금하기 ↗</span>
+              </a>
+
+              <a
+                href="mailto:contact@workfreemarket.com?subject=%5BWorkFree%205%2C000%EC%9B%90%20%EC%9E%85%EA%B8%88%EC%99%84%EB%A3%8C%5D%20%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%20%EB%B0%9C%EC%86%A1%20%EC%9A%94%EC%B2%AD&body=%EC%9E%85%EA%B8%88%EC%9E%90%EB%AA%85%3A%20%0D%0A%EC%9E%85%EA%B8%88%20%EB%82%A0%EC%A5%9C%3A%20%0D%0A%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%EB%A5%BC%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%8B%A4%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%A3%BC%EC%86%8C%3A%20"
+                className="w-full py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-cyan-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
+              >
+                <span>✉️ contact@workfreemarket.com 으로 입금 완료 알리기 ↗</span>
               </a>
 
               <button
@@ -1822,9 +1867,9 @@ export default function Home() {
                   setShowPaymentNoticeModal(false);
                   setShowLicenseModal(true);
                 }}
-                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs shadow transition-all cursor-pointer active:scale-95 text-center border border-slate-700 break-keep"
+                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs shadow transition-all cursor-pointer active:scale-95 text-center border border-slate-700 break-keep"
               >
-                🔑 이미 발급받은 수강 패스키(라이선스 키)가 있으신가요?
+                🔑 수강생 패스키(라이선스 키) 바로 입력하기 ➔
               </button>
             </div>
           </div>
