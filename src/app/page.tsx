@@ -231,11 +231,12 @@ export default function Home() {
     }
   };
 
-  // State for Privacy Policy Modal, Terms Modal, Inquiry Choice Modal & Deposit Notice Modal
+  // State for Privacy Policy Modal, Terms Modal, Inquiry Choice Modal, Deposit Notice Modal & QR Zoom Modal
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [showPaymentNoticeModal, setShowPaymentNoticeModal] = useState(false);
+  const [showQrZoomModal, setShowQrZoomModal] = useState(false);
 
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
@@ -1818,7 +1819,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* KakaoPay QR Remittance Card (Functional QR Code) */}
+              {/* KakaoPay QR Remittance Card (Functional QR Code & Image Zoom) */}
               <div className="p-4 rounded-xl bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-yellow-500/10 border border-yellow-500/40 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
@@ -1830,33 +1831,48 @@ export default function Home() {
                     </span>
                   </div>
                   <span className="px-2 py-0.5 rounded-full bg-yellow-400/20 text-yellow-300 text-[10px] font-bold border border-yellow-400/30">
-                    스캔/링크 지원
+                    스캔/링크/이미지 지원
                   </span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center gap-3 pt-1">
-                  {/* Real QR Code Image */}
-                  <div className="w-28 h-28 bg-white p-2 rounded-xl border-2 border-yellow-400 shadow-md shrink-0 flex flex-col items-center justify-center">
+                  {/* Real QR Code Image - Click to Zoom/Download */}
+                  <div
+                    onClick={() => setShowQrZoomModal(true)}
+                    className="w-28 h-28 bg-white p-2 rounded-xl border-2 border-yellow-400 shadow-md shrink-0 flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform group relative"
+                    title="클릭하여 대형 QR 이미지 팝업 열기"
+                  >
                     {/* eslint-disable-next-html-link */}
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent("https://qr.kakaopay.com/FVGQc7DUq")}`}
                       alt="카카오페이 5000원 송금 QR"
                       className="w-full h-full object-contain"
                     />
+                    <div className="absolute inset-0 bg-slate-950/60 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-yellow-300 font-bold text-[10px]">
+                      🔍 크게보기
+                    </div>
                   </div>
 
                   <div className="space-y-2 text-center sm:text-left flex-1 break-keep">
                     <p className="text-[11px] text-slate-200 leading-snug">
-                      모바일은 아래 <strong>송금하기 버튼</strong>을 누르시거나, PC 화면은 <strong>카카오톡 QR 스캔</strong>으로 5,000원 즉시 송금이 가능합니다!
+                      모바일은 아래 <strong>송금하기 버튼</strong>을 누르시거나, <strong>QR 이미지 크게 보기</strong>로 캡처/스캔하여 5,000원 즉시 송금이 가능합니다!
                     </p>
-                    <a
-                      href="https://qr.kakaopay.com/FVGQc7DUq"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs shadow-md shadow-yellow-400/20 transition-all active:scale-95 cursor-pointer whitespace-nowrap w-full sm:w-auto"
-                    >
-                      💛 카카오페이 5,000원 송금하기 ↗
-                    </a>
+                    <div className="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+                      <a
+                        href="https://qr.kakaopay.com/FVGQc7DUq"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center justify-center px-3.5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs shadow-md transition-all active:scale-95 cursor-pointer whitespace-nowrap"
+                      >
+                        💛 5,000원 송금하기 ↗
+                      </a>
+                      <button
+                        onClick={() => setShowQrZoomModal(true)}
+                        className="inline-flex items-center justify-center px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 font-bold text-xs shadow border border-yellow-500/30 transition-all active:scale-95 cursor-pointer whitespace-nowrap"
+                      >
+                        🔍 QR 크게보기 / 캡처
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1894,6 +1910,63 @@ export default function Home() {
                 className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs shadow transition-all cursor-pointer active:scale-95 text-center border border-slate-700 break-keep"
               >
                 🔑 수강생 패스키(라이선스 키) 바로 입력하기 ➔
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* KAKAOPAY QR ZOOM MODAL */}
+      {showQrZoomModal && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-sm bg-slate-900 border border-yellow-500/40 rounded-3xl p-6 shadow-2xl space-y-5 text-center">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h4 className="font-extrabold text-sm text-yellow-300 flex items-center space-x-2">
+                <span>💛 카카오페이 5,000원 송금 QR 이미지</span>
+              </h4>
+              <button
+                onClick={() => setShowQrZoomModal(false)}
+                className="text-slate-400 hover:text-white text-lg font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Large QR Display */}
+            <div className="p-4 bg-white rounded-2xl border-4 border-yellow-400 shadow-xl mx-auto w-64 h-64 flex items-center justify-center">
+              {/* eslint-disable-next-html-link */}
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent("https://qr.kakaopay.com/FVGQc7DUq")}`}
+                alt="카카오페이 5,000원 송금 QR 코드 대형"
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="space-y-2 text-xs text-slate-300 break-keep">
+              <p className="font-bold text-white">📱 카카오페이 앨범 송금 방법</p>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                1. 위 QR 화면을 캡처한 후 카카오톡 실행
+                <br />
+                2. 카카오톡 상단 🔍 검색창 옆 <strong className="text-yellow-300">QR 스캔</strong> 클릭
+                <br />
+                3. 하단 <strong className="text-yellow-300">앨범</strong>에서 캡처한 QR 이미지 선택 시 5,000원 즉시 송금 완료!
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <a
+                href="https://qr.kakaopay.com/FVGQc7DUq"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center"
+              >
+                <span>🚀 카카오페이 즉시 송금 연결 ↗</span>
+              </a>
+              <button
+                onClick={() => setShowQrZoomModal(false)}
+                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer"
+              >
+                닫기
               </button>
             </div>
           </div>
