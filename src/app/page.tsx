@@ -2450,13 +2450,13 @@ export default function Home() {
         </div>
       )}
 
-      {/* Marketing Information Consent Modal (할인혜택 및 마케팅 수신 동의 상세) */}
+      {/* Marketing Information Consent Modal (할인혜택 및 마케팅 수신 동의 1:1 전문) */}
       {showMarketingModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
           <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-slate-100 font-sans">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <h3 className="font-extrabold text-base text-yellow-300 flex items-center space-x-2">
-                <span>🎁 할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
+                <span>🎁 마케팅 수신동의 약관</span>
               </h3>
               <button
                 onClick={() => setShowMarketingModal(false)}
@@ -2467,29 +2467,32 @@ export default function Home() {
             </div>
 
             <div className="space-y-4 text-xs text-slate-300 leading-relaxed font-sans break-keep">
-              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
-                <h4 className="font-bold text-white text-xs">1. 마케팅 정보 활용 목적</h4>
-                <p className="text-[11px] text-slate-400">
-                  워크프리마켓에서 제공하는 엑셀 자동화 신규 마스터클래스 오픈 알림, 얼리버드 90% 할인 혜택 및 이용자 맞춤형 상품/교육 서비스 정보를 이메일 또는 알림으로 제공합니다.
+              <div className="space-y-2 p-4 rounded-2xl bg-slate-950 border border-slate-800">
+                <h4 className="font-bold text-white text-xs">1. 광고성 정보의 이용목적</h4>
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  워크프리마켓(WorkFree Market)이 제공하는 이용자 맞춤형 서비스 및 상품 추천, 각종 경품 행사, 이벤트 등의 광고성 정보를 전자우편이나 서신우편, 문자(SMS 또는 카카오 알림톡), 푸시, 전화 등을 통해 이용자에게 제공합니다.
+                </p>
+                <p className="text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-800/80">
+                  마케팅 수신 동의는 거부하실 수 있으며 동의 이후에라도 고객의 의사에 따라 동의를 철회할 수 있습니다. 동의를 거부하시더라도 워크프리마켓이 제공하는 서비스의 이용에 제한이 되지 않습니다. 단, 할인, 이벤트 및 이용자 맞춤형 상품 추천 등의 마케팅 정보 안내 서비스가 제한됩니다.
                 </p>
               </div>
 
-              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+              <div className="space-y-1.5 p-4 rounded-2xl bg-slate-950 border border-slate-800">
                 <h4 className="font-bold text-white text-xs">2. 미동의 시 불이익 사항</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
+                <p className="text-[11px] text-slate-300 leading-relaxed">
                   개인정보보호법 제22조 제5항에 의해 선택정보 사항에 대해서는 동의 거부하시더라도 서비스 이용에 제한되지 않습니다. 단, 할인, 이벤트 및 이용자 맞춤형 상품 추천 등의 마케팅 정보 안내 서비스가 제한됩니다.
                 </p>
               </div>
 
-              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+              <div className="space-y-1.5 p-4 rounded-2xl bg-slate-950 border border-slate-800">
                 <h4 className="font-bold text-white text-xs">3. 서비스 정보 수신 동의 철회</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  워크프리마켓에서 제공하는 마케팅 정보를 원하지 않을 경우 고객센터 또는 이메일(contact@workfreemarket.com)을 통해 철회를 요청할 수 있습니다. 또한 향후 마케팅 활용에 새롭게 동의하고자 하는 경우에도 동일한 방법으로 동의하실 수 있습니다.
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  워크프리마켓에서 제공하는 마케팅 정보를 원하지 않을 경우 고객센터 또는 이메일(contact@workfreemarket.com)을 통해 철회를 요청할 수 있습니다. 또한 향후 마케팅 활용에 새롭게 동의하고자 하는 경우에는 언제든지 동일한 방법으로 동의하실 수 있습니다.
                 </p>
               </div>
 
               <p className="text-[10px] text-slate-500 font-mono text-right pt-1">
-                시행일자 : 2026년 7월 28일
+                시행일자 : 2026.07.28
               </p>
             </div>
 
