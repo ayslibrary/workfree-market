@@ -471,12 +471,16 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
-      {/* Top Header Navbar (Persistent Everywhere) */}
+      {/* Top Header Navbar (Logo Only - Click to Home) */}
       <header className="sticky top-0 z-[60] px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto w-full">
-          {/* Logo & Main Title */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setViewMode("landing")}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-extrabold text-white shadow-lg shadow-cyan-500/20 text-sm tracking-tighter">
+        <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
+          {/* Logo & Main Title (Click goes to Home) */}
+          <div
+            className="flex items-center space-x-3 cursor-pointer group hover:opacity-90 transition-all"
+            onClick={() => setViewMode("landing")}
+            title="WorkFree Market 메인 홈으로 이동"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-extrabold text-white shadow-lg shadow-cyan-500/20 text-sm tracking-tighter group-hover:scale-105 transition-transform">
               WF
             </div>
             <div>
@@ -492,52 +496,6 @@ export default function Home() {
                 클릭 1번 엑셀 자동화: 8시간 업무를 1시간으로!
               </p>
             </div>
-          </div>
-
-          {/* Navigation View Switcher & Action Buttons */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <button
-              onClick={() => setViewMode("landing")}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
-                viewMode === "landing"
-                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20"
-                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-              }`}
-            >
-              🏠 <span className="hidden xs:inline">클래스 소개</span> (홈)
-            </button>
-            <button
-              onClick={() => setViewMode("classroom")}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 whitespace-nowrap ${
-                viewMode === "classroom"
-                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20"
-                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-              }`}
-            >
-              <span>🎓 <span className="hidden xs:inline">10강 </span>강의실</span>
-            </button>
-
-            {/* License Status Badge */}
-            {isAuthenticated ? (
-              <button
-                onClick={handleLogoutLicense}
-                className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all cursor-pointer whitespace-nowrap"
-                title="클릭 시 수강인증 잠금 상태로 전환"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-                <span className="hidden sm:inline">🔑 수강인증 완료</span>
-                <span className="sm:hidden">🔑 인증됨</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => setShowLicenseModal(true)}
-                className="inline-flex items-center px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold border border-amber-500/30 transition-all cursor-pointer whitespace-nowrap"
-                title="클릭하여 수강생 라이선스 키 입력"
-              >
-                <span className="hidden sm:inline">🔒 수강 미인증 (키 입력)</span>
-                <span className="sm:hidden">🔒 미인증</span>
-              </button>
-            )}
           </div>
         </div>
       </header>
