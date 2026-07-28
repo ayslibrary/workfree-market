@@ -231,10 +231,11 @@ export default function Home() {
     }
   };
 
-  // State for Privacy Policy Modal, Terms Modal & Inquiry Choice Modal
+  // State for Privacy Policy Modal, Terms Modal, Inquiry Choice Modal & Deposit Notice Modal
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
+  const [showPaymentNoticeModal, setShowPaymentNoticeModal] = useState(false);
 
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
@@ -333,64 +334,13 @@ export default function Home() {
     }
   };
 
-  const handlePortonePayment = async (provider = selectedPayMethod) => {
-    const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    try {
-      setIsLoadingAuth(true);
-      const paymentId = `workfree-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-      const payParams: any = {
-        storeId: process.env.NEXT_PUBLIC_PORTONE_STORE_ID || "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
-        paymentId: paymentId,
-        orderName: "WorkFree Market LV.01 10강 마스터클래스 수강권",
-        totalAmount: 5000,
-        currency: "CURRENCY_KRW",
-        redirectUrl: typeof window !== "undefined" ? window.location.href : undefined,
-      };
-
-      if (provider === "kakaopay") {
-        payParams.payMethod = "EASY_PAY";
-        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_KAKAOPAY" };
-      } else if (provider === "tosspay") {
-        payParams.payMethod = "EASY_PAY";
-        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_TOSSPAY" };
-      } else if (provider === "naverpay") {
-        payParams.payMethod = "EASY_PAY";
-        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_NAVERPAY" };
-      } else if (provider === "card") {
-        payParams.payMethod = "CARD";
-      }
-
-      if (process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY) {
-        payParams.channelKey = process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY;
-      }
-
-      const response = await PortOne.requestPayment(payParams);
-
-      if (response && !response.code) {
-        setIsAuthenticated(true);
-        setShowLicenseModal(false);
-        setShowKeyInfo(true);
-        localStorage.setItem("workfree_license_auth", "true");
-        localStorage.setItem("workfree_paid_auth", "true");
-        alert("🎉 5,000원 결제가 성공적으로 완료되었습니다! 10강 전체 수강이 자동으로 승인되었습니다.");
-        trackGAEvent("portone_payment_success", "conversion", "5000_krw");
-      } else if (response && response.code) {
-        if (response.message && !response.message.includes("취소")) {
-          alert(`결제 안내: ${response.message}`);
-        }
-      }
-    } catch (err: any) {
-      console.error("PortOne payment error:", err);
-      if (isMobile && provider === "kakaopay") {
-        window.open("https://qr.kakaopay.com/FVGQc7DUq", "_blank");
-      }
-      setShowLicenseModal(true);
-      setShowKeyInfo(true);
-    } finally {
-      setIsLoadingAuth(false);
-    }
+  // Payment Handler: Currently PG integration is in preparation, opens deposit & license info modal
+  const handlePortonePayment = async () => {
+    setShowPaymentNoticeModal(true);
+    trackGAEvent("click_payment_button", "conversion", "5000_earlybird");
   };
+
+
 
   const handleVerifyLicense = () => {
     if (licenseInput.trim() === VALID_LICENSE_KEY) {
@@ -1803,6 +1753,84 @@ export default function Home() {
           </div>
         </div>
       )}
+      {/* PAYMENT PLATFORM IN PREPARATION & DEPOSIT GUIDE MODAL */}
+      {showPaymentNoticeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-base font-bold">
+                  💳
+                </div>
+                <h3 className="font-extrabold text-base sm:text-lg text-white">
+                  수강 신청 &amp; 결제 안내
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowPaymentNoticeModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Notice Pill */}
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+              <div className="flex items-center space-x-2 text-amber-300 font-bold text-xs sm:text-sm">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0"></span>
+                <span>💳 결제 플랫폼 PG연동 심사 준비 중</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                현재 카드/간편결제 PG 연동 심사 준비 중입니다.
+                <br />
+                지금 당장은 <strong className="text-amber-400 font-extrabold">5,000원 무통장 입금</strong> 후 아래 메일 주소로 입금 완료 메일을 보내주시면 확인 즉시 메일로 10강 수강 라이선스 접속 주소를 발송해 드립니다!
+              </p>
+            </div>
+
+            {/* Bank Account & Deposit Instructions */}
+            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs text-slate-300">
+              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                <span className="text-slate-400 font-semibold">신청 강좌</span>
+                <span className="font-bold text-white">WorkFree LV.01 10강 마스터클래스</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                <span className="text-slate-400 font-semibold">입금 금액</span>
+                <span className="font-mono font-black text-amber-400 text-sm">5,000원 (얼리버드 90% 특가)</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                <span className="text-slate-400 font-semibold">입금 계좌</span>
+                <span className="font-mono font-bold text-cyan-300">카카오뱅크 3333-28-5710284 윤아영</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-400 font-semibold">입금 확인 메일</span>
+                <span className="font-mono font-bold text-cyan-400">contact@workfreemarket.com</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-2.5 pt-1">
+              <a
+                href="mailto:contact@workfreemarket.com?subject=%5BWorkFree%205%2C000%EC%9B%90%20%EC%9E%85%EA%B8%88%EC%99%84%EB%A3%8C%5D%20%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%20%EB%B0%9C%EC%86%A1%20%EC%9A%94%EC%B2%AD&body=%EC%9E%85%EA%B8%88%EC%9E%90%EB%AA%85%3A%20%0D%0A%EC%9E%85%EA%B8%88%20%EB%82%A0%EC%A5%9C%3A%20%0D%0A%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%EB%A5%BC%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%8B%A4%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%A3%BC%EC%86%8C%3A%20"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
+              >
+                <span>✉️ contact@workfreemarket.com 으로 입금 알리기 ↗</span>
+              </a>
+
+              <button
+                onClick={() => {
+                  setShowPaymentNoticeModal(false);
+                  setShowLicenseModal(true);
+                }}
+                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs shadow transition-all cursor-pointer active:scale-95 text-center border border-slate-700 break-keep"
+              >
+                🔑 이미 발급받은 수강 패스키(라이선스 키)가 있으신가요?
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Terms of Service Modal */}
       {showTermsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
