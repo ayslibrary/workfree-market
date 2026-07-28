@@ -1941,12 +1941,10 @@ export default function Home() {
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
               <div className="flex items-center space-x-2 text-amber-300 font-bold text-xs sm:text-sm">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0"></span>
-                <span>💳 결제 플랫폼 PG연동 구현 중 (계좌이체 / 카카오페이 가능)</span>
+                <span>💳 결제 수단 안내 (계좌이체 / 카카오페이 5,000원)</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed break-keep">
-                현재 카드/간편결제 PG 연동 시스템을 구현 중입니다.
-                <br />
-                당분간은 <strong className="text-amber-400 font-extrabold">계좌이체</strong> 또는 <strong className="text-yellow-400 font-extrabold">카카오페이(5,000원)</strong> 입금 후 아래 이메일로 입금 완료 메일을 남겨주시면 확인 즉시 10강 수강 라이선스 접속 주소를 메일로 발송해 드립니다!
+                <strong className="text-amber-400 font-extrabold">신한은행 계좌이체</strong> 또는 <strong className="text-yellow-400 font-extrabold">카카오페이(5,000원)</strong> 입금 후, 아래 <strong className="text-yellow-300 font-extrabold">[카카오톡 1:1 채널로 입금 완료 알리기]</strong> 버튼을 통해 입금자명과 수강 이메일을 남겨주시면 확인 즉시 10강 수강 라이선스를 발송해 드립니다!
               </p>
             </div>
 
@@ -2038,29 +2036,29 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Email Contact Notice */}
+              {/* Kakao Channel Direct Contact Notice */}
               <div className="flex justify-between items-center pt-1 border-t border-slate-800/80">
-                <span className="text-slate-400 font-semibold">입금 확인 메일</span>
-                <span className="font-mono font-bold text-cyan-400">contact@workfreemarket.com</span>
+                <span className="text-slate-400 font-semibold">입금 확인 채널</span>
+                <a
+                  href="http://pf.kakao.com/_qvNxnX/chat"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-mono font-bold text-yellow-400 hover:underline"
+                >
+                  카카오톡 채널 @워크프리마켓 ↗
+                </a>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-2.5 pt-1">
               <a
-                href="https://qr.kakaopay.com/FVGQc7DUq"
+                href="http://pf.kakao.com/_qvNxnX/chat"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-400/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
+                className="w-full py-3.5 rounded-xl bg-[#FEE500] hover:bg-[#EDD100] text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-yellow-400/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
               >
-                <span>💛 카카오페이 5,000원 즉시 송금하기 ↗</span>
-              </a>
-
-              <a
-                href="mailto:contact@workfreemarket.com?subject=%5BWorkFree%205%2C000%EC%9B%90%20%EC%9E%85%EA%B8%88%EC%99%84%EB%A3%8C%5D%20%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%20%EB%B0%9C%EC%86%A1%20%EC%9A%94%EC%B2%AD&body=%EC%9E%85%EA%B8%88%EC%9E%90%EB%AA%85%3A%20%0D%0A%EC%9E%85%EA%B8%88%20%EB%82%A0%EC%A5%9C%3A%20%0D%0A%EC%88%98%EA%B0%95%20%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4%EB%A5%BC%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%8B%A4%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%A3%BC%EC%86%8C%3A%20"
-                className="w-full py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-cyan-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer block text-center break-keep"
-              >
-                <span>✉️ contact@workfreemarket.com 으로 입금 완료 알리기 ↗</span>
+                <span>💬 카카오톡 1:1 채널로 입금 완료 알리기 (즉시 승인) ↗</span>
               </a>
 
               <button
