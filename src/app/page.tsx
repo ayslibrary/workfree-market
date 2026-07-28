@@ -231,12 +231,21 @@ export default function Home() {
     }
   };
 
-  // State for Privacy Policy Modal, Terms Modal, Inquiry Choice Modal, Deposit Notice Modal & QR Zoom Modal
+  // State for Privacy Policy Modal, Terms Modal, Inquiry Choice Modal, Deposit Notice Modal, QR Zoom Modal & Auth Modal
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [showPaymentNoticeModal, setShowPaymentNoticeModal] = useState(false);
   const [showQrZoomModal, setShowQrZoomModal] = useState(false);
+
+  // Nomad Coders Style Auth Modal State (Login / Join with Kakao & Google)
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [authTab, setAuthTab] = useState<"login" | "join">("join");
+  const [authName, setAuthName] = useState<string>("");
+  const [authEmail, setAuthEmail] = useState<string>("");
+  const [agreeTerms, setAgreeTerms] = useState<boolean>(true);
+  const [agreeMarketing, setAgreeMarketing] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
@@ -447,6 +456,49 @@ export default function Home() {
                 클릭 1번 엑셀 자동화: 8시간 업무를 1시간으로!
               </p>
             </div>
+          </div>
+
+          {/* Top Login & Join Buttons (Nomad Coders Matched) */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            {currentUser ? (
+              <div className="flex items-center space-x-2.5">
+                <span className="text-xs font-bold text-slate-200 flex items-center space-x-1">
+                  <span>👤</span>
+                  <span className="text-cyan-300">{currentUser.name}</span>님
+                </span>
+                <button
+                  onClick={() => {
+                    setCurrentUser(null);
+                    localStorage.removeItem("workfree_user");
+                    alert("로그아웃 되었습니다.");
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 text-xs font-medium cursor-pointer transition-colors"
+                >
+                  로그아웃
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setAuthTab("login");
+                    setShowAuthModal(true);
+                  }}
+                  className="text-xs sm:text-sm font-bold text-slate-300 hover:text-white transition-colors cursor-pointer"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => {
+                    setAuthTab("join");
+                    setShowAuthModal(true);
+                  }}
+                  className="px-4 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+                >
+                  Join
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -1967,6 +2019,183 @@ export default function Home() {
                 className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer"
               >
                 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* NOMAD CODERS STYLE AUTH MODAL (Login & Join with Kakao & Google) */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#141923]/90 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-md bg-[#1e2638] border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative text-slate-100 font-sans">
+            {/* Top Header Bar inside Modal */}
+            <div className="flex items-center justify-between border-b border-slate-700/70 pb-4">
+              {/* Logo */}
+              <div className="flex items-center space-x-2">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white text-xs">
+                  WF
+                </div>
+                <span className="font-extrabold text-sm text-white tracking-tight">WorkFree Market</span>
+              </div>
+
+              {/* Tab Switcher & Close */}
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => setAuthTab(authTab === "join" ? "login" : "join")}
+                  className="text-xs text-cyan-400 font-bold hover:underline cursor-pointer"
+                >
+                  {authTab === "join" ? "Login" : "Join"}
+                </button>
+                <button
+                  onClick={() => setShowAuthModal(false)}
+                  className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Main Form Box (Rounded Slate-800 Container matching screenshot) */}
+            <div className="p-6 rounded-2xl bg-[#2b3548] border border-slate-700 space-y-4 shadow-inner">
+              {authTab === "join" && (
+                <div className="space-y-1.5 text-left">
+                  <label className="block text-xs font-bold text-slate-300">이름</label>
+                  <input
+                    type="text"
+                    placeholder="홍길동"
+                    value={authName}
+                    onChange={(e) => setAuthName(e.target.value)}
+                    className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
+                  />
+                </div>
+              )}
+
+              <div className="space-y-1.5 text-left">
+                <label className="block text-xs font-bold text-slate-300">이메일</label>
+                <input
+                  type="email"
+                  placeholder="example@email.com"
+                  value={authEmail}
+                  onChange={(e) => setAuthEmail(e.target.value)}
+                  className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
+                />
+              </div>
+
+              {authTab === "join" && (
+                <div className="space-y-2.5 pt-1 text-left text-[11px] text-slate-300">
+                  <label className="flex items-center space-x-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={agreeTerms}
+                      onChange={(e) => setAgreeTerms(e.target.checked)}
+                      className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
+                    />
+                    <span className="text-cyan-300 font-semibold">개인정보 수집 및 이용약관 동의</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={agreeMarketing}
+                      onChange={(e) => setAgreeMarketing(e.target.checked)}
+                      className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
+                    />
+                    <span className="text-slate-400">할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
+                  </label>
+                </div>
+              )}
+
+              <button
+                onClick={() => {
+                  if (!authEmail) {
+                    alert("이메일을 입력해 주세요.");
+                    return;
+                  }
+                  if (authTab === "join" && !agreeTerms) {
+                    alert("개인정보 수집 및 이용약관 동의가 필요합니다.");
+                    return;
+                  }
+                  const name = authName || authEmail.split("@")[0] || "수강생";
+                  const userObj = { name, email: authEmail };
+                  setCurrentUser(userObj);
+                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
+                  setShowAuthModal(false);
+                  alert(`🎉 ${name}님, ${authTab === "join" ? "이메일 회원가입" : "이메일 로그인"}이 완료되었습니다!`);
+                  setShowPaymentNoticeModal(true);
+                }}
+                className="w-full py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer mt-2 text-center"
+              >
+                {authTab === "join" ? "이메일 회원가입" : "이메일 로그인"}
+              </button>
+            </div>
+
+            {/* Mode Switch Link matching screenshot */}
+            <div className="text-center text-xs text-slate-300 font-medium">
+              {authTab === "join" ? (
+                <span>
+                  이미 계정이 있으신가요?{" "}
+                  <button
+                    onClick={() => setAuthTab("login")}
+                    className="text-cyan-400 font-bold hover:underline cursor-pointer"
+                  >
+                    로그인 ➔
+                  </button>
+                </span>
+              ) : (
+                <span>
+                  계정이 없으신가요?{" "}
+                  <button
+                    onClick={() => setAuthTab("join")}
+                    className="text-cyan-400 font-bold hover:underline cursor-pointer"
+                  >
+                    회원가입 ➔
+                  </button>
+                </span>
+              )}
+            </div>
+
+            {/* Divider matching screenshot: ──────── 또는 ──────── */}
+            <div className="relative flex items-center justify-center my-2">
+              <div className="border-t border-slate-700/80 w-full"></div>
+              <span className="bg-[#1e2638] px-4 text-xs font-semibold text-slate-400 shrink-0">
+                또는
+              </span>
+              <div className="border-t border-slate-700/80 w-full"></div>
+            </div>
+
+            {/* Social Login Buttons: Kakao & Google */}
+            <div className="space-y-3 pt-1">
+              {/* Kakao Social Button matching screenshot yellow color */}
+              <button
+                onClick={() => {
+                  const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+                  setCurrentUser(userObj);
+                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
+                  setShowAuthModal(false);
+                  alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+                  setShowPaymentNoticeModal(true);
+                }}
+                className="w-full py-3.5 rounded-xl bg-[#FEE500] hover:bg-[#EDD100] text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center space-x-2 text-center"
+              >
+                <span className="text-base">💬</span>
+                <span>카카오 {authTab === "join" ? "회원가입" : "로그인"} ➔</span>
+              </button>
+
+              {/* Google Social Button */}
+              <button
+                onClick={() => {
+                  const userObj = { name: "구글 수강생", email: "google_member@workfreemarket.com" };
+                  setCurrentUser(userObj);
+                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
+                  setShowAuthModal(false);
+                  alert("🌐 구글 계정으로 회원가입/로그인이 완료되었습니다!");
+                  setShowPaymentNoticeModal(true);
+                }}
+                className="w-full py-3.5 rounded-xl bg-[#2b3548] hover:bg-[#344056] text-white font-extrabold text-xs sm:text-sm border border-slate-600 shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center space-x-2 text-center"
+              >
+                <span className="text-base">🌐</span>
+                <span>구글 {authTab === "join" ? "회원가입" : "로그인"} ➔</span>
               </button>
             </div>
           </div>
