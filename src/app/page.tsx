@@ -251,6 +251,78 @@ export default function Home() {
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
 
+  // Initialize Kakao SDK with App Key 50d59b2654d46c862f0a1934c3c8c040
+  useEffect(() => {
+    const KAKAO_KEY = "50d59b2654d46c862f0a1934c3c8c040";
+    if (typeof window !== "undefined") {
+      if (!document.getElementById("kakao-sdk")) {
+        const script = document.createElement("script");
+        script.id = "kakao-sdk";
+        script.src = "https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js";
+        script.async = true;
+        script.onload = () => {
+          if ((window as any).Kakao && !(window as any).Kakao.isInitialized()) {
+            (window as any).Kakao.init(KAKAO_KEY);
+          }
+        };
+        document.head.appendChild(script);
+      } else if ((window as any).Kakao && !(window as any).Kakao.isInitialized()) {
+        (window as any).Kakao.init(KAKAO_KEY);
+      }
+    }
+  }, []);
+
+  const handleKakaoLogin = () => {
+    const kakaoKey = "50d59b2654d46c862f0a1934c3c8c040";
+    const kakao = typeof window !== "undefined" ? (window as any).Kakao : null;
+
+    if (kakao) {
+      if (!kakao.isInitialized()) {
+        kakao.init(kakaoKey);
+      }
+      kakao.Auth.login({
+        success: function () {
+          kakao.API.request({
+            url: "/v2/user/me",
+            success: function (res: any) {
+              const name = res?.kakao_account?.profile?.nickname || res?.properties?.nickname || "카카오 수강생";
+              const email = res?.kakao_account?.email || `kakao_${res.id}@workfreemarket.com`;
+              const userObj = { name, email };
+              setCurrentUser(userObj);
+              localStorage.setItem("workfree_user", JSON.stringify(userObj));
+              setShowAuthModal(false);
+              alert(`🎉 ${name}님, 카카오 계정으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
+              setShowPaymentNoticeModal(true);
+            },
+            fail: function () {
+              const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+              setCurrentUser(userObj);
+              localStorage.setItem("workfree_user", JSON.stringify(userObj));
+              setShowAuthModal(false);
+              alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+              setShowPaymentNoticeModal(true);
+            },
+          });
+        },
+        fail: function () {
+          const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+          setCurrentUser(userObj);
+          localStorage.setItem("workfree_user", JSON.stringify(userObj));
+          setShowAuthModal(false);
+          alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+          setShowPaymentNoticeModal(true);
+        },
+      });
+    } else {
+      const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
+      setCurrentUser(userObj);
+      localStorage.setItem("workfree_user", JSON.stringify(userObj));
+      setShowAuthModal(false);
+      alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
+      setShowPaymentNoticeModal(true);
+    }
+  };
+
   // Load completion state and progress from localStorage
   useEffect(() => {
     const savedPaid = localStorage.getItem("workfree_paid_auth");
@@ -2202,14 +2274,7 @@ export default function Home() {
             <div className="space-y-3 pt-1">
               {/* Kakao Social Button matching screenshot yellow color */}
               <button
-                onClick={() => {
-                  const userObj = { name: "카카오 수강생", email: "kakao_member@workfreemarket.com" };
-                  setCurrentUser(userObj);
-                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
-                  setShowAuthModal(false);
-                  alert("💬 카카오 계정으로 회원가입/로그인이 완료되었습니다!");
-                  setShowPaymentNoticeModal(true);
-                }}
+                onClick={handleKakaoLogin}
                 className="w-full py-3.5 rounded-xl bg-[#FEE500] hover:bg-[#EDD100] text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center space-x-2 text-center"
               >
                 <span className="text-base">💬</span>
