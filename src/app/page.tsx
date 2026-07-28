@@ -245,6 +245,7 @@ export default function Home() {
   const [authEmail, setAuthEmail] = useState<string>("");
   const [agreeTerms, setAgreeTerms] = useState<boolean>(true);
   const [agreeMarketing, setAgreeMarketing] = useState<boolean>(true);
+  const [showMarketingModal, setShowMarketingModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
   // Lecture Playback Progress Tracking (Resume Playback)
@@ -2094,15 +2095,24 @@ export default function Home() {
                     <span className="text-cyan-300 font-semibold">개인정보 수집 및 이용약관 동의</span>
                   </label>
 
-                  <label className="flex items-center space-x-2 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={agreeMarketing}
-                      onChange={(e) => setAgreeMarketing(e.target.checked)}
-                      className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
-                    />
-                    <span className="text-slate-400">할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center space-x-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={agreeMarketing}
+                        onChange={(e) => setAgreeMarketing(e.target.checked)}
+                        className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
+                      />
+                      <span className="text-slate-400">할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowMarketingModal(true)}
+                      className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
+                    >
+                      [상세보기]
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -2432,6 +2442,61 @@ export default function Home() {
               <button
                 onClick={() => setShowPrivacyModal(false)}
                 className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
+              >
+                확인 및 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Marketing Information Consent Modal (할인혜택 및 마케팅 수신 동의 상세) */}
+      {showMarketingModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-slate-100 font-sans">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="font-extrabold text-base text-yellow-300 flex items-center space-x-2">
+                <span>🎁 할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
+              </h3>
+              <button
+                onClick={() => setShowMarketingModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs text-slate-300 leading-relaxed font-sans break-keep">
+              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+                <h4 className="font-bold text-white text-xs">1. 마케팅 정보 활용 목적</h4>
+                <p className="text-[11px] text-slate-400">
+                  워크프리마켓에서 제공하는 엑셀 자동화 신규 마스터클래스 오픈 알림, 얼리버드 90% 할인 혜택 및 이용자 맞춤형 상품/교육 서비스 정보를 이메일 또는 알림으로 제공합니다.
+                </p>
+              </div>
+
+              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+                <h4 className="font-bold text-white text-xs">2. 미동의 시 불이익 사항</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  개인정보보호법 제22조 제5항에 의해 선택정보 사항에 대해서는 동의 거부하시더라도 서비스 이용에 제한되지 않습니다. 단, 할인, 이벤트 및 이용자 맞춤형 상품 추천 등의 마케팅 정보 안내 서비스가 제한됩니다.
+                </p>
+              </div>
+
+              <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950 border border-slate-800">
+                <h4 className="font-bold text-white text-xs">3. 서비스 정보 수신 동의 철회</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  워크프리마켓에서 제공하는 마케팅 정보를 원하지 않을 경우 고객센터 또는 이메일(contact@workfreemarket.com)을 통해 철회를 요청할 수 있습니다. 또한 향후 마케팅 활용에 새롭게 동의하고자 하는 경우에도 동일한 방법으로 동의하실 수 있습니다.
+                </p>
+              </div>
+
+              <p className="text-[10px] text-slate-500 font-mono text-right pt-1">
+                시행일자 : 2026년 7월 28일
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowMarketingModal(false)}
+                className="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs transition-all cursor-pointer"
               >
                 확인 및 닫기
               </button>
