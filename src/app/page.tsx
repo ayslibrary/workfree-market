@@ -2202,9 +2202,9 @@ export default function Home() {
         </div>
       )}
 
-      {/* Terms of Service Modal */}
+      {/* Terms of Service Modal (워크프리마켓 이용약관 26개 조항 전문) */}
       {showTermsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
           <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[85vh] flex flex-col">
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
               <h3 className="font-extrabold text-lg text-white flex items-center space-x-2">
@@ -2218,69 +2218,219 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans">
-              <p>
-                <strong>워크프리마켓</strong>(대표자 윤아영, 이하 &apos;회사&apos;라 함)이 운영하는 온라인 지식 교육 플랫폼(www.workfreemarket.com, 이하 &apos;사이트&apos;라 함)을 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
-              </p>
+            <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans break-keep">
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제1조 (목적)</h4>
+                <p>본 약관은 워크프리마켓(대표자 윤아영, 이하 &quot;회사&quot;라 합니다)에서 제공하는 인터넷 관련 서비스(접속 가능한 유·무선 단말기의 종류와 관계없이 회사가 제공하는 이용 가능한 모든 서비스를 의미하며, 이하 &quot;서비스&quot;라 합니다)를 이용함에 있어 회사와 회원의 권리와 의무, 책임사항, 기타 필요한 사항을 규정함을 그 목적으로 합니다.</p>
+              </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제1조 (목적 및 정의)</h4>
-                <p>본 약관은 회사가 제공하는 엑셀 자동화 온라인 10강 마스터클래스 동영상 콘텐츠, 수강 라이선스 승인, 1:1 맞춤 교육 및 외주 대행 서비스(이하 &apos;서비스&apos;라 함)의 이용에 관한 사항을 다룹니다.</p>
+                <h4 className="font-bold text-cyan-400 text-sm">제2조 (정의)</h4>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>&apos;이용자&apos;:</strong> 사이트에 접속하여 본 약관에 따라 회사가 제공하는 서비스를 이용하는 자</li>
-                  <li><strong>&apos;수강 라이선스 키&apos;:</strong> 온라인 동영상 강의 시청 권한을 부여하는 고유 인증 코드</li>
+                  <li>&quot;사이트&quot;란 회사가 재화 또는 서비스(이하 &quot;상품 등&quot;이라 합니다)를 회원에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 상품 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며 회사가 모바일 환경에서 서비스하는 모바일 웹과 앱을 포함합니다.</li>
+                  <li>&quot;회원&quot;이라 함은 사이트에서 정한 소정의 절차를 거쳐 회원가입을 한 자로서, 약관에 따라 회사가 제공하는 서비스를 이용할 수 있는 자를 말합니다.</li>
+                  <li>&quot;아이디(ID)&quot;라 함은 회원의 식별과 서비스의 이용을 위하여 회원이 설정하고 회사가 승인하여 등록된 전자우편주소 또는 소셜 서비스(카카오/구글 등) 연동을 통해 수집된 전자우편주소를 말합니다.</li>
+                  <li>&quot;유료서비스&quot;라 함은 &quot;회사&quot;가 유료로 제공하는 각종 온라인 디지털 콘텐츠(10강 마스터클래스 동영상 강의 열람, 프리미엄 교육 정보, 외주 제작 대행 등) 및 제반 서비스를 의미합니다.</li>
                 </ul>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제2조 (약관의 효력 및 변경)</h4>
-                <p>① 본 약관은 사이트 화면에 게시함으로써 효력이 발생합니다.</p>
-                <p>② 회사는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제에 관한 법률 등 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.</p>
+                <h4 className="font-bold text-cyan-400 text-sm">제3조 (약관 등의 명시와 설명 및 개정)</h4>
+                <p>&quot;회사&quot;는 본 약관의 내용과 상호, 영업소 소재지 주소, 대표자의 성명, 사업자등록번호, 개인정보관리책임자 등을 &quot;회원&quot;이 쉽게 확인할 수 있도록 사이트의 초기 화면에 게시합니다.</p>
+                <p>&quot;회사&quot;는 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있으며, 약관 개정 시 적용일자 7일 이전부터 적용일자 전일까지 사이트에 사전 공지합니다. 불리한 변경의 경우 최소 30일 이상의 유예기간을 두고 공지합니다.</p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제3조 (서비스의 제공 및 이용 승인)</h4>
-                <p>① 회사는 수강생이 이용 요금(5,000원 얼리버드 특가 등)을 결제하거나 수강 승인을 마친 경우, 10강 동영상 마스터클래스 전 강좌 시청 권한을 즉시 승인합니다.</p>
-                <p>② 시스템 점검, 서버 오류 등 불가피한 사유가 발생한 경우 서비스 제공이 일시 중단될 수 있으며, 회사는 이를 사전 또는 사후에 공지합니다.</p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제4조 (결제 및 환불 규정)</h4>
-                <p>① 서비스 결제는 포트원(Portone), ㈜카카오페이 등 회사가 제공하는 정식 전자결제 수단을 통해 이루어집니다.</p>
-                <p>② <strong>청약철회 및 환불:</strong></p>
-                <ul className="list-disc pl-5 space-y-1 text-slate-300">
-                  <li><strong>동영상 강의를 전혀 시청하지 않은 경우:</strong> 결제일로부터 7일 이내 100% 전액 환불이 가능합니다.</li>
-                  <li><strong>동영상 강의를 시청했거나 수강 승인이 완료된 경우:</strong> 전자상거래법 제17조 제2항에 따라 복제가 가능한 디지털 콘텐츠의 시청이 개시된 경우 환불이 제한될 수 있습니다.</li>
+                <h4 className="font-bold text-cyan-400 text-sm">제4조 (서비스의 제공 및 변경)</h4>
+                <p>&quot;회사&quot;는 다음과 같은 서비스를 제공합니다.</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>가. 온라인 동영상 강의 서비스 (VBA, Power Automate, AI 결합 10강)</li>
+                  <li>나. 수강 승인 및 1:1 과외 / 맞춤 자동화 외주 대행 서비스</li>
+                  <li>다. 업무 자동화 템플릿 및 가이드라인 다운로드 서비스</li>
                 </ul>
-                <p>③ 환불 신청은 고객센터(070-8080-2814 또는 contact@workfreemarket.com)를 통해 접수 처리됩니다.</p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제5조 (지식재산권의 보호)</h4>
-                <p>① 회사가 작성한 본 사이트의 동영상 강의, 학습 자료, 매크로 코드, 디자인 및 상표에 대한 지식재산권은 회사에 귀속됩니다.</p>
-                <p>② 이용자는 회사의 사전 승낙 없이 콘텐츠를 무단 캡처, 녹화, 복제, 유포, 재배포하거나 타인에게 수강 권한을 양도·판매할 수 없습니다. 이를 위반할 경우 관계 법령에 따라 민·형사상 책임을 질 수 있습니다.</p>
+                <h4 className="font-bold text-cyan-400 text-sm">제5조 (서비스의 중단)</h4>
+                <p>&quot;회사&quot;는 컴퓨터 등 정보통신설비의 보수 점검 및 교체, 고장, 통신의 두절 등의 사유가 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.</p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제6조 (개인정보 보호)</h4>
-                <p>회사는 관련 법령이 정하는 바에 따라 이용자의 개인정보를 보호하기 위해 노력하며, 개인정보의 보호 및 사용에 대해서는 관련 법령 및 회사의 &apos;개인정보처리방침&apos;이 적용됩니다.</p>
+                <h4 className="font-bold text-cyan-400 text-sm">제6조 (회원가입과 이용계약의 성립)</h4>
+                <p>이용계약은 &quot;가입신청자&quot;가 회원가입을 신청하고 &quot;회사&quot;가 승인함으로써 체결됩니다. 카카오톡, 구글 등 외부 소셜 연동 가입 시에도 본 약관 및 개인정보 처리방침 동의를 거쳐 회원 승인이 완료됩니다.</p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-cyan-400 text-sm">제7조 (면책 조항 및 분쟁 해결)</h4>
-                <p>① 회사는 천재지변, 인터넷 장애 등 불가항력적인 사유로 서비스를 제공할 수 없는 경우에는 책임이 면제됩니다.</p>
-                <p>② 본 약관과 관련된 분쟁에 대해서는 대한민국 법률을 적용하며, 관할 법원은 회사의 본사 소재지 관할 법원으로 합니다.</p>
+                <h4 className="font-bold text-cyan-400 text-sm">제7조 (회원의 의무 및 부정이용 금지)</h4>
+                <p>&quot;회원&quot;은 회사의 사전 동의 없이 콘텐츠를 무단 캡처, 녹화, 복제, 번역, 유포, 타인 양도할 수 없으며, 타인의 명예를 손상시키거나 해킹·바이러스 유포 행위를 해서는 안 됩니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제8조 (회원의 아이디 및 비밀번호 관리의무)</h4>
+                <p>&quot;회원&quot;의 아이디 관리책임은 본인에게 있으며 제3자에게 이용하게 해서는 안 됩니다. 동일 ID 2대 이상 기기 동시 접속 또는 타인 판매/대여 시 부정 이용으로 간주하여 이용 정지 처리될 수 있습니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제9조 (회원 탈퇴 및 자격 상실)</h4>
+                <p>&quot;회원&quot;은 언제든지 사이트 또는 고객센터를 통해 탈퇴를 요청할 수 있으며 회사는 지체 없이 처리합니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제10조 (회사의 의무)</h4>
+                <p>&quot;회사&quot;는 지속적이고 안정적으로 서비스를 제공하기 위해 최선을 다하며 개인정보 보안시스템을 준수합니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제11조 ~ 제21조 (부정이용 차단, 개인정보보호, 통지, 결제, 환불 규정)</h4>
+                <p>동영상 강의를 전혀 시청하지 않은 경우 결제일로부터 7일 이내 100% 환불이 가능합니다. 단, 복제가 가능한 디지털 콘텐츠 시청이 개시되었거나 5강 이상 수강 시 전자상거래법에 따라 환불이 제한될 수 있습니다.</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-cyan-400 text-sm">제22조 ~ 제26조 (저작권 귀속, 면책, 재판권 및 준거법)</h4>
+                <p>&quot;회사&quot;가 작성한 동영상 강의 및 저작물에 대한 저작권은 회사에 귀속되며, 본 약관과 관련된 분쟁은 대한민국 법률을 적용하고 회사의 본사 소재지 관할 법원으로 합니다.</p>
               </div>
 
               <div className="space-y-2 pt-2 border-t border-slate-800">
                 <h4 className="font-bold text-cyan-400 text-sm">부칙</h4>
-                <p>본 약관은 <strong>2026년 7월 27일</strong>부터 시행됩니다.</p>
+                <p>공고일자 : 2026년 7월 28일</p>
+                <p>시행일자 : 2026년 7월 28일</p>
               </div>
             </div>
 
             <div className="pt-3 border-t border-slate-800 flex justify-end">
               <button
                 onClick={() => setShowTermsModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
+              >
+                확인 및 닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Privacy Policy Modal (워크프리마켓 개인정보취급방침 전문) */}
+      {showPrivacyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[85vh] flex flex-col">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 className="font-extrabold text-lg text-white flex items-center space-x-2">
+                <span>🔒 워크프리마켓 개인정보취급방침</span>
+              </h3>
+              <button
+                onClick={() => setShowPrivacyModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans break-keep">
+              <p>
+                <strong>워크프리마켓</strong>(대표자 윤아영, 이하 &quot;회사&quot;라 합니다)는 『정보통신망 이용촉진 및 정보보호 등에 관한 법률』, 『개인정보보호법』, 『통신비밀보호법』, 『전기통신사업법』 등 정보통신서비스제공자가 준수하여야 할 관련 법령 상의 개인정보보호 규정을 준수하며 최소한의 정보만을 필요한 시점에 수집하고, 수집하는 정보는 고지한 범위 내에서만 사용하며, 사전 동의 없이 그 범위를 초과하여 이용하거나 외부에 공개하지 않는 등 &quot;회원&quot;의 권익 보호에 최선을 다하고 있습니다.
+              </p>
+              <p>
+                &quot;회사&quot;는 개인정보취급방침을 통하여 &quot;회원&quot;이 제공하는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드리고 개인정보취급방침을 개정하는 경우 개정 이유 및 내용에 관하여 웹사이트 및 이메일 등을 통하여 고지합니다.
+              </p>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">1. 수집하는 개인정보 항목 및 수집방법</h4>
+                <p>&quot;회사&quot;는 이용하는 서비스의 형태에 따라 다음과 같은 개인정보를 수집 및 이용·제공·파기하고 있습니다.</p>
+                <ul className="list-disc pl-5 space-y-1.5 text-slate-300">
+                  <li>
+                    <strong>필수 수집 정보:</strong> 서비스 아이디, 이메일, IMEI(단말기 고유 정보), 단말기 정보, (SNS 계정으로 로그인 연동 시) 카카오톡/구글/깃허브 계정을 비롯한 기타 소셜 네트워크(SNS) 계정, 방문 일시, 서비스 이용기록, 쿠키, 세션, 접속로그, 지역위치
+                  </li>
+                  <li>
+                    <strong>선택 수집 정보:</strong> 위치정보, 사진(메타 정보 포함), 성별, 나이, 생년월일, 배송지 정보, 프로필 사진, 닉네임, 암호화된 이용자 확인값(CI)
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">2. 개인정보의 수집 및 이용 목적</h4>
+                <p>&quot;회사&quot;는 필요한 목적 범위 내에서만 개인정보를 이용하고 있습니다.</p>
+                <div className="space-y-2 pl-2">
+                  <p><strong>가. 서비스의 기본 기능의 제공:</strong> &quot;회원&quot;의 로그인, 동영상 콘텐츠 감상, 수강 라이선스 발송 등 기본적인 기능을 제공하기 위하여 개인정보를 이용합니다.</p>
+                  <p><strong>나. 회원관리:</strong> &quot;회원&quot;의 본인확인, 회원 식별, 콘텐츠 접근 권한의 차등 적용, 고객 문의에 대한 회신, 각종 고지 사항 전달, 불량회원 제한, 부정이용방지, 분쟁 조정을 위한 기록 보존 등의 목적으로 개인정보를 이용합니다.</p>
+                  <p><strong>다. 사용자 경험 향상 및 마케팅·광고에의 활용:</strong> 지속적으로 사용자의 경험을 높이기 위해서 새로운 서비스를 개발하고, 새로운 기능, 추천서비스, 기존 기능 개선, 각종 이벤트나 광고성 정보를 제공합니다.</p>
+                  <p><strong>라. 법령 및 약관 등의 이행 및 준수:</strong> 법령이나 이용약관 등에 반하여 피해를 줄 수 있는 부분을 방지하기 위해서 수집된 정보들을 활용합니다.</p>
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">3. 개인정보 처리 위탁 현황</h4>
+                <p>&quot;회사&quot;는 원활한 서비스 제공과 효과적인 업무처리를 위하여 다음과 같이 개인정보를 처리 위탁하고 있습니다.</p>
+                <div className="overflow-x-auto my-2">
+                  <table className="w-full text-[11px] text-left border-collapse border border-slate-700">
+                    <thead>
+                      <tr className="bg-slate-800 text-slate-200">
+                        <th className="p-2 border border-slate-700">구분</th>
+                        <th className="p-2 border border-slate-700">수탁자</th>
+                        <th className="p-2 border border-slate-700">위탁업무</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-slate-300">
+                      <tr>
+                        <td className="p-2 border border-slate-700 font-semibold">서비스 운영 및 관리</td>
+                        <td className="p-2 border border-slate-700">Google G Suite, Kakao, Vercel</td>
+                        <td className="p-2 border border-slate-700">서비스 운영, 회원 인증 및 관리를 위해 활용</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2 border border-slate-700 font-semibold">콘텐츠 제공</td>
+                        <td className="p-2 border border-slate-700">Bunny.net, Google Cloud</td>
+                        <td className="p-2 border border-slate-700">강의, 동영상 등의 콘텐츠 스트리밍 인프라</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2 border border-slate-700 font-semibold">서버 제공</td>
+                        <td className="p-2 border border-slate-700">Vercel Inc. / Amazon Web Services</td>
+                        <td className="p-2 border border-slate-700">서비스 웹 호스팅 및 운영을 위한 인프라</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2 border border-slate-700 font-semibold">결제 처리</td>
+                        <td className="p-2 border border-slate-700">포트원(Portone), (주)카카오, 신한은행</td>
+                        <td className="p-2 border border-slate-700">무통장 계좌이체, 카카오페이 등 결제 처리 및 내역 확인</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">4. 개인정보의 파기 절차 및 방법</h4>
+                <p>수집·이용목적이 달성된 개인정보의 경우 별도의 DB에 옮겨져 내부규정 및 관련 법령을 준수하여 안전하게 보관되며, 정해진 기간이 종료되었을 때 지체 없이 영구 파기됩니다.</p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">5. 회원 및 법정대리인의 권리와 행사방법</h4>
+                <p>&quot;회원&quot;은 언제든지 개인정보 관리책임자에게 서면, 이메일(contact@workfreemarket.com) 등을 통하여 개인정보의 열람, 정정, 삭제를 요청할 수 있습니다.</p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">6. 개인정보 권익침해 구제기관 및 연락처</h4>
+                <p>개인정보에 관한 침해 신고나 상담이 필요하신 경우에는 아래 기관에 문의하실 수 있습니다.</p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                  <li><strong>개인정보 보호책임자:</strong> 윤아영 (contact@workfreemarket.com / 070-8080-2814 / 카카오톡 ayoi1034)</li>
+                  <li><strong>개인정보분쟁조정위원회:</strong> (국번없이) 1833-6972 (www.kopico.go.kr)</li>
+                  <li><strong>대검찰청 사이버수사과:</strong> http://www.spo.go.kr / 02-3480-2000 (국번없이 1301)</li>
+                  <li><strong>경찰청 사이버테러대응센터 / 사이버범죄 신고시스템:</strong> http://www.ctrc.go.kr / 1566-0112 (국번없이 182)</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">7. 고지의 의무</h4>
+                <p>서비스의 개선 혹은 목적에 따라 개인정보 취급방침에 변경사항이 생길 수 있습니다. &quot;회사&quot;는 개인정보처리방침이 변경되는 경우에는 &quot;회사&quot;의 사이트 혹은 이메일을 통하여 변경 및 시행의 시기, 변경 내용을 공지합니다. &quot;회사&quot;는 변경 사항을 게시하며, 변경된 개인정보처리방침은 게시한 날로부터 7일 이후에 효력이 발생하게 됩니다. 단, &quot;회원&quot;의 권리에 중요한 변경이 있을 경우에는 변경될 내용을 30일 이전에 미리 알립니다.</p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <h4 className="font-bold text-cyan-400 text-sm">부칙</h4>
+                <p>공고일자 : 2026년 7월 28일</p>
+                <p>시행일자 : 2026년 7월 28일</p>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowPrivacyModal(false)}
                 className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all cursor-pointer"
               >
                 확인 및 닫기
