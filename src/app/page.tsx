@@ -441,9 +441,12 @@ export default function Home() {
             onClick={() => setViewMode("landing")}
             title="WorkFree Market 메인 홈으로 이동"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-extrabold text-white shadow-lg shadow-cyan-500/20 text-sm tracking-tighter group-hover:scale-105 transition-transform">
-              WF
-            </div>
+            {/* eslint-disable-next-html-link */}
+            <img
+              src="/logo.jpg"
+              alt="WorkFree Market 로고"
+              className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-slate-700/80 bg-white"
+            />
             <div>
               <div className="flex items-center space-x-2">
                 <h1 className="font-extrabold text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
@@ -2034,9 +2037,12 @@ export default function Home() {
             <div className="flex items-center justify-between border-b border-slate-700/70 pb-4">
               {/* Logo */}
               <div className="flex items-center space-x-2">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white text-xs">
-                  WF
-                </div>
+                {/* eslint-disable-next-html-link */}
+                <img
+                  src="/logo.jpg"
+                  alt="WorkFree Market 로고"
+                  className="w-7 h-7 rounded-lg object-cover border border-slate-700 bg-white"
+                />
                 <span className="font-extrabold text-sm text-white tracking-tight">WorkFree Market</span>
               </div>
 
