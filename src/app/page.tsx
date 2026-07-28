@@ -1799,41 +1799,22 @@ export default function Home() {
                 <span className="font-mono font-black text-amber-400 text-sm">5,000원 (얼리버드 90% 특가)</span>
               </div>
 
-              {/* Shinhan Bank */}
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              {/* Shinhan Bank (Primary Account) */}
+              <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 space-y-1.5 shadow-lg">
                 <div className="flex justify-between items-center">
-                  <span className="text-cyan-400 font-bold text-xs">🏦 신한은행 (계좌이체 1)</span>
+                  <span className="text-cyan-400 font-extrabold text-xs">🏦 입금 계좌 (신한은행)</span>
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText("110-356-224451");
                       alert("📋 신한은행 계좌번호 (110-356-224451)가 복사되었습니다!");
                     }}
-                    className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 text-[10px] font-bold cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold cursor-pointer transition-all active:scale-95"
                   >
-                    계좌 복사
+                    📋 계좌 복사
                   </button>
                 </div>
-                <div className="font-mono font-extrabold text-white text-sm">
-                  110-356-224451 <span className="text-xs font-sans text-slate-400">(예금주: 윤아영)</span>
-                </div>
-              </div>
-
-              {/* KakaoBank */}
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-                <div className="flex justify-between items-center">
-                  <span className="text-yellow-400 font-bold text-xs">💛 카카오뱅크 (계좌이체 2)</span>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText("3333-28-5710284");
-                      alert("📋 카카오뱅크 계좌번호 (3333-28-5710284)가 복사되었습니다!");
-                    }}
-                    className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-yellow-300 text-[10px] font-bold cursor-pointer"
-                  >
-                    계좌 복사
-                  </button>
-                </div>
-                <div className="font-mono font-extrabold text-white text-sm">
-                  3333-28-5710284 <span className="text-xs font-sans text-slate-400">(예금주: 윤아영)</span>
+                <div className="font-mono font-extrabold text-white text-base tracking-wide">
+                  110-356-224451 <span className="text-xs font-sans text-cyan-300 font-bold">(예금주: 윤아영)</span>
                 </div>
               </div>
 
