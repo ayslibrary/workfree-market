@@ -168,6 +168,8 @@ export default function Home() {
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [calcDailyHours, setCalcDailyHours] = useState<number>(3);
+  const [calcFrequency, setCalcFrequency] = useState<number>(5);
 
   // License Lock States (resets on page refresh)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -179,6 +181,7 @@ export default function Home() {
 
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [selectedPayMethod, setSelectedPayMethod] = useState<"kakaopay" | "tosspay" | "card" | "naverpay">("kakaopay");
   const VALID_LICENSE_KEY = "workfreemarketyaho";
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -236,9 +239,14 @@ export default function Home() {
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
 
-  // Load completion state and progress from localStorage (License auth resets on refresh)
+  // Load completion state and progress from localStorage
   useEffect(() => {
-    localStorage.removeItem("workfree_license_auth");
+    const savedPaid = localStorage.getItem("workfree_paid_auth");
+    if (savedPaid === "true") {
+      setIsAuthenticated(true);
+    } else {
+      localStorage.removeItem("workfree_license_auth");
+    }
 
     const savedCompleted = localStorage.getItem("workfree_completed");
     if (savedCompleted) {
@@ -325,28 +333,46 @@ export default function Home() {
     }
   };
 
-  const handlePortonePayment = async () => {
+  const handlePortonePayment = async (provider = selectedPayMethod) => {
     const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     try {
       setIsLoadingAuth(true);
       const paymentId = `workfree-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-      const response = await PortOne.requestPayment({
-        storeId: "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
+
+      const payParams: any = {
+        storeId: process.env.NEXT_PUBLIC_PORTONE_STORE_ID || "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
         paymentId: paymentId,
         orderName: "WorkFree Market LV.01 10강 마스터클래스 수강권",
         totalAmount: 5000,
         currency: "CURRENCY_KRW",
-        payMethod: "EASY_PAY",
-        easyPay: {
-          easyPayProvider: "EASY_PAY_PROVIDER_KAKAOPAY",
-        },
-      });
+        redirectUrl: typeof window !== "undefined" ? window.location.href : undefined,
+      };
+
+      if (provider === "kakaopay") {
+        payParams.payMethod = "EASY_PAY";
+        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_KAKAOPAY" };
+      } else if (provider === "tosspay") {
+        payParams.payMethod = "EASY_PAY";
+        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_TOSSPAY" };
+      } else if (provider === "naverpay") {
+        payParams.payMethod = "EASY_PAY";
+        payParams.easyPay = { easyPayProvider: "EASY_PAY_PROVIDER_NAVERPAY" };
+      } else if (provider === "card") {
+        payParams.payMethod = "CARD";
+      }
+
+      if (process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY) {
+        payParams.channelKey = process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY;
+      }
+
+      const response = await PortOne.requestPayment(payParams);
 
       if (response && !response.code) {
         setIsAuthenticated(true);
         setShowLicenseModal(false);
         setShowKeyInfo(true);
         localStorage.setItem("workfree_license_auth", "true");
+        localStorage.setItem("workfree_paid_auth", "true");
         alert("🎉 5,000원 결제가 성공적으로 완료되었습니다! 10강 전체 수강이 자동으로 승인되었습니다.");
         trackGAEvent("portone_payment_success", "conversion", "5000_krw");
       } else if (response && response.code) {
@@ -356,7 +382,7 @@ export default function Home() {
       }
     } catch (err: any) {
       console.error("PortOne payment error:", err);
-      if (isMobile) {
+      if (isMobile && provider === "kakaopay") {
         window.open("https://qr.kakaopay.com/FVGQc7DUq", "_blank");
       }
       setShowLicenseModal(true);
@@ -491,23 +517,6 @@ export default function Home() {
               <span>🎓 10강 마스터클래스 (강의실)</span>
             </button>
 
-            {viewMode === "landing" && (
-              <>
-                <a
-                  href="#curriculum"
-                  className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
-                >
-                  📚 커리큘럼
-                </a>
-                <a
-                  href="#techtree"
-                  className="hidden md:inline-block px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-cyan-300 border border-cyan-500/30 transition-all"
-                >
-                  🗺️ 테크트리
-                </a>
-              </>
-            )}
-
             {/* License Status Badge */}
             {isAuthenticated ? (
               <button
@@ -529,492 +538,425 @@ export default function Home() {
                 <span className="sm:hidden">🔒 미인증</span>
               </button>
             )}
-
-            {/* End Header Actions */}
           </div>
         </div>
       </header>
 
       {/* ====================================================================== */}
-      {/* 1. LANDING HOMEPAGE VIEW (소개 & 수강 신청 안내 랜딩페이지) */}
+      {/* 1. LANDING HOMEPAGE VIEW (Nomad Coders 1:1 Matched Layout) */}
       {/* ====================================================================== */}
       {viewMode === "landing" && (
-        <div className="flex-1 space-y-16 pb-20">
-          {/* HERO BANNER SECTION */}
-          <section className="relative overflow-hidden pt-12 pb-16 px-4 sm:px-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/80">
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-            <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-500/10">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                <span>⚡ [얼리버드 90% 특가] LV.01 온라인 10강 전체 시청권: 단 5,000원!</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight">
-                [ai딸깍샘] 클릭 1번으로 끝내는 엑셀 자동화:
-                <br />
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                  8시간 업무를 단 1시간으로!
-                </span>
-              </h1>
-
-              <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
-                매일 반복되는 엑셀 복사·붙여넣기 야근은 이제 그만!
-                <br />
-                VBA 코딩 문법을 몰라도 OK. AI와 함께 내 업무에 딱 맞는 매크로를 만들어 리본 메뉴에 심고 버튼 한 번으로 칼퇴하세요.
-              </p>
-
-              {/* Hero Call To Actions */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
-                <button
-                  onClick={() => setViewMode("classroom")}
-                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center space-x-2"
-                >
-                  <span>🚀 LV.01 10강 커리큘럼 바로 보기</span>
-                  <span className="text-cyan-200 font-bold">➔</span>
-                </button>
-                <button
-                  onClick={handlePortonePayment}
-                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-yellow-500/20 transition-all text-center flex items-center justify-center space-x-2 cursor-pointer active:scale-95"
-                >
-                  <span>⚡ 얼리버드 90% 할인 특가 신청 ↗</span>
-                </button>
-                <button
-                  onClick={() => setShowInquiryModal(true)}
-                  className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-cyan-300 hover:text-cyan-200 font-bold text-xs sm:text-sm border border-cyan-500/30 transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>💬 1:1 고객 문의하기 ↗</span>
-                </button>
-              </div>
-
-              {/* Stats Highlights */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 max-w-3xl mx-auto">
-                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
-                  <div className="text-2xl font-black text-cyan-400">80% 감축</div>
-                  <div className="text-xs text-slate-400 mt-1">주 40시간 ➔ 8시간 단축 노하우</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
-                  <div className="text-2xl font-black text-blue-400">총 9회 진행</div>
-                  <div className="text-xs text-slate-400 mt-1">사내 4회 · 외부 5회 검증된 커리큘럼</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm text-center">
-                  <div className="text-2xl font-black text-emerald-400">다음 날 즉시 적용</div>
-                  <div className="text-xs text-slate-400 mt-1">비전공자도 따라하는 실습 중심</div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* RECOMMENDED FOR (강력 추천 대상) */}
-          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
-            <div className="text-center space-y-2">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
-                ✨ TARGET AUDIENCE
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">이런 분께 강력 추천합니다!</h2>
+        <div className="flex-1 space-y-0 pb-20 bg-slate-950">
+          {/* NOMAD HERO SECTION (With Balanced Font Size) */}
+          <section className="relative pt-16 pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-6">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold shadow-md shadow-cyan-500/10 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+              <span>⚡ 비개발자 실무자를 위한 최적의 업무 자동화 파이프라인</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl font-bold">
-                  💼
-                </div>
-                <h3 className="font-bold text-base text-white">매일 똑같은 엑셀 작업으로 야근하는 분</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  회계·재무, 인사, 총무, 영업관리, 구매·SCM, 경영지원 등 단순 반복 데이터 가공이 많은 모든 사무직
-                </p>
-              </div>
+            {/* Main Title - Balanced font size */}
+            <h1
+              className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight sm:leading-snug"
+              style={{ textShadow: "rgba(0, 0, 0, 0.3) 1px 1px 4px" }}
+            >
+              10시간 걸리던 &apos;노가다&apos; 업무,
+              <br />
+              <span className="text-cyan-400">1시간으로</span> 줄여드립니다.
+            </h1>
 
-              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl font-bold">
-                  🤖
-                </div>
-                <h3 className="font-bold text-base text-white">VBA 매크로를 들어는 봤으나 시작하기 막막했던 분</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  코딩 문법 암기 없이, 생성형 AI(ChatGPT 등)를 내 개인 프로그래머처럼 부려먹는 기법 전수
-                </p>
-              </div>
+            {/* Subtitle - Balanced text size */}
+            <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep">
+              단순 코딩 교육이 아닙니다. 엑셀 VBA부터 Power Automate, 그리고 AI 결합까지.
+              <br />
+              당신이 자리를 비워도 스스로 돌아가는 &apos;업무 에이전트&apos;를 구축하는 여정입니다.
+            </p>
 
-              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-bold">
-                  ⏱️
-                </div>
-                <h3 className="font-bold text-base text-white">AI를 활용해 업무 시간을 획기적으로 줄이고 싶은 분</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  하루 8시간 잡고 있던 노가다 작업을 클릭 한 번으로 단 1시간 안에 깔끔히 마치는 자동화 루틴 구축
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800/80 space-y-3 hover:border-cyan-500/40 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold">
-                  🖱️
-                </div>
-                <h3 className="font-bold text-base text-white">복잡한 수식 대신 버튼 하나로 끝내고 싶은 분</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  엑셀 상단 '나만의 리본 메뉴'에 이모티콘 아이콘 버튼을 심어 누구든 누르기만 하면 실행되는 완성형 환경
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* TUTOR STORY & EXPERIENCE (수업 및 강사 소개) */}
-          <section className="max-w-5xl mx-auto px-4 sm:px-6">
-            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/90 border border-cyan-500/30 shadow-2xl space-y-8 relative overflow-hidden">
-              <div className="space-y-4">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
-                  <span>📘📘 강사 소개 &amp; 실무 노하우</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  &quot;매일 엑셀 붙잡고 야근하시나요? 이제 클릭 1번으로 끝내세요.&quot;
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  전직 해외영업, 영업관리, SCM을 거쳐 현직 재무·회계 실무자인 저는 AI와 VBA를 활용해 주 40시간의 반복 업무를 8시간으로, 하루 8시간의 일을 단 1시간으로 단축하는 자동화 루틴을 구축했습니다.
-                  <br /><br />
-                  현재까지 <strong>9회의 강의(사내 4회, 외부 5회)</strong>를 통해 증명된 실무 노하우를 그대로 알려드립니다. 코딩 문법을 암기하는 강의가 아닙니다. AI와 함께 내 업무에 꼭 필요한 매크로를 만들고, &apos;나만의 리본 메뉴&apos;에 등록하여 클릭 한 번으로 끝내는 실무 환경을 만들어 드립니다. VBA를 몰라도 교육 다음 날부터 바로 실무 적용이 가능합니다.
-                </p>
-              </div>
-
-              {/* History Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800">
-                <div className="space-y-1">
-                  <div className="text-sm font-bold text-cyan-400">🏆 사내 강의 4회 진행</div>
-                  <div className="text-xs text-slate-400">실제 기업 실무 환경에 최적화된 AI 엑셀 자동화 교육</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-sm font-bold text-blue-400">🏆 외부 클래스 5회 진행</div>
-                  <div className="text-xs text-slate-400">당근, 소모임 등을 통해 검증된 직장인 맞춤 자동화</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-sm font-bold text-emerald-400">⚡ 실무 성과 80% 개선</div>
-                  <div className="text-xs text-slate-400">주 40시간 소요 업무 ➔ 8시간 단축</div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* 4-STEP CORE CURRICULUM OVERVIEW */}
-          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
-            <div className="text-center space-y-2">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
-                📢📢 핵심 커리큘럼
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">4단계 실무 완벽 적용 로드맵</h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-                <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">STEP 1</span>
-                <h4 className="font-bold text-sm text-white">자동화 환경 세팅</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  클릭 1번을 위한 개발도구 설정, 보안 해제 및 AddIns 폴더 신뢰 경로 구축
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-                <span className="text-xs font-black text-blue-400 uppercase tracking-wider">STEP 2</span>
-                <h4 className="font-bold text-sm text-white">AI 매크로 만들기</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  자연어 업무 설명만으로 VBA 코드 자동 생성 및 오류 발생 시 AI 실시간 디버깅
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-                <span className="text-xs font-black text-indigo-400 uppercase tracking-wider">STEP 3</span>
-                <h4 className="font-bold text-sm text-white">나만의 리본 메뉴</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  엑셀 상단 전용 탭에 아이콘 버튼을 만들어 클릭 한 번으로 실행하는 자동화
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-                <span className="text-xs font-black text-emerald-400 uppercase tracking-wider">STEP 4</span>
-                <h4 className="font-bold text-sm text-white">실무 완벽 적용</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  PDF 일괄 변환, 조건 조회, 메일 발송 연동 등 내 실무에 직접 적용
-                </p>
-              </div>
-            </div>
-
-            {/* 10 Online Lectures Preview Banner */}
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-cyan-950/40 to-slate-900 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <h3 className="font-extrabold text-base text-white">🎬 온라인 10강 단기 마스터클래스 동영상 제공</h3>
-                <p className="text-xs text-slate-400">환경 세팅부터 100개 PDF 생성, 인풋박스 조회, 메일 자동화까지 포함된 10강 세트</p>
-              </div>
-              <button
-                onClick={() => setViewMode("classroom")}
-                className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-lg transition-colors cursor-pointer shrink-0"
+            {/* Hero Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <a
+                href="#roadmap"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95"
               >
-                🎓 10강 수강실 입장하기 ➔
+                🚀 로드맵 확인하기 ➔
+              </a>
+              <a
+                href="#calculator"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-white font-bold text-sm sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95"
+              >
+                ⏱️ 내 업무 시간 절감 계산 ➔
+              </a>
+              <button
+                onClick={() => handlePortonePayment(selectedPayMethod)}
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-950 font-black text-sm sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95"
+              >
+                ⚡ 얼리버드 90% 특가 신청 (5,000원) ↗
               </button>
             </div>
           </section>
 
-          {/* DETAILED 10-LESSON CURRICULUM SECTION */}
-          <section id="curriculum" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8 scroll-mt-20">
-            <div className="text-center space-y-3">
-              <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30 tracking-wider">
-                10-LESSON DETAILED CURRICULUM
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                LV.01 온라인 10강 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">상세 커리큘럼 &amp; 학습 포인트</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                엑셀 환경 세팅부터 AI 매크로 작성, 리본 메뉴 심기, 100개 PDF 일괄 처리 및 인풋박스 데이터 조회까지 — 10개 강좌의 요약과 주요 체크포인트를 미리 확인하세요.
-              </p>
-            </div>
+          {/* WHY EXISTING IT EDUS FAIL vs WORKFREE MASTERCLASS (Vision Section) */}
+          <section className="py-16 bg-slate-900/80 border-b border-slate-800">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div className="space-y-6">
+                  <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
+                    WHY WORKFREE MASTERCLASS
+                  </span>
+                  <h2 className="text-3xl font-bold text-white leading-snug">
+                    왜 기존 IT 교육은<br />체감이 되지 않을까요?
+                  </h2>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    대부분의 교육은 문법 위주의 학습에 치중합니다. 하지만 실무자에게 필요한 것은 &apos;내일 당장 엑셀 파일을 만지는 시간을 줄여주는 도구&apos;입니다.
+                  </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {LECTURES.map((lec) => (
+                  <div className="space-y-3 pt-2">
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-rose-500/30 flex items-start space-x-3">
+                      <span className="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">✕</span>
+                      <div>
+                        <div className="text-xs font-bold text-rose-300">기존 IT 교육</div>
+                        <div className="text-xs text-slate-400 mt-0.5">실무와 동떨어진 문법 공부, 직접 내 업무에 적용하기 막막함</div>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/30 flex items-start space-x-3">
+                      <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">✓</span>
+                      <div>
+                        <div className="text-xs font-bold text-emerald-300">WorkFree 마스터클래스</div>
+                        <div className="text-xs text-slate-400 mt-0.5">자주 쓰는 10개 실전 코드로 즉각 도입 &amp; 나만의 리본 메뉴 파이프라인 구축</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 text-center">
+                  <h3 className="font-bold text-white text-base">자동화 단계별 업무 소요 시간 비교</h3>
+                  <div className="space-y-3 pt-2 text-xs">
+                    <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+                      <span className="text-slate-400">현재 (수동 노가다 작업)</span>
+                      <span className="font-mono font-bold text-rose-400 text-sm">600분 (10시간)</span>
+                    </div>
+                    <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 flex justify-between items-center">
+                      <span className="text-cyan-300 font-bold">LV.01 리본 매크로 적용</span>
+                      <span className="font-mono font-bold text-cyan-400 text-sm">60분 (1시간)</span>
+                    </div>
+                    <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/40 flex justify-between items-center">
+                      <span className="text-emerald-300 font-bold">LV.02/03 No-Touch 파이프라인</span>
+                      <span className="font-mono font-bold text-emerald-400 text-sm">5분 (자동 구동)</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 pt-2">※ 일일 10시간 반복 업무 기준 감축 시뮬레이션</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="bg-slate-900/90 py-16 border-y border-slate-800">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl font-bold text-white tracking-tight">Featured Class</h2>
+                <h5 className="text-sm text-slate-400">최신 업데이트된 신상 실무 자동화 마스터클래스</h5>
+              </div>
+
+              {/* Nomad Course Spotlight Card - Proportional Grid (5:7 ratio) */}
+              <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-950/60 p-6 sm:p-8 rounded-3xl border border-slate-800/80 shadow-2xl">
+                {/* Course Image Frame with Neon Animated Border (5 cols) */}
+                <div className="lg:col-span-5 relative group cursor-pointer" onClick={() => setViewMode("classroom")}>
+                  <span className="absolute top-3 left-3 z-30 inline-block rounded-full bg-yellow-400/20 text-yellow-300 border border-yellow-500/40 px-3.5 py-0.5 text-xs font-bold shadow">
+                    초급
+                  </span>
+
+                  <div className="relative w-full rounded-2xl p-1 bg-gradient-to-r from-yellow-400 via-cyan-400 to-indigo-500 shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]">
+                    <div className="aspect-video w-full rounded-xl bg-slate-950 flex flex-col items-center justify-center p-4 text-center space-y-2 overflow-hidden">
+                      <div className="w-12 h-12 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-300 text-2xl font-bold">
+                        ⚡
+                      </div>
+                      <div className="font-mono text-cyan-400 text-[11px] font-bold tracking-wider">
+                        WORKFREE MASTERCLASS
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Overlapping Info Card */}
+                  <div className="relative -top-8 z-30 mx-auto w-11/12 rounded-xl bg-slate-800/95 border border-slate-700 p-3.5 text-center shadow-xl backdrop-blur-md space-y-0.5">
+                    <h3 className="text-base font-bold text-white">Maker 마스터클래스</h3>
+                    <h4 className="text-[11px] text-slate-300">이제는 1인 업무 자동화의 시대입니다</h4>
+                  </div>
+                </div>
+
+                {/* Course Details & Checklist (7 cols) */}
+                <div className="lg:col-span-7 space-y-5 text-slate-300 pl-0 lg:pl-2">
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">WorkFree LV.01 마스터클래스</h3>
+
+                    {/* Stacked Tech Icons */}
+                    <div className="flex space-x-2 mb-4">
+                      <div className="w-9 h-9 rounded-full border-2 border-slate-700 bg-slate-800 flex items-center justify-center text-xs font-bold text-cyan-400 shadow">
+                        XL
+                      </div>
+                      <div className="w-9 h-9 rounded-full border-2 border-slate-700 bg-slate-800 flex items-center justify-center text-xs font-bold text-blue-400 shadow">
+                        VBA
+                      </div>
+                      <div className="w-9 h-9 rounded-full border-2 border-slate-700 bg-slate-800 flex items-center justify-center text-xs font-bold text-emerald-400 shadow">
+                        AI
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-xs sm:text-sm">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-cyan-400 font-bold text-base">✓</span>
+                      <span>10개의 실전 커리큘럼 동영상 강의</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-cyan-400 font-bold text-base">✓</span>
+                      <span>강의 총 분량 100분 완강 코스</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-cyan-400 font-bold text-base">✓</span>
+                      <span>현시점 최신 AI(ChatGPT/Copilot)와 VBA로 나만의 리본 메뉴 만들기</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-cyan-400 font-bold text-base">✓</span>
+                      <span>하루 8시간 노가다 데이터 가공 ➔ 1시간 클릭 자동화 완료</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => setViewMode("classroom")}
+                      className="inline-flex items-center justify-center rounded-md bg-blue-600 hover:bg-blue-500 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg transition-colors cursor-pointer active:scale-95"
+                    >
+                      <span>자세히 보기 ➔</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+
+          {/* NOMAD ROADMAP TRACK CARDS SECTION (3-LEVEL MASTER ROADMAP - COURSE PROMO STYLE) */}
+          <section id="roadmap" className="py-20 bg-slate-900/60 border-t border-slate-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+              <div className="text-center space-y-2">
+                <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
+                  AUTOMATION LEARNING TRACKS
+                </span>
+                <h2 className="text-3xl font-medium text-white">WorkFree 학습 로드맵</h2>
+                <h5 className="text-lg text-slate-400 max-w-2xl mx-auto">
+                  개발자가 아니어도 100% 체감하는 사무 자동화 파이프라인 3단계
+                </h5>
+              </div>
+
+              {/* 3 Colored Course Track Cards Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Level 1: Excel AI & Ribbon (ONLINE NOW) */}
                 <div
-                  key={lec.id}
-                  className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800/90 hover:border-cyan-500/50 transition-all space-y-3.5 flex flex-col justify-between group shadow-lg shadow-black/40 hover:shadow-cyan-500/10"
+                  className="relative overflow-hidden rounded-2xl p-7 h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-yellow-500/30"
+                  style={{ backgroundColor: "rgb(252, 180, 61)" }}
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center space-x-2">
-                        <span className="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30 font-mono">
-                          {lec.id < 10 ? `0${lec.id}강` : `${lec.id}강`}
-                        </span>
-                        <span className="text-[11px] font-semibold text-slate-400">
-                          ⏱️ {lec.duration}
-                        </span>
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-slate-950/80 text-yellow-300 font-mono text-xs font-extrabold border border-yellow-400/40">
+                      LV.01 · 즉시 수강 가능 (100분 완강)
+                    </span>
+                    <div className="flex space-x-1">
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        XL
                       </div>
-                      <button
-                        onClick={() => {
-                          setCurrentLecture(lec);
-                          setViewMode("classroom");
-                        }}
-                        className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-[11px] sm:text-xs shadow-md shadow-cyan-500/20 transition-all cursor-pointer active:scale-95 flex items-center space-x-1.5 shrink-0"
-                      >
-                        <span>▶ 궁금하면 강의 바로 듣기</span>
-                        <span className="text-cyan-200">➔</span>
-                      </button>
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        VBA
+                      </div>
                     </div>
+                  </div>
 
-                    <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
-                      {lec.title}
-                    </h3>
-
-                    <p className="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-slate-800/60">
-                      {lec.summary}
+                  <div className="space-y-2 text-slate-950 my-auto">
+                    <h4 className="text-2xl font-black">LV.01 엑셀 AI &amp; 리본 메뉴</h4>
+                    <p className="text-xs font-medium leading-relaxed">
+                      <span>• 10개 실전 VBA 매크로 제작 (100분 완강)</span>
+                      <br />
+                      <span>• ERP 로우 데이터 가공 10시간 ➔ 1시간 감축</span>
+                      <br />
+                      <span>• AI(ChatGPT/Copilot)로 코드 생성 및 내 엑셀 리본 메뉴 아이콘 심기</span>
+                      <br />
+                      <span className="font-bold block mt-2 text-slate-900">#노가다탈출 #나만의리본메뉴 #1초클릭</span>
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800/80 space-y-2">
-                    <div className="text-[11px] font-bold text-cyan-400 flex items-center space-x-1">
-                      <span>📌 주요 학습 체크포인트</span>
-                    </div>
-                    <ul className="space-y-1.5 pl-0.5">
-                      {lec.keyPoints.map((point, idx) => (
-                        <li key={idx} className="flex items-start space-x-2 text-xs text-slate-300 leading-snug">
-                          <span className="text-cyan-400 font-bold mt-0.5 shrink-0">•</span>
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div>
+                    <button
+                      onClick={() => setViewMode("classroom")}
+                      className="w-full py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-yellow-300 font-black text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center"
+                    >
+                      🎓 1단계 100분 완강 클래스 들으러 가기 ➔
+                    </button>
                   </div>
                 </div>
-              ))}
+
+                {/* Level 2: Power Automate No-Touch (UPCOMING) */}
+                <div
+                  className="relative overflow-hidden rounded-2xl p-7 h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-indigo-500/30"
+                  style={{ backgroundColor: "rgb(115, 105, 243)" }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-slate-950/80 text-purple-300 font-mono text-xs font-extrabold border border-purple-400/40">
+                      LV.02 · 제작 예정 (Power Automate)
+                    </span>
+                    <div className="flex space-x-1">
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        PA
+                      </div>
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        FLOW
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-white my-auto">
+                    <h4 className="text-2xl font-black">LV.02 No-Touch 파이프라인</h4>
+                    <p className="text-xs font-medium leading-relaxed">
+                      <span>• MS 365 무료 기본 앱 Power Automate 연동</span>
+                      <br />
+                      <span>• ERP 파일 자동 다운로드부터 LV.01 리본 매크로 자동 호출</span>
+                      <br />
+                      <span>• 개입 0% (Zero-Touch): 전처리 ➔ 메일/팀즈 자동 발송까지 트리거 연결</span>
+                      <br />
+                      <span className="font-bold block mt-2 text-purple-200">#ZeroTouch #파이프라인 #손안대는자동화</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={() => setShowInquiryModal(true)}
+                      className="w-full py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-purple-200 font-bold text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-purple-400/30"
+                    >
+                      💬 2단계 라이브/실강 및 오픈 알림 문의 ↗
+                    </button>
+                  </div>
+                </div>
+
+                {/* Level 3: AI Agent & Hybrid Full Automation (UPCOMING) */}
+                <div
+                  className="relative overflow-hidden rounded-2xl p-7 h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-cyan-500/30"
+                  style={{ backgroundColor: "rgb(59, 191, 238)" }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-slate-950/80 text-cyan-300 font-mono text-xs font-extrabold border border-cyan-400/40">
+                      LV.03 · 제작 예정 (AI Agent)
+                    </span>
+                    <div className="flex space-x-1">
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        AGY
+                      </div>
+                      <div className="w-8 h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-xs font-bold shadow">
+                        AI
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-slate-950 my-auto">
+                    <h4 className="text-2xl font-black">LV.03 AI 에이전트 하이브리드</h4>
+                    <p className="text-xs font-medium leading-relaxed">
+                      <span>• Antigravity / Codex / Claude Co-work + PA + VBA 3종 결합</span>
+                      <br />
+                      <span>• 내가 없어도 24시간 스스로 굴러가는 자율형 업무 에이전트</span>
+                      <br />
+                      <span>• 3~4개 핵심 실무 예제 프로젝트 훈련으로 내 업무 완전 자동화</span>
+                      <br />
+                      <span className="font-bold block mt-2 text-slate-900">#AIAgent #엔드투엔드 #완전자율구동</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={() => setShowInquiryModal(true)}
+                      className="w-full py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-cyan-300 font-bold text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-cyan-400/30"
+                    >
+                      🚀 3단계 완전자동화 트랙 문의하기 ↗
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
-          {/* OFFICE AUTOMATION TECH TREE (사무자동화 테크트리) SECTION */}
-          <section id="techtree" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8 scroll-mt-20">
-            <div className="text-center space-y-3">
-              <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30 tracking-wider">
-                OFFICE AUTOMATION ROADMAP
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                반복업무 제로를 향한 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">사무자동화 테크트리</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                VBA로 파일과 메일을 다루는 법부터, Power Automate로 사람 손을 완전히 떠나는 자동화까지 — 순서대로 밟아가는 5단계 실무 로드맵입니다.
-              </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs text-slate-400">
-                <span className="flex items-center space-x-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-cyan-400"></span>
-                  <span>VBA · 로컬 자동화 (LV.01~02)</span>
-                </span>
-                <span className="flex items-center space-x-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-blue-500"></span>
-                  <span>Power Automate · 클라우드 자동화 (LV.03~04)</span>
-                </span>
-                <span className="flex items-center space-x-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>
-                  <span>캡스톤 · 완전자동화 (LV.05)</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Tech Tree Stage Cards List */}
-            <div className="space-y-4 max-w-3xl mx-auto">
-              {/* LV.01 (CURRENT ACTIVE CLASS) */}
-              <div className="p-6 rounded-3xl bg-gradient-to-r from-slate-900 via-cyan-950/30 to-slate-900 border-2 border-cyan-500/60 shadow-xl shadow-cyan-500/10 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 px-4 py-1 rounded-bl-2xl bg-cyan-500 text-slate-950 font-black text-[10px] uppercase tracking-wider">
-                  ▶ 현재 수강 중 (1단계)
+          {/* INTERACTIVE WORK SAVINGS CALCULATOR SECTION */}
+          <section id="calculator" className="py-20 bg-slate-900 border-t border-slate-800">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+              <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-cyan-500/30 shadow-2xl space-y-8">
+                <div className="text-center space-y-2">
+                  <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
+                    AUTOMATION TIME SAVINGS CALCULATOR
+                  </span>
+                  <h2 className="text-3xl font-bold text-white">내 업무 시간 절감 계산기</h2>
+                  <p className="text-xs sm:text-sm text-slate-400">
+                    지금 매일 반복하고 계신 엑셀 노가다 업무, WorkFree 자동화 시스템을 적용하면 일년에 얼마나 아낄 수 있을까요?
+                  </p>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center font-mono font-black text-cyan-300 text-base shrink-0">
-                    01
-                  </div>
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-mono text-[10px] font-bold border border-cyan-500/30">
-                        LV.01 · VBA 기초
-                      </span>
-                      <span className="text-xs font-bold text-emerald-400">온라인 10강 수강 가능</span>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  <div className="space-y-6">
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-xs font-bold text-slate-300">일일 반복 업무 시간</label>
+                        <span className="text-sm font-black text-cyan-400 font-mono">{calcDailyHours}시간</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="8"
+                        value={calcDailyHours}
+                        onChange={(e) => setCalcDailyHours(Number(e.target.value))}
+                        className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                      />
+                      <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 font-mono">
+                        <span>1시간</span>
+                        <span>4시간</span>
+                        <span>8시간</span>
+                      </div>
                     </div>
-                    <h3 className="text-lg font-bold text-white">반복작업 자동화 입문</h3>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      AI로 VBA 코드를 만들고 고치는 법을 배웁니다. 엑셀 하나 안에서 반복되는 손작업을 없애는 첫 단계입니다.
-                    </p>
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 mb-2">주당 반복 횟수</label>
                       <div className="flex space-x-2">
-                        <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300">
-                          Copilot 코드 생성
-                        </span>
-                        <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300">
-                          에러 디버깅
-                        </span>
+                        {[1, 3, 5].map((freq) => (
+                          <button
+                            key={freq}
+                            onClick={() => setCalcFrequency(freq)}
+                            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              calcFrequency === freq
+                                ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 font-black"
+                                : "bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700"
+                            }`}
+                          >
+                            {freq === 5 ? "매일 (주 5회)" : `주 ${freq}회`}
+                          </button>
+                        ))}
                       </div>
-                      <button
-                        onClick={() => setViewMode("classroom")}
-                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-extrabold text-xs shadow-md cursor-pointer hover:from-cyan-400 hover:to-blue-500 transition-all"
-                      >
-                        🎓 1단계 10강 마스터클래스 바로 수강 ➔
-                      </button>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* LEVEL 1 ONLINE / LEVEL 2 LIVE NOTICE BANNER */}
-              <div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200 flex items-center space-x-3 shadow-lg my-2">
-                <span className="text-base shrink-0">💡</span>
-                <p className="leading-relaxed">
-                  <strong className="text-cyan-400 font-bold">수강 관련 꿀팁:</strong> 1단계(LV.01)는 본 페이지의 온라인 10강 마스터클래스로 자유롭게 완강하시고, <strong>2단계(LV.02)부터 실강(오프라인/라이브)에 바로 참여하셔도 무방합니다!</strong>
-                </p>
-              </div>
-
-              {/* LV.02 */}
-              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center font-mono font-bold text-slate-400 text-base shrink-0">
-                    02
-                  </div>
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-mono text-[10px] font-bold border border-cyan-500/30">
-                        LV.02 · VBA 중급
+                  <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3 shadow-inner">
+                    <p className="text-xs font-bold text-slate-400">예상 연간 절감 시간 (90% 감축)</p>
+                    <div className="text-4xl sm:text-5xl font-black text-cyan-400 font-mono tracking-tight">
+                      {Math.floor(calcDailyHours * calcFrequency * 52 * 0.9).toLocaleString()}{" "}
+                      <span className="text-lg text-slate-300 font-sans">시간</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-semibold">
+                      약{" "}
+                      <span className="text-amber-400 font-extrabold text-sm">
+                        {Math.floor((calcDailyHours * calcFrequency * 52 * 0.9) / 24)}일
                       </span>
-                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-200">파일 · 메일 파이프라인 자동화</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      데이터 추출부터 양식 작성, 파일명 규칙 저장, 메일 발송까지 — 하나의 업무를 처음부터 끝까지 VBA로 잇습니다.
+                      의 자유 시간 확보! 🚀
                     </p>
-                    <div className="flex space-x-2 pt-1">
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        Outlook 연동
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        엔드투엔드 매크로
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* LV.03 */}
-              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-center font-mono font-bold text-blue-400 text-base shrink-0">
-                    03
-                  </div>
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
-                        LV.03 · Power Automate 입문
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setShowInquiryModal(true)}
-                        className="block w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-bold text-xs transition-all text-center cursor-pointer"
-                      >
-                        💬 1:1 고객 문의하기 (카카오톡 / 이메일) ↗
-                      </button>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-200">트리거 자동화 — 손 안 대는 자동화</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      실행 버튼 없이도 폴더 감시, 조건 분기, 알림까지 알아서 도는 흐름을 설계합니다. VBA와의 역할 차이를 여기서 체감합니다.
-                    </p>
-                    <div className="flex space-x-2 pt-1">
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        이벤트 트리거
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        승인 흐름
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* LV.04 */}
-              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors opacity-90">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-950/40 border border-blue-800/40 flex items-center justify-center font-mono font-bold text-blue-400 text-base shrink-0">
-                    04
-                  </div>
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
-                        LV.04 · 하이브리드 연동
-                      </span>
-                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 클래스 준비 중</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-200">VBA + Power Automate 결합 설계</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      Power Automate가 감지·알림·승인을 맡고, VBA가 무거운 엑셀 가공을 맡는 역할 분담 구조를 직접 설계합니다.
-                    </p>
-                    <div className="flex space-x-2 pt-1">
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        Office Script
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-                        역할 분담 설계
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* LV.05 CAPSTONE */}
-              <div className="p-6 rounded-3xl bg-slate-900/80 border border-amber-500/30 relative overflow-hidden">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center font-mono font-bold text-amber-400 text-base shrink-0">
-                    05
-                  </div>
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold border border-amber-500/30">
-                        LV.05 · 캡스톤
-                      </span>
-                      <span className="text-[11px] text-slate-500 font-semibold">🔒 차기 프로젝트 준비 중</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-amber-200">완전자동화 프로젝트</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      실제 입금전처리 매크로 사례를 완전자동화로 재설계합니다. 수강생은 자신의 업무 하나를 골라 같은 구조로 직접 구현합니다.
-                    </p>
-                    <div className="flex space-x-2 pt-1">
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-amber-400/80">
-                        실무 사례 재설계
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-amber-400/80">
-                        개인 프로젝트 완성
-                      </span>
+                    <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden mt-3">
+                      <div
+                        className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: `${Math.min(((calcDailyHours * calcFrequency * 52 * 0.9) / 1500) * 100, 100)}%`,
+                        }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -1022,7 +964,45 @@ export default function Home() {
             </div>
           </section>
 
-          {/* LIVE CLASS ENQUIRY BANNER */}
+          {/* END-TO-END PIPELINE DIAGRAM SECTION */}
+          <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+            <div className="text-center space-y-2">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
+                ZERO-TOUCH AUTOMATION FLOW
+              </span>
+              <h2 className="text-3xl font-bold text-white">완전 자동화 업무 파이프라인 시각화</h2>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
+                ERP 다운로드부터 엑셀 가공, 메일 전송까지 나의 개입 없이 수직 실행되는 구조입니다.
+              </p>
+            </div>
+
+            {/* Pipeline Step Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl items-center">
+              <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
+                <div className="text-3xl">🏢</div>
+                <div className="text-sm font-bold text-white">1. ERP / 웹 시스템</div>
+                <div className="text-[11px] text-slate-400">데이터 자동 다운로드</div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 text-center space-y-2">
+                <div className="text-3xl">⚙️</div>
+                <div className="text-sm font-bold text-cyan-300">2. Power Automate</div>
+                <div className="text-[11px] text-cyan-400 font-mono">이벤트 트리거 감지</div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-blue-950/40 border border-blue-500/40 text-center space-y-2">
+                <div className="text-3xl">📊</div>
+                <div className="text-sm font-bold text-blue-300">3. LV.01 VBA 매크로</div>
+                <div className="text-[11px] text-blue-400">로우 데이터 자동 가공</div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
+                <div className="text-3xl">✉️</div>
+                <div className="text-sm font-bold text-white">4. 이메일 / 팀즈</div>
+                <div className="text-[11px] text-slate-400">결과 보고서 자동 발송</div>
+              </div>
+            </div>
+          </section>
           <section id="schedule" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 scroll-mt-20">
             <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-slate-900 via-cyan-950/50 to-slate-900 border border-cyan-500/30 text-center space-y-4 shadow-2xl">
               <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
@@ -1488,7 +1468,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       {/* 100% Completion Celebration Certificate Modal */}
       {showCertificateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
@@ -1496,7 +1475,6 @@ export default function Home() {
             <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border border-emerald-500/40 flex items-center justify-center text-4xl shadow-xl shadow-emerald-500/20">
               🎉
             </div>
-
             <div className="space-y-2">
               <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
                 10강 완강 축하합니다!
@@ -1508,12 +1486,10 @@ export default function Home() {
                 축하합니다! 10개 강좌를 모두 수강하여 AI와 함께 엑셀 자동화 매크로를 작성하고 리본 메뉴를 구축할 수 있는 마스터 역량을 완성하셨습니다.
               </p>
             </div>
-
             <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-cyan-300 space-y-1">
               <div>🎓 <strong>수강생 인증:</strong> WorkFree Market 마스터 클래스</div>
               <div>⚡ <strong>업무 효율:</strong> 주 40시간 ➔ 8시간 단축 완료</div>
             </div>
-
             <button
               onClick={() => setShowCertificateModal(false)}
               className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 cursor-pointer"
@@ -1524,127 +1500,165 @@ export default function Home() {
         </div>
       )}
 
-      {/* License Key Gatekeeper Modal Overlay */}
-      {showLicenseModal && !isAuthenticated && (
-        <div className="fixed top-[61px] inset-x-0 bottom-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/90 backdrop-blur-xl">
-          <div className="w-full max-w-md bg-slate-900/95 border border-cyan-500/40 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-cyan-500/20 space-y-5 sm:space-y-6 text-center max-h-[92vh] overflow-y-auto relative">
-            <button
-              onClick={() => setShowLicenseModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg font-bold p-1 cursor-pointer transition-colors"
-              title="닫기"
-            >
-              ✕
-            </button>
-            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-xl sm:text-2xl shadow-lg shadow-cyan-500/20">
-              🔒
+      {/* License Key & Portone Payment Authorization Modal */}
+      {showLicenseModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 className="font-black text-lg text-white flex items-center space-x-2">
+                <span>🔒 10강 마스터클래스 수강 신청 &amp; 수강생 인증</span>
+              </h3>
+              <button
+                onClick={() => setShowLicenseModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
             </div>
 
-            <div className="space-y-2">
-              <span className="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] sm:text-[11px] font-extrabold tracking-wide uppercase">
-                🔥 [얼리버드 90% 할인 이벤트] 5,000원 한정 수강권
-              </span>
-              <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
-                얼리버드 특가 수강 신청 &amp; 라이선스 인증
-              </h2>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                전달받으신 <strong>수강 라이선스 키</strong>를 입력해 주세요.
-                <br />
-                아직 수강 키가 없으신 경우 아래 <strong>[얼리버드 90% 할인 특가 신청]</strong> 버튼으로 결제하신 후 카톡/당근으로 입금자명을 말씀해 주시면 수강 키를 발급해 드립니다.
-              </p>
-            </div>
+            {/* Option 1: Portone Online Direct Payment */}
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/30 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  ⚡ 90% 얼리버드 특가
+                </span>
+                <span className="text-xs font-mono font-bold text-amber-400">정가 50,000원 ➔ 5,000원</span>
+              </div>
+              <div>
+                <h4 className="font-extrabold text-sm text-white">포트원(Portone) 전자결제 수강 신청</h4>
+                <p className="text-xs text-slate-300 mt-1">
+                  결제 완료 시 즉시 10강 전체 시청 권한이 자동 승인됩니다.
+                </p>
+              </div>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleVerifyLicense();
-              }}
-              className="space-y-4"
-            >
+              {/* Payment Method Selector Tabs */}
               <div className="space-y-2">
-                <input
-                  type="password"
-                  value={licenseInput}
-                  onChange={(e) => {
-                    setLicenseInput(e.target.value);
-                    setLicenseError("");
-                  }}
-                  placeholder="라이선스 비번 입력 (예: workfree1)"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-center text-white placeholder-slate-500 focus:outline-none transition-all font-mono tracking-wider"
-                  autoFocus
-                />
+                <label className="text-[11px] font-bold text-slate-400">결제 수단 선택:</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPayMethod("kakaopay")}
+                    className={`py-2 px-3 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+                      selectedPayMethod === "kakaopay"
+                        ? "bg-yellow-400 text-slate-950 border-yellow-400 shadow-md shadow-yellow-400/20"
+                        : "bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700"
+                    }`}
+                  >
+                    🟡 카카오페이
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPayMethod("tosspay")}
+                    className={`py-2 px-3 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+                      selectedPayMethod === "tosspay"
+                        ? "bg-blue-500 text-white border-blue-500 shadow-md shadow-blue-500/20"
+                        : "bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700"
+                    }`}
+                  >
+                    🔵 토스페이
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPayMethod("card")}
+                    className={`py-2 px-3 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+                      selectedPayMethod === "card"
+                        ? "bg-cyan-500 text-slate-950 border-cyan-500 shadow-md shadow-cyan-500/20"
+                        : "bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700"
+                    }`}
+                  >
+                    💳 신용카드
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPayMethod("naverpay")}
+                    className={`py-2 px-3 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+                      selectedPayMethod === "naverpay"
+                        ? "bg-emerald-500 text-slate-950 border-emerald-500 shadow-md shadow-emerald-500/20"
+                        : "bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700"
+                    }`}
+                  >
+                    🟢 네이버페이
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handlePortonePayment(selectedPayMethod)}
+                disabled={isLoadingAuth}
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-yellow-500/20 transition-all cursor-pointer active:scale-95 disabled:opacity-50"
+              >
+                {isLoadingAuth ? "결제 요청 처리 중..." : `💳 5,000원 결제하기 (${selectedPayMethod.toUpperCase()})`}
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div className="relative flex py-1 items-center">
+              <div className="flex-grow border-t border-slate-800"></div>
+              <span className="flex-shrink mx-4 text-xs font-bold text-slate-500">또는 기존 수강생 키 입력</span>
+              <div className="flex-grow border-t border-slate-800"></div>
+            </div>
+
+            {/* Option 2: Pre-issued License Key Input */}
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  🔑 수강생 라이선스 키 (비밀번호)
+                </label>
+                <div className="flex space-x-2">
+                  <input
+                    type="password"
+                    value={licenseInput}
+                    onChange={(e) => setLicenseInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleVerifyLicense();
+                    }}
+                    placeholder="수강생 승인 라이선스 키 입력"
+                    className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleVerifyLicense}
+                    className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-md shadow-cyan-500/20 cursor-pointer active:scale-95"
+                  >
+                    인증하기
+                  </button>
+                </div>
                 {licenseError && (
-                  <p className="text-xs text-rose-400 font-semibold animate-pulse">
-                    ⚠️ {licenseError}
-                  </p>
+                  <p className="text-xs text-rose-400 font-semibold mt-1.5">{licenseError}</p>
                 )}
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition-all duration-200 cursor-pointer active:scale-95"
-              >
-                🔑 수강 승인 및 클래스 입장
-              </button>
-            </form>
-
-            {/* KakaoPay QR Code Display for PC & Mobile users */}
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2.5">
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-black uppercase">
-                🟡 PC 사용자 QR 스캔 결제
-              </span>
-              <div className="w-48 h-48 mx-auto rounded-2xl overflow-hidden border-2 border-yellow-400/80 shadow-2xl shadow-yellow-500/20 bg-white p-2 flex items-center justify-center">
-                <img
-                  src="/images/kakaopay_qr.png"
-                  alt="카카오페이 5,000원 송금 QR 코드"
-                  className="w-full h-full object-contain rounded-xl"
-                />
-              </div>
-              <p className="text-[11px] text-slate-300 leading-snug">
-                스마트폰 카메라나 카카오톡 돋보기로 위 QR을 찍으시면 <strong>5,000원 송금 창이 1초 만에 실행</strong>됩니다!
-              </p>
+              {showKeyInfo && (
+                <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-[11px] text-cyan-300 leading-relaxed font-mono">
+                  💡 수강생 인증 키 문의: 카카오톡 ID(ayoi1034) 또는 contact@workfreemarket.com
+                </div>
+              )}
             </div>
 
-            <div className="pt-2 border-t border-slate-800 space-y-2.5">
-              <p className="text-[11px] font-bold text-amber-300">
-                💳 얼리버드 특가 결제 &amp; 수강 신청:
-              </p>
-              <div className="space-y-2">
-                <button
-                  onClick={handlePortonePayment}
-                  className="block w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all text-center cursor-pointer active:scale-95"
-                >
-                  ⚡ 얼리버드 90% 할인 특가 신청 (5,000원) ↗
-                </button>
-                <a
-                  href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackGAEvent("click_karrot_inquiry", "conversion", "modal_5k")}
-                  className="block w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-400 font-bold text-xs border border-amber-500/30 transition-all text-center cursor-pointer"
-                >
-                  🥕 당근마켓 문의 ↗
-                </a>
-                <a
-                  href="#schedule"
-                  onClick={() => {
-                    setShowLicenseModal(false);
-                    trackGAEvent("click_kakaotalk_inquiry", "conversion", "modal_5k");
-                  }}
-                  className="block w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-semibold text-xs border border-slate-800 transition-all text-center cursor-pointer"
-                >
-                  💬 카카오톡 1:1 상담 (ayoi1034)
-                </a>
-              </div>
+            <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
               <button
-                onClick={() => setViewMode("landing")}
-                className="text-[11px] text-slate-500 hover:text-slate-300 underline cursor-pointer pt-1"
+                type="button"
+                onClick={() => {
+                  setShowLicenseModal(false);
+                  setShowInquiryModal(true);
+                }}
+                className="text-xs text-cyan-400 hover:underline font-semibold"
               >
-                🏠 강의 소개 페이지로 돌아가기
+                💬 1:1 고객 문의하기
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowLicenseModal(false)}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
+              >
+                닫기
               </button>
             </div>
           </div>
         </div>
       )}
+
       {/* Privacy Policy Modal */}
       {showPrivacyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1660,12 +1674,8 @@ export default function Home() {
                 ✕
               </button>
             </div>
-
             <div className="flex-1 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed pr-2 font-sans">
-              <p>
-                <strong>워크프리마켓</strong>(이하 &apos;회사&apos;라 한다)는 개인정보보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
-              </p>
-
+              <p><strong>워크프리마켓</strong>(이하 '회사'라 한다)는 개인정보보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.</p>
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제1조(개인정보의 수집 항목 및 수집 방법)</h4>
                 <p>회사는 회원가입, 고객상담, 각종 서비스의 제공을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
@@ -1675,7 +1685,6 @@ export default function Home() {
                   <li><strong>자동 수집 항목:</strong> 서비스 이용기록, 방문기록, IP 주소, 쿠키, 접속 지표</li>
                 </ul>
               </div>
-
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제2조(개인정보의 처리 목적)</h4>
                 <p>회사는 수집한 개인정보를 다음의 목적을 위해 처리합니다.</p>
@@ -1685,7 +1694,6 @@ export default function Home() {
                   <li><strong>신규 서비스 개발 및 마케팅:</strong> 신규 교육과정 안내, 맞춤형 서비스 제공 및 통계학적 분석</li>
                 </ol>
               </div>
-
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제3조(개인정보의 처리 및 보유 기간)</h4>
                 <p>① 회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.</p>
@@ -1696,7 +1704,6 @@ export default function Home() {
                   <li>웹사이트 방문기록: 3개월 (통신비밀보호법)</li>
                 </ul>
               </div>
-
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제4조(개인정보 처리업무의 위탁)</h4>
                 <p>회사는 원활한 결제 서비스 제공 및 효과적인 업무 처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
@@ -1706,12 +1713,10 @@ export default function Home() {
                   <li><strong>위탁 기간:</strong> 회원 탈퇴 시 또는 위탁 계약 종료 시까지</li>
                 </ul>
               </div>
-
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제5조(개인정보의 파기)</h4>
                 <p>회사는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체 없이 전자적 기록을 복구 불가능한 방법으로 파기합니다.</p>
               </div>
-
               <div className="space-y-2">
                 <h4 className="font-bold text-cyan-400 text-sm">제6조(개인정보 보호책임자)</h4>
                 <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
