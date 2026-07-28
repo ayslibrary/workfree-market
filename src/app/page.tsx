@@ -2085,15 +2085,33 @@ export default function Home() {
 
               {authTab === "join" && (
                 <div className="space-y-2.5 pt-1 text-left text-[11px] text-slate-300">
-                  <label className="flex items-center space-x-2 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={agreeTerms}
-                      onChange={(e) => setAgreeTerms(e.target.checked)}
-                      className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
-                    />
-                    <span className="text-cyan-300 font-semibold">개인정보 수집 및 이용약관 동의</span>
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center space-x-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={agreeTerms}
+                        onChange={(e) => setAgreeTerms(e.target.checked)}
+                        className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
+                      />
+                      <span className="text-cyan-300 font-semibold">개인정보 수집 및 이용약관 동의</span>
+                    </label>
+                    <div className="flex items-center space-x-1.5 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setShowPrivacyModal(true)}
+                        className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
+                      >
+                        [개인정보]
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowTermsModal(true)}
+                        className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
+                      >
+                        [이용약관]
+                      </button>
+                    </div>
+                  </div>
 
                   <div className="flex items-center justify-between">
                     <label className="flex items-center space-x-2 cursor-pointer select-none">
