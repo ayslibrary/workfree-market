@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
+  --background: #0b0f17;
   --foreground: #f8fafc;
 }
 
@@ -9,6 +9,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
 }
 
 /* Custom Scrollbar for Lecture List */
@@ -27,3 +28,35 @@ body {
   background: #475569;
 }
 
+/* Lovable Aurora Glow Keyframes */
+@keyframes aurora-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) translateY(-15px);
+  }
+}
+
+.animate-aurora {
+  animation: aurora-glow 8s ease-in-out infinite;
+}
+
+/* Lovable Lovable Gradient Text Class */
+.lovable-gradient-text {
+  background: linear-gradient(135deg, #ff7e47 0%, #ff4b72 40%, #b249f8 75%, #6c5ce7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lovable-gradient-btn {
+  background: linear-gradient(135deg, #ff6b35 0%, #f43f5e 45%, #a855f7 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lovable-gradient-btn:hover {
+  background: linear-gradient(135deg, #ff7e47 0%, #fb7185 45%, #c084fc 100%);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.4);
+}

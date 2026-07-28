@@ -511,22 +511,25 @@ export default function Home() {
       {/* 1. LANDING HOMEPAGE VIEW (Nomad Coders 1:1 Matched Layout) */}
       {/* ====================================================================== */}
       {viewMode === "landing" && (
-        <div className="flex-1 space-y-0 pb-20 bg-slate-950">
+        <div className="flex-1 space-y-0 pb-20 bg-[#0b0f17] relative overflow-hidden">
+          {/* Ambient Lovable Aurora Orbs */}
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-gradient-to-tr from-orange-500/20 via-pink-500/20 to-purple-600/25 blur-[130px] rounded-full pointer-events-none -z-10 animate-aurora"></div>
+
           <section className="relative pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
             {/* Badge Pill */}
-            <div className="inline-flex items-center space-x-2 px-3 sm:px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[11px] sm:text-xs font-bold shadow-md shadow-cyan-500/10 backdrop-blur-md break-keep">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span>
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-500/15 via-rose-500/15 to-purple-500/15 border border-pink-500/30 text-pink-300 text-[11px] sm:text-xs font-bold shadow-lg shadow-pink-500/10 backdrop-blur-md break-keep">
+              <span className="w-2 h-2 rounded-full bg-pink-400 animate-ping shrink-0"></span>
               <span>⚡ 비개발자 실무자를 위한 최적의 업무 자동화 파이프라인</span>
             </div>
 
             {/* Main Title - Mobile Optimized & break-keep */}
             <h1
               className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-snug sm:leading-snug break-keep"
-              style={{ textShadow: "rgba(0, 0, 0, 0.3) 1px 1px 4px" }}
+              style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 4px" }}
             >
               10시간 걸리던 &apos;노가다&apos; 업무,
               <br />
-              <span className="text-cyan-400">1시간으로</span> 줄여드립니다.
+              <span className="lovable-gradient-text">1시간으로</span> 줄여드립니다.
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
@@ -540,19 +543,19 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
               <a
                 href="#roadmap"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl lovable-gradient-btn text-white font-black text-xs sm:text-base shadow-xl shadow-pink-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap border border-white/20"
               >
                 🚀 로드맵 확인하기 ➔
               </a>
               <a
                 href="#calculator"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-white font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-700 hover:border-pink-400 text-white font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
               >
                 ⏱️ 내 업무 시간 절감 계산 ➔
               </a>
               <button
                 onClick={() => handlePortonePayment(selectedPayMethod)}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-950 font-black text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-orange-500/20 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap border border-amber-300/40"
               >
                 ⚡ 얼리버드 90% 특가 신청 (5,000원) ↗
               </button>
