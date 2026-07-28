@@ -1083,7 +1083,7 @@ export default function Home() {
                 💡 1단계는 본 온라인 10강 마스터클래스로 완강하시고, 2단계(LV.02)부터 실강(오프라인/라이브)에 참여하셔도 무방합니다.
               </div>
               <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
-                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 당근마켓 프로필이나 카카오톡 ID(ayoi1034)로 편하게 메시지 남겨주세요!
+                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 당근마켓 프로필이나 카카오톡 공식 채널로 편하게 메시지 남겨주세요!
               </p>
             </div>
           </section>
@@ -1144,7 +1144,7 @@ export default function Home() {
               <span>•</span>
               <span>이메일: contact@workfreemarket.com</span>
               <span>•</span>
-              <span>카카오톡 ID: ayoi1034</span>
+              <a href="http://pf.kakao.com/_qvNxnX/chat" target="_blank" rel="noreferrer" className="text-yellow-400 font-bold hover:underline">카카오톡 채널: @워크프리마켓 ↗</a>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400 text-[11px]">
               <span>개인정보관리책임자: 윤아영</span>
@@ -1676,7 +1676,7 @@ export default function Home() {
 
               {showKeyInfo && (
                 <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-[11px] text-cyan-300 leading-relaxed font-mono">
-                  💡 수강생 인증 키 문의: 카카오톡 ID(ayoi1034) 또는 contact@workfreemarket.com
+                  💡 수강생 인증 키 문의: 카카오톡 공식 채널(@워크프리마켓) 또는 contact@workfreemarket.com
                 </div>
               )}
             </div>
