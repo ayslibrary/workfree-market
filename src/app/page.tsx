@@ -1822,28 +1822,47 @@ export default function Home() {
             </p>
 
             <div className="space-y-3 pt-1">
-              {/* Option 1: KakaoTalk Inquiry */}
-              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+              {/* Option 1: KakaoTalk Channel Official 1:1 Chat */}
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-amber-300 font-extrabold text-xs sm:text-sm">
-                    <span>🟡 카카오톡 1:1 실시간 문의</span>
+                    <span>🟡 카카오톡 1:1 실시간 상담</span>
                   </div>
-                  <span className="text-[10px] text-amber-400/80 font-mono">ID: ayoi1034</span>
+                  <span className="text-[10px] text-amber-400 font-mono font-bold">공식 채널</span>
                 </div>
-                <p className="text-[11px] text-slate-300 leading-snug">
-                  카카오톡 ID 검색창에서 <strong>ayoi1034</strong> 를 검색해 1:1 채팅 문의를 남겨주세요.
-                </p>
+                
+                {/* Kakao Channel QR Code Display */}
+                <div className="flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                  <img
+                    src="/kakao_channel_qr.jpg"
+                    alt="워크프리마켓 카카오톡 채널 QR"
+                    className="w-16 h-16 rounded-lg object-contain bg-white shrink-0"
+                  />
+                  <div className="space-y-1 text-left">
+                    <p className="text-[11px] font-bold text-white">워크프리마켓 카톡 채널</p>
+                    <p className="text-[10px] text-slate-400 leading-snug">
+                      QR 스캔 또는 아래 [실시간 1:1 채팅 열기] 버튼 클릭 시 1:1 상담창이 바로 열립니다!
+                    </p>
+                  </div>
+                </div>
+
                 <div className="flex space-x-2 pt-1">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText("ayoi1034");
-                      alert("📋 카카오톡 ID (ayoi1034)가 복사되었습니다! 카카오톡 친구추가에서 검색해 주세요.");
-                      trackGAEvent("copy_kakaotalk_id", "engagement", "inquiry_modal");
-                    }}
-                    className="flex-1 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer active:scale-95 transition-all text-center"
+                  <a
+                    href="http://pf.kakao.com/_qvNxnX/chat"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer active:scale-95 transition-all text-center block"
                   >
-                    📋 카톡 ID 복사 (ayoi1034)
-                  </button>
+                    💬 카톡 1:1 실시간 채팅 열기 ↗
+                  </a>
+                  <a
+                    href="http://pf.kakao.com/_qvNxnX/friend"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-xs cursor-pointer active:scale-95 transition-all text-center block"
+                  >
+                    ➕ 친구추가 ↗
+                  </a>
                 </div>
               </div>
 
@@ -2604,6 +2623,18 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Floating KakaoTalk Channel Chat Button */}
+      <a
+        href="http://pf.kakao.com/_qvNxnX/chat"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 z-40 p-3.5 sm:px-4 sm:py-3 rounded-full bg-[#FEE500] hover:bg-[#EDD100] text-slate-950 font-black text-xs sm:text-sm shadow-2xl shadow-yellow-500/40 flex items-center space-x-2 transition-all active:scale-95 cursor-pointer border border-yellow-400"
+        title="워크프리마켓 카카오톡 1:1 실시간 문의하기"
+      >
+        <span className="text-base sm:text-lg">💬</span>
+        <span className="hidden sm:inline">카톡 1:1 실시간 문의 ↗</span>
+      </a>
     </div>
   );
 }
