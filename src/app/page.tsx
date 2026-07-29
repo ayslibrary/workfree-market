@@ -302,6 +302,7 @@ export default function Home() {
   const [authTab, setAuthTab] = useState<"login" | "join">("join");
   const [authName, setAuthName] = useState<string>("");
   const [authEmail, setAuthEmail] = useState<string>("");
+  const [authPassword, setAuthPassword] = useState<string>("");
   const [agreeTerms, setAgreeTerms] = useState<boolean>(true);
   const [agreeMarketing, setAgreeMarketing] = useState<boolean>(true);
   const [showMarketingModal, setShowMarketingModal] = useState<boolean>(false);
