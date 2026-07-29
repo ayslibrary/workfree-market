@@ -882,7 +882,7 @@ export default function Home() {
                             }}
                             className="px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-yellow-500/20 flex items-center space-x-2 cursor-pointer active:scale-95 ring-2 ring-yellow-300"
                           >
-                            <span>📁 2026_상반기_재무보고서_최종.xlsx 즉시 열기 (클릭!)</span>
+                            <span>📁 [시도 때도 없이 확인하는] 2026_전사_핵심_통합실적보고서.xlsx 즉시 열기 (클릭!)</span>
                           </button>
                         </div>
                         <div className="text-right">
@@ -892,16 +892,16 @@ export default function Home() {
 
                       {/* File Open Result Window */}
                       <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 font-mono">
-                        <div className="text-[11px] text-slate-400">
-                          📂 Target Path: <span className="text-cyan-300">C:\Users\Office\Documents\2026\Finance\Reports\Final_Master_Data.xlsx</span>
+                        <div className="text-[11px] text-slate-400 leading-normal break-all">
+                          📂 Target Path: <span className="text-cyan-300">C:\Users\Office\WorkFree\Documents\2026_전사_통합_업무데이터\01_본사_집계폴더\02_월간실적\최종수정본\2026_전사_핵심_통합실적보고서_최종_V3.xlsx</span>
                         </div>
                         {fileOpenStatus ? (
                           <div className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center space-x-2 animate-bounce">
-                            <span>✅ 0.1초 만에 복잡한 깊은 경로의 업무 엑셀 파일이 즉시 활성화되었습니다!</span>
+                            <span>✅ 시도 때도 없이 열어봐야 하는 7단계 깊은 경로의 핵심 업무 파일이 0.1초 만에 즉시 열렸습니다!</span>
                           </div>
                         ) : (
                           <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 text-xs">
-                            ▶ 버튼을 클릭하면 탐색기 10단계 폴더를 뒤질 필요 없이 0.1초 만에 바로 파일이 화면에 열립니다.
+                            ▶ 이 길고 복잡한 폴더 경로, 매번 찾아 들어가느라 스트레스받으셨나요? 버튼 1번으로 0.1초 만에 열어드립니다.
                           </div>
                         )}
                       </div>
@@ -910,7 +910,10 @@ export default function Home() {
                     <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
                       <div className="text-yellow-400 font-bold text-sm">💡 02강 파일 즉시 오픈 데모</div>
                       <p>
-                        매일 아침 탐색기 열어서 <strong className="text-white">&apos;문서 ➔ 2026년 ➔ 재무 ➔ 보고서&apos;</strong> 폴더 클릭클릭 하던 시간을 엑셀 리본 메뉴 버튼 1번으로 완전히 단축시킵니다.
+                        &quot;이 길고 복잡한 7단계 폴더 경로(<strong className="text-amber-300 font-mono text-[11px]">문서 ➔ 전사통합 ➔ 01집계 ➔ 02월간실적 ➔ 최종수정본</strong>), 이걸 매번 클릭해서 들어가셨나요?&quot;
+                      </p>
+                      <p>
+                        출근해서 퇴근할 때까지 <strong className="text-white">시도 때도 없이 열어서 확인해야 하는 핵심 업무 파일</strong>, 이제 엑셀 상단 리본 메뉴 버튼 1번으로 0.1초 만에 즉시 열어보세요!
                       </p>
                     </div>
                   </div>
