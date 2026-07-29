@@ -826,7 +826,7 @@ export default function Home() {
               onClick={() => setShowAgentModal(true)}
               className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
             >
-              <span>🤖 AI 에이전트 빌더 (베타)</span>
+              <span>⚡ 실습 튜토리얼 체험해보기</span>
             </button>
             {currentUser ? (
               <div className="flex items-center space-x-2.5">
@@ -922,14 +922,21 @@ export default function Home() {
                   rel="noreferrer"
                   className="text-teal-300 hover:text-teal-200 font-bold underline cursor-pointer"
                 >
-                  📖 엑셀 실전 웹교재 체험 (무료 열람) ↗
+                  📖 강의 예습하기 (웹교재 무료 열람) ↗
                 </a>
+                <span>•</span>
+                <button
+                  onClick={() => setShowAgentModal(true)}
+                  className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
+                >
+                  ⚡ 실습 튜토리얼 체험해보기 ↗
+                </button>
                 <span>•</span>
                 <button
                   onClick={() => setViewMode("classroom")}
                   className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
                 >
-                  ▶️ 5천원 인강 LV.01 (100분 완강) 보기
+                  ▶️ 5천원 인강 LV.01 완강 보기
                 </button>
                 <span>•</span>
                 <button
@@ -937,13 +944,6 @@ export default function Home() {
                   className="text-amber-300 hover:text-amber-200 font-bold underline cursor-pointer"
                 >
                   🔔 마감 시 다음 회차 알림 신청
-                </button>
-                <span>•</span>
-                <button
-                  onClick={() => setShowAgentModal(true)}
-                  className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
-                >
-                  ⚡ Gemini AI 매크로 생성기 &amp; 1초 단추 튜토리얼
                 </button>
               </div>
             </div>
