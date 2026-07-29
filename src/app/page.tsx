@@ -936,7 +936,7 @@ export default function Home() {
                   onClick={() => setViewMode("classroom")}
                   className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
                 >
-                  ▶️ 5천원 인강 LV.01 완강 보기
+                  ▶️ LV.01 10강 완강 (<span className="line-through text-slate-500 font-normal">50,000원</span> ➔ 5,000원 90% OFF) 보기
                 </button>
                 <span>•</span>
                 <button
@@ -1533,8 +1533,13 @@ export default function Home() {
                   </div>
 
                   <div className="space-y-2 text-slate-950 my-auto py-3 break-keep">
-                    <h4 className="text-xl sm:text-2xl font-black">LV.01 엑셀 AI &amp; 리본 메뉴</h4>
-                    <p className="text-[11px] sm:text-xs font-medium leading-relaxed">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xl sm:text-2xl font-black">LV.01 엑셀 AI &amp; 리본 메뉴</h4>
+                    </div>
+                    <div className="inline-block px-2.5 py-1 rounded-lg bg-slate-950 text-yellow-300 font-black text-xs font-mono shadow-md">
+                      🔥 90% 얼리버드 특가 <span className="line-through text-slate-400 font-normal mr-1">50,000원</span> ➔ 5,000원
+                    </div>
+                    <p className="text-[11px] sm:text-xs font-medium leading-relaxed pt-1">
                       <span>• 10개 실전 VBA 매크로 제작 (100분 완강)</span>
                       <br />
                       <span>• ERP 로우 데이터 가공 10시간 ➔ 1시간 감축</span>
@@ -2548,9 +2553,11 @@ export default function Home() {
             <div className="p-5 rounded-2xl bg-gradient-to-b from-amber-500/10 to-amber-500/5 border border-amber-500/30 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  ⚡ 90% 얼리버드 특가
+                  ⚡ 90% 얼리버드 할인가 적용
                 </span>
-                <span className="text-xs font-mono font-bold text-amber-400">정가 50,000원 ➔ 5,000원</span>
+                <span className="text-xs font-mono font-bold text-amber-400">
+                  <span className="line-through text-slate-400 font-normal mr-1.5">정가 50,000원</span> ➔ <strong className="text-amber-300 font-black text-sm">5,000원 (90% OFF)</strong>
+                </span>
               </div>
               <div>
                 <h4 className="font-extrabold text-sm text-white">포트원(Portone) 전자결제 수강 신청</h4>
