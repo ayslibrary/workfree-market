@@ -167,6 +167,12 @@ export default function Home() {
   const [showCertificateModal, setShowCertificateModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
+  const [zipDownloadUrl, setZipDownloadUrl] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("workfree_zip_url") || "https://drive.google.com/drive/folders/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF";
+    }
+    return "https://drive.google.com/drive/folders/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF";
+  });
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [calcDailyHours, setCalcDailyHours] = useState<number>(3);
   const [calcFrequency, setCalcFrequency] = useState<number>(5);
@@ -1758,7 +1764,7 @@ export default function Home() {
                 </p>
               </div>
               <a
-                href="https://drive.google.com/drive/folders/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF"
+                href={zipDownloadUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="px-5 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-md transition-all active:scale-95 cursor-pointer shrink-0 block text-center border border-amber-300"
