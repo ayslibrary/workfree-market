@@ -696,10 +696,10 @@ export default function Home() {
                 ⚡ 8.8(토) 실강 4만원 얼리버드 (잔여 1석) ↗
               </a>
               <a
-                href="#calculator"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-white font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                href="#reviews"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/40 hover:border-orange-400 text-orange-300 font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5"
               >
-                ⏱️ 내 업무 시간 절감 계산 ➔
+                <span>🥕 당근마켓 찐 수강후기 보러가기 ➔</span>
               </a>
               <a
                 href="#roadmap"
