@@ -751,7 +751,7 @@ export default function Home() {
                 onClick={() => setViewMode("classroom")}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-cyan-400/50"
               >
-                <span>▶️ 10강 수강 강의실로 가기 ➔</span>
+                <span>⚡ 8시간 엑셀 1시간으로 줄이기 (LV.01 수강) ➔</span>
               </button>
               <button
                 onClick={() => setShowPaymentNoticeModal(true)}
