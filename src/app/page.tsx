@@ -891,24 +891,20 @@ export default function Home() {
               <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
             </div>
 
-            {/* Main Title - Ultra Punchy Short Impact Headline */}
+            {/* Main Title - Distinctive Unique Impact Headline */}
             <h1
               className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              엑셀 노가다,{" "}
+              엑셀 칼퇴 치트키,{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                클릭 1번에 끝.
+                나만의 [1초 AI 단추] 만들기.
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
-              단순 엑셀 함수 수업이 아닙니다.
-              <br />
-              <strong className="text-cyan-300">[ERP 자료 다운 ➔ 엑셀 매크로 전처리 ➔ PDF 저장 &amp; 메일 자동 발송]</strong>까지
-              <br />
-              손 하나 안 대는 <strong>Zero-Touch 무인 파이프라인</strong>을 구축하는 클래스입니다.
+              회계·영업·인사·구매팀 실무자를 위한 복사·붙여넣기·PDF·이메일 무인 자동화 파이프라인
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
