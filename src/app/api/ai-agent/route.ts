@@ -19,8 +19,48 @@ export async function POST(req: Request) {
     let analysis = "";
     let vbaCode = "";
 
-    // 1. Check for real OpenAI / Anthropic / Groq LLM API Key in environment variables
+    // 1. Check for real Google Gemini API Key / OpenAI Key in environment variables
+    const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     const openAiApiKey = process.env.OPENAI_API_KEY;
+
+    if (geminiApiKey) {
+      try {
+        const sysPrompt = `You are an expert Excel VBA developer and Automation Specialist for WorkFree Market.
+Target File Path: ${targetFile}
+Target Sheet Name: ${targetSheet}
+User Requirement: ${cleanPrompt}
+
+Provide JSON with keys:
+1. 'analysis': Concise requirement analysis in Korean.
+2. 'vbaCode': Complete, error-trapped Excel VBA code (Sub procedure) using On Error GoTo ErrorHandler.
+3. 'filename': Suggested filename ending with .bas`;
+
+        const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: sysPrompt }] }],
+            generationConfig: { responseMimeType: "application/json" },
+          }),
+        });
+
+        if (geminiRes.ok) {
+          const gData = await geminiRes.json();
+          const jsonText = gData?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (jsonText) {
+            const parsed = JSON.parse(jsonText);
+            return NextResponse.json({
+              analysis: parsed.analysis || `🎯 [Gemini AI 맞춤 분석 완료]\n- 대상 파일: ${targetFile}\n- 대상 시트: ${targetSheet}\n- 요건: ${cleanPrompt}`,
+              vbaCode: parsed.vbaCode || `' WorkFree Gemini Generated Code\nSub WorkFree_Automate()\n    MsgBox "자동화 실행 완료!", vbInformation\nEnd Sub`,
+              ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">\n  <ribbon>\n    <tabs>\n      <tab id="tabWorkFree" label="WorkFree AI">\n        <group id="grpAgent" label="딸깍 자동화">\n          <button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="WorkFree_Custom_Automation" />\n        </group>\n      </tab>\n    </tabs>\n  </ribbon>\n</customUI>`,
+              filename: parsed.filename || "WorkFree_Custom_Macro.bas",
+            });
+          }
+        }
+      } catch (gemErr) {
+        console.warn("Gemini API call failed, falling back to Server Engine:", gemErr);
+      }
+    }
 
     if (openAiApiKey) {
       try {
@@ -35,7 +75,9 @@ export async function POST(req: Request) {
             messages: [
               {
                 role: "system",
-                content: `You are an expert Excel VBA developer and Automation Specialist for WorkFree Market. 
+                content: `You are an expert Excel VBA developer and Automation Specialist for WorkFree Market.
+Target File Path: ${targetFile}
+Target Sheet Name: ${targetSheet}
 The user will describe an Excel task in Korean.
 Your job is to:
 1. Provide a concise business requirement analysis (in Korean).
