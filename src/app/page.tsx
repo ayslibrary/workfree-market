@@ -246,6 +246,14 @@ export default function Home() {
   const [fileOpenStatus, setFileOpenStatus] = useState<boolean>(false);
   const [isAggregating, setIsAggregating] = useState<boolean>(false);
 
+  // Agent App Controller Modal State
+  const [showAgentAppModal, setShowAgentAppModal] = useState<boolean>(false);
+  const [isAgentRunning, setIsAgentRunning] = useState<boolean>(false);
+  const [agentLogs, setAgentLogs] = useState<string[]>([
+    "[SYSTEM_INIT] WorkFree AI Agent Controller Engine Ready",
+    "[WORKSPACE] Connected to C:\\Automation\\ Workspace",
+  ]);
+
   // Priority 2: Actual Operation Demo Clip simulation state (0 to 100 files saving in 3s)
   const [demoSavedCount, setDemoSavedCount] = useState<number>(0);
   const [isDemoActive, setIsDemoActive] = useState<boolean>(true);
@@ -823,10 +831,16 @@ export default function Home() {
           {/* Top Login & Join Buttons (Nomad Coders Matched) */}
           <div className="flex items-center space-x-2.5 sm:space-x-3">
             <button
+              onClick={() => setShowAgentAppModal(true)}
+              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/40 text-emerald-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
+            >
+              <span>🤖 AI 에이전트 앱</span>
+            </button>
+            <button
               onClick={() => setShowAgentModal(true)}
               className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
             >
-              <span>⚡ 실습 튜토리얼 체험해보기</span>
+              <span>⚡ 실습 튜토리얼</span>
             </button>
             {currentUser ? (
               <div className="flex items-center space-x-2.5">
@@ -4166,6 +4180,130 @@ export default function Home() {
             </div>
             <div className="text-center text-[11px] text-slate-400 font-medium">
               배경이나 ✕ 버튼을 클릭하시면 창이 닫힙니다.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* WORKFREE AI AGENT CONTROLLER APP DASHBOARD MODAL */}
+      {showAgentAppModal && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-3xl bg-slate-900 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ring-1 ring-emerald-500/30">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-400 to-teal-500 text-slate-950 flex items-center justify-center text-xl font-bold shadow-lg shadow-emerald-500/20 shrink-0">
+                  🤖
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-black text-base sm:text-lg text-white">WorkFree AI 자율 구동 에이전트 컨트롤러</h3>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
+                      LIVE v1.0 Ready
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    UiPath/Power Automate를 대체하는 100% 무인 자동화 파이프라인 제어 센터입니다.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowAgentAppModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer shrink-0"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Dashboard Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                <div className="text-[10px] text-slate-400 font-mono font-bold">AGENT STATUS</div>
+                <div className="text-sm font-extrabold text-emerald-400 flex items-center space-x-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>🟢 READY (정상 가동)</span>
+                </div>
+                <div className="text-[10px] text-slate-400">스케줄: 매일 08:30 AM</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                <div className="text-[10px] text-slate-400 font-mono font-bold">LOCAL WORKSPACE</div>
+                <div className="text-xs font-mono font-bold text-white truncate">C:\Automation\</div>
+                <div className="text-[10px] text-cyan-400">로우 데이터 / 일간 보고서</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                <div className="text-[10px] text-slate-400 font-mono font-bold">LAST EXECUTION</div>
+                <div className="text-xs font-mono font-bold text-amber-300">SUCCESS (100% 완수)</div>
+                <div className="text-[10px] text-slate-400">Daily_Report_20260730.xlsx</div>
+              </div>
+            </div>
+
+            {/* Action Buttons Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <button
+                disabled={isAgentRunning}
+                onClick={async () => {
+                  setIsAgentRunning(true);
+                  setAgentLogs((prev) => [
+                    ...prev,
+                    `[${new Date().toLocaleTimeString("ko-KR")}] 🚀 Pilot Agent Task Launched via Backend API...`,
+                  ]);
+                  try {
+                    const res = await fetch("/api/run-agent", { method: "POST" });
+                    const data = await res.json();
+                    if (data.success) {
+                      setAgentLogs((prev) => [
+                        ...prev,
+                        `[${new Date().toLocaleTimeString("ko-KR")}] ✅ ${data.message}`,
+                        `[OUTPUT] ${data.output || "Daily Executive Report Created successfully!"}`,
+                      ]);
+                      alert("🎉 개발 PC에서 파일럿 에이전트가 성공적으로 구동되었습니다!\nC:\\Automation\\Reports\\Daily_Report_20260730.xlsx 생성 완료!");
+                    } else {
+                      setAgentLogs((prev) => [
+                        ...prev,
+                        `[${new Date().toLocaleTimeString("ko-KR")}] ❌ ${data.message}`,
+                      ]);
+                    }
+                  } catch (e: any) {
+                    setAgentLogs((prev) => [
+                      ...prev,
+                      `[${new Date().toLocaleTimeString("ko-KR")}] ❌ Connection Error: ${e.message}`,
+                    ]);
+                  } finally {
+                    setIsAgentRunning(false);
+                  }
+                }}
+                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-black text-xs shadow-xl shadow-emerald-500/20 transition-all flex items-center justify-center space-x-2 cursor-pointer active:scale-95 disabled:opacity-50"
+              >
+                <span>{isAgentRunning ? "⏳ 에이전트 구동 중..." : "⚡ 개발 PC에서 파일럿 에이전트 구동하기 ➔"}</span>
+              </button>
+
+              <a
+                href="/automation_agent/WorkFree_Agent_Installer.bat"
+                download="WorkFree_Agent_Installer.bat"
+                className="w-full py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800 text-emerald-300 font-extrabold text-xs shadow-lg transition-all flex items-center justify-center space-x-2 cursor-pointer border border-emerald-500/40 text-center break-keep"
+              >
+                <span>📥 윈도우 원클릭 설치 파일 (.bat) 다운로드 ↗</span>
+              </a>
+            </div>
+
+            {/* Real-time Agent Log Stream Terminal */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-slate-300 flex items-center space-x-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>🖥️ REAL-TIME AGENT EXECUTION LOG TERMINAL</span>
+                </span>
+                <span className="text-[10px] font-mono text-slate-500">C:\Automation\Logs\agent_log.txt</span>
+              </div>
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-[11px] text-emerald-400 space-y-1.5 max-h-48 overflow-y-auto leading-relaxed shadow-inner">
+                {agentLogs.map((log, idx) => (
+                  <div key={idx} className="break-all">
+                    {log}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
