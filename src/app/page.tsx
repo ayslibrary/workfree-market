@@ -747,12 +747,12 @@ export default function Home() {
 
             {/* Hero Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
-              <a
-                href="#schedule"
+              <button
+                onClick={() => setShowPaymentNoticeModal(true)}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-yellow-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
               >
                 ⚡ 8.8(토) 실강 4만원 얼리버드 (잔여 1석) ↗
-              </a>
+              </button>
               <a
                 href="#reviews"
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/40 hover:border-orange-400 text-orange-300 font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5"
@@ -1837,6 +1837,11 @@ export default function Home() {
               <span>•</span>
               <a href="http://pf.kakao.com/_qvNxnX/chat" target="_blank" rel="noreferrer" className="text-yellow-400 font-bold hover:underline">카카오톡 채널: @워크프리마켓 ↗</a>
             </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-cyan-300 font-medium text-[11px]">
+              <span>서비스 제공 기간: 결제 완료 후 즉시 시청 제공 (1년 365일 이용 권한)</span>
+              <span>•</span>
+              <span>상품 유형: 단건 결제 상품 (정기 자동 결제 없음)</span>
+            </div>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-400 text-[11px]">
               <span>개인정보관리책임자: 윤아영</span>
               <span>•</span>
@@ -2662,6 +2667,14 @@ export default function Home() {
               <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
                 <span className="text-slate-400 font-semibold">수강료</span>
                 <span className="font-mono font-black text-amber-400 text-sm">5,000원 (얼리버드 90% 특가)</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                <span className="text-slate-400 font-semibold">서비스 제공 기간</span>
+                <span className="font-bold text-cyan-300">결제 완료 후 즉시 제공 (1년 365일 수강 가능)</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                <span className="text-slate-400 font-semibold">상품 유형</span>
+                <span className="font-bold text-slate-300">단건 결제 상품 (정기구독 없음)</span>
               </div>
 
               {/* Shinhan Bank (Primary Account) */}
