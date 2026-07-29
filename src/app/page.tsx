@@ -339,10 +339,13 @@ export default function Home() {
   const [showMarketingModal, setShowMarketingModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
-  // AI Macro Generator & Interactive 4-Step Tutorial App States
+  // AI Macro Generator & Interactive 4-Step Tutorial App States (7 Core Lecture Elements)
   const [showAgentModal, setShowAgentModal] = useState<boolean>(false);
   const [agentFilePath, setAgentFilePath] = useState<string>("");
   const [agentSheetName, setAgentSheetName] = useState<string>("");
+  const [agentHeaderRow, setAgentHeaderRow] = useState<string>("");
+  const [agentColumnRange, setAgentColumnRange] = useState<string>("");
+  const [agentSafetyRules, setAgentSafetyRules] = useState<string>("Option Explicit 필수, Application.ScreenUpdating = False 최적화");
   const [agentPrompt, setAgentPrompt] = useState<string>("");
   const [agentGenerating, setAgentGenerating] = useState<boolean>(false);
   const [activeTutorialStep, setActiveTutorialStep] = useState<number>(1);
@@ -391,7 +394,14 @@ export default function Home() {
     }
   };
 
-  const handleGenerateAgentCode = async (promptText: string, filePathVal?: string, sheetNameVal?: string) => {
+  const handleGenerateAgentCode = async (
+    promptText: string,
+    filePathVal?: string,
+    sheetNameVal?: string,
+    headerRowVal?: string,
+    columnRangeVal?: string,
+    safetyRulesVal?: string
+  ) => {
     if (!promptText.trim()) {
       alert("구현하고자 하는 매크로의 상세 동작(요건)을 직접 입력해 주세요.");
       return;
@@ -408,6 +418,9 @@ export default function Home() {
           prompt: promptText,
           filePath: filePathVal || agentFilePath,
           sheetName: sheetNameVal || agentSheetName,
+          headerRow: headerRowVal || agentHeaderRow,
+          columnRange: columnRangeVal || agentColumnRange,
+          safetyRules: safetyRulesVal || agentSafetyRules,
         }),
       });
 
@@ -426,7 +439,7 @@ export default function Home() {
       console.warn("Server AI Agent API fetch failed, fallback to local:", err);
       setAgentOutput({
         vbaCode: `' WorkFree AI Agent Server Fallback\nSub WorkFree_Automate()\n    MsgBox "자동화 처리가 성공적으로 완료되었습니다!", vbInformation\nEnd Sub`,
-        analysis: `🎯 [서버 연동 업무 분석 완료]\n- 파일 경로: ${filePathVal || agentFilePath || 'C:\\WorkFree\\Data.xlsx'}\n- 시트명: ${sheetNameVal || agentSheetName || 'Sheet1'}\n- 요건: ${promptText}\n- 엑셀 자동화 템플릿 코드 생성 완료`,
+        analysis: `🎯 [서버 연동 업무 분석 완료]\n- 파일 경로: ${filePathVal || agentFilePath || 'C:\\WorkFree\\Data.xlsx'}\n- 시트명: ${sheetNameVal || agentSheetName || 'Sheet1'}\n- 헤더 Offset: ${headerRowVal || agentHeaderRow || '6행 헤더'}\n- 열 범주: ${columnRangeVal || agentColumnRange || 'A~G열'}\n- 요건: ${promptText}\n- 엑셀 자동화 템플릿 코드 생성 완료`,
         ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui"><ribbon><tabs><tab id="tabWorkFree" label="WorkFree AI"><group id="grpAgent" label="딸깍 자동화"><button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="WorkFree_Automate" /></group></tab></tabs></ribbon></customUI>`,
         filename: "WorkFree_Agent_Macro.bas",
       });
@@ -3005,10 +3018,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* REQUIREMENTS GATHERING INTERVIEW FORM */}
+            {/* REQUIREMENTS GATHERING INTERVIEW FORM (LECTURE 7-ELEMENT FULL ALIGNMENT) */}
             <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 shadow-inner">
-              <div className="flex items-center space-x-2 text-xs font-extrabold text-cyan-400 border-b border-slate-800 pb-2">
-                <span>📝 [인터뷰 폼] 내 업무 조건 및 요건 입력</span>
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span className="text-xs font-extrabold text-cyan-400">📝 [인터뷰 폼] 강의 핵심 7가지 정보 및 내 업무 요건 입력</span>
+                <span className="text-[10px] font-mono text-slate-400">💡 6행 offset / 열매핑 / 안전 규칙 지원</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -3018,7 +3032,7 @@ export default function Home() {
                     type="text"
                     value={agentFilePath}
                     onChange={(e) => setAgentFilePath(e.target.value)}
-                    placeholder="예: C:\Users\Office\Documents\월간실적.xlsx"
+                    placeholder="예: C:\Users\owner\바탕 화면\매크로교육\STEP1\EXCHANGE_RATE_LIST.xlsx"
                     className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
                   />
                 </div>
@@ -3029,29 +3043,62 @@ export default function Home() {
                     type="text"
                     value={agentSheetName}
                     onChange={(e) => setAgentSheetName(e.target.value)}
-                    placeholder="예: RawData 또는 Sheet1"
+                    placeholder="예: 2026.06 또는 RawData"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-300">3. 헤더 위치 / 데이터 시작행 (선택)</label>
+                  <input
+                    type="text"
+                    value={agentHeaderRow}
+                    onChange={(e) => setAgentHeaderRow(e.target.value)}
+                    placeholder="예: 6행 헤더 offset (데이터 시작: 9행)"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-300">4. 데이터 범위 / 열 매핑 (선택)</label>
+                  <input
+                    type="text"
+                    value={agentColumnRange}
+                    onChange={(e) => setAgentColumnRange(e.target.value)}
+                    placeholder="예: L열(만기일), M열(통화), N열(금액)"
                     className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-300">3. 구현하고자 하는 매크로의 상세 동작 (필수 요건)</label>
+                <label className="text-[11px] font-bold text-slate-300">5. 예외 및 안전 규칙 (Option Explicit, 화면 업데이트 중단)</label>
+                <input
+                  type="text"
+                  value={agentSafetyRules}
+                  onChange={(e) => setAgentSafetyRules(e.target.value)}
+                  placeholder="예: Option Explicit 필수, ScreenUpdating = False 최적화, On Error GoTo ErrorHandler"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-slate-300">6. 구현하고자 하는 매크로의 상세 동작 (필수 요건)</label>
                 <textarea
                   rows={3}
                   value={agentPrompt}
                   onChange={(e) => setAgentPrompt(e.target.value)}
-                  placeholder="예: 매월 10개 지점 엑셀 파일 열어서 A~D열 데이터를 마스터 시트에 자동 통합하고, 미수금 금액 합계 도출 및 시트 100개 개별 PDF 자동 저장"
+                  placeholder="예: InputBox로 날짜를 받아 Raw_Data.xlsx B열에서 날짜를 검색한 후 Template\Deposit_Template.xlsx 5행부터 A~G열에 맞춰 복사하고 SaveAs로 저장해줘"
                   className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-sans leading-relaxed resize-none"
                 ></textarea>
               </div>
 
               <button
-                onClick={() => handleGenerateAgentCode(agentPrompt, agentFilePath, agentSheetName)}
+                onClick={() => handleGenerateAgentCode(agentPrompt, agentFilePath, agentSheetName, agentHeaderRow, agentColumnRange, agentSafetyRules)}
                 disabled={agentGenerating}
                 className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-sm shadow-xl shadow-cyan-500/20 transition-all cursor-pointer active:scale-95 disabled:opacity-50 border border-cyan-300 text-center"
               >
-                {agentGenerating ? "⚡ Gemini AI가 맞춤형 코드를 생성하는 중..." : "⚡ VBA 코드 자동 생성 및 튜토리얼 시작 ➔"}
+                {agentGenerating ? "⚡ Gemini 2.0 AI가 맞춤형 코드를 생성하는 중..." : "⚡ VBA 코드 자동 생성 및 튜토리얼 시작 ➔"}
               </button>
             </div>
 

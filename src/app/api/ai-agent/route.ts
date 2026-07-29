@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { prompt, filePath, sheetName } = await req.json();
+    const { prompt, filePath, sheetName, headerRow, columnRange, safetyRules } = await req.json();
 
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return NextResponse.json(
@@ -14,6 +14,9 @@ export async function POST(req: Request) {
     const cleanPrompt = prompt.trim();
     const targetFile = (filePath && typeof filePath === "string" && filePath.trim()) ? filePath.trim() : "C:\\Users\\Office\\Documents\\업무데이터.xlsx";
     const targetSheet = (sheetName && typeof sheetName === "string" && sheetName.trim()) ? sheetName.trim() : "Sheet1";
+    const targetHeader = (headerRow && typeof headerRow === "string" && headerRow.trim()) ? headerRow.trim() : "6행 헤더 offset (데이터 시작 9행)";
+    const targetCols = (columnRange && typeof columnRange === "string" && columnRange.trim()) ? columnRange.trim() : "A~G열 (만기일, 통화, 금액 매핑)";
+    const targetSafety = (safetyRules && typeof safetyRules === "string" && safetyRules.trim()) ? safetyRules.trim() : "Option Explicit 필수, ScreenUpdating = False 최적화";
 
     let filename = "WorkFree_Agent_Macro.bas";
     let analysis = "";
@@ -28,11 +31,14 @@ export async function POST(req: Request) {
         const sysPrompt = `You are an expert Excel VBA developer and Automation Specialist for WorkFree Market.
 Target File Path: ${targetFile}
 Target Sheet Name: ${targetSheet}
-User Requirement: ${cleanPrompt}
+Header Row Offset: ${targetHeader}
+Data Column Range / Mapping: ${targetCols}
+Safety & Exception Rules: ${targetSafety}
+User Detailed Requirement: ${cleanPrompt}
 
 Provide JSON with keys:
-1. 'analysis': Concise requirement analysis in Korean.
-2. 'vbaCode': Complete, error-trapped Excel VBA code (Sub procedure) using On Error GoTo ErrorHandler.
+1. 'analysis': Concise requirement analysis in Korean covering target file, sheet, header offset, column mapping, and safety rules.
+2. 'vbaCode': Complete, production-ready, error-trapped Excel VBA code (Sub procedure) using On Error GoTo ErrorHandler and Option Explicit.
 3. 'filename': Suggested filename ending with .bas`;
 
         const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`, {
