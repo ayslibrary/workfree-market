@@ -584,8 +584,13 @@ export default function Home() {
           {/* Logo & Main Title (Click goes to Home) */}
           <div
             className="flex items-center space-x-3 cursor-pointer group hover:opacity-90 transition-all"
-            onClick={() => setViewMode("landing")}
-            title="WorkFree Market 메인 홈으로 이동"
+            onClick={() => {
+              setViewMode("landing");
+              if (typeof window !== "undefined") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            title="WorkFree Market 메인 홈으로 이동 (맨 위로 스크롤)"
           >
             {/* eslint-disable-next-html-link */}
             <img
