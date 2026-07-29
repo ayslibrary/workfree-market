@@ -2041,7 +2041,7 @@ export default function Home() {
                   <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase">STEP 01</span>
                   <h4 className="font-bold text-sm text-white">LV.01 결제 완료</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    5,000원 결제 즉시 10강 플레이어 시청 및 실습 예제 (.zip) 파일 다운로드 시작
+                    5,000원 결제 즉시 10강 플레이어 전체 시청 및 실전 자동화 학습 시작
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
@@ -2284,25 +2284,7 @@ export default function Home() {
               </div>
             )}
 
-            {/* Practice Files (.zip) Download Section */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-500/15 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
-              <div className="space-y-0.5 text-center sm:text-left">
-                <div className="flex items-center space-x-2 text-amber-300 font-extrabold text-xs sm:text-sm">
-                  <span>📁 10강 커리큘럼 실습 예제 파일 (.zip) &amp; 강의자료</span>
-                </div>
-                <p className="text-[11px] text-slate-300">
-                  강의에서 사용하는 엑셀 서식, VBA 서브루틴 코드 및 파이프라인 실습 자료 전체를 다운로드하실 수 있습니다.
-                </p>
-              </div>
-              <a
-                href={zipDownloadUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-md transition-all active:scale-95 cursor-pointer shrink-0 block text-center border border-amber-300"
-              >
-                📥 예제 파일 (.zip) 다운로드 ↗
-              </a>
-            </div>
+
 
             {/* Lecture Summary & Core Points Section */}
             <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
