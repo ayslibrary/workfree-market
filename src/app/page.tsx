@@ -1861,10 +1861,103 @@ export default function Home() {
                 <div className="text-[11px] text-blue-400">로우 데이터 자동 가공</div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
-                <div className="text-3xl">✉️</div>
-                <div className="text-sm font-bold text-white">4. 이메일 / 팀즈</div>
-                <div className="text-[11px] text-slate-400">결과 보고서 자동 발송</div>
+            </div>
+          </section>
+
+          {/* TOP 3 HIGH-IMPACT RELATABLE AI AGENTS SHOWCASE */}
+          <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 space-y-10 border-t border-slate-800">
+            <div className="text-center space-y-3 break-keep">
+              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/30">
+                REAL-WORLD AI AGENTS
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+                직장인 100%가 무릎을 치는 <span className="text-emerald-400">와닿는 실무 AI 에이전트 3선</span>
+              </h2>
+              <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                매일 반복되는 가장 귀찮고 피곤한 3대 사무 업무를 AI 에이전트에게 통째로 위임하세요.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Agent 1 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-4 flex flex-col justify-between shadow-xl">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl">📄</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
+                      인기 1위
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-black text-white break-keep">
+                    거래처 견적서 PDF 100장 1초 생성 &amp; 맞춤 이메일 무인 발송
+                  </h3>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-rose-300 border border-rose-500/20 leading-relaxed font-sans break-keep">
+                    🚨 <strong>기존 고통:</strong> 거래처 30곳에 각각 엑셀 수정 ➔ PDF 저장 ➔ 메일주소 복붙 ➔ 첨부파일 30번 누르기 (하루 2시간 소요)
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-emerald-300 border border-emerald-500/20 leading-relaxed font-sans break-keep">
+                    ⚡ <strong>AI 해결:</strong> 엑셀 버튼 1번으로 거래처별 맞춤 PDF 1초 자동 분할 생성 &amp; 수신자별 이메일 내용 맞춤 자동 발송!
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowAgentAppModal(true)}
+                  className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs shadow-lg transition-all cursor-pointer text-center"
+                >
+                  🤖 이 에이전트 구동하기 ➔
+                </button>
+              </div>
+
+              {/* Agent 2 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-4 flex flex-col justify-between shadow-xl">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl">🧾</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
+                      AI Vision
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-black text-white break-keep">
+                    영수증 사진 찰칵 ➔ AI 시각 지능 자동 경비 정산 엑셀
+                  </h3>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-rose-300 border border-rose-500/20 leading-relaxed font-sans break-keep">
+                    🚨 <strong>기존 고통:</strong> 월말마다 종이 영수증 펴두고 일자, 결제금액, 사용처, 계정과목 엑셀 수기 기입
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-cyan-300 border border-cyan-500/20 leading-relaxed font-sans break-keep">
+                    ⚡ <strong>AI 해결:</strong> 스마트폰 영수증 사진을 폴더에 던지면 Gemini AI Vision이 금액/사용처 1초 추출 &amp; 결재용 PDF 완성!
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowAgentAppModal(true)}
+                  className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs shadow-lg transition-all cursor-pointer text-center"
+                >
+                  🤖 이 에이전트 구동하기 ➔
+                </button>
+              </div>
+
+              {/* Agent 3 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-amber-500/30 space-y-4 flex flex-col justify-between shadow-xl">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl">📊</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+                      24/7 크롤링
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-black text-white break-keep">
+                    매일 아침 ERP/경쟁사 최저가 추적 &amp; 카톡 실시간 경보
+                  </h3>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-rose-300 border border-rose-500/20 leading-relaxed font-sans break-keep">
+                    🚨 <strong>기존 고통:</strong> 매일 경쟁사몰/ERP 접속해서 가격 변동 여부 하나하나 클릭해서 엑셀 기록
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 text-xs text-amber-300 border border-amber-500/20 leading-relaxed font-sans break-keep">
+                    ⚡ <strong>AI 해결:</strong> 매일 08:30 AM 경쟁사 웹 가격 자동 크롤링 후 5% 이상 하락 시 카카오톡 경보 메세지 자동 발송!
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowAgentAppModal(true)}
+                  className="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-lg transition-all cursor-pointer text-center"
+                >
+                  🤖 이 에이전트 구동하기 ➔
+                </button>
               </div>
             </div>
           </section>
