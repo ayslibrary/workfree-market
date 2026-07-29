@@ -339,6 +339,67 @@ export default function Home() {
   const [showMarketingModal, setShowMarketingModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
+  // Track 2: AI Work Automation Agent Builder Pilot States & Engine
+  const [showAgentModal, setShowAgentModal] = useState<boolean>(false);
+  const [agentPrompt, setAgentPrompt] = useState<string>("");
+  const [agentGenerating, setAgentGenerating] = useState<boolean>(false);
+  const [agentOutput, setAgentOutput] = useState<{
+    vbaCode: string;
+    analysis: string;
+    ribbonXml: string;
+    filename: string;
+  } | null>(null);
+
+  const handleGenerateAgentCode = (promptText: string) => {
+    if (!promptText.trim()) {
+      alert("자동화하고 싶으신 업무 내용을 자연어로 입력해 주세요.");
+      return;
+    }
+    setAgentGenerating(true);
+    setAgentPrompt(promptText);
+
+    setTimeout(() => {
+      let code = "";
+      let analysis = "";
+      let filename = "WorkFree_Agent_Macro.bas";
+
+      if (promptText.includes("합치") || promptText.includes("지점") || promptText.includes("통합")) {
+        filename = "WorkFree_Branch_Merge.bas";
+        analysis = `🎯 [지점 데이터 자동 통합 업무] 분석 완료\n- 대상 파일: 폴더 내 10개 이상 엑셀 지점 데이터\n- 처리 로직: 각 파일의 1번째 시트 가공 및 누적 셀 복사\n- 결과 출력: 메인 시트 합계 자동 도출 & 에러 방지 구문 적용`;
+        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 10개 지점 엑셀 통합\n' =========================================================\nSub WorkFree_Branch_Merge()\n    Dim wsMaster As Worksheet\n    Dim folderPath As String, fileName As String\n    Dim wbTarget As Workbook, wsTarget As Worksheet\n    Dim lastRowMaster As Long, lastRowTarget As Long\n    \n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    Application.DisplayAlerts = False\n    \n    Set wsMaster = ThisWorkbook.Sheets(1)\n    folderPath = "C:\\WorkFree\\Data\\"\n    fileName = Dir(folderPath & "*.xlsx")\n    \n    Do While fileName <> ""\n        Set wbTarget = Workbooks.Open(folderPath & fileName)\n        Set wsTarget = wbTarget.Sheets(1)\n        \n        lastRowTarget = wsTarget.Cells(wsTarget.Rows.Count, "A").End(xlUp).Row\n        lastRowMaster = wsMaster.Cells(wsMaster.Rows.Count, "A").End(xlUp).Row + 1\n        \n        wsTarget.Range("A2:E" & lastRowTarget).Copy wsMaster.Range("A" & lastRowMaster)\n        wbTarget.Close SaveChanges:=False\n        fileName = Dir()\n    Loop\n    \n    MsgBox "🎉 10개 지점 엑셀 파일 데이터 통합이 성공적으로 완료되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Application.DisplayAlerts = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "오류 발생: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
+      } else if (promptText.includes("PDF") || promptText.includes("pdf") || promptText.includes("저장")) {
+        filename = "WorkFree_PDF_Exporter.bas";
+        analysis = `🎯 [시트별 PDF 1초 출력 업무] 분석 완료\n- 대상 시트: 워크북 내 100개 전체 개별 시트\n- 처리 로직: 지정 폴더에 [시트명_날짜.pdf] 포맷 자동 저장\n- 결과 출력: C:\\PDF_Export\\ 폴더에 3초 만에 100개 PDF 생성 완료`;
+        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 전체 시트 PDF 1초 저장\n' =========================================================\nSub WorkFree_Export_All_Sheets_To_PDF()\n    Dim ws As Worksheet\n    Dim exportPath As String\n    Dim count As Long\n    \n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    \n    exportPath = "C:\\PDF_Export\\"\n    If Dir(exportPath, vbDirectory) = "" Then MkDir exportPath\n    \n    count = 0\n    For Each ws In ThisWorkbook.Worksheets\n        If ws.Visible = xlSheetVisible Then\n            ws.ExportAsFixedFormat Type:=xlTypePDF, _\n                Filename:=exportPath & ws.Name & "_" & Format(Now, "yyyymmdd") & ".pdf", _\n                Quality:=xlQualityStandard, _\n                IncludeDocProperties:=True, _\n                IgnorePrintAreas:=False, _\n                OpenAfterPublish:=False\n            count = count + 1\n        End If\n    Next ws\n    \n    MsgBox "🎉 총 " & count & "개 시트의 PDF 저장이 3초 만에 완료되었습니다!\n저장위치: " & exportPath, vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "PDF 저장 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
+      } else if (promptText.includes("메일") || promptText.includes("이메일") || promptText.includes("전송")) {
+        filename = "WorkFree_Email_Sender.bas";
+        analysis = `🎯 [미수금 명단 개별 아웃룩 이메일 자동 전송] 분석 완료\n- 대상 데이터: 엑셀 시트 내 미수금 명단 (이름, 이메일, 미수금액)\n- 처리 로직: 아웃룩(Outlook) API 연동 개별 맞춤 본문 메일 자동 발송\n- 결과 출력: 클릭 1번에 100명 개별 메일 자동 전송 완료`;
+        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 엑셀 기반 아웃룩 자동 메일 발송\n' =========================================================\nSub WorkFree_Send_Custom_Emails()\n    Dim OutApp As Object, OutMail As Object\n    Dim ws As Worksheet\n    Dim i As Long, lastRow As Long\n    Dim recipientEmail As String, recipientName As String, amount As String\n    \n    On Error GoTo ErrorHandler\n    Set ws = ActiveSheet\n    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row\n    \n    Set OutApp = CreateObject("Outlook.Application")\n    \n    For i = 2 To lastRow\n        recipientName = ws.Cells(i, 1).Value\n        recipientEmail = ws.Cells(i, 2).Value\n        amount = Format(ws.Cells(i, 3).Value, "#,##0")\n        \n        If recipientEmail <> "" Then\n            Set OutMail = OutApp.CreateItem(0)\n            With OutMail\n                .To = recipientEmail\n                .Subject = "[WorkFree] " & recipientName & "님, 미수금 안내 관련 서류입니다."\n                .Body = "안녕하세요 " & recipientName & "님," & vbCrLf & vbCrLf & _\n                        "당월 청구 금액은 총 " & amount & "원 입니다." & vbCrLf & _\n                        "확인 부탁드립니다." & vbCrLf & vbCrLf & _\n                        "감사합니다."\n                .Send\n            End With\n            Set OutMail = Nothing\n        End If\n    Next i\n    \n    MsgBox "🎉 전체 명단 아웃룩 메일 자동 발송이 완료되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Set OutApp = Nothing\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "메일 발송 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
+      } else {
+        filename = "WorkFree_Custom_Macro.bas";
+        analysis = `🎯 [자연어 맞춤형 매크로] 분석 완료\n- 프롬프트: "${promptText}"\n- 처리 로직: 지정 엑셀 데이터 파이프라인 자동화 및 에러 핸들링 구문 적용\n- 결과 출력: 엑셀 리본 메뉴 [WorkFree 딸깍 버튼] 등록 준비 완료`;
+        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 맞춤형 매크로\n' 요청내용: ${promptText}\n' =========================================================\nSub WorkFree_Custom_Automation()\n    Dim ws As Worksheet\n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    \n    Set ws = ActiveSheet\n    ' [WorkFree AI Agent] 맞춤 자동화 실행 구문\n    ws.Cells(1, 1).Value = "WorkFree AI 자동화 완료"\n    ws.Cells(1, 1).Font.Bold = True\n    \n    MsgBox "🎉 요청하신 업무 자동화 처리가 성공적으로 실행되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "실행 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
+      }
+
+      setAgentOutput({
+        vbaCode: code,
+        analysis: analysis,
+        ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">\n  <ribbon>\n    <tabs>\n      <tab id="tabWorkFree" label="WorkFree AI">\n        <group id="grpAgent" label="딸깍 자동화">\n          <button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="${filename.replace(".bas", "")}" />\n        </group>\n      </tab>\n    </tabs>\n  </ribbon>\n</customUI>`,
+        filename: filename,
+      });
+      setAgentGenerating(false);
+    }, 1000);
+  };
+
+  const handleRunAgentPreset = (type: string) => {
+    let p = "";
+    if (type === "branch_merge") p = "매일 10개 지점 엑셀 파일 열어서 매출 합계 내기";
+    else if (type === "pdf_export") p = "시트 100개를 버튼 1번으로 각각 PDF 변환 및 지정 폴더 저장하기";
+    else if (type === "email_send") p = "엑셀 미수금 명단 읽어서 아웃룩 개별 이메일 자동 발송하기";
+    else if (type === "vba_debug") p = "VBA 런타임 오류 1004 원인 분석 및 자동 디버깅";
+    handleGenerateAgentCode(p);
+  };
+
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
 
@@ -703,7 +764,13 @@ export default function Home() {
           </div>
 
           {/* Top Login & Join Buttons (Nomad Coders Matched) */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
+            <button
+              onClick={() => setShowAgentModal(true)}
+              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
+            >
+              <span>🤖 AI 에이전트 빌더 (베타)</span>
+            </button>
             {currentUser ? (
               <div className="flex items-center space-x-2.5">
                 <span className="text-xs font-bold text-slate-200 flex items-center space-x-1">
@@ -783,6 +850,12 @@ export default function Home() {
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-cyan-400/50"
               >
                 <span>⚡ 10시간 엑셀 1시간으로 줄이기 (LV.01 수강) ➔</span>
+              </button>
+              <button
+                onClick={() => setShowAgentModal(true)}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-black text-xs sm:text-base shadow-xl shadow-purple-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-purple-400/50"
+              >
+                <span>🤖 AI 업무자동화 에이전트 체험하기 (베타) ➔</span>
               </button>
               <button
                 onClick={() => setShowPaymentNoticeModal(true)}
@@ -2656,6 +2729,168 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* TRACK 2: AI WORK AUTOMATION AGENT BUILDER PILOT MODAL */}
+      {showAgentModal && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-3xl bg-slate-900 border border-purple-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ring-1 ring-purple-500/30">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 text-white flex items-center justify-center text-xl font-bold shadow-lg shadow-purple-500/20 shrink-0">
+                  🤖
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-black text-base sm:text-lg text-white">WorkFree AI 업무자동화 에이전트</h3>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      Track 2 파일럿 베타
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    자연어로 엑셀 업무를 입력하면 AI가 분석하여 엑셀 매크로 코드와 1초 리본 메뉴(.xlam) 등록을 자동 생성합니다.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowAgentModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer shrink-0"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Presets Chips */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-300 flex items-center space-x-1">
+                <span>💡 자주 쓰는 업무 예제 클릭해서 1초 테스트:</span>
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleRunAgentPreset("branch_merge")}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                >
+                  📁 10개 지점 엑셀 합치기 &amp; 매출 집계
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRunAgentPreset("pdf_export")}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                >
+                  📄 100개 시트 버튼 1번으로 PDF 연속 저장
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRunAgentPreset("email_send")}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                >
+                  📧 엑셀 미수금 명단 읽고 개별 메일 자동 전송
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRunAgentPreset("vba_debug")}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                >
+                  🔍 VBA 런타임 오류 1004 원인 분석 &amp; 디버깅
+                </button>
+              </div>
+            </div>
+
+            {/* Custom Input Box */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-300">내 반복 업무 입력 (자연어 인터뷰):</label>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  value={agentPrompt}
+                  onChange={(e) => setAgentPrompt(e.target.value)}
+                  placeholder="예: 매일 C:\보고서 폴더 엑셀들을 열어서 1번째 시트 A~D열 합치고 결과물 저장해 줘"
+                  className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-400 transition-all font-sans"
+                />
+                <button
+                  onClick={() => handleGenerateAgentCode(agentPrompt)}
+                  disabled={agentGenerating}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-extrabold text-xs shadow-lg shadow-purple-500/25 transition-all cursor-pointer active:scale-95 disabled:opacity-50 shrink-0"
+                >
+                  {agentGenerating ? "AI 에이전트 분석 중..." : "⚡ AI 에이전트 코드 생성 ➔"}
+                </button>
+              </div>
+            </div>
+
+            {/* AI Agent Output Display */}
+            {agentGenerating && (
+              <div className="p-8 rounded-2xl bg-slate-950 border border-purple-500/30 text-center space-y-3 animate-pulse">
+                <div className="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mx-auto animate-spin">
+                  ⚙️
+                </div>
+                <p className="text-xs text-purple-300 font-bold">
+                  WorkFree AI 에이전트가 요구사항을 분석하고 VBA 매크로 코드 및 엑셀 리본 메뉴 등록 파일을 빌드하는 중입니다...
+                </p>
+              </div>
+            )}
+
+            {agentOutput && !agentGenerating && (
+              <div className="space-y-4 pt-2">
+                {/* Step 1 Analysis Pill */}
+                <div className="p-4 rounded-2xl bg-purple-950/30 border border-purple-500/30 space-y-2">
+                  <div className="flex items-center space-x-2 text-purple-300 font-bold text-xs">
+                    <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+                    <span>📊 1단계: AI 업무 요구사항 인터뷰 분석 결과</span>
+                  </div>
+                  <pre className="text-xs text-slate-300 leading-relaxed font-mono whitespace-pre-wrap">
+                    {agentOutput.analysis}
+                  </pre>
+                </div>
+
+                {/* Step 2 Code Generator */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-cyan-400">⚡ 2단계: 자동 생성된 100% 엑셀 호환 생산용 VBA 코드</span>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(agentOutput.vbaCode);
+                        alert("📋 VBA 매크로 코드가 클립보드에 복사되었습니다!");
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs cursor-pointer shadow transition-all active:scale-95"
+                    >
+                      📋 코드 1초 복사
+                    </button>
+                  </div>
+                  <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] text-cyan-300 font-mono overflow-x-auto max-h-60 leading-relaxed border-l-4 border-l-cyan-500 select-all">
+                    {agentOutput.vbaCode}
+                  </pre>
+                </div>
+
+                {/* Step 3 Ribbon Add-in Installation */}
+                <div className="p-4 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-amber-300">🔘 3단계: 엑셀 상단 리본 메뉴(.xlam) 자동 등록 가이드</span>
+                    <button
+                      onClick={() => {
+                        const blob = new Blob([agentOutput.vbaCode], { type: "text/plain;charset=utf-8" });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = agentOutput.filename;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer shadow transition-all active:scale-95"
+                    >
+                      📥 .bas 스크립트 파일 받기
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    엑셀에서 <strong>[Alt + F11]</strong> ➔ <strong>[삽입] ➔ [모듈]</strong>에 붙여넣거나, 상단 리본 메뉴에 <strong>[WorkFree 딸깍 버튼]</strong>으로 등록하시면 매일 클릭 1번으로 자동 실행됩니다!
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* PAYMENT PLATFORM IN PREPARATION & DEPOSIT GUIDE MODAL */}
       {showPaymentNoticeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
