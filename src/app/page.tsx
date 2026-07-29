@@ -831,16 +831,10 @@ export default function Home() {
           {/* Top Login & Join Buttons (Nomad Coders Matched) */}
           <div className="flex items-center space-x-2.5 sm:space-x-3">
             <button
-              onClick={() => setShowAgentAppModal(true)}
-              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/40 text-emerald-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
-            >
-              <span>🤖 AI 에이전트 앱</span>
-            </button>
-            <button
               onClick={() => setShowAgentModal(true)}
               className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
             >
-              <span>⚡ 실습 튜토리얼</span>
+              <span>⚡ 실습 튜토리얼 체험해보기</span>
             </button>
             {currentUser ? (
               <div className="flex items-center space-x-2.5">
@@ -902,18 +896,18 @@ export default function Home() {
               className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-snug sm:leading-snug break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.3) 1px 1px 4px" }}
             >
-              복사(Ctrl+C) ➔ 붙여넣기(Ctrl+V) ➔ PDF ➔ 메일 첨부
+              매일 반복되는 엑셀 노가다 업무,
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                엑셀 [1초 버튼] 하나만 누르세요!
+                AI 버튼 1번으로 0.1초 만에 끝내세요!
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
-              회계·영업·인사·구매팀 실무진이 매일 겪는 4대 반복 노가다 업무.
+              단순 코딩 교육이 아닙니다. 회계·영업·인사·구매팀 실무자를 위한
               <br className="hidden sm:inline" />
-              내가 자리를 비워도 엑셀과 AI가 알아서 완수하는 <strong>무인 업무 에이전트</strong>를 구축하는 클래스입니다.
+              클릭 한 번 엑셀 자동화 &amp; 자율 업무 파이프라인 구축 마스터클래스
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
