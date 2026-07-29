@@ -748,6 +748,12 @@ export default function Home() {
             {/* Hero Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
               <button
+                onClick={() => setViewMode("classroom")}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-cyan-400/50"
+              >
+                <span>▶️ 10강 수강 강의실로 가기 ➔</span>
+              </button>
+              <button
                 onClick={() => setShowPaymentNoticeModal(true)}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-yellow-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
               >
@@ -757,13 +763,7 @@ export default function Home() {
                 href="#reviews"
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/40 hover:border-orange-400 text-orange-300 font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5"
               >
-                <span>🥕 당근마켓 찐 수강후기 보러가기 ➔</span>
-              </a>
-              <a
-                href="#roadmap"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/20 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
-              >
-                🚀 커리큘럼 로드맵 ➔
+                <span>🥕 당근마켓 찐 수강후기 ➔</span>
               </a>
             </div>
           </section>
