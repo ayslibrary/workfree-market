@@ -545,7 +545,22 @@ export default function Home() {
       } else {
         setIsAuthenticated(true);
         localStorage.setItem("workfree_license_auth", "true");
-        alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n별도 라이선스 키 입력 없이 10강 전체 시청 권한이 즉시 승인되었습니다.");
+        localStorage.setItem("workfree_payment_type", "online_pg");
+
+        try {
+          await supabase.auth.updateUser({
+            data: {
+              payment_type: "온라인 PG 전자결제 (포트원)",
+              enrolled_course: "WorkFree LV.01 10강 마스터클래스",
+              paid_amount: 5000,
+              paid_at: new Date().toLocaleString("ko-KR"),
+            },
+          });
+        } catch (e) {
+          console.warn("Supabase user metadata sync error:", e);
+        }
+
+        alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n[온라인 PG 전자결제 수강생] 자격으로 10강 시청 권한이 즉시 승인되었습니다.");
         setShowPaymentNoticeModal(false);
         setShowLicenseModal(false);
         setViewMode("classroom");
@@ -555,14 +570,30 @@ export default function Home() {
     }
   };
 
-
-
-  const handleVerifyLicense = () => {
-    if (licenseInput.trim() === VALID_LICENSE_KEY) {
+  const handleVerifyLicense = async () => {
+    const inputKey = licenseInput.trim().toUpperCase();
+    if (inputKey === VALID_LICENSE_KEY || inputKey === "LIVE2026" || inputKey === "LIVE40000") {
       setIsAuthenticated(true);
+      localStorage.setItem("workfree_license_auth", "true");
+      localStorage.setItem("workfree_payment_type", `license_key_${inputKey}`);
       setShowLicenseModal(false);
       setLicenseError("");
-      trackGAEvent("license_auth_success", "engagement", "workfree_key");
+
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            payment_type: "오프라인 실강 / 수동 패스키 수강생",
+            used_key: inputKey,
+            enrolled_course: "WorkFree LV.01 마스터클래스",
+            activated_at: new Date().toLocaleString("ko-KR"),
+          },
+        });
+      } catch (e) {
+        console.warn("Supabase user metadata sync error:", e);
+      }
+
+      alert(`🎉 수강생 라이선스 패스키(${inputKey})가 정상 인증되었습니다!\n[실강/쿠폰 수강생] 자격으로 10강 시청이 승인되었습니다.`);
+      trackGAEvent("license_auth_success", "engagement", inputKey);
     } else {
       setLicenseError("올바르지 않은 수강 비번입니다. 강사에게 전달받은 수강 라이선스 키를 확인해 주세요.");
     }
