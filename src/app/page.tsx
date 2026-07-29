@@ -2904,7 +2904,7 @@ export default function Home() {
                   ⚡
                 </div>
                 <div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center flex-wrap gap-2">
                     <h3 className="font-black text-base sm:text-lg text-white">Gemini AI 엑셀 매크로 생성기 &amp; 1초 단추 튜토리얼</h3>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
                       LIVE Gemini 2.0 AI 연동
