@@ -2920,6 +2920,30 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => {
+                    setAgentFilePath("C:\\Users\\owner\\매크로교육\\STEP1\\EXCHANGE_RATE_LIST.xlsx");
+                    setAgentSheetName("2026.06");
+                    setAgentPrompt("환율 리스트 파일에서 6행 헤더 offset 반영 후 입력받은 날짜(YYYY-MM-DD)의 JPY/USD 환율을 검색하여 팝업창으로 표시해 줘");
+                    handleGenerateAgentCode("환율 리스트 파일에서 6행 헤더 offset 반영 후 입력받은 날짜(YYYY-MM-DD)의 JPY/USD 환율을 검색하여 팝업창으로 표시해 줘", "C:\\Users\\owner\\매크로교육\\STEP1\\EXCHANGE_RATE_LIST.xlsx", "2026.06");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
+                >
+                  💱 날짜별 환율 조회 (EXCHANGE_RATE_LIST)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAgentFilePath("C:\\Users\\owner\\매크로교육\\Raw_Data.xlsx");
+                    setAgentSheetName("RawData");
+                    setAgentPrompt("Raw_Data.xlsx B열 날짜 검색 후 Deposit_Template.xlsx B2셀에 날짜 기입, A~G열 입금 및 원화 금액을 복사하여 새 파일로 저장해 줘");
+                    handleGenerateAgentCode("Raw_Data.xlsx B열 날짜 검색 후 Deposit_Template.xlsx B2셀에 날짜 기입, A~G열 입금 및 원화 금액을 복사하여 새 파일로 저장해 줘", "C:\\Users\\owner\\매크로교육\\Raw_Data.xlsx", "RawData");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
+                >
+                  📝 입금 증빙 템플릿 매핑 (Deposit_Template)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
                     setAgentFilePath("C:\\WorkFree\\Data\\2026_지점별_매출통합.xlsx");
                     setAgentSheetName("Master_Data");
                     handleRunAgentPreset("branch_merge");
