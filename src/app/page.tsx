@@ -3344,14 +3344,23 @@ export default function Home() {
             </div>
 
             <div className="space-y-4">
-              {/* Next Cohort Social Proof Live Banner */}
-              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/20 via-amber-500/10 to-rose-500/20 border border-rose-500/40 space-y-1.5 text-xs break-keep">
-                <div className="flex items-center space-x-2 font-black text-rose-300">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-400 animate-ping shrink-0"></span>
-                  <span>🔥 다음 회차 실강 8.2(일) 개설 예정 · 현재 1명 대기 신청 중!</span>
+              {/* Next Cohort Social Proof Live Banner with Masked Email Lead */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/20 via-amber-500/10 to-rose-500/20 border border-rose-500/40 space-y-2 text-xs break-keep">
+                <div className="flex items-center justify-between font-black text-rose-300">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-400 animate-ping shrink-0"></span>
+                    <span>🔥 8.2(일) 추가 실강 개설 예정 · 현재 1명 대기 중</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono text-[10px] border border-rose-500/30 shrink-0">
+                    우선 1순위
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-cyan-300 flex items-center justify-between">
+                  <span>👤 최근 신청자: <strong className="text-white">mo***@naver.com</strong></span>
+                  <span className="text-amber-400 font-bold text-[10px]">✓ 대기 완료</span>
                 </div>
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  8.2(일) 추가 코호트 개설 확정 시, 대기 신청 순서대로 가장 먼저 1:1 카카오톡/이메일 우선 등록 링크를 보내드립니다.
+                  8.2(일) 추가 코호트 개설 확정 시, 신청하신 순서대로 1:1 카카오톡/이메일 우선 등록 링크를 발송해 드립니다.
                 </p>
               </div>
 
