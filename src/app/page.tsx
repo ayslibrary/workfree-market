@@ -170,6 +170,53 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [calcDailyHours, setCalcDailyHours] = useState<number>(3);
   const [calcFrequency, setCalcFrequency] = useState<number>(5);
+  const [hourlyWage, setHourlyWage] = useState<number>(15000); // Priority 1: Hourly wage input
+
+  // Priority 3: 8.8(Sat) Live Class Early bird recruitment states
+  const LIVE_CLASS_MAX_SEATS = 5;
+  const LIVE_CLASS_ENROLLED_SEATS = 4;
+  const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
+    days: 3,
+    hours: 14,
+    minutes: 22,
+    seconds: 45,
+  });
+
+  useEffect(() => {
+    // 2026-08-08 14:00 Target Date for Live Class
+    const targetDate = new Date("2026-08-08T14:00:00").getTime();
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Priority 2: Actual Operation Demo Clip simulation state (0 to 100 files saving in 3s)
+  const [demoSavedCount, setDemoSavedCount] = useState<number>(0);
+  const [isDemoActive, setIsDemoActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!isDemoActive) return;
+    const interval = setInterval(() => {
+      setDemoSavedCount((prev) => {
+        if (prev >= 100) return 0;
+        return prev + 5;
+      });
+    }, 150);
+    return () => clearInterval(interval);
+  }, [isDemoActive]);
 
   // License Lock States (resets on page refresh)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -432,7 +479,7 @@ export default function Home() {
   };
 
   // Payment Handler: Currently PG integration is in preparation, opens deposit & license info modal
-  const handlePortonePayment = async () => {
+  const handlePortonePayment = async (payMethod?: string) => {
     setShowPaymentNoticeModal(true);
     trackGAEvent("click_payment_button", "conversion", "5000_earlybird");
   };
@@ -599,10 +646,10 @@ export default function Home() {
       {viewMode === "landing" && (
         <div className="flex-1 space-y-0 pb-20 bg-slate-950">
           <section className="relative pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center space-x-2 px-3 sm:px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[11px] sm:text-xs font-bold shadow-md shadow-cyan-500/10 backdrop-blur-md break-keep">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span>
-              <span>⚡ 비개발자 실무자를 위한 최적의 업무 자동화 파이프라인</span>
+            {/* Priority 3: Top Live Recruitment Alert Pill */}
+            <div className="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] sm:text-xs font-black shadow-lg backdrop-blur-md break-keep">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shrink-0"></span>
+              <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (5만원 ➔ 4만원) · 5명 중 4명 신청 완료! (잔여 딱 1석)</span>
             </div>
 
             {/* Main Title - Mobile Optimized & break-keep */}
@@ -622,13 +669,13 @@ export default function Home() {
               당신이 자리를 비워도 스스로 돌아가는 &apos;업무 에이전트&apos;를 구축하는 여정입니다.
             </p>
 
-            {/* Hero Action Buttons - Full width on mobile */}
+            {/* Hero Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
               <a
-                href="#roadmap"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                href="#schedule"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-yellow-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
               >
-                🚀 로드맵 확인하기 ➔
+                ⚡ 8.8(토) 실강 4만원 얼리버드 (잔여 1석) ↗
               </a>
               <a
                 href="#calculator"
@@ -636,18 +683,18 @@ export default function Home() {
               >
                 ⏱️ 내 업무 시간 절감 계산 ➔
               </a>
-              <button
-                onClick={() => handlePortonePayment(selectedPayMethod)}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-950 font-black text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+              <a
+                href="#roadmap"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/20 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
               >
-                ⚡ 얼리버드 90% 특가 신청 (5,000원) ↗
-              </button>
+                🚀 커리큘럼 로드맵 ➔
+              </a>
             </div>
           </section>
 
-          {/* WHY EXISTING IT EDUS FAIL vs WORKFREE MASTERCLASS (Vision Section - Mobile Optimized) */}
+          {/* WHY EXISTING IT EDUS FAIL vs WORKFREE MASTERCLASS (Vision Section + Priority 2 GIF/Clip Showcase) */}
           <section className="py-12 sm:py-16 bg-slate-900/80 border-b border-slate-800">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
                 <div className="space-y-5 sm:space-y-6">
                   <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
@@ -679,7 +726,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 text-center">
+                {/* Priority 2: Before/After Comparison Table */}
+                <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 text-center shadow-xl">
                   <h3 className="font-bold text-white text-sm sm:text-base break-keep">자동화 단계별 업무 소요 시간 비교</h3>
                   <div className="space-y-2.5 sm:space-y-3 pt-1 text-xs">
                     <div className="p-3 sm:p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center break-keep">
@@ -696,6 +744,83 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="text-[10px] sm:text-[11px] text-slate-500 pt-1">※ 일일 10시간 반복 업무 기준 감축 시뮬레이션</p>
+                </div>
+              </div>
+
+              {/* Priority 2 NEW: Actual Operation GIF / 3-5 Sec Clip Showcase Frame */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-cyan-500/40 shadow-2xl space-y-5">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                  <div className="flex items-center space-x-3">
+                    <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-black border border-rose-500/30 flex items-center space-x-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                      <span>LIVE DEMO GIF</span>
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-white">
+                      리본 메뉴 버튼 1번 눌렀을 때 100개 파일이 3초 만에 생성되는 실제 동작 화면
+                    </h3>
+                  </div>
+                  <span className="text-xs text-slate-400 font-mono">⏱️ 실제 실행 속도 0.8초</span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                  {/* Visual Clip Simulation Container */}
+                  <div className="lg:col-span-8 rounded-2xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-inner">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <div className="flex items-center space-x-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                        <span className="text-slate-200 font-bold ml-1">Excel Ribbon Macro Demo.xlsm</span>
+                      </div>
+                      <span className="text-cyan-400 font-bold">Screen Recording Demo (3s)</span>
+                    </div>
+
+                    {/* Ribbon UI Simulation */}
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-cyan-500/30">
+                      <div className="flex items-center space-x-2">
+                        <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1 ring-2 ring-cyan-300">
+                          <span>⚡ 1-Click PDF 일괄 저장</span>
+                        </div>
+                        <span className="text-[11px] text-slate-400 hidden sm:inline">👈 리본 메뉴 상단 클릭</span>
+                      </div>
+                      <div className="font-mono text-xs font-bold text-emerald-400">
+                        저장 완료: <span className="text-white text-sm font-black">{demoSavedCount}</span> / 100개
+                      </div>
+                    </div>
+
+                    {/* Folder output popup */}
+                    <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                        <span>📂 C:\Company_Data\PDF_Export\</span>
+                        <span className="text-emerald-400 font-bold">{demoSavedCount >= 100 ? "✓ 100개 완료 (0.8s)" : "자동 처리 중..."}</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[10px]">
+                        {Array.from({ length: Math.min(demoSavedCount, 12) }).map((_, idx) => (
+                          <div key={idx} className="p-1.5 rounded bg-slate-900 border border-emerald-500/40 text-emerald-300 flex items-center space-x-1 truncate">
+                            <span className="text-rose-400">📄</span>
+                            <span className="truncate">거래처_{(idx + 1).toString().padStart(3, '0')}.pdf</span>
+                          </div>
+                        ))}
+                        {demoSavedCount === 0 && (
+                          <div className="col-span-4 py-4 text-center text-slate-500 text-xs">
+                            ▶ 버튼 클릭 시 3초 만에 100개 파일이 시트별로 분리 저장됩니다.
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Trust copy card */}
+                  <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                    <div className="text-cyan-400 font-bold text-sm">💡 신뢰도 차이가 압도적인 이유</div>
+                    <p>
+                      텍스트로 <strong className="text-white">&quot;10시간 ➔ 1시간&quot;</strong>이라고 적어두는 것보다,
+                      실제로 내 눈앞에서 버튼 하나 누르자마자 100개 거래처 보고서가 3초 만에 쏟아지는 걸 보는 것은 전혀 다릅니다.
+                    </p>
+                    <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-cyan-200 font-semibold text-[11px]">
+                      WorkFree 마스터클래스에서 배우는 매크로는 당신의 PC 엑셀 상단 리본 메뉴에 버튼으로 평생 등록됩니다.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -929,10 +1054,6 @@ export default function Home() {
               </div>
             </div>
           </section>
-
-
-
-          {/* INTERACTIVE WORK SAVINGS CALCULATOR SECTION */}
           <section id="calculator" className="py-20 bg-slate-900 border-t border-slate-800">
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
               <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-cyan-500/30 shadow-2xl space-y-8">
@@ -940,14 +1061,15 @@ export default function Home() {
                   <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
                     AUTOMATION TIME SAVINGS CALCULATOR
                   </span>
-                  <h2 className="text-3xl font-bold text-white">내 업무 시간 절감 계산기</h2>
+                  <h2 className="text-3xl font-bold text-white">내 업무 시간 절감 &amp; 금액 환산 계산기</h2>
                   <p className="text-xs sm:text-sm text-slate-400">
-                    지금 매일 반복하고 계신 엑셀 노가다 업무, WorkFree 자동화 시스템을 적용하면 일년에 얼마나 아낄 수 있을까요?
+                    매일 반복하고 계신 엑셀 노가다 업무, WorkFree 자동화 시스템 적용 시 연간 얼마나 아끼고 얼마의 시급 가치가 창출되는지 확인하세요!
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                  <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                  <div className="space-y-6 bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
+                    {/* Daily Hours Slider */}
                     <div>
                       <div className="flex justify-between items-center mb-2">
                         <label className="text-xs font-bold text-slate-300">일일 반복 업무 시간</label>
@@ -968,6 +1090,7 @@ export default function Home() {
                       </div>
                     </div>
 
+                    {/* Weekly Frequency */}
                     <div>
                       <label className="block text-xs font-bold text-slate-300 mb-2">주당 반복 횟수</label>
                       <div className="flex space-x-2">
@@ -986,24 +1109,82 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
+
+                    {/* Priority 1 NEW: Hourly Wage Input */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-xs font-bold text-amber-300">당신의 시급 (금액 환산용)</label>
+                        <div className="flex items-center space-x-1">
+                          <input
+                            type="number"
+                            step="1000"
+                            value={hourlyWage}
+                            onChange={(e) => setHourlyWage(Math.max(1000, Number(e.target.value)))}
+                            className="w-24 px-2 py-1 text-right text-xs font-black text-amber-400 font-mono bg-slate-900 border border-amber-500/40 rounded-lg focus:outline-none focus:border-amber-400"
+                          />
+                          <span className="text-xs text-slate-400 font-bold">원</span>
+                        </div>
+                      </div>
+                      {/* Quick Wage Preset Pills */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {[10000, 15000, 25000, 35000, 50000].map((wage) => (
+                          <button
+                            key={wage}
+                            onClick={() => setHourlyWage(wage)}
+                            className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                              hourlyWage === wage
+                                ? "bg-amber-400 text-slate-950 font-black shadow-md shadow-amber-400/20"
+                                : "bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-white"
+                            }`}
+                          >
+                            {wage === 15000 ? "15,000원(기본)" : wage === 25000 ? "25,000원(대기업)" : `${wage.toLocaleString()}원`}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3 shadow-inner">
-                    <p className="text-xs font-bold text-slate-400">예상 연간 절감 시간 (90% 감축)</p>
-                    <div className="text-4xl sm:text-5xl font-black text-cyan-400 font-mono tracking-tight">
-                      {Math.floor(calcDailyHours * calcFrequency * 52 * 0.9).toLocaleString()}{" "}
-                      <span className="text-lg text-slate-300 font-sans">시간</span>
+                  {/* Dynamic Calculation Results Output Box */}
+                  <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between space-y-4 shadow-inner">
+                    <div className="text-center space-y-2">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">예상 연간 절감 시간 (90% 감축)</p>
+                      <div className="text-4xl sm:text-5xl font-black text-cyan-400 font-mono tracking-tight">
+                        {Math.floor(calcDailyHours * calcFrequency * 52 * 0.9).toLocaleString()}{" "}
+                        <span className="text-lg text-slate-300 font-sans">시간</span>
+                      </div>
+                      <p className="text-xs text-slate-300 font-semibold">
+                        약{" "}
+                        <span className="text-amber-400 font-extrabold text-sm">
+                          {Math.floor((calcDailyHours * calcFrequency * 52 * 0.9) / 24)}일
+                        </span>
+                        의 완전한 자유 시간 확보! 🚀
+                      </p>
                     </div>
-                    <p className="text-xs text-slate-300 font-semibold">
-                      약{" "}
-                      <span className="text-amber-400 font-extrabold text-sm">
-                        {Math.floor((calcDailyHours * calcFrequency * 52 * 0.9) / 24)}일
-                      </span>
-                      의 자유 시간 확보! 🚀
-                    </p>
-                    <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden mt-3">
+
+                    {/* Priority 1 Dynamic Money Conversion Banner */}
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/40 text-center space-y-2 shadow-lg">
+                      <div className="text-[11px] font-bold text-amber-300 uppercase tracking-wider">
+                        💰 연간 돈 환산 아끼는 가치
+                      </div>
+                      <div className="text-2xl sm:text-3xl font-black text-yellow-400 font-mono tracking-tight">
+                        연간 약 {Math.floor((calcDailyHours * calcFrequency * 52 * 0.9 * hourlyWage) / 10000).toLocaleString()}만 원
+                      </div>
+                      <div className="text-[11px] sm:text-xs text-slate-200 font-semibold leading-relaxed break-keep pt-1 border-t border-amber-500/30">
+                        🔥 당신의 시급({hourlyWage.toLocaleString()}원) 기준, 1년 동안{" "}
+                        <strong className="text-yellow-300">
+                          {Math.floor((calcDailyHours * calcFrequency * 52 * 0.9 * hourlyWage) / 10000).toLocaleString()}만원 상당
+                        </strong>의 시간을 아낍니다.
+                        <br />
+                        <span className="text-cyan-300 font-extrabold">
+                          이 강의값(실강 4만 원 / 인강 5천 원)은 그 0.1%도 안 됩니다!
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Savings Progress Bar */}
+                    <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full rounded-full transition-all duration-500"
+                        className="bg-gradient-to-r from-cyan-400 via-amber-400 to-yellow-400 h-full rounded-full transition-all duration-500"
                         style={{
                           width: `${Math.min(((calcDailyHours * calcFrequency * 52 * 0.9) / 1500) * 100, 100)}%`,
                         }}
@@ -1054,43 +1235,140 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* Priority 3: 8.8(토) LIVE CLASS EARLYBIRD RECRUITMENT SECTION */}
           <section id="schedule" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 scroll-mt-20">
-            <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-slate-900 via-cyan-950/50 to-slate-900 border border-cyan-500/30 text-center space-y-4 shadow-2xl">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>현강 진행 중</span>
+            <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 via-cyan-950/60 to-slate-900 border border-cyan-500/40 text-center space-y-6 shadow-2xl relative overflow-hidden">
+              {/* Top Real-time recruitment pill */}
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <span className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-black border border-rose-500/40 animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+                  <span>🔴 REAL-TIME 실시간 모집 중 · 선착순 마감</span>
+                </span>
+                <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-bold border border-cyan-500/30 font-mono">
+                  <span>📅 8월 8일 (토) 3시간 집중 실강</span>
+                </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                현강 진행 중 · 실강 참여 원할 시 문의
-              </h2>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+
+              {/* Section Title */}
+              <div className="space-y-2 max-w-2xl mx-auto">
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight break-keep">
+                  8.8(토) 3시간 실강 마스터클래스
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
+                    얼리버드 모집 (잔여 1석!)
+                  </span>
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed break-keep">
+                  현장에서 직접 엑셀 파일을 들고 와서 강사와 함께 나만의 자동화 매크로를 구축하는 3시간 라이브/오프라인 집중 과정입니다.
+                </p>
+              </div>
+
+              {/* Seat Progress & Countdown Card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto items-stretch">
+                {/* 1. Seat Counter Status */}
+                <div className="p-5 rounded-2xl bg-slate-950/90 border border-amber-500/40 text-left space-y-3 shadow-lg">
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span className="text-amber-300">🔥 실시간 참가 모집 현황</span>
+                    <span className="text-rose-400 font-mono font-black animate-pulse">
+                      잔여 {LIVE_CLASS_MAX_SEATS - LIVE_CLASS_ENROLLED_SEATS}석 (마감 임박!)
+                    </span>
+                  </div>
+                  <div className="flex items-baseline justify-between font-mono">
+                    <span className="text-2xl sm:text-3xl font-black text-white">
+                      {LIVE_CLASS_ENROLLED_SEATS} <span className="text-sm font-sans text-slate-400">/ {LIVE_CLASS_MAX_SEATS}명 완료</span>
+                    </span>
+                    <span className="text-xs font-bold text-cyan-400">
+                      {((LIVE_CLASS_ENROLLED_SEATS / LIVE_CLASS_MAX_SEATS) * 100)}% 진행됨
+                    </span>
+                  </div>
+
+                  {/* Seat visual progress bar */}
+                  <div className="space-y-1">
+                    <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden p-0.5 border border-slate-700">
+                      <div
+                        className="bg-gradient-to-r from-yellow-400 via-amber-400 to-rose-500 h-full rounded-full transition-all duration-1000 shadow-md shadow-amber-500/30"
+                        style={{ width: `${(LIVE_CLASS_ENROLLED_SEATS / LIVE_CLASS_MAX_SEATS) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+                      <span>모집 시작</span>
+                      <span>최대 5명 정원 마감</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] text-slate-300 font-medium pt-1">
+                    현재 <strong>4명 신청 완료</strong>! 마지막 <strong>1자리</strong> 남았습니다.
+                  </p>
+                </div>
+
+                {/* 2. Earlybird Countdown Timer & Price */}
+                <div className="p-5 rounded-2xl bg-slate-950/90 border border-cyan-500/40 text-left space-y-3 shadow-lg flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between text-xs font-bold mb-2">
+                      <span className="text-cyan-300">⏳ 얼리버드 마감 카운트다운</span>
+                      <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-[10px]">
+                        D-{timeLeft.days}
+                      </span>
+                    </div>
+                    {/* Ticking Clock Box */}
+                    <div className="grid grid-cols-4 gap-1 text-center font-mono">
+                      <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                        <div className="text-lg sm:text-xl font-black text-cyan-400">{String(timeLeft.days).padStart(2, '0')}</div>
+                        <div className="text-[9px] text-slate-400 uppercase">일</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                        <div className="text-lg sm:text-xl font-black text-cyan-400">{String(timeLeft.hours).padStart(2, '0')}</div>
+                        <div className="text-[9px] text-slate-400 uppercase">시간</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                        <div className="text-lg sm:text-xl font-black text-cyan-400">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                        <div className="text-[9px] text-slate-400 uppercase">분</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                        <div className="text-lg sm:text-xl font-black text-rose-400 animate-pulse">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                        <div className="text-[9px] text-slate-400 uppercase">초</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
+                    <span className="text-xs text-slate-400 font-bold">8.8(토) 실강 얼리버드 수강료</span>
+                    <div className="text-right">
+                      <span className="text-xs line-through text-slate-500 mr-2 font-mono">50,000원</span>
+                      <span className="text-lg font-black text-amber-400 font-mono">40,000원</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <button
-                  onClick={handlePortonePayment}
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
+                  onClick={() => handlePortonePayment("kakaopay")}
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/25 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>⚡ 얼리버드 90% 할인 특가 신청 ↗</span>
+                  <span>⚡ 8.8(토) 실강 4만원 얼리버드 신청하기 (잔여 1석) ↗</span>
                 </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>🥕 당근마켓 실강 문의 ↗</span>
+                  <span>🥕 당근마켓 1:1 실강 문의 ↗</span>
                 </a>
                 <button
                   onClick={() => setShowInquiryModal(true)}
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-sm font-bold text-cyan-300 hover:text-cyan-200 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer shadow-inner"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-sm font-bold text-cyan-300 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer shadow-inner"
                 >
-                  <span>💬 1:1 고객 문의하기 (카톡 / 이메일) ↗</span>
+                  <span>💬 1:1 고객 문의 ↗</span>
                 </button>
               </div>
-              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-lg mx-auto leading-relaxed font-semibold shadow-inner">
-                💡 1단계는 본 온라인 10강 마스터클래스로 완강하시고, 2단계(LV.02)부터 실강(오프라인/라이브)에 참여하셔도 무방합니다.
+
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-xl mx-auto leading-relaxed font-semibold shadow-inner">
+                💡 8/8(토) 실강 참여자는 본 10강 VOD 마스터클래스 전 과정 시청 권한이 기본 제공됩니다.
               </div>
-              <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
-                오프라인 정모 및 실시간 라이브 클래스 참여 문의는 당근마켓 프로필이나 카카오톡 공식 채널로 편하게 메시지 남겨주세요!
-              </p>
             </div>
           </section>
 
@@ -1308,6 +1586,26 @@ export default function Home() {
                 </button>
               </div>
             )}
+
+            {/* Practice Files (.zip) Download Section */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-500/15 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+              <div className="space-y-0.5 text-center sm:text-left">
+                <div className="flex items-center space-x-2 text-amber-300 font-extrabold text-xs sm:text-sm">
+                  <span>📁 10강 커리큘럼 실습 예제 파일 (.zip) &amp; 강의자료</span>
+                </div>
+                <p className="text-[11px] text-slate-300">
+                  강의에서 사용하는 엑셀 서식, VBA 서브루틴 코드 및 파이프라인 실습 자료 전체를 다운로드하실 수 있습니다.
+                </p>
+              </div>
+              <a
+                href="https://drive.google.com/drive/folders/12y8MivWwaKY5GVhJtcGvfjWqYtyWLoTF"
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-md transition-all active:scale-95 cursor-pointer shrink-0 block text-center border border-amber-300"
+              >
+                📥 예제 파일 (.zip) 다운로드 ↗
+              </a>
+            </div>
 
             {/* Lecture Summary & Core Points Section */}
             <div className="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4">
@@ -1944,7 +2242,7 @@ export default function Home() {
                 <span>💳 결제 수단 안내 (계좌이체 / 카카오페이 5,000원)</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed break-keep">
-                <strong className="text-amber-400 font-extrabold">신한은행 계좌이체</strong> 또는 <strong className="text-yellow-400 font-extrabold">카카오페이(5,000원)</strong> 입금 후, 아래 <strong className="text-yellow-300 font-extrabold">[카카오톡 1:1 채널로 입금 완료 알리기]</strong> 버튼을 통해 입금자명과 수강 이메일을 남겨주시면 확인 즉시 10강 수강 라이선스를 발송해 드립니다!
+                <strong className="text-amber-400 font-extrabold">신한은행 계좌이체</strong> 또는 <strong className="text-yellow-400 font-extrabold">카카오페이(5,000원)</strong> 입금 후, 아래 <strong className="text-yellow-300 font-extrabold">[카카오톡 1:1 채널로 입금 완료 알리기]</strong> 버튼을 통해 입금자명만 남겨주시면 확인 즉시 10강 수강 라이선스를 바로 승인해 드립니다!
               </p>
             </div>
 
