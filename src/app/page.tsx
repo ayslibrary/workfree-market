@@ -2730,6 +2730,39 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="space-y-2.5 pt-1">
+              <button
+                onClick={async () => {
+                  try {
+                    const paymentId = `pay-${Date.now()}`;
+                    const response = await PortOne.requestPayment({
+                      storeId: "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
+                      channelKey: "channel-key-9a6add1a-15df-43ab-8242-e8df711d7a9a",
+                      paymentId: paymentId,
+                      orderName: "WorkFree Market 엑셀 자동화 10강 수강권",
+                      totalAmount: 5000,
+                      currency: "CURRENCY_KRW",
+                      payMethod: "EASY_PAY",
+                      customer: {
+                        fullName: currentUser?.name || "수강생",
+                        email: currentUser?.email || "student@workfreemarket.com",
+                      },
+                    });
+
+                    if (response?.code != null) {
+                      alert(`결제 안내: ${response.message || "결제가 취소되었습니다."}`);
+                    } else {
+                      alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n수강권 라이선스가 자동 승인되었습니다.");
+                      setShowPaymentNoticeModal(false);
+                      setViewMode("classroom");
+                    }
+                  } catch (err: any) {
+                    alert(`결제 요청 처리 중 오류: ${err?.message || err}`);
+                  }
+                }}
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-yellow-500/25 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer text-center break-keep"
+              >
+                <span>💳 5,000원 카카오페이 / 신용카드 1초 간편 결제하기 ➔</span>
+              </button>
               <a
                 href="http://pf.kakao.com/_qvNxnX/chat"
                 target="_blank"
