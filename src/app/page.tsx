@@ -1332,6 +1332,33 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+
+              {/* Review Card 5 (NEW from screenshot) */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-orange-500/40 transition-all space-y-4 shadow-xl flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
+                        향친
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">향친*</div>
+                        <div className="text-[10px] text-slate-400">잠실7동 · 당근 인증 최신</div>
+                      </div>
+                    </div>
+                    <span className="text-amber-400 font-bold text-xs">★★★★★ 5.0</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-semibold border border-cyan-500/30">#신개념자동화</span>
+                    <span className="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-[10px] font-semibold border border-yellow-500/30">#이해하기쉬운설명</span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    &quot;이런 방법이 있는지 처음 알았어요 너무 도움이 됐습니다&quot;
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Direct Karrot Profile Link Banner */}
