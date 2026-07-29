@@ -522,10 +522,37 @@ export default function Home() {
     }
   };
 
-  // Payment Handler: Currently PG integration is in preparation, opens deposit & license info modal
+  // Payment Handler: PortOne PG payment execution & instant 10-lecture access grant
   const handlePortonePayment = async (payMethod?: string) => {
-    setShowPaymentNoticeModal(true);
-    trackGAEvent("click_payment_button", "conversion", "5000_earlybird");
+    try {
+      const paymentId = `pay-${Date.now()}`;
+      const response = await PortOne.requestPayment({
+        storeId: "store-f7c52ad9-3899-4b5b-87b4-cc5cdcdbb5d4",
+        channelKey: "channel-key-9a6add1a-15df-43ab-8242-e8df711d7a9a",
+        paymentId: paymentId,
+        orderName: "WorkFree Market 엑셀 자동화 10강 수강권",
+        totalAmount: 5000,
+        currency: "CURRENCY_KRW",
+        payMethod: payMethod === "card" ? "CARD" : "EASY_PAY",
+        customer: {
+          fullName: currentUser?.name || "수강생",
+          email: currentUser?.email || "student@workfreemarket.com",
+        },
+      });
+
+      if (response?.code != null) {
+        alert(`결제 안내: ${response.message || "결제가 취소되었습니다."}`);
+      } else {
+        setIsAuthenticated(true);
+        localStorage.setItem("workfree_license_auth", "true");
+        alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n별도 라이선스 키 입력 없이 10강 전체 시청 권한이 즉시 승인되었습니다.");
+        setShowPaymentNoticeModal(false);
+        setShowLicenseModal(false);
+        setViewMode("classroom");
+      }
+    } catch (err: any) {
+      alert(`결제 요청 처리 중 오류: ${err?.message || err}`);
+    }
   };
 
 
@@ -2751,7 +2778,9 @@ export default function Home() {
                     if (response?.code != null) {
                       alert(`결제 안내: ${response.message || "결제가 취소되었습니다."}`);
                     } else {
-                      alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n수강권 라이선스가 자동 승인되었습니다.");
+                      setIsAuthenticated(true);
+                      localStorage.setItem("workfree_license_auth", "true");
+                      alert("🎉 5,000원 수강료 결제가 성공적으로 완료되었습니다!\n별도 라이선스 키 입력 없이 10강 전체 시청 권한이 즉시 승인되었습니다.");
                       setShowPaymentNoticeModal(false);
                       setViewMode("classroom");
                     }
