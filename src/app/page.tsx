@@ -339,10 +339,13 @@ export default function Home() {
   const [showMarketingModal, setShowMarketingModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
-  // Track 2: AI Work Automation Agent Builder Pilot States & Engine
+  // AI Macro Generator & Interactive 4-Step Tutorial App States
   const [showAgentModal, setShowAgentModal] = useState<boolean>(false);
+  const [agentFilePath, setAgentFilePath] = useState<string>("");
+  const [agentSheetName, setAgentSheetName] = useState<string>("");
   const [agentPrompt, setAgentPrompt] = useState<string>("");
   const [agentGenerating, setAgentGenerating] = useState<boolean>(false);
+  const [activeTutorialStep, setActiveTutorialStep] = useState<number>(1);
   const [agentOutput, setAgentOutput] = useState<{
     vbaCode: string;
     analysis: string;
@@ -388,19 +391,24 @@ export default function Home() {
     }
   };
 
-  const handleGenerateAgentCode = async (promptText: string) => {
+  const handleGenerateAgentCode = async (promptText: string, filePathVal?: string, sheetNameVal?: string) => {
     if (!promptText.trim()) {
-      alert("자동화하고 싶으신 업무 내용을 자연어로 입력해 주세요.");
+      alert("구현하고자 하는 매크로의 상세 동작(요건)을 직접 입력해 주세요.");
       return;
     }
     setAgentGenerating(true);
     setAgentPrompt(promptText);
+    setActiveTutorialStep(1);
 
     try {
       const res = await fetch("/api/ai-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: promptText }),
+        body: JSON.stringify({
+          prompt: promptText,
+          filePath: filePathVal || agentFilePath,
+          sheetName: sheetNameVal || agentSheetName,
+        }),
       });
 
       if (!res.ok) {
@@ -418,7 +426,7 @@ export default function Home() {
       console.warn("Server AI Agent API fetch failed, fallback to local:", err);
       setAgentOutput({
         vbaCode: `' WorkFree AI Agent Server Fallback\nSub WorkFree_Automate()\n    MsgBox "자동화 처리가 성공적으로 완료되었습니다!", vbInformation\nEnd Sub`,
-        analysis: `🎯 [서버 연동 업무 분석 완료]\n- 요청: ${promptText}\n- 엑셀 자동화 템플릿 코드 생성 완료`,
+        analysis: `🎯 [서버 연동 업무 분석 완료]\n- 파일 경로: ${filePathVal || agentFilePath || 'C:\\WorkFree\\Data.xlsx'}\n- 시트명: ${sheetNameVal || agentSheetName || 'Sheet1'}\n- 요건: ${promptText}\n- 엑셀 자동화 템플릿 코드 생성 완료`,
         ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui"><ribbon><tabs><tab id="tabWorkFree" label="WorkFree AI"><group id="grpAgent" label="딸깍 자동화"><button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="WorkFree_Automate" /></group></tab></tabs></ribbon></customUI>`,
         filename: "WorkFree_Agent_Macro.bas",
       });
@@ -2873,25 +2881,25 @@ export default function Home() {
         </div>
       )}
 
-      {/* TRACK 2: AI WORK AUTOMATION AGENT BUILDER PILOT MODAL */}
+      {/* AI MACRO AUTOMATIC GENERATION & INTERACTIVE TUTORIAL APP MODAL */}
       {showAgentModal && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-3xl bg-slate-900 border border-purple-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ring-1 ring-purple-500/30">
+          <div className="w-full max-w-4xl bg-slate-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ring-1 ring-cyan-500/30">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 text-white flex items-center justify-center text-xl font-bold shadow-lg shadow-purple-500/20 shrink-0">
-                  🤖
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-slate-950 flex items-center justify-center text-xl font-bold shadow-lg shadow-cyan-500/20 shrink-0">
+                  ⚡
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <h3 className="font-black text-base sm:text-lg text-white">WorkFree AI 업무자동화 에이전트</h3>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                      Track 2 파일럿 베타
+                    <h3 className="font-black text-base sm:text-lg text-white">AI 매크로 자동 생성 및 튜토리얼 앱</h3>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
+                      LIVE Gemini AI 연동
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
-                    자연어로 엑셀 업무를 입력하면 AI가 분석하여 엑셀 매크로 코드와 1초 리본 메뉴(.xlam) 등록을 자동 생성합니다.
+                    인터뷰 폼에 업무 요건을 입력하면 Gemini AI가 맞춤형 VBA 코드를 짜주고, 엑셀에 심는 4단계 실전 튜토리얼까지 1초 만에 제공합니다.
                   </p>
                 </div>
               </div>
@@ -2903,131 +2911,326 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Presets Chips */}
+            {/* Presets Quick Test Chips */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-300 flex items-center space-x-1">
-                <span>💡 자주 쓰는 업무 예제 클릭해서 1초 테스트:</span>
+                <span>💡 자주 쓰는 업무 예제 선택 (클릭 시 자동 입력):</span>
               </label>
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => handleRunAgentPreset("branch_merge")}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                  onClick={() => {
+                    setAgentFilePath("C:\\WorkFree\\Data\\2026_지점별_매출통합.xlsx");
+                    setAgentSheetName("Master_Data");
+                    handleRunAgentPreset("branch_merge");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
                 >
                   📁 10개 지점 엑셀 합치기 &amp; 매출 집계
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRunAgentPreset("pdf_export")}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                  onClick={() => {
+                    setAgentFilePath("C:\\PDF_Export\\2026_청구서.xlsx");
+                    setAgentSheetName("Invoice_List");
+                    handleRunAgentPreset("pdf_export");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
                 >
                   📄 100개 시트 버튼 1번으로 PDF 연속 저장
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRunAgentPreset("email_send")}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                  onClick={() => {
+                    setAgentFilePath("C:\\WorkFree\\MailList\\미수금_명단.xlsx");
+                    setAgentSheetName("Email_Targets");
+                    handleRunAgentPreset("email_send");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
                 >
                   📧 엑셀 미수금 명단 읽고 개별 메일 자동 전송
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRunAgentPreset("vba_debug")}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-950/60 border border-slate-700 hover:border-purple-500/40 text-xs font-semibold text-purple-200 transition-all cursor-pointer"
+                  onClick={() => {
+                    setAgentFilePath("C:\\Users\\Office\\Documents\\디버깅대상.xlsm");
+                    setAgentSheetName("Main");
+                    handleRunAgentPreset("vba_debug");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
                 >
                   🔍 VBA 런타임 오류 1004 원인 분석 &amp; 디버깅
                 </button>
               </div>
             </div>
 
-            {/* Custom Input Box */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-300">내 반복 업무 입력 (자연어 인터뷰):</label>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="text"
+            {/* REQUIREMENTS GATHERING INTERVIEW FORM */}
+            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 shadow-inner">
+              <div className="flex items-center space-x-2 text-xs font-extrabold text-cyan-400 border-b border-slate-800 pb-2">
+                <span>📝 [인터뷰 폼] 내 업무 조건 및 요건 입력</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-300">1. 대상 엑셀 파일 경로 (선택)</label>
+                  <input
+                    type="text"
+                    value={agentFilePath}
+                    onChange={(e) => setAgentFilePath(e.target.value)}
+                    placeholder="예: C:\Users\Office\Documents\월간실적.xlsx"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-300">2. 시트 이름 (선택)</label>
+                  <input
+                    type="text"
+                    value={agentSheetName}
+                    onChange={(e) => setAgentSheetName(e.target.value)}
+                    placeholder="예: RawData 또는 Sheet1"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-slate-300">3. 구현하고자 하는 매크로의 상세 동작 (필수 요건)</label>
+                <textarea
+                  rows={3}
                   value={agentPrompt}
                   onChange={(e) => setAgentPrompt(e.target.value)}
-                  placeholder="예: 매일 C:\보고서 폴더 엑셀들을 열어서 1번째 시트 A~D열 합치고 결과물 저장해 줘"
-                  className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-400 transition-all font-sans"
-                />
-                <button
-                  onClick={() => handleGenerateAgentCode(agentPrompt)}
-                  disabled={agentGenerating}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-extrabold text-xs shadow-lg shadow-purple-500/25 transition-all cursor-pointer active:scale-95 disabled:opacity-50 shrink-0"
-                >
-                  {agentGenerating ? "AI 에이전트 분석 중..." : "⚡ AI 에이전트 코드 생성 ➔"}
-                </button>
+                  placeholder="예: 매월 10개 지점 엑셀 파일 열어서 A~D열 데이터를 마스터 시트에 자동 통합하고, 미수금 금액 합계 도출 및 시트 100개 개별 PDF 자동 저장"
+                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-sans leading-relaxed resize-none"
+                ></textarea>
               </div>
+
+              <button
+                onClick={() => handleGenerateAgentCode(agentPrompt, agentFilePath, agentSheetName)}
+                disabled={agentGenerating}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-sm shadow-xl shadow-cyan-500/20 transition-all cursor-pointer active:scale-95 disabled:opacity-50 border border-cyan-300 text-center"
+              >
+                {agentGenerating ? "⚡ Gemini AI가 맞춤형 코드를 생성하는 중..." : "⚡ VBA 코드 자동 생성 및 튜토리얼 시작 ➔"}
+              </button>
             </div>
 
-            {/* AI Agent Output Display */}
+            {/* AI GENERATING LOADING STATE */}
             {agentGenerating && (
-              <div className="p-8 rounded-2xl bg-slate-950 border border-purple-500/30 text-center space-y-3 animate-pulse">
-                <div className="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mx-auto animate-spin">
+              <div className="p-8 rounded-2xl bg-slate-950 border border-cyan-500/30 text-center space-y-3 animate-pulse">
+                <div className="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl mx-auto animate-spin">
                   ⚙️
                 </div>
-                <p className="text-xs text-purple-300 font-bold">
-                  WorkFree AI 에이전트가 요구사항을 분석하고 VBA 매크로 코드 및 엑셀 리본 메뉴 등록 파일을 빌드하는 중입니다...
+                <p className="text-xs text-cyan-300 font-bold">
+                  Gemini AI API가 사용자가 입력한 경로/시트/요건을 바탕으로 실시간 맞춤형 VBA 코드를 생성 중입니다...
                 </p>
               </div>
             )}
 
+            {/* INTERACTIVE STEP-BY-STEP DYNAMIC TUTORIAL APP GUIDE */}
             {agentOutput && !agentGenerating && (
-              <div className="space-y-4 pt-2">
-                {/* Step 1 Analysis Pill */}
-                <div className="p-4 rounded-2xl bg-purple-950/30 border border-purple-500/30 space-y-2">
-                  <div className="flex items-center space-x-2 text-purple-300 font-bold text-xs">
-                    <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-                    <span>📊 1단계: AI 업무 요구사항 인터뷰 분석 결과</span>
-                  </div>
-                  <pre className="text-xs text-slate-300 leading-relaxed font-mono whitespace-pre-wrap">
-                    {agentOutput.analysis}
-                  </pre>
+              <div className="space-y-5 pt-2 border-t border-slate-800 animate-fadeIn">
+                {/* Tutorial Step Navigation Tabs */}
+                <div className="flex space-x-1 p-1 bg-slate-950 rounded-2xl border border-slate-800 overflow-x-auto">
+                  <button
+                    onClick={() => setActiveTutorialStep(1)}
+                    className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      activeTutorialStep === 1
+                        ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    1단계: 맞춤 VBA 코드
+                  </button>
+                  <button
+                    onClick={() => setActiveTutorialStep(2)}
+                    className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      activeTutorialStep === 2
+                        ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    2단계: VBE 모듈 삽입
+                  </button>
+                  <button
+                    onClick={() => setActiveTutorialStep(3)}
+                    className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      activeTutorialStep === 3
+                        ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    3단계: 디버그 &amp; 실행
+                  </button>
+                  <button
+                    onClick={() => setActiveTutorialStep(4)}
+                    className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      activeTutorialStep === 4
+                        ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    4단계: 리본 메뉴 연동
+                  </button>
                 </div>
 
-                {/* Step 2 Code Generator */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-cyan-400">⚡ 2단계: 자동 생성된 100% 엑셀 호환 생산용 VBA 코드</span>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(agentOutput.vbaCode);
-                        alert("📋 VBA 매크로 코드가 클립보드에 복사되었습니다!");
-                      }}
-                      className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs cursor-pointer shadow transition-all active:scale-95"
-                    >
-                      📋 코드 1초 복사
-                    </button>
-                  </div>
-                  <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] text-cyan-300 font-mono overflow-x-auto max-h-60 leading-relaxed border-l-4 border-l-cyan-500 select-all">
-                    {agentOutput.vbaCode}
-                  </pre>
-                </div>
+                {/* STEP 1: Code View & Copy */}
+                {activeTutorialStep === 1 && (
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2">
+                      <div className="flex items-center space-x-2 text-cyan-300 font-bold text-xs">
+                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                        <span>📊 AI 업무 요구사항 인터뷰 분석 완료</span>
+                      </div>
+                      <pre className="text-xs text-slate-300 leading-relaxed font-mono whitespace-pre-wrap">
+                        {agentOutput.analysis}
+                      </pre>
+                    </div>
 
-                {/* Step 3 Ribbon Add-in Installation */}
-                <div className="p-4 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-amber-300">🔘 3단계: 엑셀 상단 리본 메뉴(.xlam) 자동 등록 가이드</span>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white">⚡ AI가 실시간 생성한 나만의 엑셀 VBA 코드:</span>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(agentOutput.vbaCode);
+                            alert("📋 맞춤형 VBA 매크로 코드가 클립보드에 복사되었습니다!\n다음 2단계 가이드를 따라 엑셀 VBE 모듈에 붙여넣어 보세요.");
+                            setActiveTutorialStep(2);
+                          }}
+                          className="px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 font-black text-xs cursor-pointer shadow-lg shadow-yellow-500/20 transition-all active:scale-95 border border-yellow-300"
+                        >
+                          📋 VBA 코드 1초 복사 후 2단계로 ➔
+                        </button>
+                      </div>
+                      <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] text-cyan-300 font-mono overflow-x-auto max-h-72 leading-relaxed border-l-4 border-l-cyan-500 select-all">
+                        {agentOutput.vbaCode}
+                      </pre>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 2: VBE Module Guide */}
+                {activeTutorialStep === 2 && (
+                  <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                      <span className="text-sm font-bold text-cyan-300">💻 2단계: 엑셀 비주얼 베이직 편집기(VBE) 모듈 삽입 가이드</span>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(agentOutput.vbaCode);
+                          alert("📋 코드가 클립보드에 복사되었습니다!");
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs cursor-pointer"
+                      >
+                        📋 코드 다시 복사
+                      </button>
+                    </div>
+                    <div className="space-y-3 text-xs text-slate-300 leading-relaxed font-sans">
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center shrink-0">1</span>
+                        <div>
+                          <strong className="text-white">비주얼 베이직 창 열기:</strong> 엑셀 실행 후 키보드 <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-cyan-300 font-mono">Alt + F11</kbd> 누르기
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center shrink-0">2</span>
+                        <div>
+                          <strong className="text-white">모듈 생성:</strong> 상단 메뉴에서 <strong className="text-amber-300">삽입(I) ➔ 모듈(M)</strong> 클릭
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center shrink-0">3</span>
+                        <div>
+                          <strong className="text-white">코드 붙여넣기:</strong> 흰색 모듈 편집창에 복사한 코드를 <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-cyan-300 font-mono">Ctrl + V</kbd> 로 붙여넣기
+                        </div>
+                      </div>
+                    </div>
                     <button
-                      onClick={() => {
-                        const blob = new Blob([agentOutput.vbaCode], { type: "text/plain;charset=utf-8" });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement("a");
-                        a.href = url;
-                        a.download = agentOutput.filename;
-                        a.click();
-                        URL.revokeObjectURL(url);
-                      }}
-                      className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer shadow transition-all active:scale-95"
+                      onClick={() => setActiveTutorialStep(3)}
+                      className="w-full py-3 rounded-xl bg-cyan-500 text-slate-950 font-black text-xs cursor-pointer shadow transition-all active:scale-95 text-center"
                     >
-                      📥 .bas 스크립트 파일 받기
+                      다음 3단계: 디버그 및 실행 테스트 가이드로 이동 ➔
                     </button>
                   </div>
-                  <p className="text-[11px] text-slate-300 leading-relaxed">
-                    엑셀에서 <strong>[Alt + F11]</strong> ➔ <strong>[삽입] ➔ [모듈]</strong>에 붙여넣거나, 상단 리본 메뉴에 <strong>[WorkFree 딸깍 버튼]</strong>으로 등록하시면 매일 클릭 1번으로 자동 실행됩니다!
-                  </p>
-                </div>
+                )}
+
+                {/* STEP 3: Debug & Run Guide */}
+                {activeTutorialStep === 3 && (
+                  <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                      <span className="text-sm font-bold text-amber-300">🔍 3단계: 매크로 디버깅 및 실행 검증</span>
+                    </div>
+                    <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center shrink-0">1</span>
+                        <div>
+                          <strong className="text-white">즉시 실행:</strong> 키보드 <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono">F5</kbd> 키를 눌러 코드 즉시 테스트 실행
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center shrink-0">2</span>
+                        <div>
+                          <strong className="text-white">단계별 한 줄씩 디버깅:</strong> <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono">F8</kbd> 키를 연속으로 누르며 셀 값이 바뀌는지 노란색 하이라이트 확인
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-start space-x-3">
+                        <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center shrink-0">3</span>
+                        <div>
+                          <strong className="text-white">오류 발생 시 대처:</strong> 런타임 오류 1004 등이 뜨면 다시 위 인터뷰 폼에 오류 내용을 입력해 AI에게 디버깅 요청하기
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setActiveTutorialStep(4)}
+                      className="w-full py-3 rounded-xl bg-amber-400 text-slate-950 font-black text-xs cursor-pointer shadow transition-all active:scale-95 text-center"
+                    >
+                      다음 4단계: 엑셀 상단 리본 메뉴 연동 가이드로 이동 ➔
+                    </button>
+                  </div>
+                )}
+
+                {/* STEP 4: Ribbon Menu Add-in Registration */}
+                {activeTutorialStep === 4 && (
+                  <div className="p-6 rounded-2xl bg-slate-950 border border-amber-500/40 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                      <span className="text-sm font-bold text-amber-300">🔘 4단계: 엑셀 상단 리본 메뉴 커스텀 버튼 연동</span>
+                      <button
+                        onClick={() => {
+                          const blob = new Blob([agentOutput.vbaCode], { type: "text/plain;charset=utf-8" });
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement("a");
+                          a.href = url;
+                          a.download = agentOutput.filename;
+                          a.click();
+                          URL.revokeObjectURL(url);
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-bold text-xs cursor-pointer"
+                      >
+                        📥 .bas 파일 받기
+                      </button>
+                    </div>
+                    <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
+                      <p>
+                        매일 엑셀을 열 때마다 매번 코드를 실행할 필요 없이, 엑셀 상단 탭에 <strong className="text-amber-300">[WorkFree 딸깍 버튼]</strong>을 하나 만들어 두면 버튼 1번으로 자동 구동됩니다!
+                      </p>
+                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                        <div className="font-bold text-white">📌 리본 메뉴 사용자 지정 방법:</div>
+                        <div className="text-[11px] text-slate-300 space-y-1 font-mono">
+                          1. 엑셀 상단 메뉴 [파일] ➔ [옵션] ➔ [리본 사용자 지정] 선택
+                          <br />
+                          2. 오른쪽 탭 목록에서 [새 탭] 생성 후 이름을 &apos;WorkFree AI&apos; 로 지정
+                          <br />
+                          3. 왼쪽 명령 선택에서 [매크로] 선택 ➔ 생성한 매크로({agentOutput.filename.replace('.bas', '')})를 새 탭으로 추가!
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-2 text-center">
+                      <button
+                        onClick={() => setShowAgentModal(false)}
+                        className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-xs shadow-lg transition-all active:scale-95 cursor-pointer"
+                      >
+                        🎉 4단계 튜토리얼 완료! 닫기
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

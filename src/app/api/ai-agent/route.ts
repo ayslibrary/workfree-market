@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    const { prompt, filePath, sheetName } = await req.json();
 
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return NextResponse.json(
@@ -12,6 +12,9 @@ export async function POST(req: Request) {
     }
 
     const cleanPrompt = prompt.trim();
+    const targetFile = (filePath && typeof filePath === "string" && filePath.trim()) ? filePath.trim() : "C:\\Users\\Office\\Documents\\업무데이터.xlsx";
+    const targetSheet = (sheetName && typeof sheetName === "string" && sheetName.trim()) ? sheetName.trim() : "Sheet1";
+
     let filename = "WorkFree_Agent_Macro.bas";
     let analysis = "";
     let vbaCode = "";
