@@ -956,40 +956,7 @@ export default function Home() {
                 >
                   🔔 마감 시 다음 회차 알림 신청
                 </button>
-              </div>
-
-              {/* REAL-WORLD SHORTS VIDEO SHOWCASE PLAYER */}
-              <div className="pt-6 w-full max-w-xs sm:max-w-sm mx-auto">
-                <div className="relative overflow-hidden rounded-3xl bg-slate-900/90 border border-cyan-500/40 shadow-2xl shadow-cyan-500/10 p-3 space-y-2 backdrop-blur-md">
-                  <div className="flex items-center justify-between px-2 pt-1">
-                    <span className="inline-flex items-center space-x-1.5 text-xs font-black text-cyan-300">
-                      <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                      <span>🎬 15초 실전 자동화 시연 (Shorts)</span>
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                      LIVE DEMO
-                    </span>
-                  </div>
-                  <div className="relative aspect-[9/16] max-h-[420px] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner flex items-center justify-center">
-                    <video
-                      controls
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
-                      className="w-full h-full object-cover rounded-xl"
-                    >
-                      <source src="/shorts_demo.mp4" type="video/mp4" />
-                      브라우저가 동영상 재생을 지원하지 않습니다.
-                    </video>
-                  </div>
-                  <div className="text-center text-[11px] text-slate-300 font-medium break-keep pt-1">
-                    💡 <strong>실제 엑셀 AI 자동화 구동 시연 영상</strong>입니다. ▶ 버튼을 눌러보세요!
-                  </div>
-                </div>
-              </div>
-            </div>
+              </div>            </div>
           </section>
 
           {/* WHY EXISTING IT EDUS FAIL vs WORKFREE MASTERCLASS (Vision Section + Priority 2 GIF/Clip Showcase) */}
