@@ -930,7 +930,7 @@ export default function Home() {
                   onClick={() => setShowAgentModal(true)}
                   className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
                 >
-                  ⚡ AI 매크로 자동 생성 및 튜토리얼
+                  ⚡ Gemini AI 매크로 생성기 &amp; 1초 단추 튜토리얼
                 </button>
               </div>
             </div>
@@ -2910,13 +2910,13 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <h3 className="font-black text-base sm:text-lg text-white">AI 매크로 자동 생성 및 튜토리얼 앱</h3>
+                    <h3 className="font-black text-base sm:text-lg text-white">Gemini AI 엑셀 매크로 생성기 &amp; 1초 단추 튜토리얼</h3>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
-                      LIVE Gemini AI 연동
+                      LIVE Gemini 2.0 AI 연동
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
-                    인터뷰 폼에 업무 요건을 입력하면 Gemini AI가 맞춤형 VBA 코드를 짜주고, 엑셀에 심는 4단계 실전 튜토리얼까지 1초 만에 제공합니다.
+                    인터뷰 폼에 업무 요건을 입력하면 Gemini AI가 맞춤형 VBA 코드를 짜주고, 엑셀 상단 리본 메뉴에 단추를 심는 4단계 실전 튜토리얼까지 제공합니다.
                   </p>
                 </div>
               </div>
