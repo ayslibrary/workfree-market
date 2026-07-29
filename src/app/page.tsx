@@ -891,21 +891,23 @@ export default function Home() {
               <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
             </div>
 
-            {/* Main Title - Excel Processing 100 Times Target Headline */}
+            {/* Main Title - Nomad Coders 1:1 Matched Punchy Style */}
             <h1
-              className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
+              className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-none break-keep space-y-1 sm:space-y-2"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              매일 엑셀 가공 100번 하는 실무자 모여라.
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                딸깍 1번에 완성되는 엑셀 무인 시스템.
+              <span className="block text-white">Automate Work.</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
+                Kill Overtime.
+              </span>
+              <span className="block text-xl sm:text-3xl md:text-4xl font-extrabold text-cyan-300 pt-2">
+                자동화는 진짜 내 업무를 바꿔보는거야!
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
-            <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
-              회계·영업·인사·구매팀 실무자를 위한 클릭 한 번 업무 자동화 파이프라인 구축 마스터클래스
+            <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep pt-1">
+              실제 내 엑셀 노가다를 따라 자동화하면서 VBA와 AI 에이전트를 배우세요.
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
