@@ -203,6 +203,11 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Interactive Live Demo Sandbox Tabs (File Open, Amount Aggregation, 100 PDF Export)
+  const [activeDemoTab, setActiveDemoTab] = useState<"pdfExport" | "fileOpen" | "aggregate">("pdfExport");
+  const [fileOpenStatus, setFileOpenStatus] = useState<boolean>(false);
+  const [isAggregating, setIsAggregating] = useState<boolean>(false);
+
   // Priority 2: Actual Operation Demo Clip simulation state (0 to 100 files saving in 3s)
   const [demoSavedCount, setDemoSavedCount] = useState<number>(0);
   const [isDemoActive, setIsDemoActive] = useState<boolean>(true);
@@ -747,81 +752,233 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Priority 2 NEW: Actual Operation GIF / 3-5 Sec Clip Showcase Frame */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-cyan-500/40 shadow-2xl space-y-5">
+              {/* MULTI-TAB INTERACTIVE LIVE DEMO SANDBOX (3 Core Features Showcase) */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-cyan-500/40 shadow-2xl space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
                   <div className="flex items-center space-x-3">
                     <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-black border border-rose-500/30 flex items-center space-x-1.5">
                       <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
-                      <span>LIVE DEMO GIF</span>
+                      <span>INTERACTIVE LIVE DEMO</span>
                     </span>
-                    <h3 className="text-base sm:text-lg font-bold text-white">
-                      리본 메뉴 버튼 1번 눌렀을 때 100개 파일이 3초 만에 생성되는 실제 동작 화면
+                    <h3 className="text-base sm:text-xl font-extrabold text-white">
+                      수강 후 내 엑셀 리본 메뉴에서 일어나는 3대 자동화 라이브 체험관
                     </h3>
                   </div>
-                  <span className="text-xs text-slate-400 font-mono">⏱️ 실제 실행 속도 0.8초</span>
+                  <span className="text-xs text-cyan-400 font-mono font-bold">👉 직접 버튼을 눌러보세요!</span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                  {/* Visual Clip Simulation Container */}
-                  <div className="lg:col-span-8 rounded-2xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-inner">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
-                      <div className="flex items-center space-x-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
-                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-                        <span className="text-slate-200 font-bold ml-1">Excel Ribbon Macro Demo.xlsm</span>
-                      </div>
-                      <span className="text-cyan-400 font-bold">Screen Recording Demo (3s)</span>
-                    </div>
+                {/* Tab Switcher Buttons */}
+                <div className="flex flex-wrap gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800">
+                  <button
+                    onClick={() => setActiveDemoTab("pdfExport")}
+                    className={`flex-1 min-w-[160px] py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 ${
+                      activeDemoTab === "pdfExport"
+                        ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
+                        : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    }`}
+                  >
+                    <span>📄 100개 PDF 일괄 저장 (09-10강)</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveDemoTab("fileOpen")}
+                    className={`flex-1 min-w-[160px] py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 ${
+                      activeDemoTab === "fileOpen"
+                        ? "bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 font-black shadow-lg shadow-yellow-500/20"
+                        : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    }`}
+                  >
+                    <span>📂 복잡한 파일 1초 오픈 (02강)</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveDemoTab("aggregate")}
+                    className={`flex-1 min-w-[160px] py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 ${
+                      activeDemoTab === "aggregate"
+                        ? "bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20"
+                        : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    }`}
+                  >
+                    <span>📊 월별·통화별 자동 금액 집계 (04-05강)</span>
+                  </button>
+                </div>
 
-                    {/* Ribbon UI Simulation */}
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-cyan-500/30">
-                      <div className="flex items-center space-x-2">
-                        <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1 ring-2 ring-cyan-300">
-                          <span>⚡ 1-Click PDF 일괄 저장</span>
+                {/* TAB 1: 100 PDF Export Demo */}
+                {activeDemoTab === "pdfExport" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center animate-fadeIn">
+                    <div className="lg:col-span-8 rounded-2xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-inner">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
+                        <div className="flex items-center space-x-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                          <span className="text-slate-200 font-bold ml-1">Microsoft Excel - [다중시트_PDF_저장.xlsm]</span>
                         </div>
-                        <span className="text-[11px] text-slate-400 hidden sm:inline">👈 리본 메뉴 상단 클릭</span>
+                        <span className="text-cyan-400 font-bold">Demo #1 (3s)</span>
                       </div>
-                      <div className="font-mono text-xs font-bold text-emerald-400">
-                        저장 완료: <span className="text-white text-sm font-black">{demoSavedCount}</span> / 100개
+
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-cyan-500/30">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => setDemoSavedCount(0)}
+                            className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs shadow-md shadow-cyan-500/20 flex items-center space-x-1 ring-2 ring-cyan-300 cursor-pointer active:scale-95"
+                          >
+                            <span>⚡ 1-Click PDF 일괄 저장 (다시 실행)</span>
+                          </button>
+                        </div>
+                        <div className="font-mono text-xs font-bold text-emerald-400">
+                          저장 완료: <span className="text-white text-sm font-black">{demoSavedCount}</span> / 100개
+                        </div>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                          <span>📂 C:\WorkFree_Export\2026_Invoices\</span>
+                          <span className="text-emerald-400 font-bold">{demoSavedCount >= 100 ? "✓ 100개 완료 (0.8s)" : "자동 처리 중..."}</span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[10px]">
+                          {Array.from({ length: Math.min(demoSavedCount, 12) }).map((_, idx) => (
+                            <div key={idx} className="p-1.5 rounded bg-slate-900 border border-emerald-500/40 text-emerald-300 flex items-center space-x-1 truncate">
+                              <span className="text-rose-400">📄</span>
+                              <span className="truncate">거래처_{(idx + 1).toString().padStart(3, '0')}.pdf</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
-                    {/* Folder output popup */}
-                    <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span>📂 C:\Company_Data\PDF_Export\</span>
-                        <span className="text-emerald-400 font-bold">{demoSavedCount >= 100 ? "✓ 100개 완료 (0.8s)" : "자동 처리 중..."}</span>
+                    <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                      <div className="text-cyan-400 font-bold text-sm">💡 09~10강 일괄 저장 데모</div>
+                      <p>
+                        반복적으로 개별 시트마다 PDF 저장 버튼 누르고 파일명 바꾸던 600분 노가다를 단 <strong className="text-white">0.8초 만에 100개 완료</strong>합니다.
+                      </p>
+                      <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-cyan-200 font-semibold text-[11px]">
+                        내 엑셀 리본 메뉴 상단에 커스텀 버튼으로 평생 연동됩니다.
                       </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[10px]">
-                        {Array.from({ length: Math.min(demoSavedCount, 12) }).map((_, idx) => (
-                          <div key={idx} className="p-1.5 rounded bg-slate-900 border border-emerald-500/40 text-emerald-300 flex items-center space-x-1 truncate">
-                            <span className="text-rose-400">📄</span>
-                            <span className="truncate">거래처_{(idx + 1).toString().padStart(3, '0')}.pdf</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 2: File Open Demo (02강) */}
+                {activeDemoTab === "fileOpen" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center animate-fadeIn">
+                    <div className="lg:col-span-8 rounded-2xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-inner">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
+                        <div className="flex items-center space-x-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                          <span className="text-slate-200 font-bold ml-1">Microsoft Excel Ribbon Menu Bar</span>
+                        </div>
+                        <span className="text-yellow-400 font-bold">Demo #2 (02강)</span>
+                      </div>
+
+                      {/* Simulated Ribbon Button */}
+                      <div className="p-3 rounded-xl bg-slate-950 border border-yellow-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div className="space-y-1">
+                          <div className="text-[10px] text-slate-400 font-mono">엑셀 상단 리본 메뉴 등록 커스텀 버튼:</div>
+                          <button
+                            onClick={() => {
+                              setFileOpenStatus(true);
+                              setTimeout(() => setFileOpenStatus(false), 3000);
+                            }}
+                            className="px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-yellow-500/20 flex items-center space-x-2 cursor-pointer active:scale-95 ring-2 ring-yellow-300"
+                          >
+                            <span>📁 2026_상반기_재무보고서_최종.xlsx 즉시 열기 (클릭!)</span>
+                          </button>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-[10px] font-mono text-slate-400">속도: 0.1초</span>
+                        </div>
+                      </div>
+
+                      {/* File Open Result Window */}
+                      <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 font-mono">
+                        <div className="text-[11px] text-slate-400">
+                          📂 Target Path: <span className="text-cyan-300">C:\Users\Office\Documents\2026\Finance\Reports\Final_Master_Data.xlsx</span>
+                        </div>
+                        {fileOpenStatus ? (
+                          <div className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center space-x-2 animate-bounce">
+                            <span>✅ 0.1초 만에 복잡한 깊은 경로의 업무 엑셀 파일이 즉시 활성화되었습니다!</span>
                           </div>
-                        ))}
-                        {demoSavedCount === 0 && (
-                          <div className="col-span-4 py-4 text-center text-slate-500 text-xs">
-                            ▶ 버튼 클릭 시 3초 만에 100개 파일이 시트별로 분리 저장됩니다.
+                        ) : (
+                          <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 text-xs">
+                            ▶ 버튼을 클릭하면 탐색기 10단계 폴더를 뒤질 필요 없이 0.1초 만에 바로 파일이 화면에 열립니다.
                           </div>
                         )}
                       </div>
                     </div>
-                  </div>
 
-                  {/* Trust copy card */}
-                  <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
-                    <div className="text-cyan-400 font-bold text-sm">💡 신뢰도 차이가 압도적인 이유</div>
-                    <p>
-                      텍스트로 <strong className="text-white">&quot;10시간 ➔ 1시간&quot;</strong>이라고 적어두는 것보다,
-                      실제로 내 눈앞에서 버튼 하나 누르자마자 100개 거래처 보고서가 3초 만에 쏟아지는 걸 보는 것은 전혀 다릅니다.
-                    </p>
-                    <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-cyan-200 font-semibold text-[11px]">
-                      WorkFree 마스터클래스에서 배우는 매크로는 당신의 PC 엑셀 상단 리본 메뉴에 버튼으로 평생 등록됩니다.
+                    <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                      <div className="text-yellow-400 font-bold text-sm">💡 02강 파일 즉시 오픈 데모</div>
+                      <p>
+                        매일 아침 탐색기 열어서 <strong className="text-white">&apos;문서 ➔ 2026년 ➔ 재무 ➔ 보고서&apos;</strong> 폴더 클릭클릭 하던 시간을 엑셀 리본 메뉴 버튼 1번으로 완전히 단축시킵니다.
+                      </p>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {/* TAB 3: Amount Aggregation Demo (04~05강) */}
+                {activeDemoTab === "aggregate" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center animate-fadeIn">
+                    <div className="lg:col-span-8 rounded-2xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-inner">
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
+                        <div className="flex items-center space-x-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                          <span className="text-slate-200 font-bold ml-1">Microsoft Excel - [월별_통화별_합산 automation.xlsm]</span>
+                        </div>
+                        <span className="text-emerald-400 font-bold">Demo #3 (04-05강)</span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-emerald-500/30">
+                        <button
+                          onClick={() => {
+                            setIsAggregating(true);
+                            setTimeout(() => setIsAggregating(false), 600);
+                          }}
+                          className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 flex items-center space-x-2 cursor-pointer active:scale-95 ring-2 ring-emerald-300"
+                        >
+                          <span>⚡ 1,000건 로우 데이터 ➔ 월별/통화별 합산표 즉시 생성 (클릭!)</span>
+                        </button>
+                        <span className="text-xs font-mono text-emerald-400 font-bold">0.3초 집계</span>
+                      </div>
+
+                      {/* Raw vs Aggregated Result Grid */}
+                      <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs">
+                        {isAggregating ? (
+                          <div className="py-6 text-center text-cyan-300 font-bold animate-pulse">
+                            ⚙️ AI VBA 매크로가 1,000개 로우 데이터의 만기일, 통화(USD/EUR/KRW), 금액 열을 분석 중...
+                          </div>
+                        ) : (
+                          <div className="space-y-2">
+                            <div className="text-[11px] text-slate-400 font-bold">📊 생성 완료된 월별·통화별 자동 합산 요약표:</div>
+                            <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+                              <div className="p-2.5 rounded-lg bg-slate-900 border border-cyan-500/40">
+                                <div className="text-slate-400 text-[10px]">USD (달러) 합계</div>
+                                <div className="text-cyan-300 font-black text-sm">$450,000</div>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-slate-900 border border-purple-500/40">
+                                <div className="text-slate-400 text-[10px]">EUR (유로) 합계</div>
+                                <div className="text-purple-300 font-black text-sm">€180,000</div>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-slate-900 border border-amber-500/40">
+                                <div className="text-slate-400 text-[10px]">KRW (원화) 합계</div>
+                                <div className="text-amber-300 font-black text-sm">₩350,000,000</div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-4 space-y-3 text-slate-300 text-xs leading-relaxed break-keep bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                      <div className="text-emerald-400 font-bold text-sm">💡 04~05강 금액 집계 데모</div>
+                      <p>
+                        서로 다른 통화와 만기일이 섞여 있는 로우 데이터를 손으로 피벗 테이블 만들고 함수 필터링하던 업무를 <strong className="text-white">버튼 단 1번 클릭 0.3초</strong>로 자동 집계합니다.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>
