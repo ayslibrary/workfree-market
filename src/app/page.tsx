@@ -2830,24 +2830,13 @@ export default function Home() {
               )}
 
               <div className="space-y-1.5 text-left">
-                <label className="block text-xs font-bold text-slate-300">이메일</label>
+                <label className="block text-xs font-bold text-slate-300">이메일 주소</label>
                 <input
                   type="email"
                   placeholder="example@email.com"
                   value={authEmail}
                   onChange={(e) => setAuthEmail(e.target.value)}
-                  className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
-                />
-              </div>
-
-              <div className="space-y-1.5 text-left">
-                <label className="block text-xs font-bold text-slate-300">비밀번호</label>
-                <input
-                  type="password"
-                  placeholder="비밀번호 입력 (6자 이상)"
-                  value={authPassword}
-                  onChange={(e) => setAuthPassword(e.target.value)}
-                  className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
+                  className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all font-mono"
                 />
               </div>
 
@@ -2912,10 +2901,6 @@ export default function Home() {
                     alert("이메일을 입력해 주세요.");
                     return;
                   }
-                  if (!authPassword || authPassword.length < 4) {
-                    alert("비밀번호를 입력해 주세요. (4자 이상)");
-                    return;
-                  }
                   if (authTab === "join" && !agreeTerms) {
                     alert("개인정보 수집 및 이용약관 동의가 필요합니다.");
                     return;
@@ -2923,29 +2908,19 @@ export default function Home() {
                   const name = authName.trim() || authEmail.split("@")[0] || "수강생";
 
                   try {
-                    if (authTab === "join") {
-                      const { data, error } = await supabase.auth.signUp({
-                        email: authEmail,
-                        password: authPassword,
-                        options: {
-                          data: {
-                            name: name,
-                            full_name: name,
-                            display_name: name,
-                          },
+                    const { error } = await supabase.auth.signInWithOtp({
+                      email: authEmail,
+                      options: {
+                        data: {
+                          name: name,
+                          full_name: name,
+                          display_name: name,
                         },
-                      });
-                      if (error) {
-                        console.warn("Supabase auth signup warning:", error.message);
-                      }
-                    } else {
-                      const { data, error } = await supabase.auth.signInWithPassword({
-                        email: authEmail,
-                        password: authPassword,
-                      });
-                      if (error) {
-                        console.warn("Supabase login warning:", error.message);
-                      }
+                        emailRedirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+                      },
+                    });
+                    if (error) {
+                      console.warn("Supabase magic link warning:", error.message);
                     }
                   } catch (e) {
                     console.error("Supabase auth sync error:", e);
@@ -2955,12 +2930,12 @@ export default function Home() {
                   setCurrentUser(userObj);
                   localStorage.setItem("workfree_user", JSON.stringify(userObj));
                   setShowAuthModal(false);
-                  alert(`🎉 ${name}님, ${authTab === "join" ? "이메일 회원가입" : "이메일 로그인"}이 완료되었습니다!`);
+                  alert(`📩 ${authEmail} (으)로 비밀번호 없는 [1초 로그인 링크]가 전송되었습니다!\n메일함에서 [로그인 →] 버튼을 누르시면 즉시 인증됩니다.`);
                   setShowPaymentNoticeModal(true);
                 }}
-                className="w-full py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer mt-2 text-center"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all active:scale-95 cursor-pointer mt-2 text-center"
               >
-                {authTab === "join" ? "이메일 회원가입" : "이메일 로그인"}
+                ⚡ 이메일로 1초 로그인 링크 받기 ➔
               </button>
             </div>
 
