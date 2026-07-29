@@ -1540,28 +1540,42 @@ export default function Home() {
                       🔥 90% 얼리버드 특가 <span className="line-through text-slate-400 font-normal mr-1">50,000원</span> ➔ 5,000원
                     </div>
                     <p className="text-[11px] sm:text-xs font-medium leading-relaxed pt-1">
-                      <span>• 10개 실전 VBA 매크로 제작 (100분 완강)</span>
+                      <span>• <strong>온라인 인강 (5천원)</strong>: 10개 실전 VBA 매크로 100분 완강</span>
                       <br />
-                      <span>• ERP 로우 데이터 가공 10시간 ➔ 1시간 감축</span>
+                      <span>• <strong>8.8(토) 실강 (4만원)</strong>: 3시간 집중 오프라인/라이브 실강</span>
                       <br />
-                      <span>• AI(ChatGPT/Copilot)로 코드 생성 및 내 엑셀 리본 메뉴 아이콘 심기</span>
+                      <span>• <strong>1:1 맞춤 과외</strong>: 내 회사 엑셀 서식 직접 자동화 1:1 지도</span>
                       <br />
-                      <span className="font-bold block mt-2 text-slate-900">#노가다탈출 #나만의리본메뉴 #1초클릭</span>
+                      <span className="font-bold block mt-2 text-slate-900">#노가다탈출 #나만의리본메뉴 #1초클릭 #1대1과외가능</span>
                     </p>
                   </div>
 
                   <div className="space-y-2">
                     <button
                       onClick={() => setViewMode("classroom")}
-                      className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-yellow-300 font-black text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center break-keep"
+                      className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-yellow-300 font-black text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center break-keep"
                     >
-                      🎓 1단계 100분 완강 클래스 들으러 가기 ➔
+                      🎓 온라인 인강 100분 완강 들으러 가기 (5천원) ➔
                     </button>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setShowPaymentNoticeModal(true)}
+                        className="py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-amber-300 font-extrabold text-[10px] sm:text-[11px] shadow transition-all cursor-pointer text-center border border-amber-400/40 break-keep"
+                      >
+                        📅 8.8 실강 (4만원) ↗
+                      </button>
+                      <button
+                        onClick={() => setShowInquiryModal(true)}
+                        className="py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-purple-200 font-extrabold text-[10px] sm:text-[11px] shadow transition-all cursor-pointer text-center border border-purple-400/40 break-keep"
+                      >
+                        💬 1:1 과외 문의 ↗
+                      </button>
+                    </div>
                     <a
                       href="/textbook.html"
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full py-2 rounded-xl bg-slate-950/80 hover:bg-slate-900 text-slate-900 bg-amber-400 hover:bg-amber-300 font-extrabold text-[11px] sm:text-xs shadow transition-all cursor-pointer block text-center border border-yellow-300 break-keep"
+                      className="w-full py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-[11px] shadow transition-all cursor-pointer block text-center border border-yellow-300 break-keep"
                     >
                       📖 LV.01 실전 웹교재 무료 예습하기 ↗
                     </a>
