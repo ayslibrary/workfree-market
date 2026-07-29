@@ -177,6 +177,7 @@ export default function Home() {
   const [calcDailyHours, setCalcDailyHours] = useState<number>(3);
   const [calcFrequency, setCalcFrequency] = useState<number>(5);
   const [hourlyWage, setHourlyWage] = useState<number>(15000); // Priority 1: Hourly wage input
+  const [selectedReviewImage, setSelectedReviewImage] = useState<string | null>(null);
 
   // Priority 3: 8.8(Sat) Live Class Early bird recruitment states
   const LIVE_CLASS_MAX_SEATS = 5;
@@ -989,6 +990,182 @@ export default function Home() {
                   </div>
                 )}
               </div>
+            </div>
+          </section>
+
+          {/* REAL KARROT MARKET REVIEWS SECTION (#reviews) */}
+          <section id="reviews" className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 scroll-mt-20 py-8">
+            <div className="text-center space-y-3 break-keep">
+              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-400 text-xs font-black border border-orange-500/30">
+                <span className="text-sm">🥕</span>
+                <span>당근마켓 100% 찐 수강생 내돈내산 검증 후기</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+                &quot;VBA 몰랐는데 다음 날 회사에서 바로 썼습니다!&quot;
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                당근마켓 이웃 수강생분들이 직접 남겨주신 솔직 100% 실시간 수강 평가입니다. (평점 ★ 5.0 만점)
+              </p>
+            </div>
+
+            {/* Review Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Review Card 1 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-orange-500/40 transition-all space-y-4 shadow-xl flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
+                        Alan
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">AlanRunner</div>
+                        <div className="text-[10px] text-slate-400">군자동 · 당근 인증 3일 전</div>
+                      </div>
+                    </div>
+                    <span className="text-amber-400 font-bold text-xs">★★★★★ 5.0</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-2 py-0.5 rounded bg-orange-500/20 text-orange-300 text-[10px] font-semibold border border-orange-500/30">#비개발자 강추</span>
+                    <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-semibold border border-cyan-500/30">#자연어VBA생성</span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    &quot;VBA를 몰라도 실무 자동화에 충분히 도전할 수 있는 시대가 왔다는 걸 느꼈습니다. 생성형 AI를 활용해 자연어만으로 VBA 코드를 만들고 오류 수정까지 진행할 수 있어 비개발자도 부담 없이 시작할 수 있었습니다.&quot;
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_3.jpg")}
+                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <span>📸 당근 캡처 원본 크게 보기</span>
+                </button>
+              </div>
+
+              {/* Review Card 2 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-orange-500/40 transition-all space-y-4 shadow-xl flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
+                        모나
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">모나리자</div>
+                        <div className="text-[10px] text-slate-400">잠실6동 · 당근 인증 1일 전</div>
+                      </div>
+                    </div>
+                    <span className="text-amber-400 font-bold text-xs">★★★★★ 5.0</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-[10px] font-semibold border border-yellow-500/30">#내리본만들기</span>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold border border-emerald-500/30">#회사서복습연습</span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    &quot;강사님 설명이 정말 친절하고 실습 위주라 지루하지 않았습니다. AI를 이용하니까 생각보다 훨씬 쉽게 매크로를 만들 수 있었고, 내 리본을 만든다는게 인상깊었습니다. 실무자분들께 추천합니다.&quot;
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_4.jpg")}
+                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <span>📸 당근 캡처 원본 크게 보기</span>
+                </button>
+              </div>
+
+              {/* Review Card 3 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-orange-500/40 transition-all space-y-4 shadow-xl flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
+                        아나
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">아나볼릭</div>
+                        <div className="text-[10px] text-slate-400">중곡동 · 당근 인증 4일 전</div>
+                      </div>
+                    </div>
+                    <span className="text-amber-400 font-bold text-xs">★★★★★ 5.0</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-semibold border border-rose-500/30">#야근탈출</span>
+                    <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-semibold border border-cyan-500/30">#다음날즉시적용</span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    &quot;엑셀 반복 업무 때문에 야근이 많았는데, 강의 듣고 바로 다음 날 제 업무를 자동화할 수 있을 거 같아요. VBA를 전혀 몰랐는데도 AI를 활용해서 매크로를 만들고 버튼 한 번으로 실행되니 신기합니다!&quot;
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_2.jpg")}
+                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <span>📸 당근 캡처 원본 크게 보기</span>
+                </button>
+              </div>
+
+              {/* Review Card 4 */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-orange-500/40 transition-all space-y-4 shadow-xl flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
+                        오후
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">좋은오후</div>
+                        <div className="text-[10px] text-slate-400">잠실7동 · 당근 인증 13회</div>
+                      </div>
+                    </div>
+                    <span className="text-amber-400 font-bold text-xs">★★★★★ 5.0</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold border border-emerald-500/30">#실무커스터마이징</span>
+                    <span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-semibold border border-purple-500/30">#실제회사사용</span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    &quot;단순히 VBA 문법을 배우는 수업이 아니라 제 업무를 자동화하는 방법을 배웠습니다. 실무 예제로 연습해서 바로 제 업무에 커스터마이징했고, 다음 날부터 실제 회사에서 사용하고 있습니다.&quot;
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_2.jpg")}
+                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                >
+                  <span>📸 당근 캡처 원본 크게 보기</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Direct Karrot Profile Link Banner */}
+            <div className="p-6 rounded-3xl bg-gradient-to-r from-orange-500/20 via-amber-500/15 to-orange-500/20 border border-orange-500/40 text-center space-y-4 shadow-2xl">
+              <div className="space-y-1">
+                <div className="text-base font-extrabold text-white">
+                  🥕 당근마켓 강사 프로필에서 수강생 100% 찐 평점과 후기를 직접 확인하세요!
+                </div>
+                <p className="text-xs text-slate-300">
+                  당근마켓 공식 이웃 인증 수강생들의 후기가 실시간으로 업데이트됩니다.
+                </p>
+              </div>
+
+              <a
+                href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/30 transition-all active:scale-95 cursor-pointer"
+              >
+                <span>🥕 당근마켓 수강생 실제 후기 전체 보러가기 (프로필 연동) ↗</span>
+              </a>
             </div>
           </section>
 
@@ -3050,6 +3227,41 @@ export default function Home() {
               >
                 확인 및 닫기
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Karrot Review Screenshot Lightbox Modal */}
+      {selectedReviewImage && (
+        <div
+          onClick={() => setSelectedReviewImage(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md cursor-pointer animate-fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-2xl max-h-[90vh] bg-slate-900 border border-slate-700 rounded-3xl p-5 overflow-hidden shadow-2xl space-y-3 flex flex-col"
+          >
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span className="text-xs sm:text-sm font-extrabold text-orange-400 flex items-center space-x-1.5">
+                <span>🥕 당근마켓 100% 찐 수강생 원본 캡처 화면</span>
+              </span>
+              <button
+                onClick={() => setSelectedReviewImage(null)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="overflow-y-auto max-h-[75vh] rounded-xl border border-slate-800 p-2 bg-slate-950 flex justify-center">
+              <img
+                src={selectedReviewImage}
+                alt="당근마켓 수강생 후기 원본 캡처"
+                className="w-full h-auto object-contain rounded-lg shadow-lg"
+              />
+            </div>
+            <div className="text-center text-[11px] text-slate-400 font-medium">
+              배경이나 ✕ 버튼을 클릭하시면 창이 닫힙니다.
             </div>
           </div>
         </div>
