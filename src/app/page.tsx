@@ -2839,6 +2839,17 @@ export default function Home() {
                 />
               </div>
 
+              <div className="space-y-1.5 text-left">
+                <label className="block text-xs font-bold text-slate-300">비밀번호</label>
+                <input
+                  type="password"
+                  placeholder="비밀번호 입력 (6자 이상)"
+                  value={authPassword}
+                  onChange={(e) => setAuthPassword(e.target.value)}
+                  className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
+                />
+              </div>
+
               {authTab === "join" && (
                 <div className="space-y-2.5 pt-1 text-left text-[11px] text-slate-300">
                   <div className="flex items-center justify-between">
@@ -2894,6 +2905,10 @@ export default function Home() {
                 onClick={() => {
                   if (!authEmail) {
                     alert("이메일을 입력해 주세요.");
+                    return;
+                  }
+                  if (!authPassword) {
+                    alert("비밀번호를 입력해 주세요.");
                     return;
                   }
                   if (authTab === "join" && !agreeTerms) {
