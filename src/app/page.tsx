@@ -350,6 +350,44 @@ export default function Home() {
     filename: string;
   } | null>(null);
 
+  // Expert Review Point 1 Fix: Next Cohort Waitlist Modal State & Handler
+  const [showWaitlistModal, setShowWaitlistModal] = useState<boolean>(false);
+  const [waitlistContact, setWaitlistContact] = useState<string>("");
+  const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState<boolean>(false);
+
+  const handleSaveWaitlist = async () => {
+    if (!waitlistContact.trim()) {
+      alert("카카오톡 ID 또는 이메일을 입력해 주세요.");
+      return;
+    }
+    setIsSubmittingWaitlist(true);
+    try {
+      const prevWaitlist = JSON.parse(localStorage.getItem("workfree_waitlist_leads") || "[]");
+      prevWaitlist.push({ contact: waitlistContact.trim(), requested_at: new Date().toLocaleString("ko-KR") });
+      localStorage.setItem("workfree_waitlist_leads", JSON.stringify(prevWaitlist));
+
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            waitlist_requested: true,
+            waitlist_contact: waitlistContact.trim(),
+            requested_at: new Date().toLocaleString("ko-KR"),
+          },
+        });
+      } catch (e) {
+        console.warn("Waitlist Supabase sync error:", e);
+      }
+
+      alert("🎉 다음 회차 알림 신청이 완료되었습니다!\n8.8 실강 마감 후 다음 회차 일정(8월 중순)이 확정되는 즉시 가장 먼저 카카오톡/이메일로 안내해 드리겠습니다.");
+      setWaitlistContact("");
+      setShowWaitlistModal(false);
+    } catch (err: any) {
+      alert(`알림 신청 처리 중 오류: ${err?.message || err}`);
+    } finally {
+      setIsSubmittingWaitlist(false);
+    }
+  };
+
   const handleGenerateAgentCode = async (promptText: string) => {
     if (!promptText.trim()) {
       alert("자동화하고 싶으신 업무 내용을 자연어로 입력해 주세요.");
@@ -841,32 +879,43 @@ export default function Home() {
               당신이 자리를 비워도 스스로 돌아가는 &apos;업무 에이전트&apos;를 구축하는 여정입니다.
             </p>
 
-            {/* Hero Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 w-full sm:w-auto">
-              <button
-                onClick={() => setViewMode("classroom")}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-cyan-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-cyan-400/50"
-              >
-                <span>⚡ 10시간 엑셀 1시간으로 줄이기 (LV.01 수강) ➔</span>
-              </button>
-              <button
-                onClick={() => setShowAgentModal(true)}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-black text-xs sm:text-base shadow-xl shadow-purple-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5 ring-2 ring-purple-400/50"
-              >
-                <span>🤖 AI 업무자동화 에이전트 체험하기 (베타) ➔</span>
-              </button>
+            {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
+            <div className="w-full max-w-xl mx-auto space-y-3 pt-2">
               <button
                 onClick={() => setShowPaymentNoticeModal(true)}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-base shadow-xl shadow-yellow-500/25 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap"
+                className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-base sm:text-lg shadow-2xl shadow-yellow-500/30 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap border border-yellow-300"
               >
-                ⚡ 8.8(토) 실강 4만원 얼리버드 (잔여 1석) ↗
+                ⚡ 8.8(토) 3시간 실강 4만원 신청하기 (잔여 1석) ↗
               </button>
-              <a
-                href="#reviews"
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/40 hover:border-orange-400 text-orange-300 font-bold text-xs sm:text-base shadow-xl transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap flex items-center justify-center space-x-1.5"
-              >
-                <span>🥕 당근마켓 찐 수강후기 ➔</span>
-              </a>
+              
+              <div className="flex justify-between items-center text-[11px] sm:text-xs text-slate-400 font-mono px-1">
+                <span className="text-amber-400 font-bold">D-{timeLeft.days} · {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
+                <span>정원 5명 중 4명 모집 완료</span>
+              </div>
+
+              {/* Secondary Options Line (Redesign Blueprint) */}
+              <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-300">
+                <button
+                  onClick={() => setViewMode("classroom")}
+                  className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
+                >
+                  ▶️ 5천원 인강 LV.01 (100분 완강) 보기
+                </button>
+                <span>•</span>
+                <button
+                  onClick={() => setShowWaitlistModal(true)}
+                  className="text-amber-300 hover:text-amber-200 font-bold underline cursor-pointer"
+                >
+                  🔔 마감 시 다음 회차 알림 신청
+                </button>
+                <span>•</span>
+                <button
+                  onClick={() => setShowAgentModal(true)}
+                  className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
+                >
+                  🤖 AI 에이전트 빌더 (베타)
+                </button>
+              </div>
             </div>
           </section>
 
@@ -1882,40 +1931,112 @@ export default function Home() {
           </section>
 
           {/* 1:1 LESSON & OUTSOURCING (1:1 과외 & 외주 제작 서비스) */}
-          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+          <section id="roadmap-prices" className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
             <div className="text-center space-y-2">
               <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold border border-cyan-500/30">
-                💎💎 수업 유형 및 외주 제작 안내
+                💎💎 단계별 학습 로드맵 및 서비스 가격
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">맞춤 과외 &amp; 자동화 대행 서비스</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">WorkFree 자동화 가격 사다리</h2>
+              <p className="text-xs text-slate-400">개발자가 아니어도 체감하는 3단계 파이프라인 및 맞춤 외주 제작</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                <div className="text-cyan-400 font-extrabold text-sm uppercase">교육반</div>
-                <h3 className="font-bold text-lg text-white">2시간 집중 자동화 클래스</h3>
-                <div className="text-base font-bold text-cyan-300">4만 원</div>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              <div className="p-6 rounded-2xl bg-slate-900 border border-cyan-500/50 space-y-3 ring-1 ring-cyan-500/30">
+                <div className="text-cyan-400 font-extrabold text-xs uppercase font-mono">LV.01 온라인</div>
+                <h3 className="font-bold text-base text-white">10강 VOD 마스터클래스</h3>
+                <div className="text-lg font-black text-amber-400 font-mono">5,000원</div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  AI와 함께 나만의 매크로를 직접 제작해보는 기초 집중 교육
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 ring-1 ring-cyan-500/40">
-                <div className="text-blue-400 font-extrabold text-sm uppercase">1:1 맞춤반</div>
-                <h3 className="font-bold text-lg text-white">프로젝트형 1:1 과외</h3>
-                <div className="text-base font-bold text-blue-300">별도 협의</div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  내 업무 데이터 세트를 가져와 1:1로 직접 자동화하는 맞춤형 프로젝트
+                  10개 실전 매크로 · 100분 완강 · 결제 완료 즉시 수강 시작
                 </p>
               </div>
 
               <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                <div className="text-emerald-400 font-extrabold text-sm uppercase">외주 제작</div>
-                <h3 className="font-bold text-lg text-white">매크로 자동화 맞춤 제작</h3>
-                <div className="text-base font-bold text-emerald-300">별도 협의</div>
+                <div className="text-yellow-400 font-extrabold text-xs uppercase font-mono">LV.02 실강</div>
+                <h3 className="font-bold text-base text-white">No-Touch 파이프라인 (3시간)</h3>
+                <div className="text-lg font-black text-yellow-300 font-mono">10만원대~ <span className="text-[10px] text-slate-400 font-sans font-normal">(문의)</span></div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  당장 내일 급한 업무 자동화 매크로를 대신 개발해 드리는 대행 서비스
+                  Power Automate + VBA 연동 개입 0% 완전 자동화 실강
                 </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                <div className="text-blue-400 font-extrabold text-xs uppercase font-mono">LV.03 맞춤반</div>
+                <h3 className="font-bold text-base text-white">프로젝트형 1:1 과외</h3>
+                <div className="text-base font-bold text-blue-300 font-mono">상담 후 맞춤 견적</div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  내 실무 데이터 세트로 1:1 직접 구축하는 프리미엄 과외
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                <div className="text-emerald-400 font-extrabold text-xs uppercase font-mono">외주 제작</div>
+                <h3 className="font-bold text-base text-white">매크로 맞춤 개발 대행</h3>
+                <div className="text-base font-bold text-emerald-300 font-mono">상담 후 맞춤 견적</div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  당장 내일 급한 업무 자동화 매크로를 대신 제작해 드리는 대행
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* EXPERT REVIEW POINT 2 FIX: POST-PURCHASE UP-SELL FLOW SECTION */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 pt-4">
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-6">
+              <div className="space-y-1.5 text-center sm:text-left">
+                <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
+                  POST-PURCHASE JOURNEY
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white">LV.01 결제 후엔 무슨 일이 일어나나요?</h3>
+                <p className="text-xs text-slate-400">이미 지갑을 연 수강생이 가장 전환율이 높은 고객입니다 — 3단계 맞춤 후속 케어로 성장합니다.</p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                  <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase">STEP 01</span>
+                  <h4 className="font-bold text-sm text-white">LV.01 결제 완료</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    5,000원 결제 즉시 10강 플레이어 시청 및 실습 예제 (.zip) 파일 다운로드 시작
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                  <span className="text-[10px] font-mono text-amber-400 font-bold uppercase">STEP 02</span>
+                  <h4 className="font-bold text-sm text-white">3일 후 자동 커스터마이징 피드백</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    &quot;나만의 엑셀 리본 메뉴 잘 제작하셨나요?&quot; 실무 적용 Q&amp;A 후속 케어
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                  <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">STEP 03</span>
+                  <h4 className="font-bold text-sm text-white">LV.02/03 연계 확장</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    LV.02 파이프라인(10만원대~) &amp; 1:1 과외 문의로 무인 자동화 구축 상담 진행
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* EXPERT REVIEW POINT 1 FIX: NEXT COHORT WAITLIST BANNER SECTION */}
+          <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/40 space-y-5 shadow-2xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-mono font-bold border border-amber-500/40">
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span>8.8 마감 마감 대비 사전예약</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">8/8(토) 1석 마저 마감되면?</h3>
+                  <p className="text-xs text-slate-300">
+                    다음 회차(8월 중순) 일정이 열리는 즉시 가장 먼저 카카오톡/이메일로 알림을 보내드립니다.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setShowWaitlistModal(true)}
+                  className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 transition-all cursor-pointer whitespace-nowrap shrink-0 active:scale-95 border border-yellow-300"
+                >
+                  🔔 다음 회차 우선 알림 신청하기 ➔
+                </button>
               </div>
             </div>
           </section>
@@ -2885,6 +3006,64 @@ export default function Home() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* EXPERT REVIEW POINT 1 FIX: NEXT COHORT WAITLIST MODAL */}
+      {showWaitlistModal && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-lg bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto ring-1 ring-amber-500/30">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-500 text-slate-950 flex items-center justify-center text-xl font-bold shadow-lg shadow-amber-500/20 shrink-0">
+                  🔔
+                </div>
+                <div>
+                  <h3 className="font-black text-base sm:text-lg text-white">다음 회차 실강 알림 신청</h3>
+                  <p className="text-xs text-slate-400">
+                    8/8 실강 마감 직후, 다음 코호트(8월 중순) 일정이 열리면 가장 먼저 연락드립니다.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowWaitlistModal(false)}
+                className="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer shrink-0"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-1 text-xs text-amber-200">
+                <p className="font-bold">💡 알림 신청 혜택:</p>
+                <p className="text-[11px] text-amber-300/80">
+                  - 8.8 실강 마감 후 다음 일정(8월 중순) <strong>우선 수강권 부여</strong>
+                  <br />
+                  - 다음 회차 오픈 시 <strong>얼리버드 90% 할인 혜택 동일 유지</strong>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-300">카카오톡 ID 또는 이메일 주소:</label>
+                <input
+                  type="text"
+                  value={waitlistContact}
+                  onChange={(e) => setWaitlistContact(e.target.value)}
+                  placeholder="예: kakao_id1234 또는 name@email.com"
+                  className="w-full px-4 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-sans"
+                />
+              </div>
+
+              <button
+                onClick={handleSaveWaitlist}
+                disabled={isSubmittingWaitlist}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/20 transition-all cursor-pointer active:scale-95 disabled:opacity-50 border border-yellow-300"
+              >
+                {isSubmittingWaitlist ? "신청 처리 중..." : "🔔 다음 회차 우선 알림 신청하기 ➔"}
+              </button>
+            </div>
           </div>
         </div>
       )}
