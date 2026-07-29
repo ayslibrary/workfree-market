@@ -13,6 +13,14 @@ body {
   text-size-adjust: 100%;
   margin: 0;
   padding: 0;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* Global Korean Responsive Word-Wrapping & Layout Aspect Ratio Alignment */
+h1, h2, h3, h4, h5, h6, p, span, div, button, a, label, li {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 @keyframes fadeIn {
