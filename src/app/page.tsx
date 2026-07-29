@@ -891,21 +891,21 @@ export default function Home() {
               <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
             </div>
 
-            {/* Main Title - Super Simple Direct Impact Headline */}
+            {/* Main Title - Any Task 10 Hours to 1 Hour Miracle Headline */}
             <h1
               className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              10시간 걸리던 엑셀 업무,{" "}
-              <br className="sm:hidden" />
+              어떤 업무든 10시간이{" "}
+              <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                1초 만에 끝나는 기적.
+                1시간으로 줄어드는 기적.
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
-              회계·영업·인사·구매팀 실무자를 위한 클릭 한 번 무인 업무 자동화 마스터클래스
+              회계·영업·인사·구매 등 어떤 실무에도 즉시 적용하는 엑셀 자동화 &amp; AI 자율 파이프라인
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
