@@ -2950,18 +2950,15 @@ export default function Home() {
                       },
                     });
                     if (error) {
-                      console.warn("Supabase magic link warning:", error.message);
+                      alert(`오류가 발생했습니다: ${error.message}`);
+                      return;
                     }
                   } catch (e) {
                     console.error("Supabase auth sync error:", e);
                   }
 
-                  const userObj = { name, email: authEmail };
-                  setCurrentUser(userObj);
-                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
                   setShowAuthModal(false);
-                  alert(`📩 ${authEmail} (으)로 비밀번호 없는 [1초 로그인 링크]가 전송되었습니다!\n메일함에서 [로그인 →] 버튼을 누르시면 즉시 인증됩니다.`);
-                  setShowPaymentNoticeModal(true);
+                  alert(`📩 ${authEmail} (으)로 1초 로그인 메일이 발송되었습니다!\n\n이메일함(Gmail/네이버 등)으로 이동하셔서 [로그인 ➔] 버튼을 클릭해 주세요.`);
                 }}
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all active:scale-95 cursor-pointer mt-2 text-center"
               >
