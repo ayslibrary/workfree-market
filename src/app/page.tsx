@@ -891,20 +891,21 @@ export default function Home() {
               <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
             </div>
 
-            {/* Main Title - Distinctive Unique Impact Headline */}
+            {/* Main Title - Super Simple Direct Impact Headline */}
             <h1
               className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              엑셀 칼퇴 치트키,{" "}
+              10시간 걸리던 엑셀 업무,{" "}
+              <br className="sm:hidden" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                나만의 [1초 AI 단추] 만들기.
+                1초 만에 끝나는 기적.
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
-              회계·영업·인사·구매팀 실무자를 위한 복사·붙여넣기·PDF·이메일 무인 자동화 파이프라인
+              회계·영업·인사·구매팀 실무자를 위한 클릭 한 번 무인 업무 자동화 마스터클래스
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
