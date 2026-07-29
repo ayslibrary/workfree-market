@@ -903,6 +903,15 @@ export default function Home() {
 
               {/* Secondary Options Line (Redesign Blueprint) */}
               <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-300">
+                <a
+                  href="/textbook.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-teal-300 hover:text-teal-200 font-bold underline cursor-pointer"
+                >
+                  📖 엑셀 실전 웹교재 체험 (무료 열람) ↗
+                </a>
+                <span>•</span>
                 <button
                   onClick={() => setViewMode("classroom")}
                   className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
@@ -921,7 +930,7 @@ export default function Home() {
                   onClick={() => setShowAgentModal(true)}
                   className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
                 >
-                  🤖 AI 에이전트 빌더 (베타)
+                  ⚡ AI 매크로 자동 생성 및 튜토리얼
                 </button>
               </div>
             </div>
@@ -1570,13 +1579,21 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div>
+                  <div className="space-y-2">
                     <button
                       onClick={() => setShowInquiryModal(true)}
                       className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-purple-200 font-bold text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-purple-400/30 break-keep"
                     >
                       💬 라이브 실강 요청 문의 ↗
                     </button>
+                    <a
+                      href="/textbook.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2 rounded-xl bg-slate-950/70 hover:bg-slate-900 text-amber-300 font-bold text-[11px] sm:text-xs shadow transition-all cursor-pointer block text-center border border-yellow-400/40 break-keep"
+                    >
+                      📖 실전 웹교재 미리보기 (무료 열람) ↗
+                    </a>
                   </div>
                 </div>
 
