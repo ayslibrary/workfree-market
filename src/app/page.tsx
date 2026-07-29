@@ -1025,7 +1025,7 @@ export default function Home() {
                         Alan
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white">AlanRunner</div>
+                        <div className="text-xs font-bold text-white">AlanR***</div>
                         <div className="text-[10px] text-slate-400">군자동 · 당근 인증 3일 전</div>
                       </div>
                     </div>
@@ -1059,7 +1059,7 @@ export default function Home() {
                         모나
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white">모나리자</div>
+                        <div className="text-xs font-bold text-white">모나*자</div>
                         <div className="text-[10px] text-slate-400">잠실6동 · 당근 인증 1일 전</div>
                       </div>
                     </div>
@@ -1093,7 +1093,7 @@ export default function Home() {
                         아나
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white">아나볼릭</div>
+                        <div className="text-xs font-bold text-white">아나**</div>
                         <div className="text-[10px] text-slate-400">중곡동 · 당근 인증 4일 전</div>
                       </div>
                     </div>
@@ -1127,7 +1127,7 @@ export default function Home() {
                         오후
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white">좋은오후</div>
+                        <div className="text-xs font-bold text-white">좋은**</div>
                         <div className="text-[10px] text-slate-400">잠실7동 · 당근 인증 13회</div>
                       </div>
                     </div>
