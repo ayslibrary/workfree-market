@@ -3004,17 +3004,7 @@ export default function Home() {
                 >
                   📧 엑셀 미수금 명단 읽고 개별 메일 자동 전송
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAgentFilePath("C:\\Users\\Office\\Documents\\디버깅대상.xlsm");
-                    setAgentSheetName("Main");
-                    handleRunAgentPreset("vba_debug");
-                  }}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-500/40 text-xs font-semibold text-cyan-200 transition-all cursor-pointer"
-                >
-                  🔍 VBA 런타임 오류 1004 원인 분석 &amp; 디버깅
-                </button>
+
               </div>
             </div>
 
