@@ -885,34 +885,26 @@ export default function Home() {
       {viewMode === "landing" && (
         <div className="flex-1 space-y-0 pb-20 bg-slate-950">
           <section className="relative pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
-            {/* Top Nomad Coders Style Tag Pill */}
+            {/* Top Tag Pill */}
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-black tracking-wider shadow-lg">
               <span>🚀 WORKPLACE FREE CLASS</span>
             </div>
 
-            {/* Priority 3: Top Live Recruitment Alert Pill */}
-            <div className="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] sm:text-xs font-black shadow-lg backdrop-blur-md break-keep">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shrink-0"></span>
-              <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
-            </div>
-
-            {/* Main Title - Nomad Coders 1:1 Matched Punchy Style */}
+            {/* Main Title - Clean & Focused Impact Headline */}
             <h1
-              className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-none break-keep space-y-1 sm:space-y-2"
+              className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              <span className="block text-white">Automate Work.</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                Kill Overtime.
-              </span>
-              <span className="block text-xl sm:text-3xl md:text-4xl font-extrabold text-cyan-300 pt-2">
-                자동화는 진짜 내 업무를 바꿔보는거야!
+              직장인을 위한{" "}
+              <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
+                1초 AI 엑셀 자동화.
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
-            <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep pt-1">
-              실제 엑셀 업무를 따라 하며 나만의 무인 에이전트를 만드세요.
+            <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep">
+              실제 내 업무를 따라 하며 나만의 무인 에이전트를 만드세요.
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
