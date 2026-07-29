@@ -971,12 +971,17 @@ export default function Home() {
                   </div>
                   <div className="relative aspect-[9/16] max-h-[420px] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner flex items-center justify-center">
                     <video
-                      src="/shorts_demo.mp4"
                       controls
+                      autoPlay
+                      muted
+                      loop
                       playsInline
-                      preload="metadata"
-                      className="w-full h-full object-contain rounded-xl"
-                    ></video>
+                      preload="auto"
+                      className="w-full h-full object-cover rounded-xl"
+                    >
+                      <source src="/shorts_demo.mp4" type="video/mp4" />
+                      브라우저가 동영상 재생을 지원하지 않습니다.
+                    </video>
                   </div>
                   <div className="text-center text-[11px] text-slate-300 font-medium break-keep pt-1">
                     💡 <strong>실제 엑셀 AI 자동화 구동 시연 영상</strong>입니다. ▶ 버튼을 눌러보세요!
