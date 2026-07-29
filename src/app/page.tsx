@@ -885,6 +885,11 @@ export default function Home() {
       {viewMode === "landing" && (
         <div className="flex-1 space-y-0 pb-20 bg-slate-950">
           <section className="relative pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
+            {/* Top Nomad Coders Style Tag Pill */}
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-black tracking-wider shadow-lg">
+              <span>🚀 WORKPLACE FREE CLASS</span>
+            </div>
+
             {/* Priority 3: Top Live Recruitment Alert Pill */}
             <div className="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] sm:text-xs font-black shadow-lg backdrop-blur-md break-keep">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shrink-0"></span>
