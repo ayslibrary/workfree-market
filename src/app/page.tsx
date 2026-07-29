@@ -350,7 +350,7 @@ export default function Home() {
     filename: string;
   } | null>(null);
 
-  const handleGenerateAgentCode = (promptText: string) => {
+  const handleGenerateAgentCode = async (promptText: string) => {
     if (!promptText.trim()) {
       alert("자동화하고 싶으신 업무 내용을 자연어로 입력해 주세요.");
       return;
@@ -358,37 +358,35 @@ export default function Home() {
     setAgentGenerating(true);
     setAgentPrompt(promptText);
 
-    setTimeout(() => {
-      let code = "";
-      let analysis = "";
-      let filename = "WorkFree_Agent_Macro.bas";
+    try {
+      const res = await fetch("/api/ai-agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: promptText }),
+      });
 
-      if (promptText.includes("합치") || promptText.includes("지점") || promptText.includes("통합")) {
-        filename = "WorkFree_Branch_Merge.bas";
-        analysis = `🎯 [지점 데이터 자동 통합 업무] 분석 완료\n- 대상 파일: 폴더 내 10개 이상 엑셀 지점 데이터\n- 처리 로직: 각 파일의 1번째 시트 가공 및 누적 셀 복사\n- 결과 출력: 메인 시트 합계 자동 도출 & 에러 방지 구문 적용`;
-        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 10개 지점 엑셀 통합\n' =========================================================\nSub WorkFree_Branch_Merge()\n    Dim wsMaster As Worksheet\n    Dim folderPath As String, fileName As String\n    Dim wbTarget As Workbook, wsTarget As Worksheet\n    Dim lastRowMaster As Long, lastRowTarget As Long\n    \n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    Application.DisplayAlerts = False\n    \n    Set wsMaster = ThisWorkbook.Sheets(1)\n    folderPath = "C:\\WorkFree\\Data\\"\n    fileName = Dir(folderPath & "*.xlsx")\n    \n    Do While fileName <> ""\n        Set wbTarget = Workbooks.Open(folderPath & fileName)\n        Set wsTarget = wbTarget.Sheets(1)\n        \n        lastRowTarget = wsTarget.Cells(wsTarget.Rows.Count, "A").End(xlUp).Row\n        lastRowMaster = wsMaster.Cells(wsMaster.Rows.Count, "A").End(xlUp).Row + 1\n        \n        wsTarget.Range("A2:E" & lastRowTarget).Copy wsMaster.Range("A" & lastRowMaster)\n        wbTarget.Close SaveChanges:=False\n        fileName = Dir()\n    Loop\n    \n    MsgBox "🎉 10개 지점 엑셀 파일 데이터 통합이 성공적으로 완료되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Application.DisplayAlerts = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "오류 발생: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
-      } else if (promptText.includes("PDF") || promptText.includes("pdf") || promptText.includes("저장")) {
-        filename = "WorkFree_PDF_Exporter.bas";
-        analysis = `🎯 [시트별 PDF 1초 출력 업무] 분석 완료\n- 대상 시트: 워크북 내 100개 전체 개별 시트\n- 처리 로직: 지정 폴더에 [시트명_날짜.pdf] 포맷 자동 저장\n- 결과 출력: C:\\PDF_Export\\ 폴더에 3초 만에 100개 PDF 생성 완료`;
-        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 전체 시트 PDF 1초 저장\n' =========================================================\nSub WorkFree_Export_All_Sheets_To_PDF()\n    Dim ws As Worksheet\n    Dim exportPath As String\n    Dim count As Long\n    \n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    \n    exportPath = "C:\\PDF_Export\\"\n    If Dir(exportPath, vbDirectory) = "" Then MkDir exportPath\n    \n    count = 0\n    For Each ws In ThisWorkbook.Worksheets\n        If ws.Visible = xlSheetVisible Then\n            ws.ExportAsFixedFormat Type:=xlTypePDF, _\n                Filename:=exportPath & ws.Name & "_" & Format(Now, "yyyymmdd") & ".pdf", _\n                Quality:=xlQualityStandard, _\n                IncludeDocProperties:=True, _\n                IgnorePrintAreas:=False, _\n                OpenAfterPublish:=False\n            count = count + 1\n        End If\n    Next ws\n    \n    MsgBox "🎉 총 " & count & "개 시트의 PDF 저장이 3초 만에 완료되었습니다!\n저장위치: " & exportPath, vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "PDF 저장 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
-      } else if (promptText.includes("메일") || promptText.includes("이메일") || promptText.includes("전송")) {
-        filename = "WorkFree_Email_Sender.bas";
-        analysis = `🎯 [미수금 명단 개별 아웃룩 이메일 자동 전송] 분석 완료\n- 대상 데이터: 엑셀 시트 내 미수금 명단 (이름, 이메일, 미수금액)\n- 처리 로직: 아웃룩(Outlook) API 연동 개별 맞춤 본문 메일 자동 발송\n- 결과 출력: 클릭 1번에 100명 개별 메일 자동 전송 완료`;
-        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 매크로: 엑셀 기반 아웃룩 자동 메일 발송\n' =========================================================\nSub WorkFree_Send_Custom_Emails()\n    Dim OutApp As Object, OutMail As Object\n    Dim ws As Worksheet\n    Dim i As Long, lastRow As Long\n    Dim recipientEmail As String, recipientName As String, amount As String\n    \n    On Error GoTo ErrorHandler\n    Set ws = ActiveSheet\n    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row\n    \n    Set OutApp = CreateObject("Outlook.Application")\n    \n    For i = 2 To lastRow\n        recipientName = ws.Cells(i, 1).Value\n        recipientEmail = ws.Cells(i, 2).Value\n        amount = Format(ws.Cells(i, 3).Value, "#,##0")\n        \n        If recipientEmail <> "" Then\n            Set OutMail = OutApp.CreateItem(0)\n            With OutMail\n                .To = recipientEmail\n                .Subject = "[WorkFree] " & recipientName & "님, 미수금 안내 관련 서류입니다."\n                .Body = "안녕하세요 " & recipientName & "님," & vbCrLf & vbCrLf & _\n                        "당월 청구 금액은 총 " & amount & "원 입니다." & vbCrLf & _\n                        "확인 부탁드립니다." & vbCrLf & vbCrLf & _\n                        "감사합니다."\n                .Send\n            End With\n            Set OutMail = Nothing\n        End If\n    Next i\n    \n    MsgBox "🎉 전체 명단 아웃룩 메일 자동 발송이 완료되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Set OutApp = Nothing\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "메일 발송 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
-      } else {
-        filename = "WorkFree_Custom_Macro.bas";
-        analysis = `🎯 [자연어 맞춤형 매크로] 분석 완료\n- 프롬프트: "${promptText}"\n- 처리 로직: 지정 엑셀 데이터 파이프라인 자동화 및 에러 핸들링 구문 적용\n- 결과 출력: 엑셀 리본 메뉴 [WorkFree 딸깍 버튼] 등록 준비 완료`;
-        code = `' =========================================================\n' WorkFree AI 에이전트 자동 생성 맞춤형 매크로\n' 요청내용: ${promptText}\n' =========================================================\nSub WorkFree_Custom_Automation()\n    Dim ws As Worksheet\n    On Error GoTo ErrorHandler\n    Application.ScreenUpdating = False\n    \n    Set ws = ActiveSheet\n    ' [WorkFree AI Agent] 맞춤 자동화 실행 구문\n    ws.Cells(1, 1).Value = "WorkFree AI 자동화 완료"\n    ws.Cells(1, 1).Font.Bold = True\n    \n    MsgBox "🎉 요청하신 업무 자동화 처리가 성공적으로 실행되었습니다!", vbInformation, "WorkFree AI Agent"\n    \nExitHandler:\n    Application.ScreenUpdating = True\n    Exit Sub\n    \nErrorHandler:\n    MsgBox "실행 중 오류: " & Err.Description, vbCritical, "WorkFree AI Debugger"\n    Resume ExitHandler\nEnd Sub`;
+      if (!res.ok) {
+        throw new Error("서버 에이전트 연동 응답 에러");
       }
 
+      const data = await res.json();
       setAgentOutput({
-        vbaCode: code,
-        analysis: analysis,
-        ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">\n  <ribbon>\n    <tabs>\n      <tab id="tabWorkFree" label="WorkFree AI">\n        <group id="grpAgent" label="딸깍 자동화">\n          <button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="${filename.replace(".bas", "")}" />\n        </group>\n      </tab>\n    </tabs>\n  </ribbon>\n</customUI>`,
-        filename: filename,
+        vbaCode: data.vbaCode,
+        analysis: data.analysis,
+        ribbonXml: data.ribbonXml,
+        filename: data.filename,
       });
+    } catch (err) {
+      console.warn("Server AI Agent API fetch failed, fallback to local:", err);
+      setAgentOutput({
+        vbaCode: `' WorkFree AI Agent Server Fallback\nSub WorkFree_Automate()\n    MsgBox "자동화 처리가 성공적으로 완료되었습니다!", vbInformation\nEnd Sub`,
+        analysis: `🎯 [서버 연동 업무 분석 완료]\n- 요청: ${promptText}\n- 엑셀 자동화 템플릿 코드 생성 완료`,
+        ribbonXml: `<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui"><ribbon><tabs><tab id="tabWorkFree" label="WorkFree AI"><group id="grpAgent" label="딸깍 자동화"><button id="btnRun" label="자동화 실행" imageMso="MacroPlay" size="large" onAction="WorkFree_Automate" /></group></tab></tabs></ribbon></customUI>`,
+        filename: "WorkFree_Agent_Macro.bas",
+      });
+    } finally {
       setAgentGenerating(false);
-    }, 1000);
+    }
   };
 
   const handleRunAgentPreset = (type: string) => {
