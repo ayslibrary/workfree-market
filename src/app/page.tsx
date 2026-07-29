@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import * as PortOne from "@portone/browser-sdk/v2";
+import { supabase } from "@/lib/supabase";
 
 interface Lecture {
   id: number;
@@ -2902,13 +2903,13 @@ export default function Home() {
               )}
 
               <button
-                onClick={() => {
+                onClick={async () => {
                   if (!authEmail) {
                     alert("이메일을 입력해 주세요.");
                     return;
                   }
-                  if (!authPassword) {
-                    alert("비밀번호를 입력해 주세요.");
+                  if (!authPassword || authPassword.length < 4) {
+                    alert("비밀번호를 입력해 주세요. (4자 이상)");
                     return;
                   }
                   if (authTab === "join" && !agreeTerms) {
@@ -2916,6 +2917,30 @@ export default function Home() {
                     return;
                   }
                   const name = authName || authEmail.split("@")[0] || "수강생";
+
+                  try {
+                    if (authTab === "join") {
+                      const { data, error } = await supabase.auth.signUp({
+                        email: authEmail,
+                        password: authPassword,
+                        options: { data: { name } }
+                      });
+                      if (error) {
+                        console.warn("Supabase auth signup warning:", error.message);
+                      }
+                    } else {
+                      const { data, error } = await supabase.auth.signInWithPassword({
+                        email: authEmail,
+                        password: authPassword,
+                      });
+                      if (error) {
+                        console.warn("Supabase login warning:", error.message);
+                      }
+                    }
+                  } catch (e) {
+                    console.error("Supabase auth sync error:", e);
+                  }
+
                   const userObj = { name, email: authEmail };
                   setCurrentUser(userObj);
                   localStorage.setItem("workfree_user", JSON.stringify(userObj));
