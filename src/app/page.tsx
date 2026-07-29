@@ -903,8 +903,12 @@ export default function Home() {
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
-            <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep">
-              회계·영업·인사·구매팀 실무자를 위한 0.1초 AI 엑셀 자동화 마스터클래스
+            <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal break-keep">
+              단순 엑셀 함수 수업이 아닙니다.
+              <br />
+              <strong className="text-cyan-300">[ERP 자료 다운 ➔ 엑셀 매크로 전처리 ➔ PDF 저장 &amp; 메일 자동 발송]</strong>까지
+              <br />
+              손 하나 안 대는 <strong>Zero-Touch 무인 파이프라인</strong>을 구축하는 클래스입니다.
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
