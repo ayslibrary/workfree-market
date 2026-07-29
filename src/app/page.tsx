@@ -1545,13 +1545,21 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div>
+                  <div className="space-y-2">
                     <button
                       onClick={() => setViewMode("classroom")}
                       className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-yellow-300 font-black text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center break-keep"
                     >
                       🎓 1단계 100분 완강 클래스 들으러 가기 ➔
                     </button>
+                    <a
+                      href="/textbook.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2 rounded-xl bg-slate-950/80 hover:bg-slate-900 text-slate-900 bg-amber-400 hover:bg-amber-300 font-extrabold text-[11px] sm:text-xs shadow transition-all cursor-pointer block text-center border border-yellow-300 break-keep"
+                    >
+                      📖 LV.01 실전 웹교재 무료 예습하기 ↗
+                    </a>
                   </div>
                 </div>
 
@@ -1592,21 +1600,13 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="space-y-2">
+                  <div>
                     <button
                       onClick={() => setShowInquiryModal(true)}
                       className="w-full py-2.5 sm:py-3 rounded-xl bg-slate-950/90 hover:bg-slate-900 text-purple-200 font-bold text-[11px] sm:text-xs shadow-lg transition-all cursor-pointer active:scale-95 text-center border border-purple-400/30 break-keep"
                     >
                       💬 라이브 실강 요청 문의 ↗
                     </button>
-                    <a
-                      href="/textbook.html"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full py-2 rounded-xl bg-slate-950/70 hover:bg-slate-900 text-amber-300 font-bold text-[11px] sm:text-xs shadow transition-all cursor-pointer block text-center border border-yellow-400/40 break-keep"
-                    >
-                      📖 실전 웹교재 미리보기 (무료 열람) ↗
-                    </a>
                   </div>
                 </div>
 
