@@ -2749,43 +2749,6 @@ export default function Home() {
                 </span>
               )}
             </div>
-
-            {/* Divider matching screenshot: ──────── 또는 ──────── */}
-            <div className="relative flex items-center justify-center my-2">
-              <div className="border-t border-slate-700/80 w-full"></div>
-              <span className="bg-[#1e2638] px-4 text-xs font-semibold text-slate-400 shrink-0">
-                또는
-              </span>
-              <div className="border-t border-slate-700/80 w-full"></div>
-            </div>
-
-            {/* Social Login Buttons: Kakao & Google */}
-            <div className="space-y-3 pt-1">
-              {/* Kakao Social Button matching screenshot yellow color */}
-              <button
-                onClick={handleKakaoLogin}
-                className="w-full py-3.5 rounded-xl bg-[#FEE500] hover:bg-[#EDD100] text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center space-x-2 text-center"
-              >
-                <span className="text-base">💬</span>
-                <span>카카오 {authTab === "join" ? "회원가입" : "로그인"} ➔</span>
-              </button>
-
-              {/* Google Social Button */}
-              <button
-                onClick={() => {
-                  const userObj = { name: "구글 수강생", email: "google_member@workfreemarket.com" };
-                  setCurrentUser(userObj);
-                  localStorage.setItem("workfree_user", JSON.stringify(userObj));
-                  setShowAuthModal(false);
-                  alert("🌐 구글 계정으로 회원가입/로그인이 완료되었습니다!");
-                  setShowPaymentNoticeModal(true);
-                }}
-                className="w-full py-3.5 rounded-xl bg-[#2b3548] hover:bg-[#344056] text-white font-extrabold text-xs sm:text-sm border border-slate-600 shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center space-x-2 text-center"
-              >
-                <span className="text-base">🌐</span>
-                <span>구글 {authTab === "join" ? "회원가입" : "로그인"} ➔</span>
-              </button>
-            </div>
           </div>
         </div>
       )}
