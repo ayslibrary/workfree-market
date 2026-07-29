@@ -1250,13 +1250,6 @@ export default function Home() {
                     &quot;VBA를 몰라도 실무 자동화에 충분히 도전할 수 있는 시대가 왔다는 걸 느꼈습니다. 생성형 AI를 활용해 자연어만으로 VBA 코드를 만들고 오류 수정까지 진행할 수 있어 비개발자도 부담 없이 시작할 수 있었습니다.&quot;
                   </p>
                 </div>
-
-                <button
-                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_3.jpg")}
-                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>📸 당근 캡처 원본 크게 보기</span>
-                </button>
               </div>
 
               {/* Review Card 2 */}
@@ -1284,13 +1277,6 @@ export default function Home() {
                     &quot;강사님 설명이 정말 친절하고 실습 위주라 지루하지 않았습니다. AI를 이용하니까 생각보다 훨씬 쉽게 매크로를 만들 수 있었고, 내 리본을 만든다는게 인상깊었습니다. 실무자분들께 추천합니다.&quot;
                   </p>
                 </div>
-
-                <button
-                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_4.jpg")}
-                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>📸 당근 캡처 원본 크게 보기</span>
-                </button>
               </div>
 
               {/* Review Card 3 */}
@@ -1318,13 +1304,6 @@ export default function Home() {
                     &quot;엑셀 반복 업무 때문에 야근이 많았는데, 강의 듣고 바로 다음 날 제 업무를 자동화할 수 있을 거 같아요. VBA를 전혀 몰랐는데도 AI를 활용해서 매크로를 만들고 버튼 한 번으로 실행되니 신기합니다!&quot;
                   </p>
                 </div>
-
-                <button
-                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_2.jpg")}
-                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>📸 당근 캡처 원본 크게 보기</span>
-                </button>
               </div>
 
               {/* Review Card 4 */}
@@ -1352,13 +1331,6 @@ export default function Home() {
                     &quot;단순히 VBA 문법을 배우는 수업이 아니라 제 업무를 자동화하는 방법을 배웠습니다. 실무 예제로 연습해서 바로 제 업무에 커스터마이징했고, 다음 날부터 실제 회사에서 사용하고 있습니다.&quot;
                   </p>
                 </div>
-
-                <button
-                  onClick={() => setSelectedReviewImage("/reviews/karrot_review_2.jpg")}
-                  className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                >
-                  <span>📸 당근 캡처 원본 크게 보기</span>
-                </button>
               </div>
             </div>
 
@@ -1482,11 +1454,11 @@ export default function Home() {
                 </h5>
               </div>
 
-              {/* 3 Colored Course Track Cards Row - Mobile Responsive Heights */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* 3 Colored Course Track Cards Row - Responsive Fluid Heights */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Level 1: Excel AI & Ribbon (ONLINE NOW) */}
                 <div
-                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] sm:h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-yellow-500/30"
+                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-yellow-500/30"
                   style={{ backgroundColor: "rgb(252, 180, 61)" }}
                 >
                   <div className="flex items-center justify-between gap-2">
@@ -1528,12 +1500,12 @@ export default function Home() {
 
                 {/* Level 2: Power Automate No-Touch (LIVE CLASS INQUIRY) */}
                 <div
-                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] sm:h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-indigo-500/30"
+                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-indigo-500/30"
                   style={{ backgroundColor: "rgb(115, 105, 243)" }}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="px-2.5 py-1 rounded-full bg-slate-950/80 text-purple-300 font-mono text-[10px] sm:text-xs font-extrabold border border-purple-400/40 whitespace-nowrap">
-                      LV.02 · 라이브 실강 신청
+                      LV.02 · 얼리버드 5만원대~ (정가 10만원대)
                     </span>
                     <div className="flex space-x-1 shrink-0">
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-white text-slate-950 flex items-center justify-center text-[10px] sm:text-xs font-bold shadow">
@@ -1546,7 +1518,12 @@ export default function Home() {
                   </div>
 
                   <div className="space-y-2 text-white my-auto py-3 break-keep">
-                    <h4 className="text-xl sm:text-2xl font-black">LV.02 No-Touch 파이프라인</h4>
+                    <div className="flex items-center space-x-2">
+                      <h4 className="text-xl sm:text-2xl font-black">LV.02 No-Touch 파이프라인</h4>
+                    </div>
+                    <div className="inline-block px-2.5 py-0.5 rounded-lg bg-amber-400 text-slate-950 font-black text-xs font-mono">
+                      🔥 얼리버드 특가 5만원대~ (문의)
+                    </div>
                     <p className="text-[11px] sm:text-xs font-medium leading-relaxed">
                       <span>• MS 365 무료 기본 앱 Power Automate 연동</span>
                       <br />
@@ -1570,7 +1547,7 @@ export default function Home() {
 
                 {/* Level 3: AI Agent & Hybrid Full Automation (1:1 TUTORING INQUIRY) */}
                 <div
-                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] sm:h-[420px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-cyan-500/30"
+                  className="relative overflow-hidden rounded-2xl p-5 sm:p-7 min-h-[380px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1.5 border border-cyan-500/30"
                   style={{ backgroundColor: "rgb(59, 191, 238)" }}
                 >
                   <div className="flex items-center justify-between gap-2">
@@ -1767,7 +1744,7 @@ export default function Home() {
             </div>
 
             {/* Pipeline Step Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl items-center">
               <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
                 <div className="text-3xl">🏢</div>
                 <div className="text-sm font-bold text-white">1. ERP / 웹 시스템</div>
@@ -1940,7 +1917,7 @@ export default function Home() {
               <p className="text-xs text-slate-400">개발자가 아니어도 체감하는 3단계 파이프라인 및 맞춤 외주 제작</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-6 rounded-2xl bg-slate-900 border border-cyan-500/50 space-y-3 ring-1 ring-cyan-500/30">
                 <div className="text-cyan-400 font-extrabold text-xs uppercase font-mono">LV.01 온라인</div>
                 <h3 className="font-bold text-base text-white">10강 VOD 마스터클래스</h3>
@@ -1951,9 +1928,13 @@ export default function Home() {
               </div>
 
               <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                <div className="text-yellow-400 font-extrabold text-xs uppercase font-mono">LV.02 실강</div>
+                <div className="text-yellow-400 font-extrabold text-xs uppercase font-mono">LV.02 실강 · 얼리버드 특가</div>
                 <h3 className="font-bold text-base text-white">No-Touch 파이프라인 (3시간)</h3>
-                <div className="text-lg font-black text-yellow-300 font-mono">10만원대~ <span className="text-[10px] text-slate-400 font-sans font-normal">(문의)</span></div>
+                <div className="flex items-baseline space-x-1 font-mono">
+                  <span className="text-xs line-through text-slate-500 font-bold">10만원대</span>
+                  <span className="text-lg font-black text-amber-400">얼리버드 5만원대~</span>
+                  <span className="text-[10px] text-slate-400 font-sans font-normal">(문의)</span>
+                </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Power Automate + VBA 연동 개입 0% 완전 자동화 실강
                 </p>
@@ -2009,34 +1990,50 @@ export default function Home() {
                   <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">STEP 03</span>
                   <h4 className="font-bold text-sm text-white">LV.02/03 연계 확장</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    LV.02 파이프라인(10만원대~) &amp; 1:1 과외 문의로 무인 자동화 구축 상담 진행
+                    LV.02 파이프라인(얼리버드 5만원대~) &amp; 1:1 과외 문의로 무인 자동화 구축 상담 진행
                   </p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* EXPERT REVIEW POINT 1 FIX: NEXT COHORT WAITLIST BANNER SECTION */}
-          <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/40 space-y-5 shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-mono font-bold border border-amber-500/40">
-                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                    <span>8.8 마감 마감 대비 사전예약</span>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-white">8/8(토) 1석 마저 마감되면?</h3>
-                  <p className="text-xs text-slate-300">
-                    다음 회차(8월 중순) 일정이 열리는 즉시 가장 먼저 카카오톡/이메일로 알림을 보내드립니다.
-                  </p>
+          {/* EXPERT REVIEW POINT 1 FIX: NEXT COHORT WAITLIST BANNER & INLINE FORM SECTION */}
+          <section id="waitlist" className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 scroll-mt-20">
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/50 border border-amber-500/40 space-y-5 shadow-2xl">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-mono font-bold border border-amber-500/40">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                  <span>NEW · 마감 대비 사전예약</span>
                 </div>
+                <h3 className="text-xl sm:text-2xl font-black text-white">8/8(토) 1석 마저 마감되면?</h3>
+                <p className="text-xs text-slate-300">
+                  다음 회차가 열리면 가장 먼저 카카오톡으로 알려드려요. 지금 신청 못해도 기회를 놓치지 않습니다.
+                </p>
+              </div>
 
+              {/* Direct Inline Waitlist Form */}
+              <div className="flex flex-col sm:flex-row items-stretch gap-2.5 max-w-xl">
+                <input
+                  type="text"
+                  value={waitlistContact}
+                  onChange={(e) => setWaitlistContact(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSaveWaitlist();
+                  }}
+                  placeholder="카카오톡 ID 또는 이메일 주소 입력"
+                  className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-xs sm:text-sm font-mono focus:outline-none focus:border-amber-400"
+                />
                 <button
-                  onClick={() => setShowWaitlistModal(true)}
-                  className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 transition-all cursor-pointer whitespace-nowrap shrink-0 active:scale-95 border border-yellow-300"
+                  type="button"
+                  onClick={handleSaveWaitlist}
+                  disabled={isSubmittingWaitlist}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all cursor-pointer whitespace-nowrap active:scale-95 border border-yellow-300 shrink-0"
                 >
-                  🔔 다음 회차 우선 알림 신청하기 ➔
+                  {isSubmittingWaitlist ? "처리 중..." : "⚡ 다음 회차 알림 신청"}
                 </button>
+              </div>
+              <div className="text-[11px] text-slate-400 font-mono">
+                ※ 다음 회차 일정(8월 중순) 확정 시 가장 빠른 카카오톡/이메일 우선 알림 혜택 제공
               </div>
             </div>
           </section>
