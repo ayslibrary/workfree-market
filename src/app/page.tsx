@@ -907,7 +907,7 @@ export default function Home() {
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep pt-1">
-              실제 내 엑셀 노가다를 따라 자동화하면서 VBA와 AI 에이전트를 배우세요.
+              실제 엑셀 업무를 따라 하며 나만의 무인 에이전트를 만드세요.
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
