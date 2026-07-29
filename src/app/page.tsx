@@ -2904,6 +2904,10 @@ export default function Home() {
 
               <button
                 onClick={async () => {
+                  if (authTab === "join" && !authName.trim()) {
+                    alert("이름을 입력해 주세요.");
+                    return;
+                  }
                   if (!authEmail) {
                     alert("이메일을 입력해 주세요.");
                     return;
@@ -2916,14 +2920,20 @@ export default function Home() {
                     alert("개인정보 수집 및 이용약관 동의가 필요합니다.");
                     return;
                   }
-                  const name = authName || authEmail.split("@")[0] || "수강생";
+                  const name = authName.trim() || authEmail.split("@")[0] || "수강생";
 
                   try {
                     if (authTab === "join") {
                       const { data, error } = await supabase.auth.signUp({
                         email: authEmail,
                         password: authPassword,
-                        options: { data: { name } }
+                        options: {
+                          data: {
+                            name: name,
+                            full_name: name,
+                            display_name: name,
+                          },
+                        },
                       });
                       if (error) {
                         console.warn("Supabase auth signup warning:", error.message);
