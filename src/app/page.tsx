@@ -211,6 +211,36 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Supabase Magic Link Auth Session Listener (Auto login when clicking email link)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        const email = session.user.email || "";
+        const name = session.user.user_metadata?.name || session.user.user_metadata?.full_name || email.split("@")[0] || "수강생";
+        const userObj = { name, email };
+        setCurrentUser(userObj);
+        localStorage.setItem("workfree_user", JSON.stringify(userObj));
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        const email = session.user.email || "";
+        const name = session.user.user_metadata?.name || session.user.user_metadata?.full_name || email.split("@")[0] || "수강생";
+        const userObj = { name, email };
+        setCurrentUser(userObj);
+        localStorage.setItem("workfree_user", JSON.stringify(userObj));
+        if (event === "SIGNED_IN") {
+          alert(`🎉 ${name}님, 메일 인증이 완료되어 성공적으로 로그인되었습니다!`);
+        }
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   // Interactive Live Demo Sandbox Tabs (File Open, Amount Aggregation, 100 PDF Export)
   const [activeDemoTab, setActiveDemoTab] = useState<"pdfExport" | "fileOpen" | "aggregate">("pdfExport");
   const [fileOpenStatus, setFileOpenStatus] = useState<boolean>(false);
