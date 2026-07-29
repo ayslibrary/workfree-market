@@ -880,7 +880,7 @@ export default function Home() {
             {/* Priority 3: Top Live Recruitment Alert Pill */}
             <div className="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] sm:text-xs font-black shadow-lg backdrop-blur-md break-keep">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shrink-0"></span>
-              <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (5만원 ➔ 4만원) · 5명 중 4명 신청 완료! (잔여 딱 1석)</span>
+              <span>🔥 8.8(토) 3시간 실강 얼리버드 특가 (<span className="line-through text-amber-400/60 font-normal">10만원</span> ➔ 4만원 60% OFF) · 5명 중 4명 신청 완료! (잔여 1석)</span>
             </div>
 
             {/* Main Title - Mobile Optimized & break-keep */}
@@ -1954,8 +1954,8 @@ export default function Home() {
                   <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
                     <span className="text-xs text-slate-400 font-bold">8.8(토) 실강 얼리버드 수강료</span>
                     <div className="text-right">
-                      <span className="text-xs line-through text-slate-500 mr-2 font-mono">50,000원</span>
-                      <span className="text-lg font-black text-amber-400 font-mono">40,000원</span>
+                      <span className="text-xs line-through text-slate-500 mr-2 font-mono">100,000원</span>
+                      <span className="text-lg font-black text-amber-400 font-mono">40,000원 <span className="text-xs font-bold text-rose-400 font-sans">(60% OFF)</span></span>
                     </div>
                   </div>
                 </div>
