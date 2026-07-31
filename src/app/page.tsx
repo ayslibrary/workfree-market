@@ -1146,10 +1146,7 @@ export default function Home() {
       {viewMode === "landing" && (
         <div className="flex-1 space-y-0 pb-20 bg-slate-950">
           <section className="relative pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
-            {/* Top Tag Pill */}
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-black tracking-wider shadow-lg">
-              <span>🚀 WORKPLACE FREE CLASS</span>
-            </div>
+
 
             {/* Main Title - Clean & Focused Impact Headline */}
             <h1
