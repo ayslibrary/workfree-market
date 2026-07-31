@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as PortOne from "@portone/browser-sdk/v2";
 import { supabase } from "@/lib/supabase";
+import { t, Lang } from "@/lib/i18n";
 
 interface Lecture {
   id: number;
@@ -1055,16 +1056,16 @@ export default function Home() {
               className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight sm:leading-tight break-keep"
               style={{ textShadow: "rgba(0, 0, 0, 0.4) 1px 1px 6px" }}
             >
-              직장인을 위한{" "}
+              {t("heroTitle1", lang)}{" "}
               <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-                1초 AI 엑셀 자동화.
+                {t("heroTitle2", lang)}
               </span>
             </h1>
 
             {/* Subtitle - Mobile Optimized & break-keep */}
             <p className="text-xs sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed font-normal break-keep">
-              실제 내 업무를 따라 하며 나만의 무인 에이전트를 만드세요.
+              {t("heroSubtitle", lang)}
             </p>
 
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
@@ -1073,12 +1074,12 @@ export default function Home() {
                 onClick={() => setShowPaymentNoticeModal(true)}
                 className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-base sm:text-lg shadow-2xl shadow-yellow-500/30 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap border border-yellow-300"
               >
-                ⚡ 8.8(토) 3시간 실강 4만원 신청하기 (잔여 1석) ↗
+                {t("heroCta", lang)}
               </button>
               
               <div className="flex justify-between items-center text-[11px] sm:text-xs text-slate-400 font-mono px-1">
                 <span className="text-amber-400 font-bold">D-{timeLeft.days} · {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
-                <span>정원 5명 중 4명 모집 완료</span>
+                <span>{t("seatCount", lang)}</span>
               </div>
 
               {/* Secondary Options Line (Redesign Blueprint) */}
@@ -1089,28 +1090,28 @@ export default function Home() {
                   rel="noreferrer"
                   className="text-teal-300 hover:text-teal-200 font-bold underline cursor-pointer"
                 >
-                  📖 강의 예습하기 (웹교재 무료 열람) ↗
+                  {t("linkPreviewTextbook", lang)}
                 </a>
                 <span>•</span>
                 <button
                   onClick={() => setShowAgentModal(true)}
                   className="text-purple-300 hover:text-purple-200 font-bold underline cursor-pointer"
                 >
-                  ⚡ 실습 튜토리얼 체험해보기 ↗
+                  {t("linkTryTutorial", lang)}
                 </button>
                 <span>•</span>
                 <button
                   onClick={() => setViewMode("classroom")}
                   className="text-cyan-400 hover:text-cyan-300 font-bold underline cursor-pointer"
                 >
-                  ▶️ LV.01 10강 완강 (<span className="line-through text-slate-500 font-normal">50,000원</span> ➔ 5,000원 90% OFF) 보기
+                  {t("linkClassroomView", lang)}
                 </button>
                 <span>•</span>
                 <button
                   onClick={() => setShowWaitlistModal(true)}
                   className="text-amber-300 hover:text-amber-200 font-bold underline cursor-pointer"
                 >
-                  🔔 마감 시 다음 회차 알림 신청
+                  {t("linkWaitlist", lang)}
                 </button>
               </div>            </div>
           </section>
@@ -1124,26 +1125,26 @@ export default function Home() {
                     WHY WORKFREE MASTERCLASS
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-bold text-white leading-snug break-keep">
-                    왜 기존 IT 교육은<br />체감이 되지 않을까요?
+                    {t("whyTitle1", lang)}<br />{t("whyTitle2", lang)}
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed break-keep">
-                    대부분의 교육은 문법 위주의 학습에 치중합니다. 하지만 실무자에게 필요한 것은 &apos;내일 당장 엑셀 파일을 만지는 시간을 줄여주는 도구&apos;입니다.
+                    {t("whyDesc", lang)}
                   </p>
 
                   <div className="space-y-3 pt-1 sm:pt-2">
                     <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-950/80 border border-rose-500/30 flex items-start space-x-3">
                       <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-[10px] sm:text-xs shrink-0 mt-0.5">✕</span>
                       <div className="break-keep">
-                        <div className="text-xs font-bold text-rose-300">기존 IT 교육</div>
-                        <div className="text-[11px] sm:text-xs text-slate-400 mt-0.5">실무와 동떨어진 문법 공부, 직접 내 업무에 적용하기 막막함</div>
+                        <div className="text-xs font-bold text-rose-300">{t("oldEduTitle", lang)}</div>
+                        <div className="text-[11px] sm:text-xs text-slate-400 mt-0.5">{t("oldEduDesc", lang)}</div>
                       </div>
                     </div>
 
                     <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/30 flex items-start space-x-3">
                       <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] sm:text-xs shrink-0 mt-0.5">✓</span>
                       <div className="break-keep">
-                        <div className="text-xs font-bold text-emerald-300">WorkFree 마스터클래스</div>
-                        <div className="text-[11px] sm:text-xs text-slate-400 mt-0.5">자주 쓰는 10개 실전 코드로 즉각 도입 &amp; 나만의 리본 메뉴 파이프라인 구축</div>
+                        <div className="text-xs font-bold text-emerald-300">{t("newEduTitle", lang)}</div>
+                        <div className="text-[11px] sm:text-xs text-slate-400 mt-0.5">{t("newEduDesc", lang)}</div>
                       </div>
                     </div>
                   </div>
@@ -1151,22 +1152,22 @@ export default function Home() {
 
                 {/* Priority 2: Before/After Comparison Table */}
                 <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-4 text-center shadow-xl">
-                  <h3 className="font-bold text-white text-sm sm:text-base break-keep">자동화 단계별 업무 소요 시간 비교</h3>
+                  <h3 className="font-bold text-white text-sm sm:text-base break-keep">{t("tableHeader", lang)}</h3>
                   <div className="space-y-2.5 sm:space-y-3 pt-1 text-xs">
                     <div className="p-3 sm:p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center break-keep">
-                      <span className="text-slate-400 text-[11px] sm:text-xs">현재 (수동 노가다 작업)</span>
-                      <span className="font-mono font-bold text-rose-400 text-xs sm:text-sm whitespace-nowrap">600분 (10시간)</span>
+                      <span className="text-slate-400 text-[11px] sm:text-xs">{t("stageCurrent", lang)}</span>
+                      <span className="font-mono font-bold text-rose-400 text-xs sm:text-sm whitespace-nowrap">{t("stageCurrentTime", lang)}</span>
                     </div>
                     <div className="p-3 sm:p-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 flex justify-between items-center break-keep">
-                      <span className="text-cyan-300 font-bold text-[11px] sm:text-xs">LV.01 리본 매크로 적용</span>
-                      <span className="font-mono font-bold text-cyan-400 text-xs sm:text-sm whitespace-nowrap">60분 (1시간)</span>
+                      <span className="text-cyan-300 font-bold text-[11px] sm:text-xs">{t("stageRibbon", lang)}</span>
+                      <span className="font-mono font-bold text-cyan-400 text-xs sm:text-sm whitespace-nowrap">{t("stageRibbonTime", lang)}</span>
                     </div>
                     <div className="p-3 sm:p-3.5 rounded-xl bg-slate-900 border border-emerald-500/40 flex justify-between items-center break-keep">
-                      <span className="text-emerald-300 font-bold text-[11px] sm:text-xs">LV.02/03 No-Touch 파이프라인</span>
-                      <span className="font-mono font-bold text-emerald-400 text-xs sm:text-sm whitespace-nowrap">5분 (자동 구동)</span>
+                      <span className="text-emerald-300 font-bold text-[11px] sm:text-xs">{t("stagePipeline", lang)}</span>
+                      <span className="font-mono font-bold text-emerald-400 text-xs sm:text-sm whitespace-nowrap">{t("stagePipelineTime", lang)}</span>
                     </div>
                   </div>
-                  <p className="text-[10px] sm:text-[11px] text-slate-500 pt-1">※ 일일 10시간 반복 업무 기준 감축 시뮬레이션</p>
+                  <p className="text-[10px] sm:text-[11px] text-slate-500 pt-1">{t("tableFooterNote", lang)}</p>
                 </div>
               </div>
 
@@ -1179,10 +1180,10 @@ export default function Home() {
                       <span>INTERACTIVE LIVE DEMO</span>
                     </span>
                     <h3 className="text-base sm:text-xl font-extrabold text-white">
-                      수강 후 내 엑셀 리본 메뉴에서 일어나는 3대 자동화 라이브 체험관
+                      {t("demoTitle", lang)}
                     </h3>
                   </div>
-                  <span className="text-xs text-cyan-400 font-mono font-bold">👉 직접 버튼을 눌러보세요!</span>
+                  <span className="text-xs text-cyan-400 font-mono font-bold">{t("demoClickHint", lang)}</span>
                 </div>
 
                 {/* Tab Switcher Buttons */}
@@ -1195,7 +1196,7 @@ export default function Home() {
                         : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
                     }`}
                   >
-                    <span>📄 100개 PDF 일괄 저장 (09-10강)</span>
+                    <span>{t("tabPdfExport", lang)}</span>
                   </button>
                   <button
                     onClick={() => setActiveDemoTab("fileOpen")}
@@ -1205,7 +1206,7 @@ export default function Home() {
                         : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
                     }`}
                   >
-                    <span>📂 복잡한 파일 1초 오픈 (02강)</span>
+                    <span>{t("tabFileOpen", lang)}</span>
                   </button>
                   <button
                     onClick={() => setActiveDemoTab("aggregate")}
@@ -1215,7 +1216,7 @@ export default function Home() {
                         : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white"
                     }`}
                   >
-                    <span>📊 월별·통화별 자동 금액 집계 (04-05강)</span>
+                    <span>{t("tabAggregate", lang)}</span>
                   </button>
                 </div>
 
@@ -1846,9 +1847,11 @@ export default function Home() {
                   <span className="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
                     AUTOMATION TIME SAVINGS CALCULATOR
                   </span>
-                  <h2 className="text-3xl font-bold text-white">내 업무 시간 절감 &amp; 금액 환산 계산기</h2>
+                  <h2 className="text-3xl font-bold text-white">{t("calcTitle", lang)}</h2>
                   <p className="text-xs sm:text-sm text-slate-400">
-                    매일 반복하고 계신 엑셀 노가다 업무, WorkFree 자동화 시스템 적용 시 연간 얼마나 아끼고 얼마의 시급 가치가 창출되는지 확인하세요!
+                    {lang === "en"
+                      ? "Check how many hours and financial value you can save per year by automating your daily Excel work with WorkFree!"
+                      : "매일 반복하고 계신 엑셀 노가다 업무, WorkFree 자동화 시스템 적용 시 연간 얼마나 아끼고 얼마의 시급 가치가 창출되는지 확인하세요!"}
                   </p>
                 </div>
 
@@ -1857,8 +1860,8 @@ export default function Home() {
                     {/* Daily Hours Slider */}
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <label className="text-xs font-bold text-slate-300">일일 반복 업무 시간</label>
-                        <span className="text-sm font-black text-cyan-400 font-mono">{calcDailyHours}시간</span>
+                        <label className="text-xs font-bold text-slate-300">{t("calcDailyHours", lang)}</label>
+                        <span className="text-sm font-black text-cyan-400 font-mono">{calcDailyHours}{lang === "en" ? " hrs" : "시간"}</span>
                       </div>
                       <input
                         type="range"
@@ -3980,10 +3983,10 @@ export default function Home() {
             <div className="p-6 rounded-2xl bg-[#2b3548] border border-slate-700 space-y-4 shadow-inner">
               {authTab === "join" && (
                 <div className="space-y-1.5 text-left">
-                  <label className="block text-xs font-bold text-slate-300">이름</label>
+                  <label className="block text-xs font-bold text-slate-300">{t("authNameLabel", lang)}</label>
                   <input
                     type="text"
-                    placeholder="홍길동"
+                    placeholder={t("authNamePlaceholder", lang)}
                     value={authName}
                     onChange={(e) => setAuthName(e.target.value)}
                     className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all"
@@ -3992,10 +3995,10 @@ export default function Home() {
               )}
 
               <div className="space-y-1.5 text-left">
-                <label className="block text-xs font-bold text-slate-300">이메일 주소</label>
+                <label className="block text-xs font-bold text-slate-300">{t("authEmailLabel", lang)}</label>
                 <input
                   type="email"
-                  placeholder="example@email.com"
+                  placeholder={t("authEmailPlaceholder", lang)}
                   value={authEmail}
                   onChange={(e) => setAuthEmail(e.target.value)}
                   className="w-full bg-[#1e2638] border border-slate-600 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all font-mono"
@@ -4012,7 +4015,7 @@ export default function Home() {
                         onChange={(e) => setAgreeTerms(e.target.checked)}
                         className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
                       />
-                      <span className="text-cyan-300 font-semibold">개인정보 수집 및 이용약관 동의</span>
+                      <span className="text-cyan-300 font-semibold">{t("agreeTerms", lang)}</span>
                     </label>
                     <div className="flex items-center space-x-1.5 shrink-0">
                       <button
@@ -4020,14 +4023,14 @@ export default function Home() {
                         onClick={() => setShowPrivacyModal(true)}
                         className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
                       >
-                        [개인정보]
+                        {t("privacyBtn", lang)}
                       </button>
                       <button
                         type="button"
                         onClick={() => setShowTermsModal(true)}
                         className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
                       >
-                        [이용약관]
+                        {t("termsBtn", lang)}
                       </button>
                     </div>
                   </div>
@@ -4040,14 +4043,14 @@ export default function Home() {
                         onChange={(e) => setAgreeMarketing(e.target.checked)}
                         className="w-4 h-4 rounded bg-slate-900 border-slate-600 text-cyan-500 accent-cyan-500 cursor-pointer"
                       />
-                      <span className="text-slate-400">할인 혜택 및 마케팅 정보 수신 동의 (선택)</span>
+                      <span className="text-slate-400">{t("agreeMarketing", lang)}</span>
                     </label>
                     <button
                       type="button"
                       onClick={() => setShowMarketingModal(true)}
                       className="text-[10px] text-cyan-400 hover:underline font-bold cursor-pointer"
                     >
-                      [상세보기]
+                      {t("detailBtn", lang)}
                     </button>
                   </div>
                 </div>
@@ -4094,7 +4097,7 @@ export default function Home() {
                 }}
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition-all active:scale-95 cursor-pointer mt-2 text-center"
               >
-                ⚡ 이메일로 1초 로그인 링크 받기 ➔
+                {t("sendEmailLink", lang)}
               </button>
             </div>
 
@@ -4102,7 +4105,7 @@ export default function Home() {
             <div className="relative flex items-center justify-center my-2">
               <div className="border-t border-slate-700/80 w-full"></div>
               <span className="bg-[#1e2638] px-3 text-[11px] text-slate-400 font-medium absolute">
-                또는 간편 소셜 {authTab === "join" ? "회원가입" : "로그인"}
+                {t("orSocialText", lang)} {authTab === "join" ? t("switchToJoin", lang).replace(" ➔", "") : t("switchToLogin", lang).replace(" ➔", "")}
               </span>
             </div>
 
@@ -4132,7 +4135,7 @@ export default function Home() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                   />
                 </svg>
-                <span>Google 계정으로 {authTab === "join" ? "회원가입" : "로그인"}</span>
+                <span>{t("googleLoginBtn", lang)}</span>
               </button>
 
               {/* Kakao Login Button */}
@@ -4144,7 +4147,7 @@ export default function Home() {
                 <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
                   <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.557 1.707 4.8 4.27 6.054-.188.702-.682 2.545-.78 2.94-.122.49.178.483.376.352.155-.103 2.466-1.675 3.468-2.356.544.08 1.103.125 1.666.125 4.97 0 9-3.186 9-7.115S16.97 3 12 3z" />
                 </svg>
-                <span>카카오 계정으로 {authTab === "join" ? "회원가입" : "로그인"}</span>
+                <span>{t("kakaoLoginBtn", lang)}</span>
               </button>
             </div>
 
@@ -4152,22 +4155,22 @@ export default function Home() {
             <div className="text-center text-xs text-slate-300 font-medium">
               {authTab === "join" ? (
                 <span>
-                  이미 계정이 있으신가요?{" "}
+                  {t("alreadyHaveAccount", lang)}{" "}
                   <button
                     onClick={() => setAuthTab("login")}
                     className="text-cyan-400 font-bold hover:underline cursor-pointer"
                   >
-                    로그인 ➔
+                    {t("switchToLogin", lang)}
                   </button>
                 </span>
               ) : (
                 <span>
-                  계정이 없으신가요?{" "}
+                  {t("dontHaveAccount", lang)}{" "}
                   <button
                     onClick={() => setAuthTab("join")}
                     className="text-cyan-400 font-bold hover:underline cursor-pointer"
                   >
-                    회원가입 ➔
+                    {t("switchToJoin", lang)}
                   </button>
                 </span>
               )}
