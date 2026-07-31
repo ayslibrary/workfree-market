@@ -975,10 +975,10 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
       {/* Top Header Navbar (Logo Only - Click to Home) */}
       <header className="sticky top-0 z-[60] bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between w-full">
           {/* Brand Logo & Subtitle */}
           <div
-            className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer group hover:opacity-90 transition-all shrink-0"
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer group hover:opacity-90 transition-all shrink-0"
             onClick={() => {
               setViewMode("landing");
               if (typeof window !== "undefined") {
@@ -991,18 +991,18 @@ export default function Home() {
             <img
               src="/logo.jpg"
               alt="WorkFree Market 로고"
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-slate-700/80 bg-white"
+              className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-slate-700/80 bg-white"
             />
             <div>
-              <div className="flex items-center space-x-1.5 sm:space-x-2">
-                <h1 className="font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <h1 className="font-extrabold text-xs sm:text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent whitespace-nowrap">
                   WorkFree Market
                 </h1>
-                <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                <span className="px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 whitespace-nowrap">
                   ai딸깍샘
                 </span>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-cyan-400 font-medium tracking-wide hidden xs:block">
+              <p className="text-[10px] text-cyan-400 font-medium tracking-wide hidden md:block">
                 {lang === "en"
                   ? "1-Click Excel Automation: 10h to 1h!"
                   : "클릭 1번 엑셀 자동화: 10시간을 1시간으로!"}
@@ -1011,18 +1011,18 @@ export default function Home() {
           </div>
 
           {/* Top Language Switcher & Auth Buttons */}
-          <div className="flex items-center space-x-1.5 sm:space-x-3 ml-auto sm:ml-0">
+          <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
             {/* Language Selector Switcher (KOR / ENG) */}
-            <div className="flex items-center bg-slate-800/90 p-0.5 sm:p-1 rounded-xl border border-slate-700/80 text-[10px] sm:text-xs font-bold shrink-0 shadow-inner">
+            <div className="flex items-center bg-slate-800/90 p-0.5 rounded-xl border border-slate-700/80 text-[10px] sm:text-xs font-bold shrink-0 shadow-inner">
               <button
                 type="button"
                 onClick={() => toggleLang("ko")}
-                className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-0.5 sm:space-x-1 ${
+                className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-0.5 ${
                   lang === "ko"
                     ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md font-black"
                     : "text-slate-400 hover:text-white"
                 }`}
-                title="한국어로 언어 변경 (Switch to Korean)"
+                title="한국어로 언어 변경"
               >
                 <span>🇰🇷</span>
                 <span>KOR</span>
@@ -1030,36 +1030,30 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => toggleLang("en")}
-                className={`px-2 py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-1 ${
+                className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-0.5 ${
                   lang === "en"
                     ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md font-black"
                     : "text-slate-400 hover:text-white"
                 }`}
-                title="Switch to English (영어로 언어 변경)"
+                title="Switch to English"
               >
                 <span>🇺🇸</span>
                 <span>ENG</span>
               </button>
             </div>
 
-            <button
-              onClick={() => setShowAgentModal(true)}
-              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
-            >
-              <span>{lang === "en" ? "⚡ Try Demo Tutorial" : "⚡ 실습 튜토리얼 체험해보기"}</span>
-            </button>
             {currentUser ? (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2">
                 <button
                   onClick={() => {
                     logUserActivityToSupabase("open_mypage", "Header My Page Modal click");
                     setShowMyPageModal(true);
                   }}
-                  className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-xs font-bold text-slate-200 flex items-center space-x-1.5 transition-all cursor-pointer shadow-md active:scale-95"
+                  className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-[11px] sm:text-xs font-bold text-slate-200 flex items-center space-x-1 transition-all cursor-pointer shadow-md active:scale-95 whitespace-nowrap"
                 >
                   <span className="text-cyan-400">👤</span>
-                  <span className="text-cyan-300 font-extrabold">{currentUser.name}님</span>
-                  <span className="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-mono">{lang === "en" ? "My Page" : "마이페이지"}</span>
+                  <span className="text-cyan-300 font-extrabold max-w-[70px] sm:max-w-none truncate">{currentUser.name}님</span>
+                  <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-mono">{lang === "en" ? "My Page" : "마이페이지"}</span>
                 </button>
                 <button
                   onClick={() => {
@@ -1068,32 +1062,32 @@ export default function Home() {
                     localStorage.removeItem("workfree_user");
                     alert(lang === "en" ? "Logged out successfully." : "로그아웃 되었습니다.");
                   }}
-                  className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium cursor-pointer transition-colors"
+                  className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 text-[10px] sm:text-xs font-medium cursor-pointer transition-colors whitespace-nowrap"
                 >
                   {lang === "en" ? "Logout" : "로그아웃"}
                 </button>
               </div>
             ) : (
-              <>
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
                 <button
                   onClick={() => {
                     setAuthTab("login");
                     setShowAuthModal(true);
                   }}
-                  className="text-xs sm:text-sm font-bold text-slate-300 hover:text-white transition-colors cursor-pointer"
+                  className="text-[11px] sm:text-xs font-bold text-slate-300 hover:text-white transition-colors cursor-pointer px-1.5 py-1 whitespace-nowrap"
                 >
-                  Login
+                  로그인
                 </button>
                 <button
                   onClick={() => {
                     setAuthTab("join");
                     setShowAuthModal(true);
                   }}
-                  className="px-4 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+                  className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-black text-[11px] sm:text-xs transition-all shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
                 >
-                  Join
+                  회원가입
                 </button>
-              </>
+              </div>
             )}
           </div>
         </div>
