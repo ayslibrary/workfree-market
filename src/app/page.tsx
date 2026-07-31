@@ -247,16 +247,21 @@ export default function Home() {
   }, []);
 
   // Supabase Magic Link Auth Session Listener & Database Logger
-  const logUserAuthToSupabase = async (name: string, email: string, provider: string = "google") => {
+  const logUserAuthToSupabase = async (name: string, email: string, provider: string = "kakao") => {
     try {
+      const safeName = name && name.trim() ? name.trim() : "카카오 수강생";
+      const safeEmail = email && email.trim() ? email.trim() : "kakao_member@workfreemarket.com";
+      const safeProvider = provider || "kakao";
+
       await supabase.from("user_logs").insert([
         {
-          name: name,
-          email: email,
-          provider: provider,
+          name: safeName,
+          email: safeEmail,
+          provider: safeProvider,
           logged_at: new Date().toISOString(),
         },
       ]);
+      console.log("Successfully logged user auth to Supabase:", { safeName, safeEmail, safeProvider });
     } catch (err) {
       console.warn("Supabase custom DB log sync notice:", err);
     }
@@ -265,12 +270,14 @@ export default function Home() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        const email = session.user.email || "";
+        const rawEmail = session.user.email || session.user.user_metadata?.email || session.user.user_metadata?.kakao_account?.email || "";
+        const email = rawEmail || `kakao_${session.user.id.slice(0, 8)}@workfreemarket.com`;
         const name =
           session.user.user_metadata?.name ||
           session.user.user_metadata?.full_name ||
           session.user.user_metadata?.nickname ||
-          (email ? email.split("@")[0] : "수강생");
+          session.user.user_metadata?.profile?.nickname ||
+          (email ? email.split("@")[0] : "카카오 수강생");
         const provider =
           session.user.app_metadata?.provider ||
           session.user.identities?.[0]?.provider ||
@@ -284,12 +291,14 @@ export default function Home() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
-        const email = session.user.email || "";
+        const rawEmail = session.user.email || session.user.user_metadata?.email || session.user.user_metadata?.kakao_account?.email || "";
+        const email = rawEmail || `kakao_${session.user.id.slice(0, 8)}@workfreemarket.com`;
         const name =
           session.user.user_metadata?.name ||
           session.user.user_metadata?.full_name ||
           session.user.user_metadata?.nickname ||
-          (email ? email.split("@")[0] : "수강생");
+          session.user.user_metadata?.profile?.nickname ||
+          (email ? email.split("@")[0] : "카카오 수강생");
         const provider =
           session.user.app_metadata?.provider ||
           session.user.identities?.[0]?.provider ||
