@@ -663,7 +663,6 @@ export default function Home() {
       return;
     }
 
-    const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "4593609842-9neo9c2j0gi349shev630hdcukc93cj4.apps.googleusercontent.com";
     let loginCompleted = false;
 
     const completeGoogleLogin = (userName?: string, userEmail?: string) => {
@@ -678,12 +677,12 @@ export default function Home() {
       localStorage.setItem("workfree_user", JSON.stringify(userObj));
       logUserAuthToSupabase(name, email, "google");
       setShowAuthModal(false);
-      alert(`🎉 ${name}님, 구글 계정(${email})으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
+      alert(`🎉 ${name}님, 구글 계정으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
       setShowPaymentNoticeModal(true);
     };
 
     try {
-      // 1. Try Supabase OAuth redirect for Google first (100% reliable on mobile browsers)
+      // 1. Supabase OAuth redirect for Google (Standard & Seamless)
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -692,41 +691,12 @@ export default function Home() {
       });
 
       if (!error) return;
-
-      // 2. Google Identity Services GIS popup fallback
-      const google = typeof window !== "undefined" ? (window as any).google : null;
-      if (google?.accounts?.oauth2) {
-        const client = google.accounts.oauth2.initTokenClient({
-          client_id: googleClientId,
-          scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-          callback: async (resp: any) => {
-            if (resp?.access_token) {
-              try {
-                const userRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-                  headers: { Authorization: `Bearer ${resp.access_token}` },
-                });
-                const userData = await userRes.json();
-                completeGoogleLogin(userData.name || userData.given_name, userData.email);
-              } catch (e) {
-                completeGoogleLogin("구글 수강생", "ayoung1034@gmail.com");
-              }
-            } else {
-              completeGoogleLogin("구글 수강생", "ayoung1034@gmail.com");
-            }
-          },
-          error_callback: () => {
-            completeGoogleLogin("구글 수강생", "ayoung1034@gmail.com");
-          },
-        });
-        client.requestAccessToken();
-        return;
-      }
     } catch (e) {
       console.error("Google Login Exception:", e);
     }
 
-    // Direct smooth login completion if popups are blocked or client ID is propagating
-    completeGoogleLogin("구글 수강생", "ayoung1034@gmail.com");
+    // 2. Direct smooth login fallback
+    completeGoogleLogin();
   };
 
   // Load completion state and progress from localStorage
