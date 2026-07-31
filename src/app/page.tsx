@@ -158,6 +158,40 @@ const LECTURES: Lecture[] = [
   },
 ];
 
+export const getLectureTitle = (lec: { id: number; title: string }, lang: "ko" | "en") => {
+  if (lang === "ko") return lec.title;
+  const enTitles: Record<number, string> = {
+    1: "Lesson 01: Set Up AI & Enable Excel Developer Tab",
+    2: "Lesson 02: Generate & Run Your Very First Macro with AI",
+    3: "Lesson 03: Register Subroutines & Custom Ribbon Buttons",
+    4: "Lesson 04: Explain Data Schema to AI (Headers & Columns)",
+    5: "Lesson 05: Generate & Execute Aggregation Table Code",
+    6: "Lesson 06: Register Aggregation Macro to Ribbon & Debug",
+    7: "Lesson 07: Export 100 PDFs in One Click",
+    8: "Lesson 08: Fix Print Area Scaling & Finalize PDF Pipeline",
+    9: "Lesson 09: Save as Add-in (.xlam) & Create Quick Launcher",
+    10: "Lesson 10: Complete 1-Click Pipeline & Final Review",
+  };
+  return enTitles[lec.id] || lec.title;
+};
+
+export const getLectureSummary = (lec: { id: number; summary: string }, lang: "ko" | "en") => {
+  if (lang === "ko") return lec.summary;
+  const enSummaries: Record<number, string> = {
+    1: "Learn how to enable Excel Developer Tab, paste AI prompts, and build your initial macro setup.",
+    2: "Ask ChatGPT/Gemini to write VBA code for file opening, and run your first macro seamlessly.",
+    3: "Learn subroutine naming rules and map custom tabs and icons onto the Excel ribbon menu.",
+    4: "Teach AI raw data headers, date/currency/amount columns, and prompt for accurate aggregation.",
+    5: "Request VBA code for monthly/currency summaries, copy to module, and debug step-by-step.",
+    6: "Export macros to .xlam add-ins, attach ribbon buttons, and refactor errors with AI screenshot sharing.",
+    7: "Loop through supplier lists or key IDs to batch export hundreds of invoices to PDF instantly.",
+    8: "Adjust page setup, print area auto-fit, margin parameters, and verify PDF file integrity.",
+    9: "Save your workbook as Excel Add-in (.xlam) and set up Quick Access Toolbar shortcuts.",
+    10: "Connect all 10 modules into an autonomous 1-click pipeline and master enterprise automation.",
+  };
+  return enSummaries[lec.id] || lec.summary;
+};
+
 export default function Home() {
   // Navigation View State: "landing" (Homepage) vs "classroom" (10-Lecture Video Learning Platform)
   const [viewMode, setViewMode] = useState<"landing" | "classroom">("landing");
@@ -268,6 +302,21 @@ export default function Home() {
     }, 150);
     return () => clearInterval(interval);
   }, [isDemoActive]);
+
+  // Language (i18n) State: "ko" (Korean) vs "en" (English)
+  const [lang, setLang] = useState<"ko" | "en">("ko");
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("workfree_lang") as "ko" | "en";
+    if (savedLang) {
+      setLang(savedLang);
+    }
+  }, []);
+
+  const toggleLang = (newLang: "ko" | "en") => {
+    setLang(newLang);
+    localStorage.setItem("workfree_lang", newLang);
+  };
 
   // License Lock States (resets on page refresh)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -868,18 +917,50 @@ export default function Home() {
                 </span>
               </div>
               <p className="text-[11px] text-cyan-400 font-medium tracking-wide">
-                클릭 1번 엑셀 자동화: 10시간 업무를 1시간으로!
+                {lang === "en"
+                  ? "1-Click Excel Automation: Turn 10h Work into 1h!"
+                  : "클릭 1번 엑셀 자동화: 10시간 업무를 1시간으로!"}
               </p>
             </div>
           </div>
 
-          {/* Top Login & Join Buttons (Nomad Coders Matched) */}
+          {/* Top Language Switcher & Auth Buttons */}
           <div className="flex items-center space-x-2.5 sm:space-x-3">
+            {/* Language Selector Switcher (KOR / ENG) */}
+            <div className="flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs font-bold shrink-0 shadow-inner">
+              <button
+                type="button"
+                onClick={() => toggleLang("ko")}
+                className={`px-2 py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-1 ${
+                  lang === "ko"
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md font-black"
+                    : "text-slate-400 hover:text-white"
+                }`}
+                title="한국어로 언어 변경 (Switch to Korean)"
+              >
+                <span>🇰🇷</span>
+                <span>KOR</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => toggleLang("en")}
+                className={`px-2 py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-1 ${
+                  lang === "en"
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md font-black"
+                    : "text-slate-400 hover:text-white"
+                }`}
+                title="Switch to English (영어로 언어 변경)"
+              >
+                <span>🇺🇸</span>
+                <span>ENG</span>
+              </button>
+            </div>
+
             <button
               onClick={() => setShowAgentModal(true)}
               className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/40 text-purple-300 font-extrabold text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1"
             >
-              <span>⚡ 실습 튜토리얼 체험해보기</span>
+              <span>{lang === "en" ? "⚡ Try Demo Tutorial" : "⚡ 실습 튜토리얼 체험해보기"}</span>
             </button>
             {currentUser ? (
               <div className="flex items-center space-x-2.5">
