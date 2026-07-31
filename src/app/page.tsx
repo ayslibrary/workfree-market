@@ -404,7 +404,23 @@ export default function Home() {
   const toggleLang = (newLang: "ko" | "en") => {
     setLang(newLang);
     localStorage.setItem("workfree_lang", newLang);
+    logUserActivityToSupabase("switch_language", `Switched language to: ${newLang}`);
   };
+
+  // Log initial scroll to key landing sections
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let loggedSection = false;
+    const handleScroll = () => {
+      if (loggedSection) return;
+      if (window.scrollY > 300) {
+        loggedSection = true;
+        logUserActivityToSupabase("scroll_landing_page", `Scrolled down landing page (Scroll Y: ${Math.round(window.scrollY)}px)`);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // License Lock States (resets on page refresh)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
