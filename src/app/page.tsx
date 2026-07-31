@@ -683,6 +683,17 @@ export default function Home() {
     };
 
     try {
+      // 1. Try Supabase OAuth redirect for Google first (100% reliable on mobile browsers)
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+        },
+      });
+
+      if (!error) return;
+
+      // 2. Google Identity Services GIS popup fallback
       const google = typeof window !== "undefined" ? (window as any).google : null;
       if (google?.accounts?.oauth2) {
         const client = google.accounts.oauth2.initTokenClient({
