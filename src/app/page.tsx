@@ -1182,32 +1182,19 @@ export default function Home() {
                   ref={promoVideoRef}
                   src="/promo.mp4"
                   controls
+                  autoPlay
+                  muted
+                  loop
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   onPlay={() => {
-                    setIsPromoPlaying(true);
-                    logUserActivityToSupabase("play_promo_video", "User started watching Promo Video");
+                    logUserActivityToSupabase("play_promo_video", "Promo video autoplay started");
                   }}
-                  onPause={() => setIsPlaying(false)}
                   className="w-full h-auto max-h-[420px] object-contain rounded-2xl mx-auto"
                 >
                   <source src="/promo.mp4" type="video/mp4" />
                   브라우저가 동영상 재생을 지원하지 않습니다.
                 </video>
-
-                {!isPromoPlaying && (
-                  <div
-                    onClick={handlePlayPromo}
-                    className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-slate-950/40 group"
-                  >
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 flex items-center justify-center text-2xl sm:text-3xl font-black shadow-2xl shadow-yellow-500/40 group-hover:scale-110 transition-transform ring-4 ring-yellow-300/40">
-                      ▶
-                    </div>
-                    <span className="mt-3 px-4 py-1.5 rounded-full bg-slate-900/90 text-yellow-300 font-bold text-xs sm:text-sm border border-yellow-500/40 shadow-lg">
-                      🎬 10초 광고 영상 재생하기 (클릭!)
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
 
