@@ -1156,6 +1156,30 @@ export default function Home() {
               {t("heroSubtitle", lang)}
             </p>
 
+            {/* Promo Video Trailer Showcase Card */}
+            <div className="w-full max-w-3xl mx-auto rounded-3xl bg-slate-900/90 border border-yellow-500/40 p-3 sm:p-5 shadow-2xl shadow-yellow-500/10 space-y-3">
+              <div className="flex items-center justify-between px-1 text-xs font-bold text-slate-300">
+                <span className="flex items-center space-x-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                  <span className="text-yellow-400">🎬 WorkFree Market 1클릭 엑셀 자동화 공식 광고 영상</span>
+                </span>
+                <span className="px-2 py-0.5 rounded bg-yellow-400/20 text-yellow-300 font-mono text-[10px] border border-yellow-400/40 hidden sm:inline-block">
+                  HD PROMO
+                </span>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner group">
+                <video
+                  src="/promo.mp4"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  onPlay={() => logUserActivityToSupabase("play_promo_video", "User started watching Promo Video")}
+                  className="w-full h-auto max-h-[420px] object-contain rounded-2xl mx-auto"
+                />
+              </div>
+            </div>
+
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
             <div className="w-full max-w-xl mx-auto space-y-3 pt-2">
               <button
