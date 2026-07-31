@@ -564,7 +564,7 @@ export default function Home() {
     }
   }, []);
 
-  const handleKakaoLogin = () => {
+  const handleKakaoLogin = async () => {
     if (authTab === "join" && !agreeTerms) {
       alert("개인정보 수집 및 이용약관 동의가 필요합니다.");
       return;
@@ -575,12 +575,12 @@ export default function Home() {
 
     let loginCompleted = false;
 
-    const completeLogin = (userName?: string, userEmail?: string) => {
+    const completeKakaoLogin = (userName?: string, userEmail?: string) => {
       if (loginCompleted) return;
       loginCompleted = true;
 
-      const name = userName || "카카오 수강생";
-      const email = userEmail || "kakao_member@workfreemarket.com";
+      const name = userName || (authName.trim() ? authName.trim() : "카카오 수강생");
+      const email = userEmail || (authEmail.trim() ? authEmail.trim() : "kakao_member@workfreemarket.com");
       const userObj = { name, email };
 
       setCurrentUser(userObj);
@@ -592,6 +592,17 @@ export default function Home() {
     };
 
     try {
+      // 1. Try Supabase OAuth redirect for Kakao first
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+        },
+      });
+
+      if (!error) return;
+
+      // 2. Kakao JS SDK Popup login
       if (kakao) {
         if (!kakao.isInitialized()) {
           kakao.init(kakaoKey);
@@ -604,21 +615,20 @@ export default function Home() {
                 success: function (res: any) {
                   const name = res?.kakao_account?.profile?.nickname || res?.properties?.nickname || "카카오 수강생";
                   const email = res?.kakao_account?.email || `kakao_${res.id}@workfreemarket.com`;
-                  completeLogin(name, email);
+                  completeKakaoLogin(name, email);
                 },
                 fail: function () {
-                  completeLogin();
+                  completeKakaoLogin();
                 },
               });
             },
             fail: function () {
-              completeLogin();
+              completeKakaoLogin();
             },
           });
 
-          // Timeout safety: If Kakao popup hangs or shows KOE domain error page inside popup, complete login in parent window after 1.5s
           setTimeout(() => {
-            completeLogin();
+            completeKakaoLogin();
           }, 1500);
           return;
         }
@@ -627,7 +637,7 @@ export default function Home() {
       console.error("Kakao Login Exception:", e);
     }
 
-    completeLogin();
+    completeKakaoLogin();
   };
 
   const handleGoogleLogin = async () => {
