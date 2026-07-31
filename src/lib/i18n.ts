@@ -15,7 +15,7 @@ export const translations = {
     // Hero Section
     heroBadge: "🚀 WORKPLACE FREE CLASS",
     heroTitle1: "직장인을 위한",
-    heroTitle2: "1초 AI 엑셀 자동화.",
+    heroTitle2: "1초 AI 엑셀 자동화",
     heroSubtitle: "실제 내 업무를 따라 하며 나만의 무인 에이전트를 만드세요.",
     heroCta: "⚡ 8.8(토) 3시간 실강 4만원 신청하기 (잔여 1석) ↗",
     timerRemaining: "모집 마감 임박",
