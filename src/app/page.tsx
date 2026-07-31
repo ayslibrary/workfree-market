@@ -517,7 +517,7 @@ export default function Home() {
   // Lecture Playback Progress Tracking (Resume Playback)
   const [lectureTimestamps, setLectureTimestamps] = useState<Record<number, number>>({});
 
-  // Initialize Kakao SDK with App Key 50d59b2654d46c862f0a1934c3c8c040
+  // Initialize Google Identity Services (GIS) & Kakao SDK
   useEffect(() => {
     const KAKAO_KEY = "50d59b2654d46c862f0a1934c3c8c040";
     if (typeof window !== "undefined") {
@@ -534,6 +534,14 @@ export default function Home() {
         document.head.appendChild(script);
       } else if ((window as any).Kakao && !(window as any).Kakao.isInitialized()) {
         (window as any).Kakao.init(KAKAO_KEY);
+      }
+
+      if (!document.getElementById("google-gsi-sdk")) {
+        const script = document.createElement("script");
+        script.id = "google-gsi-sdk";
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        document.head.appendChild(script);
       }
     }
   }, []);
@@ -609,6 +617,7 @@ export default function Home() {
       return;
     }
 
+    const googleClientId = "4593609842-9neo9c2j0gi349shev630hdcukc93cj4.apps.googleusercontent.com";
     let loginCompleted = false;
 
     const completeGoogleLogin = (userName?: string, userEmail?: string) => {
@@ -627,6 +636,7 @@ export default function Home() {
     };
 
     try {
+      // 1. Try Supabase OAuth redirect first
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -638,14 +648,38 @@ export default function Home() {
         },
       });
 
-      if (error) {
-        console.warn("Supabase Google Login notice:", error.message);
-        completeGoogleLogin();
+      if (!error) return;
+
+      // 2. Google Identity Services Popup OAuth Client integration with User Client ID
+      const google = typeof window !== "undefined" ? (window as any).google : null;
+      if (google?.accounts?.oauth2) {
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: googleClientId,
+          scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+          callback: async (resp: any) => {
+            if (resp?.access_token) {
+              try {
+                const userRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+                  headers: { Authorization: `Bearer ${resp.access_token}` },
+                });
+                const userData = await userRes.json();
+                completeGoogleLogin(userData.name || userData.given_name, userData.email);
+              } catch (e) {
+                completeGoogleLogin();
+              }
+            } else {
+              completeGoogleLogin();
+            }
+          },
+        });
+        client.requestAccessToken();
+        return;
       }
     } catch (e) {
       console.error("Google Login Exception:", e);
-      completeGoogleLogin();
     }
+
+    completeGoogleLogin();
   };
 
   // Load completion state and progress from localStorage
