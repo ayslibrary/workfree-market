@@ -618,7 +618,7 @@ export default function Home() {
       return;
     }
 
-    const googleClientId = "4593609842-9neo9c2j0gi349shev630hdcukc93cj4.apps.googleusercontent.com";
+    const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "436593609842-9neo9c2j0gi349shev630hdcukc93cj4.apps.googleusercontent.com";
     let loginCompleted = false;
 
     const completeGoogleLogin = (userName?: string, userEmail?: string) => {
