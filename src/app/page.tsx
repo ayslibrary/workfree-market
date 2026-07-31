@@ -272,12 +272,13 @@ export default function Home() {
       if (session?.user) {
         const rawEmail = session.user.email || session.user.user_metadata?.email || session.user.user_metadata?.kakao_account?.email || "";
         const email = rawEmail || `kakao_${session.user.id.slice(0, 8)}@workfreemarket.com`;
-        const name =
-          session.user.user_metadata?.name ||
-          session.user.user_metadata?.full_name ||
+        const rawName =
           session.user.user_metadata?.nickname ||
           session.user.user_metadata?.profile?.nickname ||
-          (email ? email.split("@")[0] : "카카오 수강생");
+          session.user.user_metadata?.name ||
+          session.user.user_metadata?.full_name ||
+          (email ? email.split("@")[0] : "");
+        const name = rawName && rawName.trim() ? rawName.trim() : "회원";
         const provider =
           session.user.app_metadata?.provider ||
           session.user.identities?.[0]?.provider ||
@@ -293,12 +294,13 @@ export default function Home() {
       if (session?.user) {
         const rawEmail = session.user.email || session.user.user_metadata?.email || session.user.user_metadata?.kakao_account?.email || "";
         const email = rawEmail || `kakao_${session.user.id.slice(0, 8)}@workfreemarket.com`;
-        const name =
-          session.user.user_metadata?.name ||
-          session.user.user_metadata?.full_name ||
+        const rawName =
           session.user.user_metadata?.nickname ||
           session.user.user_metadata?.profile?.nickname ||
-          (email ? email.split("@")[0] : "카카오 수강생");
+          session.user.user_metadata?.name ||
+          session.user.user_metadata?.full_name ||
+          (email ? email.split("@")[0] : "");
+        const name = rawName && rawName.trim() ? rawName.trim() : "회원";
         const provider =
           session.user.app_metadata?.provider ||
           session.user.identities?.[0]?.provider ||
