@@ -42,5 +42,5 @@ next-env.d.ts
 
 # local lectures
 public/lectures
-*.mp4
+!public/promo.mp4
 
