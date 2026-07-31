@@ -1173,10 +1173,15 @@ export default function Home() {
                   src="/promo.mp4"
                   controls
                   playsInline
-                  preload="metadata"
+                  autoPlay
+                  muted
+                  preload="auto"
                   onPlay={() => logUserActivityToSupabase("play_promo_video", "User started watching Promo Video")}
                   className="w-full h-auto max-h-[420px] object-contain rounded-2xl mx-auto"
-                />
+                >
+                  <source src="/promo.mp4" type="video/mp4" />
+                  브라우저가 동영상 재생을 지원하지 않습니다.
+                </video>
               </div>
             </div>
 
