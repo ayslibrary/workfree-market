@@ -974,11 +974,11 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
       {/* Top Header Navbar (Logo Only - Click to Home) */}
-      <header className="sticky top-0 z-[60] px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
-          {/* Logo & Main Title (Click goes to Home) */}
+      <header className="sticky top-0 z-[60] bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5">
+          {/* Brand Logo & Subtitle */}
           <div
-            className="flex items-center space-x-3 cursor-pointer group hover:opacity-90 transition-all"
+            className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer group hover:opacity-90 transition-all shrink-0"
             onClick={() => {
               setViewMode("landing");
               if (typeof window !== "undefined") {
@@ -991,33 +991,33 @@ export default function Home() {
             <img
               src="/logo.jpg"
               alt="WorkFree Market 로고"
-              className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-slate-700/80 bg-white"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-slate-700/80 bg-white"
             />
             <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="font-extrabold text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
+                <h1 className="font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                   WorkFree Market
                 </h1>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                  ai딸깍샘 클래스
+                <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                  ai딸깍샘
                 </span>
               </div>
-              <p className="text-[11px] text-cyan-400 font-medium tracking-wide">
+              <p className="text-[10px] sm:text-[11px] text-cyan-400 font-medium tracking-wide hidden xs:block">
                 {lang === "en"
-                  ? "1-Click Excel Automation: Turn 10h Work into 1h!"
-                  : "클릭 1번 엑셀 자동화: 10시간 업무를 1시간으로!"}
+                  ? "1-Click Excel Automation: 10h to 1h!"
+                  : "클릭 1번 엑셀 자동화: 10시간을 1시간으로!"}
               </p>
             </div>
           </div>
 
           {/* Top Language Switcher & Auth Buttons */}
-          <div className="flex items-center space-x-2.5 sm:space-x-3">
+          <div className="flex items-center space-x-1.5 sm:space-x-3 ml-auto sm:ml-0">
             {/* Language Selector Switcher (KOR / ENG) */}
-            <div className="flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs font-bold shrink-0 shadow-inner">
+            <div className="flex items-center bg-slate-800/90 p-0.5 sm:p-1 rounded-xl border border-slate-700/80 text-[10px] sm:text-xs font-bold shrink-0 shadow-inner">
               <button
                 type="button"
                 onClick={() => toggleLang("ko")}
-                className={`px-2 py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-1 ${
+                className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg transition-all cursor-pointer flex items-center space-x-0.5 sm:space-x-1 ${
                   lang === "ko"
                     ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md font-black"
                     : "text-slate-400 hover:text-white"
