@@ -246,7 +246,22 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Supabase Magic Link Auth Session Listener (Auto login when clicking email link)
+  // Supabase Magic Link Auth Session Listener & Database Logger
+  const logUserAuthToSupabase = async (name: string, email: string, provider: string = "google") => {
+    try {
+      await supabase.from("user_logs").insert([
+        {
+          name: name,
+          email: email,
+          provider: provider,
+          logged_at: new Date().toISOString(),
+        },
+      ]);
+    } catch (err) {
+      console.warn("Supabase custom DB log sync notice:", err);
+    }
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
@@ -255,6 +270,7 @@ export default function Home() {
         const userObj = { name, email };
         setCurrentUser(userObj);
         localStorage.setItem("workfree_user", JSON.stringify(userObj));
+        logUserAuthToSupabase(name, email, session.user.app_metadata?.provider || "google");
       }
     });
 
@@ -265,8 +281,9 @@ export default function Home() {
         const userObj = { name, email };
         setCurrentUser(userObj);
         localStorage.setItem("workfree_user", JSON.stringify(userObj));
+        logUserAuthToSupabase(name, email, session.user.app_metadata?.provider || "google");
         if (event === "SIGNED_IN") {
-          alert(`🎉 ${name}님, 메일 인증이 완료되어 성공적으로 로그인되었습니다!`);
+          alert(`🎉 ${name}님, 성공적으로 로그인되었습니다!`);
         }
       }
     });
@@ -568,6 +585,7 @@ export default function Home() {
 
       setCurrentUser(userObj);
       localStorage.setItem("workfree_user", JSON.stringify(userObj));
+      logUserAuthToSupabase(name, email, "kakao");
       setShowAuthModal(false);
       alert(`🎉 ${name}님, 카카오 계정으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
       setShowPaymentNoticeModal(true);
@@ -631,6 +649,7 @@ export default function Home() {
 
       setCurrentUser(userObj);
       localStorage.setItem("workfree_user", JSON.stringify(userObj));
+      logUserAuthToSupabase(name, email, "google");
       setShowAuthModal(false);
       alert(`🎉 ${name}님, 구글 계정(${email})으로 ${authTab === "join" ? "회원가입" : "로그인"}이 완료되었습니다!`);
       setShowPaymentNoticeModal(true);
