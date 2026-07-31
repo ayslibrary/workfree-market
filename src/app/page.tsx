@@ -1146,7 +1146,7 @@ export default function Home() {
             >
               {t("heroTitle1", lang)}{" "}
               <br className="hidden sm:inline" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
+              <span className="text-white">
                 {t("heroTitle2", lang)}
               </span>
             </h1>
