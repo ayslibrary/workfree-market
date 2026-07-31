@@ -266,22 +266,38 @@ export default function Home() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         const email = session.user.email || "";
-        const name = session.user.user_metadata?.name || session.user.user_metadata?.full_name || email.split("@")[0] || "수강생";
+        const name =
+          session.user.user_metadata?.name ||
+          session.user.user_metadata?.full_name ||
+          session.user.user_metadata?.nickname ||
+          (email ? email.split("@")[0] : "수강생");
+        const provider =
+          session.user.app_metadata?.provider ||
+          session.user.identities?.[0]?.provider ||
+          "kakao";
         const userObj = { name, email };
         setCurrentUser(userObj);
         localStorage.setItem("workfree_user", JSON.stringify(userObj));
-        logUserAuthToSupabase(name, email, session.user.app_metadata?.provider || "google");
+        logUserAuthToSupabase(name, email, provider);
       }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         const email = session.user.email || "";
-        const name = session.user.user_metadata?.name || session.user.user_metadata?.full_name || email.split("@")[0] || "수강생";
+        const name =
+          session.user.user_metadata?.name ||
+          session.user.user_metadata?.full_name ||
+          session.user.user_metadata?.nickname ||
+          (email ? email.split("@")[0] : "수강생");
+        const provider =
+          session.user.app_metadata?.provider ||
+          session.user.identities?.[0]?.provider ||
+          "kakao";
         const userObj = { name, email };
         setCurrentUser(userObj);
         localStorage.setItem("workfree_user", JSON.stringify(userObj));
-        logUserAuthToSupabase(name, email, session.user.app_metadata?.provider || "google");
+        logUserAuthToSupabase(name, email, provider);
         if (event === "SIGNED_IN") {
           alert(`🎉 ${name}님, 성공적으로 로그인되었습니다!`);
         }
