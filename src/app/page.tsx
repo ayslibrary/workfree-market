@@ -596,6 +596,7 @@ export default function Home() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
+          scopes: "account_email profile_nickname",
           redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
         },
       });
