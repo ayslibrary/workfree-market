@@ -2066,40 +2066,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* END-TO-END PIPELINE DIAGRAM SECTION */}
-          <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
-            <div className="text-center space-y-2">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold border border-cyan-500/30">
-                ZERO-TOUCH AUTOMATION FLOW
-              </span>
-              <h2 className="text-3xl font-bold text-white">완전 자동화 업무 파이프라인 시각화</h2>
-              <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-                ERP 다운로드부터 엑셀 가공, 메일 전송까지 나의 개입 없이 수직 실행되는 구조입니다.
-              </p>
-            </div>
 
-            {/* Pipeline Step Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl items-center">
-              <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
-                <div className="text-3xl">🏢</div>
-                <div className="text-sm font-bold text-white">1. ERP / 웹 시스템</div>
-                <div className="text-[11px] text-slate-400">데이터 자동 다운로드</div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 text-center space-y-2">
-                <div className="text-3xl">⚙️</div>
-                <div className="text-sm font-bold text-cyan-300">2. Power Automate</div>
-                <div className="text-[11px] text-cyan-400 font-mono">이벤트 트리거 감지</div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-blue-950/40 border border-blue-500/40 text-center space-y-2">
-                <div className="text-3xl">📊</div>
-                <div className="text-sm font-bold text-blue-300">3. LV.01 VBA 매크로</div>
-                <div className="text-[11px] text-blue-400">로우 데이터 자동 가공</div>
-              </div>
-
-            </div>
-          </section>
 
           {/* TOP 4 HIGH-IMPACT RELATABLE AI AGENTS SHOWCASE */}
           <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 space-y-10 border-t border-slate-800">
