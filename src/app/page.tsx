@@ -201,6 +201,7 @@ export default function Home() {
   const [showDeployModal, setShowDeployModal] = useState<boolean>(false);
   const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
   const [showCertificateModal, setShowCertificateModal] = useState<boolean>(false);
+  const [showMyPageModal, setShowMyPageModal] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
   const [zipDownloadUrl, setZipDownloadUrl] = useState<string>(() => {
@@ -264,6 +265,29 @@ export default function Home() {
       console.log("Successfully logged user auth to Supabase:", { safeName, safeEmail, safeProvider });
     } catch (err) {
       console.warn("Supabase custom DB log sync notice:", err);
+    }
+  };
+
+  // User Action & Click Analytics Logger (Guest & Member)
+  const logUserActivityToSupabase = async (action: string, details: string = "") => {
+    try {
+      const isMember = !!currentUser;
+      const userName = currentUser?.name || "비회원 (Guest)";
+      const userEmail = currentUser?.email || "guest@workfreemarket.com";
+
+      await supabase.from("user_activity_logs").insert([
+        {
+          user_name: userName,
+          user_email: userEmail,
+          action: action,
+          details: details,
+          is_member: isMember,
+          logged_at: new Date().toISOString(),
+        },
+      ]);
+      console.log("Logged user activity:", { userName, action, details, isMember });
+    } catch (err) {
+      console.warn("User activity log sync notice:", err);
     }
   };
 
@@ -1025,20 +1049,28 @@ export default function Home() {
               <span>{lang === "en" ? "⚡ Try Demo Tutorial" : "⚡ 실습 튜토리얼 체험해보기"}</span>
             </button>
             {currentUser ? (
-              <div className="flex items-center space-x-2.5">
-                <span className="text-xs font-bold text-slate-200 flex items-center space-x-1">
-                  <span>👤</span>
-                  <span className="text-cyan-300">{currentUser.name}</span>님
-                </span>
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={() => {
+                    logUserActivityToSupabase("open_mypage", "Header My Page Modal click");
+                    setShowMyPageModal(true);
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-xs font-bold text-slate-200 flex items-center space-x-1.5 transition-all cursor-pointer shadow-md active:scale-95"
+                >
+                  <span className="text-cyan-400">👤</span>
+                  <span className="text-cyan-300 font-extrabold">{currentUser.name}님</span>
+                  <span className="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-mono">{lang === "en" ? "My Page" : "마이페이지"}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    logUserActivityToSupabase("logout", "User clicked logout");
                     setCurrentUser(null);
                     localStorage.removeItem("workfree_user");
-                    alert("로그아웃 되었습니다.");
+                    alert(lang === "en" ? "Logged out successfully." : "로그아웃 되었습니다.");
                   }}
-                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 text-xs font-medium cursor-pointer transition-colors"
+                  className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium cursor-pointer transition-colors"
                 >
-                  로그아웃
+                  {lang === "en" ? "Logout" : "로그아웃"}
                 </button>
               </div>
             ) : (
@@ -2819,6 +2851,107 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* User Dashboard My Page Modal */}
+      {showMyPageModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
+          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 border border-cyan-400 flex items-center justify-center text-white text-xl shadow-lg">
+                  👤
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-lg text-white">
+                    {currentUser?.name || "수강생"}님의 마이페이지
+                  </h3>
+                  <p className="text-xs text-slate-400 font-mono">
+                    {currentUser?.email || "student@workfreemarket.com"}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowMyPageModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center font-bold text-xs transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Profile Status & Enrolled Course Info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-2xl bg-slate-950 border border-cyan-500/30 space-y-1.5">
+                <div className="text-[10px] font-mono text-cyan-400 uppercase font-bold">수강 등급 / 권한</div>
+                <div className="text-sm font-black text-white flex items-center space-x-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>LV.01 VOD 마스터클래스</span>
+                </div>
+                <div className="text-[11px] text-slate-400">10개 매크로 자동화 강좌 활성화</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-1.5">
+                <div className="text-[10px] font-mono text-amber-400 uppercase font-bold">진도율 (Learning Progress)</div>
+                <div className="text-sm font-black text-amber-300 font-mono">
+                  {completedLectures.length} / 10강 완료 ({Math.round((completedLectures.length / 10) * 100)}%)
+                </div>
+                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden mt-1">
+                  <div
+                    className="bg-gradient-to-r from-yellow-400 to-amber-500 h-full rounded-full transition-all duration-500"
+                    style={{ width: `${(completedLectures.length / 10) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            {/* User Activity & DB Audit Log Banner */}
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <span className="text-slate-300 flex items-center space-x-1.5">
+                  <span>📊</span>
+                  <span>최근 내 계정 인증 &amp; 활동 기록</span>
+                </span>
+                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-mono border border-emerald-500/30">
+                  Supabase DB 동기화됨
+                </span>
+              </div>
+              <div className="space-y-2 text-xs font-mono text-slate-400">
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+                  <span>인증 방식:</span>
+                  <span className="text-cyan-300 font-bold">소셜 인증 계정 (Google / Kakao OAuth)</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+                  <span>로그인 상태:</span>
+                  <span className="text-emerald-400 font-bold">✅ 정상 로그인 세션 유지 중</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                onClick={() => {
+                  setShowMyPageModal(false);
+                  setViewMode("classroom");
+                }}
+                className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-xs shadow-lg shadow-cyan-500/20 transition-all cursor-pointer text-center"
+              >
+                📺 10강 수강실 입장하여 수강하기 ➔
+              </button>
+              <button
+                onClick={() => {
+                  setShowMyPageModal(false);
+                  setShowInquiryModal(true);
+                }}
+                className="px-5 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-bold text-xs transition-all cursor-pointer text-center"
+              >
+                💬 1:1 고객 문의
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 100% Completion Celebration Certificate Modal */}
       {showCertificateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
