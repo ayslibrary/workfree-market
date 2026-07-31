@@ -268,28 +268,47 @@ export default function Home() {
     }
   };
 
-  // User Action & Click Analytics Logger (Guest & Member)
+  // User Action & Click Analytics Logger (Guest & Member Full Tracking)
   const logUserActivityToSupabase = async (action: string, details: string = "") => {
     try {
+      if (typeof window === "undefined") return;
+
+      // 1. Generate or retrieve persistent Guest Session ID
+      let guestId = localStorage.getItem("workfree_guest_id");
+      if (!guestId) {
+        guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+        localStorage.setItem("workfree_guest_id", guestId);
+      }
+
       const isMember = !!currentUser;
-      const userName = currentUser?.name || "비회원 (Guest)";
-      const userEmail = currentUser?.email || "guest@workfreemarket.com";
+      const userName = currentUser?.name || `비회원 (${guestId.slice(0, 12)})`;
+      const userEmail = currentUser?.email || `${guestId}@guest.workfreemarket.com`;
+
+      // 2. Capture referrer & entry path
+      const referrer = document.referrer || "직접 접속 (Direct / KakaoTalk Link)";
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const deviceType = isMobile ? "Mobile (스마트폰)" : "Desktop (PC)";
 
       await supabase.from("user_activity_logs").insert([
         {
           user_name: userName,
           user_email: userEmail,
           action: action,
-          details: details,
+          details: `${details} | 유입경로: ${referrer} | 기기: ${deviceType}`,
           is_member: isMember,
           logged_at: new Date().toISOString(),
         },
       ]);
-      console.log("Logged user activity:", { userName, action, details, isMember });
+      console.log("Logged user activity:", { userName, action, details, referrer, deviceType, isMember });
     } catch (err) {
       console.warn("User activity log sync notice:", err);
     }
   };
+
+  // Automatic Page Entrance View & Referrer Logging
+  useEffect(() => {
+    logUserActivityToSupabase("page_entrance_view", `메인 랜딩페이지 최초 접속 (URL: ${typeof window !== "undefined" ? window.location.href : ""})`);
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
