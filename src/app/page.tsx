@@ -1185,24 +1185,15 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner group">
-                <video
-                  ref={promoVideoRef}
-                  src="/promo.mp4"
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  onPlay={() => {
-                    logUserActivityToSupabase("play_promo_video", "Promo video autoplay started");
-                  }}
-                  className="w-full h-auto max-h-[420px] object-contain rounded-2xl mx-auto"
-                >
-                  <source src="/promo.mp4" type="video/mp4" />
-                  브라우저가 동영상 재생을 지원하지 않습니다.
-                </video>
+              <div className="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner aspect-video">
+                <iframe
+                  src="https://iframe.mediadelivery.net/embed/714452/f464d3f6-2e1f-460b-a5a9-e6caf5c817c0?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+                  loading="lazy"
+                  className="w-full h-full border-0 rounded-2xl"
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                  allowFullScreen
+                  title="WorkFree Market 공식 광고 영상"
+                ></iframe>
               </div>
             </div>
 
