@@ -16,12 +16,9 @@ export default function PayPalPaymentButton({
   onSuccess,
   onError,
 }: PayPalPaymentButtonProps) {
-  let rawClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
-  // If the provided ID is a Merchant ID (starts with BAAw...) or empty, fallback to 'test' demo ID
-  if (!rawClientId || rawClientId.startsWith("BA")) {
-    rawClientId = "test";
-  }
-  const clientId = rawClientId;
+  const clientId =
+    process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ||
+    "BAAw_2RLZt3r5WwpQsQB7shX7r4AiVY3kHcoQwb2LOFQYhLTJu7XsqoztPQMpJJu3ERfZUSrWF6RWLCKQA";
 
   return (
     <PayPalScriptProvider
