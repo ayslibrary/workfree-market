@@ -1187,7 +1187,7 @@ export default function Home() {
 
               <div className="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner aspect-video">
                 <iframe
-                  src="https://iframe.mediadelivery.net/embed/714452/f464d3f6-2e1f-460b-a5a9-e6caf5c817c0?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+                  src="https://iframe.mediadelivery.net/embed/714452/9742316b-b694-4229-84b1-62e1cd7ed588?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
                   loading="lazy"
                   className="w-full h-full border-0 rounded-2xl"
                   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
