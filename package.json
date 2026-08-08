@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^10.3.0",
     "@portone/browser-sdk": "^0.1.9",
     "@supabase/supabase-js": "^2.111.0",
     "@vercel/analytics": "^2.0.1",

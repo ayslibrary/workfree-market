@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import * as PortOne from "@portone/browser-sdk/v2";
 import { supabase } from "@/lib/supabase";
 import { t, Lang } from "@/lib/i18n";
+import PayPalPaymentButton from "@/components/PayPalPaymentButton";
 
 interface Lecture {
   id: number;
@@ -3856,6 +3857,30 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="space-y-2.5 pt-1">
+              {/* PayPal Global Express Checkout */}
+              <div className="p-3.5 rounded-2xl bg-blue-950/40 border border-blue-500/40 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-blue-300 font-extrabold text-xs">🌐 PayPal Global Express Checkout (USD $4.99)</span>
+                  <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-[10px] border border-blue-400/30">
+                    Visa / Master / AMEX / PayPal
+                  </span>
+                </div>
+                <PayPalPaymentButton
+                  amount="4.99"
+                  currency="USD"
+                  onSuccess={(details) => {
+                    setIsAuthenticated(true);
+                    localStorage.setItem("workfree_license_auth", "true");
+                    alert(`🎉 PayPal 결제가 성공적으로 완료되었습니다! (Transaction ID: ${details.id})\n10강 전체 시청 권한이 승인되었습니다.`);
+                    setShowPaymentNoticeModal(false);
+                    setViewMode("classroom");
+                  }}
+                  onError={(err) => {
+                    alert(`PayPal 결제 오류: ${err?.message || "결제를 완료하지 못했습니다."}`);
+                  }}
+                />
+              </div>
+
               <button
                 onClick={async () => {
                   try {
