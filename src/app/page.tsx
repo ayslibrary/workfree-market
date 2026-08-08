@@ -445,7 +445,7 @@ export default function Home() {
   const [isMobileCurriculumOpen, setIsMobileCurriculumOpen] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [selectedPayMethod, setSelectedPayMethod] = useState<"kakaopay" | "tosspay" | "card" | "naverpay">("kakaopay");
-  const VALID_LICENSE_KEY = "workfreemarketyaho";
+  const VALID_LICENSE_KEY = "WORKFREEMARKETYAHO";
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1201,14 +1201,14 @@ export default function Home() {
             {/* Hero Primary Single Focused CTA (BluePrint Aligned) */}
             <div className="w-full max-w-xl mx-auto space-y-3 pt-2">
               <button
-                onClick={() => setShowPaymentNoticeModal(true)}
+                onClick={() => setViewMode("classroom")}
                 className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-base sm:text-lg shadow-2xl shadow-yellow-500/30 transition-all text-center cursor-pointer active:scale-95 whitespace-nowrap border border-yellow-300"
               >
                 {t("heroCta", lang)}
               </button>
               
               <div className="flex justify-between items-center text-[11px] sm:text-xs text-slate-400 font-mono px-1">
-                <span className="text-amber-400 font-bold">D-{timeLeft.days} · {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
+                <span className="text-amber-400 font-bold">⚡ {t("timerRemaining", lang)}</span>
                 <span>{t("seatCount", lang)}</span>
               </div>
 
@@ -2356,10 +2356,10 @@ export default function Home() {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <button
-                  onClick={() => handlePortonePayment("kakaopay")}
+                  onClick={() => setViewMode("classroom")}
                   className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-yellow-500/25 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>⚡ 8.8(토) 실강 4만원 얼리버드 신청하기 (잔여 1석) ↗</span>
+                  <span>{t("liveApplyBtn", lang)}</span>
                 </button>
                 <a
                   href="https://jobs.kr.karrotmarket.com/shared/profiles/6a5888b11b54fcb878ff3b65"
@@ -2367,18 +2367,18 @@ export default function Home() {
                   rel="noreferrer"
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/20 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer"
                 >
-                  <span>🥕 당근마켓 1:1 실강 문의 ↗</span>
+                  <span>{t("liveKarrotBtn", lang)}</span>
                 </a>
                 <button
                   onClick={() => setShowInquiryModal(true)}
                   className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-sm font-bold text-cyan-300 transition-all flex items-center justify-center space-x-2 active:scale-95 cursor-pointer shadow-inner"
                 >
-                  <span>💬 1:1 고객 문의 ↗</span>
+                  <span>{t("liveInquiryBtn", lang)}</span>
                 </button>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-cyan-500/30 text-xs text-cyan-300 max-w-xl mx-auto leading-relaxed font-semibold shadow-inner">
-                💡 8/8(토) 실강 참여자는 본 10강 VOD 마스터클래스 전 과정 시청 권한이 기본 제공됩니다.
+                💡 수강생 패스키(비밀번호)를 입력하면 10강 VOD 마스터클래스 동영상이 즉시 해금되어 무제한 재생됩니다.
               </div>
             </div>
           </section>

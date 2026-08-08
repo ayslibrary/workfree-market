@@ -17,13 +17,13 @@ export const translations = {
     heroTitle1: "직장인을 위한",
     heroTitle2: "1초 AI 엑셀 자동화",
     heroSubtitle: "실제 내 업무를 따라 하며 나만의 무인 에이전트를 만드세요.",
-    heroCta: "⚡ 8.8(토) 3시간 실강 4만원 신청하기 (잔여 1석) ↗",
-    timerRemaining: "모집 마감 임박",
-    seatCount: "정원 5명 중 4명 모집 완료",
+    heroCta: "🎓 WorkFree LV.01 10강 마스터클래스 수강하러 가기 ➔",
+    timerRemaining: "🔥 온라인 인강 특가 수강 가능",
+    seatCount: "🎓 10강 100분 완강 동영상 무제한 수강",
     linkPreviewTextbook: "📖 강의 예습하기 (웹교재 무료 열람) ↗",
     linkTryTutorial: "⚡ 실습 튜토리얼 체험해보기 ↗",
-    linkClassroomView: "▶️ LV.01 10강 완강 (50,000원 ➔ 5,000원 90% OFF) 보기",
-    linkWaitlist: "🔔 마감 시 다음 회차 알림 신청",
+    linkClassroomView: "▶️ 10강 온라인 강의실 바로 입장하기 ➔",
+    linkWaitlist: "🔔 1:1 맞춤 자동화 과외 문의",
 
     // Vision Section
     whyBadge: "WHY WORKFREE MASTERCLASS",
@@ -125,15 +125,15 @@ export const translations = {
     job4Btn: "🤖 구매팀 에이전트 구동해보기 ➔",
 
     // 8.8 Live Class Section
-    liveRecruitingBadge: "🔴 REAL-TIME 실시간 모집 중 · 선착순 마감",
-    liveDateBadge: "📅 8월 8일 (토) 3시간 집중 실강",
-    liveTitle: "8.8(토) 3시간 실강 마스터클래스 얼리버드 모집 (잔여 1석!)",
-    liveSub: "현장에서 직접 엑셀 파일을 들고 와서 강사와 함께 나만의 자동화 매크로를 구축하는 3시간 라이브/오프라인 집중 과정입니다.",
-    liveStatusTitle: "🔥 실시간 참가 모집 현황",
-    liveSeatsLeft: "잔여 1석 (마감 임박!)",
-    liveEnrolledText: "4 / 5명 완료",
-    liveApplyBtn: "⚡ 8.8(토) 실강 4만원 얼리버드 신청하기 (잔여 1석) ↗",
-    liveKarrotBtn: "🥕 당근마켓 1:1 실강 문의 ↗",
+    liveRecruitingBadge: "🔴 ONLINE CLASS · 즉시 수강 가능",
+    liveDateBadge: "📅 10강 100분 완강 동영상 마스터클래스",
+    liveTitle: "WorkFree LV.01 10강 온라인 동영상 마스터클래스 수강",
+    liveSub: "엑셀 자동화 10개 핵심 파이프라인을 HD 고화질 동영상과 실습 템플릿으로 언제 어디서나 학습하세요.",
+    liveStatusTitle: "🔥 온라인 클래스 수강 혜택",
+    liveSeatsLeft: "즉시 수강 가능 (무제한 반복 시청)",
+    liveEnrolledText: "10강 완강 코스",
+    liveApplyBtn: "🎓 10강 동영상 강의실 들으러 가기 ➔",
+    liveKarrotBtn: "🥕 당근마켓 1:1 과외 문의 ↗",
     liveInquiryBtn: "💬 1:1 고객 문의 ↗",
 
     // Price Ladder
