@@ -208,6 +208,7 @@ export default function Home() {
 
   const handlePlayPromo = () => {
     if (promoVideoRef.current) {
+      promoVideoRef.current.muted = true;
       promoVideoRef.current.play().then(() => {
         setIsPromoPlaying(true);
       }).catch((err) => {
@@ -215,6 +216,13 @@ export default function Home() {
       });
     }
   };
+
+  useEffect(() => {
+    if (promoVideoRef.current) {
+      promoVideoRef.current.muted = true;
+      promoVideoRef.current.play().catch(() => {});
+    }
+  }, []);
   const [driveLinks, setDriveLinks] = useState<Record<number, string>>({});
   const [zipDownloadUrl, setZipDownloadUrl] = useState<string>(() => {
     if (typeof window !== "undefined") {
