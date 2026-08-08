@@ -565,7 +565,7 @@ export default function Home() {
         console.warn("Waitlist Supabase sync error:", e);
       }
 
-      alert("🎉 다음 회차 알림 신청이 완료되었습니다!\n8.8 실강 마감 후 다음 회차 일정(8월 중순)이 확정되는 즉시 가장 먼저 카카오톡/이메일로 안내해 드리겠습니다.");
+      alert("🎉 다음 회차 알림 신청이 완료되었습니다!\n다음 회차 일정이 확정되는 즉시 가장 먼저 카카오톡/이메일로 안내해 드리겠습니다.");
       setWaitlistContact("");
       setShowWaitlistModal(false);
     } catch (err: any) {
@@ -2349,43 +2349,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* NEXT COHORT WAITLIST BANNER & INLINE FORM SECTION */}
-          <section id="waitlist" className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 scroll-mt-20">
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/50 border border-amber-500/40 space-y-5 shadow-2xl">
-              <div className="space-y-1.5">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-mono font-bold border border-amber-500/40">
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                  <span>NEW · {lang === "en" ? "Cohort Reservation" : "마감 대비 사전예약"}</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white">{t("waitlistTitle", lang)}</h3>
-                <p className="text-xs text-slate-300">
-                  {t("waitlistSub", lang)}
-                </p>
-              </div>
 
-              {/* Direct Inline Waitlist Form */}
-              <div className="flex flex-col sm:flex-row items-stretch gap-2.5 max-w-xl">
-                <input
-                  type="text"
-                  value={waitlistContact}
-                  onChange={(e) => setWaitlistContact(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSaveWaitlist();
-                  }}
-                  placeholder={t("waitlistPlaceholder", lang)}
-                  className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-xs sm:text-sm font-mono focus:outline-none focus:border-amber-400"
-                />
-                <button
-                  type="button"
-                  onClick={handleSaveWaitlist}
-                  disabled={isSubmittingWaitlist}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all cursor-pointer whitespace-nowrap active:scale-95 border border-yellow-300 shrink-0"
-                >
-                  {isSubmittingWaitlist ? (lang === "en" ? "Submitting..." : "처리 중...") : t("waitlistBtn", lang)}
-                </button>
-              </div>
-            </div>
-          </section>
 
           {/* FOOTER & BUSINESS INFORMATION */}
           <footer className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16 text-xs text-slate-500 space-y-3 border-t border-slate-800/80">
@@ -3682,7 +3646,7 @@ export default function Home() {
                 <div>
                   <h3 className="font-black text-base sm:text-lg text-white">다음 회차 실강 알림 신청</h3>
                   <p className="text-xs text-slate-400">
-                    8/8 실강 마감 직후, 다음 코호트(8월 중순) 일정이 열리면 가장 먼저 연락드립니다.
+                    다음 코호트 일정이 열리면 가장 먼저 연락드립니다.
                   </p>
                 </div>
               </div>
@@ -3700,7 +3664,7 @@ export default function Home() {
                 <div className="flex items-center justify-between font-black text-rose-300">
                   <div className="flex items-center space-x-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-400 animate-ping shrink-0"></span>
-                    <span>🔥 8.2(일) 추가 실강 개설 예정 · 현재 1명 대기 중</span>
+                    <span>🔥 추가 실강 개설 예정 · 현재 1명 대기 중</span>
                   </div>
                   <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono text-[10px] border border-rose-500/30 shrink-0">
                     우선 1순위
@@ -3711,14 +3675,14 @@ export default function Home() {
                   <span className="text-amber-400 font-bold text-[10px]">✓ 대기 완료</span>
                 </div>
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  8.2(일) 추가 코호트 개설 확정 시, 신청하신 순서대로 1:1 카카오톡/이메일 우선 등록 링크를 발송해 드립니다.
+                  추가 코호트 개설 확정 시, 신청하신 순서대로 1:1 카카오톡/이메일 우선 등록 링크를 발송해 드립니다.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-1 text-xs text-amber-200">
                 <p className="font-bold">💡 알림 신청 혜택:</p>
                 <p className="text-[11px] text-amber-300/80">
-                  - 8.2(일) 추가 실강 오픈 시 <strong>우선 수강 신청권 부여</strong>
+                  - 추가 실강 오픈 시 <strong>우선 수강 신청권 부여</strong>
                   <br />
                   - 다음 회차 오픈 시 <strong>얼리버드 할인 혜택 동일 적용</strong>
                 </p>

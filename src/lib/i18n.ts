@@ -142,9 +142,6 @@ export const translations = {
 
     // Post-Purchase Journey & Waitlist
     journeyTitle: "LV.01 결제 후엔 무슨 일이 일어나나요?",
-    journeySub: "이미 지갑을 연 수강생이 가장 전환율이 높은 고객입니다 — 3단계 맞춤 후속 케어로 성장합니다.",
-    waitlistTitle: "8/8(토) 1석 마저 마감되면?",
-    waitlistSub: "다음 회차가 열리면 가장 먼저 카카오톡으로 알려드려요. 지금 신청 못해도 기회를 놓치지 않습니다.",
     waitlistPlaceholder: "카카오톡 ID 또는 이메일 주소 입력",
     waitlistBtn: "⚡ 다음 회차 알림 신청",
 
@@ -339,8 +336,6 @@ export const translations = {
     // Post-Purchase Journey & Waitlist
     journeyTitle: "What Happens After Enrolling in LV.01?",
     journeySub: "3-step post-enrollment support for continuous growth.",
-    waitlistTitle: "What If the Last Spot Closes?",
-    waitlistSub: "We will notify you first when the next cohort opens.",
     waitlistPlaceholder: "Enter Kakao ID or Email Address",
     waitlistBtn: "⚡ Notify Me for Next Cohort",
 
